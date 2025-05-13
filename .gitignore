@@ -1,3 +1,11 @@
 # Ignore GD assets
 Resources/**
 proj.android/assets/**
+
+# Ignore build files/folders
+
+proj.android/bin/**
+proj.android/.settings/**
+proj.android/gen/**
+proj.android/libs/**
+proj.android/obj/**
