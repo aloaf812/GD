@@ -25,6 +25,12 @@ bool HelloWorld::init()
     if ( !CCLayer::init() )
     {
         return false;
+
+        auto audio = CocosDenshion::SimpleAudioEngine::getInstance();     
+        audio->preloadBackgroundMusic("menuLoop.mp3");     
+        audio->playBackgroundMusic("menuLoop.mp3");       
+        
+        return true;  
     }
     
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
