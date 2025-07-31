@@ -1,11 +1,3 @@
-//
-//  GameToolbox.h
-//  GeometryDash
-//
-//  Created by bryan on 7/27/25.
-//
-//
-
 #ifndef __GeometryDash__GameToolbox__
 #define __GeometryDash__GameToolbox__
 

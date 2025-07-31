@@ -1,11 +1,3 @@
-//
-//  MenuLayer.h
-//  GeometryDash
-//
-//  Created by bryan on 7/27/25.
-//
-//
-
 #ifndef __GeometryDash__MenuLayer__
 #define __GeometryDash__MenuLayer__
 

@@ -1,11 +1,3 @@
-//
-//  LoadingLayer.cpp
-//  GeometryDash
-//
-//  decompiled by bryan on 7/26/25.
-//
-//
-
 #include "LoadingLayer.h"
 #include "GameManager.h"
 #include "MenuLayer.h"

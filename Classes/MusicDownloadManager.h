@@ -1,11 +1,3 @@
-//
-//  MusicDownloadManager.h
-//  GeometryDash
-//
-//  Created by bryan on 7/28/25.
-//
-//
-
 #ifndef __GeometryDash__MusicDownloadManager__
 #define __GeometryDash__MusicDownloadManager__
 

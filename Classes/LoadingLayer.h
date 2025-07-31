@@ -1,11 +1,3 @@
-//
-//  LoadingLayer.h
-//  GeometryDash
-//
-//  Created by bryan on 7/26/25.
-//
-//
-
 #ifndef __GeometryDash__LoadingLayer__
 #define __GeometryDash__LoadingLayer__
 

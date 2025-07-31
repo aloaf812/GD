@@ -1,11 +1,3 @@
-//
-//  TextArea.h
-//  GeometryDash
-//
-//  Created by bryan on 7/29/25.
-//
-//
-
 #ifndef __GeometryDash__TextArea__
 #define __GeometryDash__TextArea__
 

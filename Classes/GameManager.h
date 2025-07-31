@@ -1,11 +1,3 @@
-//
-//  GameManager.h
-//  GeometryDash
-//
-//  Created by bryan on 7/27/25.
-//
-//
-
 #ifndef __GeometryDash__GameManager__
 #define __GeometryDash__GameManager__
 

@@ -1,11 +1,3 @@
-//
-//  LevelTools.h
-//  GeometryDash
-//
-//  Created by bryan on 7/29/25.
-//
-//
-
 #ifndef __GeometryDash__LevelTools__
 #define __GeometryDash__LevelTools__
 

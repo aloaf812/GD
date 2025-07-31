@@ -1,11 +1,3 @@
-//
-//  LevelTools.cpp
-//  GeometryDash
-//
-//  Created by bryan on 7/29/25.
-//
-//
-
 #include "LevelTools.h"
 USING_NS_CC;
 

@@ -1,11 +1,3 @@
-//
-//  GameManager.cpp
-//  GeometryDash
-//
-//  Created by bryan on 7/27/25.
-//
-//
-
 #include "GameManager.h"
 USING_NS_CC;
 
