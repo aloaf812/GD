@@ -8,7 +8,17 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HelloWorldScene.cpp
+                   ../../Classes/FLAlertLayerProtocol.cpp\
+                   ../../Classes/GameManager.cpp\
+                   ../../Classes/GameToolbox.cpp\
+                   ../../Classes/GManager.cpp\
+                   ../../Classes/LevelTools.cpp\
+                   ../../Classes/LoadingLayer.cpp\
+                   ../../Classes/MenuGameLayer.cpp\
+                   ../../Classes/MenuLayer.cpp\
+                   ../../Classes/MusicDownloadManager.cpp\
+                   ../../Classes/PlatformToolbox.cpp\
+                   ../../Classes/TextArea.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

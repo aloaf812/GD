@@ -9,11 +9,11 @@
 
     <!-- A universally unique application identifier. Must be unique across all BlackBerry Tablet OS applications.
          Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-    <id>com.robtopx.geometryjump</id>
+    <id>com.robtop.geometryjump</id>
 
     <!-- The name that is displayed in the BlackBerry Tablet OS application installer. 
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
-    <name>GeometryJump</name>
+    <name>GeometryDash</name>
     
     <!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
          Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
@@ -29,7 +29,7 @@
 
     <!-- Description, displayed in the BlackBerry Tablet OS application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
-    <description>The GeometryJump Application</description>
+    <description>The GeometryDash Application</description>
 
     <!-- Copyright information. Optional. -->
     <!-- <copyright></copyright> -->
@@ -55,37 +55,37 @@
     <configuration id="com.qnx.qcc.configuration.exe.debug.2142540956" name="Device-Debug">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Debug/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Device-Debug/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Device-Debug/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.release.1185536621" name="Device-Release">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Release/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Device-Release/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Device-Release/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.1563929245" name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Device-Profile/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Device-Profile/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.2091050949" name="Device-Coverage">
        <platformArchitecture>armle-v7</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Device-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Device-Coverage/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Device-Coverage/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.debug.538064218" name="Simulator">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Simulator/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Simulator/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.808507225" name="Simulator-Profile">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator-Profile/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Simulator-Profile/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Simulator-Profile/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     <configuration id="com.qnx.qcc.configuration.exe.profile.coverage.78763272" name="Simulator-Coverage">
        <platformArchitecture>x86</platformArchitecture>
        <asset path="empty/../../../../CocosDenshion/proj.blackberry/Simulator-Coverage/libCocosDenshion.so" type="Qnx/Elf">lib/libCocosDenshion.so</asset>
-       <asset path="Simulator-Coverage/GeometryJump" entry="true" type="Qnx/Elf">GeometryJump</asset>
+       <asset path="Simulator-Coverage/GeometryDash" entry="true" type="Qnx/Elf">GeometryDash</asset>
     </configuration>
     
     <!--  The icon for the application, which should be 86x86. -->

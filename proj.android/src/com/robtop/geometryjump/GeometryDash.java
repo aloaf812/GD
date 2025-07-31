@@ -21,14 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package com.robtopx.geometryjump;
+package com.robtop.geometryjump;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.os.Bundle;
 
-public class GeometryJump extends Cocos2dxActivity{
+public class GeometryDash extends Cocos2dxActivity{
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
@@ -36,7 +36,7 @@ public class GeometryJump extends Cocos2dxActivity{
 
     public Cocos2dxGLSurfaceView onCreateView() {
     	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
-    	// GeometryJump should create stencil buffer
+    	// GeometryDash should create stencil buffer
     	glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
     	
     	return glSurfaceView;

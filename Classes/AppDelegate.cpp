@@ -1,6 +1,8 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
-
+#include "LoadingLayer.h"
+#include "GameToolbox.h"
+#include "PlatformToolbox.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -23,10 +25,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-
+    
     // create a scene. it's an autorelease object
-    CCScene *pScene = HelloWorld::scene();
-
+    CCScene *pScene = LoadingLayer::scene();
+    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+    CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
+    // CCDirector::setDepthTest(this, false);
     // run
     pDirector->runWithScene(pScene);
 
@@ -48,3 +52,14 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
+
+void trySaveGame(bool p0){
+    PlatformToolbox::gameDidSave();
+    return;
+}
+
+/* void loadingIsFinished()
+{
+    return;
+}
+*/

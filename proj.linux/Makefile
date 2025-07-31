@@ -1,10 +1,20 @@
-EXECUTABLE = GeometryJump
+EXECUTABLE = GeometryDash
 
 INCLUDES = -I.. -I../Classes
 
 SOURCES = main.cpp \
         ../Classes/AppDelegate.cpp \
-        ../Classes/HelloWorldScene.cpp
+    	../Classes/FLAlertLayerProtocol.cpp\
+        ../Classes/GameManager.cpp\
+        ../Classes/GameToolbox.cpp\
+    	../Classes/GManager.cpp\
+        ../Classes/LevelTools.cpp\
+        ../Classes/LoadingLayer.cpp\
+    	../Classes/MenuGameLayer.cpp\
+        ../Classes/MenuLayer.cpp\
+        ../Classes/MusicDownloadManager.cpp\
+        ../Classes/PlatformToolbox.cpp\
+        ../Classes/TextArea.cpp
 
 COCOS_ROOT = ../../..
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk

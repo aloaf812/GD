@@ -4,8 +4,24 @@ proj.android/assets/**
 
 # Ignore build files/folders
 
-proj.android/bin/**
 proj.android/.settings/**
+proj.android/bin/**
 proj.android/gen/**
 proj.android/libs/**
 proj.android/obj/**
+
+# Ignore unsupported platforms (might add support later)
+
+proj.blackberry/**
+proj.linux/**
+proj.mac/**
+proj.marmalade/**
+proj.tizen/**
+proj.win32/**
+proj.winrt/**
+proj.wp8/**
+proj.wp8-xaml/**
+
+# Ignore other stuff
+
+proj.ios/GeometryDash.xcodeproj/xcuserdata/**

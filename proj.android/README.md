@@ -1,9 +1,3 @@
-## progress
-
-folders:
-* res: perfectly matching
-* META-INF: only file formats and manifest versions matching
-
 ## Prerequisites:
 
 * Android NDK
