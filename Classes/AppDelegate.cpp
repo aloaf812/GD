@@ -1,5 +1,4 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
 #include "LoadingLayer.h"
 #include "GameToolbox.h"
 #include "PlatformToolbox.h"
