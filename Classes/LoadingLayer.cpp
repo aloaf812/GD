@@ -19,13 +19,10 @@ CCScene* LoadingLayer::scene()
     return scene;
 }
 
-bool LoadingLayer::init()
-{
-    //////////////////////////////
-    // 1. super init first
+bool LoadingLayer::init() {
     if ( !CCLayer::init() )
     {
-        return 1;
+        return false;
     }
     
     // why does it have to be this way
@@ -37,7 +34,7 @@ bool LoadingLayer::init()
     this_01->addImage("GJ_LaunchSheet.png");
     CCSpriteFrameCache *this_02 = CCSpriteFrameCache::sharedSpriteFrameCache();
     this_02->addSpriteFramesWithFile("GJ_LaunchSheet.plist");
-    CCLOG("loaded GJ_LaunchSheet");
+    // CCLOG("loaded GJ_LaunchSheet");
     GameManager *something = GameManager::sharedState();
     CCSprite* bgSprite = CCSprite::create(something->getBGTexture(1));
     bgSprite->createWithSpriteFrameName("GJ_logo_001.png");
@@ -45,6 +42,7 @@ bool LoadingLayer::init()
     logoSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(logoSprite, 0);
     // fix this you idiot CCLabelBMFont::create(LoadingLayer::getLoadingString(), "goldFont.fnt");
+    return true;
 }
 
 const char* LoadingLayer::getLoadingString(){

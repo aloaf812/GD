@@ -6,6 +6,7 @@
 class MenuLayer: public cocos2d::CCLayer {
 public:
     static cocos2d::CCScene* scene();
+    // virtual bool init();
 };
 
 #endif /* defined(__GeometryDash__MenuLayer__) */

@@ -28,7 +28,7 @@ import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.os.Bundle;
 
-public class GeometryDash extends Cocos2dxActivity{
+public class GeometryJump extends Cocos2dxActivity{
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
@@ -36,7 +36,7 @@ public class GeometryDash extends Cocos2dxActivity{
 
     public Cocos2dxGLSurfaceView onCreateView() {
     	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
-    	// GeometryDash should create stencil buffer
+    	// GeometryJump should create stencil buffer
     	glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
     	
     	return glSurfaceView;

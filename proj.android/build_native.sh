@@ -1,4 +1,4 @@
-APPNAME="GeometryDash"
+APPNAME="GeometryJump"
 
 # options
 

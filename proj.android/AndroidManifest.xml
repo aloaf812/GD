@@ -1,30 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.robtop.geometryjump"
-      android:versionCode="1"
-      android:versionName="1.0">
+      android:installLocation="auto"
+      android:versionCode="17"
+      android:versionName="1.70">
 
-    <uses-sdk android:minSdkVersion="8"/>
-    <uses-feature android:glEsVersion="0x00020000" />
+    <uses-sdk android:minSdkVersion="8"
+              android:targetSdkVersion="16"/>
+    <uses-feature android:name="android.hardware.wifi" android:required="false"/>
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
 
-    <application android:label="@string/app_name"
+
+    <application android:hardwareAccelerated="true"
+        android:label="@string/app_name"
         android:icon="@drawable/icon">
 
-        <activity android:name=".GeometryDash"
+        <activity android:configChanges="orientation|screenSize|smallestScreenSize"
                   android:label="@string/app_name"
+                  android:name=".GeometryJump"
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                  android:configChanges="orientation">
+                  android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/app_id"/>
     </application>
-    <supports-screens android:largeScreens="true"
+    
+    <supports-screens android:anyDensity="true"
                       android:smallScreens="true"
-                      android:anyDensity="true"
-                      android:normalScreens="true"/>
+                      android:normalScreens="true"
+                      android:largeScreens="true"
+                      android:xLargeScreens="true"/>
                          
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 </manifest> 

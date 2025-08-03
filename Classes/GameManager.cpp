@@ -1,6 +1,11 @@
 #include "GameManager.h"
 USING_NS_CC;
 
+
+bool GameManager::init(){
+    return true;
+}
+
 /* i don't understand this function
 void GameManager::loadBackground(int p0)
 {
@@ -31,6 +36,13 @@ char const* GameManager::getBGTexture(int id)
     CCLOG(this_00->CCString::getCString());
     return this_00->CCString::getCString();
 }
+
+/*
+void GameManager::fadeInMusic(char *param_1){
+
+    return;
+}
+*/
 
 GameManager* GameManager::sharedState()
 {

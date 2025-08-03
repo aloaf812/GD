@@ -2,16 +2,7 @@
 Resources/**
 proj.android/assets/**
 
-# Ignore build files/folders
-
-proj.android/.settings/**
-proj.android/bin/**
-proj.android/gen/**
-proj.android/libs/**
-proj.android/obj/**
-
-# Ignore unsupported platforms (might add support later)
-
+# Ignore unsupported platforms
 proj.blackberry/**
 proj.linux/**
 proj.mac/**
@@ -22,6 +13,102 @@ proj.winrt/**
 proj.wp8/**
 proj.wp8-xaml/**
 
-# Ignore other stuff
+# Ignore thumbnails created by windows
+Thumbs.db
 
-proj.ios/GeometryDash.xcodeproj/xcuserdata/**
+# Ignore files built by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.aps
+*.vcproj.*.user
+*.vcxproj.user
+*.vspscc
+*_i.c
+*.i
+*.icf
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.sbr
+*.sdf
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+ipch/
+*.opensdf
+Generated Files
+AppPackages
+SubmissionInfo
+*.hps
+
+# Ignore files built by ndk and eclipse
+libs/
+bin/
+obj/
+gen/
+assets/
+.settings/
+local.properties
+
+# Ignore files built by NaCl
+samples/Cpp/HelloCpp/proj.nacl/Resources/
+samples/Cpp/TestCpp/proj.nacl/Resources/
+samples/Cpp/TestCpp/proj.nacl/out/
+samples/Cpp/SimpleGame/proj.nacl/Resources/
+samples/Lua/HelloLua/proj.nacl/Resources/
+samples/Lua/TestLua/proj.nacl/Resources/
+
+# Ignore python compiled files
+*.pyc
+
+# Ignore files built by airplay and marmalade
+build_*_xcode/
+build_*_vc10/
+
+# Ignore files built by xcode
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+*.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.plist
+build/
+.DS_Store
+._.*
+xcuserdata/
+DerivedData/
+*.xccheckout
+
+# Ignore files built by bada
+.Simulator-Debug/
+.Target-Debug/
+.Target-Release/
+
+# Ignore files built by blackberry
+Simulator/
+Device-Debug/
+Device-Release/
+
+# Ignore vim swaps
+*.swp
+
+# Ignore config files in javascript bindings generator
+tools/tojs/user.cfg
+# ... userconf.ini generated if running from tools/tojs
+tools/tojs/userconf.ini
+# ... userconf.ini generated if running from tools/jenkins_scripts/mac/android/
+tools/jenkins_scripts/mac/android/userconf.ini
+
+# CTags
+tags
