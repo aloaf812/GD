@@ -6,6 +6,8 @@
 class PlatformToolbox {
 public:
     static void gameDidSave();
+    static uint shouldResumeSound();
+    // android only // void reportLoadingFinished();
 };
 
 #endif /* defined(__GeometryDash__PlatformToolbox__) */

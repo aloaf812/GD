@@ -6,7 +6,6 @@
 /**
 @brief    The cocos2d Application.
 
-The reason for implement as private inheritance is to hide some interface call by CCDirector.
 */
 class  AppDelegate : public cocos2d::CCApplication
 {
@@ -34,9 +33,11 @@ public:
     virtual void applicationWillEnterForeground();
     
     // virtual void loadingIsFinished();
+    void resumeSound();
+    bool musicTest();
     
     // do not implement this right now: virtual void willSwitchToScene(cocos2d::CCScene* p0);
-    // virtual void trySaveGame(bool p0);
+    // virtual void trySaveGame();
 };
 
 #endif // _APP_DELEGATE_H_

@@ -16,7 +16,7 @@ proj.wp8-xaml/**
 # Ignore thumbnails created by windows
 Thumbs.db
 
-# Ignore files built by Visual Studio
+# Ignore files built by Visual Studio and VS Code
 *.obj
 *.exe
 *.pdb
@@ -50,6 +50,7 @@ Generated Files
 AppPackages
 SubmissionInfo
 *.hps
+.vscode/
 
 # Ignore files built by ndk and eclipse
 libs/

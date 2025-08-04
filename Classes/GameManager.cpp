@@ -3,6 +3,8 @@ USING_NS_CC;
 
 
 bool GameManager::init(){
+    // weird function here
+    // creates "CCGameManager.dat" file
     return true;
 }
 

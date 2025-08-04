@@ -6,7 +6,9 @@
 class GManager : public cocos2d::CCNode
 {
     virtual bool init();
+    virtual void setup();
+    void save();
 };
 
 
-#endif /* defined(__GeometryDash__GManager__) */
+#endif

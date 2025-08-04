@@ -2,6 +2,7 @@
 #include "LoadingLayer.h"
 #include "GameToolbox.h"
 #include "PlatformToolbox.h"
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -48,8 +49,26 @@ void AppDelegate::applicationDidEnterBackground() {
 void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
 
+    if (!PlatformToolbox::shouldResumeSound())
+    {
+        return false;
+    }
+
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    // 
+}
+
+void resumeSound(){
+    if (!AppDelegate::musicTest())
+    {
+        SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    }
+    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    return;
+}
+
+bool musicTest(){
+    return true;
 }
 
 void trySaveGame(bool p0){

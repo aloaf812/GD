@@ -2,9 +2,10 @@
 #define __GeometryDash__FLAlertLayerProtocol__
 
 #include "cocos2d.h"
+#include "FLAlertLayer.h"
 
-class FLAlertLayerProtocol{
-    
+class FLAlertLayerProtocol {
+    virtual void FLAlert_Clicked(FLAlertLayer* param_1, bool param_2)
 };
 
-#endif /* defined(__GeometryDash__FLAlertLayerProtocol__) */
+#endif

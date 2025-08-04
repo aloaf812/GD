@@ -6,3 +6,7 @@ void PlatformToolbox::gameDidSave(){
     CCLOG("game was saved");
     return;
 }
+
+uint PlatformToolbox::shouldResumeSound(){
+    return true;
+}
