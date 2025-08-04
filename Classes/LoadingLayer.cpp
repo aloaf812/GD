@@ -48,9 +48,11 @@ bool LoadingLayer::init() {
     return true;
 }
 
+/* error: variable or field 'loadAssets' declared void
 void LoadingLayer::loadAssets{
     return;
 }
+*/
 
 const char* LoadingLayer::getLoadingString(){
     

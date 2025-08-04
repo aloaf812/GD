@@ -9,11 +9,10 @@ public:
     static cocos2d::CCScene* scene();
     const char* getLoadingString();
     bool init();
-    void loadAssets();
+    // void loadAssets();
     void loadingFinished();
     void updateProgress(int param_1);
     CREATE_FUNC(LoadingLayer);
-    // do the rest later thank you very much
 };
 
-#endif /* defined(__GeometryDash__LoadingLayer__) */
+#endif

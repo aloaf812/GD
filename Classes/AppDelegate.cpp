@@ -4,6 +4,7 @@
 #include "PlatformToolbox.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate() {
 
@@ -40,25 +41,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
     CCDirector::sharedDirector()->stopAnimation();
-
+    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
-// this function will be called when the app is active again
-void AppDelegate::applicationWillEnterForeground() {
-    CCDirector::sharedDirector()->startAnimation();
-
-    if (!PlatformToolbox::shouldResumeSound())
-    {
-        return false;
-    }
-
-    // if you use SimpleAudioEngine, it must resume here
-    // 
+bool AppDelegate::musicTest(){
+    return true;
 }
-
-void resumeSound(){
+void AppDelegate::resumeSound(){
     if (!AppDelegate::musicTest())
     {
         SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
@@ -66,10 +57,17 @@ void resumeSound(){
     SimpleAudioEngine::sharedEngine()->resumeAllEffects();
     return;
 }
+// this function will be called when the app is active again
+void AppDelegate::applicationWillEnterForeground() {
+    CCDirector::sharedDirector()->startAnimation();
 
-bool musicTest(){
-    return true;
+    if (!PlatformToolbox::shouldResumeSound())
+    {
+        AppDelegate::resumeSound();
+    }
 }
+
+
 
 void trySaveGame(bool p0){
     PlatformToolbox::gameDidSave();

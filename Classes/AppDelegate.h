@@ -34,7 +34,8 @@ public:
     
     // virtual void loadingIsFinished();
     void resumeSound();
-    bool musicTest();
+    static bool musicTest();
+    // static AppDelegate* get();
     
     // do not implement this right now: virtual void willSwitchToScene(cocos2d::CCScene* p0);
     // virtual void trySaveGame();
