@@ -19,7 +19,6 @@ void GameManager::loadBackground(int p0)
         bgID = 1;
     }
     CCString *this_00 = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
-    CCLOG(this_00->CCString::getCString());
     return;
 }
 */
@@ -35,7 +34,6 @@ char const* GameManager::getBGTexture(int id)
     }
     // GameManager::loadBackground(bgid);
     CCString *this_00 = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
-    CCLOG(this_00->CCString::getCString());
     return this_00->CCString::getCString();
 }
 

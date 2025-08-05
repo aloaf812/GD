@@ -7,7 +7,15 @@ USING_NS_CC;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate() {
-
+    if false {
+        // do this
+    }
+    else {
+        ccGLInvalidateStateCache();
+        // another robtop function CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
+        CCNotificationCenter::sharedNotificationCenter()->postNofitication("event_come_to_foreground");
+        CCDirector::sharedDirector()->setGLDefaultValues();
+    }
 }
 
 AppDelegate::~AppDelegate() 
@@ -28,11 +36,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setAnimationInterval(1.0 / 60);
     
     // create a scene. it's an autorelease object
-    CCScene *pScene = LoadingLayer::scene();
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-    // CCDirector::setDepthTest(this, false);
+    pDirector->setDepthTest(false);
     // run
+    CCScene *pScene = LoadingLayer::scene();
     pDirector->runWithScene(pScene);
 
     return true;
@@ -40,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
-    CCDirector::sharedDirector()->stopAnimation();
+    CCDirector::sharedDirector()->pause();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();

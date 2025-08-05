@@ -2,7 +2,11 @@
 #define __GeometryDash__LoadingLayer__
 
 #include "cocos2d.h"
+/**
 
+@brief  The scene shown while loading the game
+
+*/
 class LoadingLayer : public cocos2d::CCLayer
 {
 public:

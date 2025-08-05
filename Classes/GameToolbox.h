@@ -11,4 +11,4 @@ public:
     // do the rest later
 };
 
-#endif /* defined(__GeometryDash__GameToolbox__) */
+#endif

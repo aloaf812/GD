@@ -36,15 +36,14 @@ bool LoadingLayer::init() {
     CCSpriteFrameCache *this_02 = CCSpriteFrameCache::sharedSpriteFrameCache();
     this_02->addSpriteFramesWithFile("GJ_LaunchSheet.plist");
 
-    // CCLOG("loaded GJ_LaunchSheet");
-
     GameManager *something = GameManager::sharedState();
     CCSprite* bgSprite = CCSprite::create(something->getBGTexture(1));
     bgSprite->createWithSpriteFrameName("GJ_logo_001.png");
     CCSprite* logoSprite = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     logoSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(logoSprite, 0);
-    // fix this you idiot CCLabelBMFont::create(LoadingLayer::getLoadingString(), "goldFont.fnt");
+
+    // this is a custom function CCDirector::sharedDirector->getScreenScaleFactorMax();
     return true;
 }
 
