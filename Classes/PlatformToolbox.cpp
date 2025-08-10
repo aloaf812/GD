@@ -1,7 +1,5 @@
 #include "PlatformToolbox.h"
 
-// this class is basically useless on iOS apart from the gameDidSave function
-
 void PlatformToolbox::gameDidSave(){
     return;
 }
@@ -18,11 +16,34 @@ bool PlatformToolbox::isLocalPlayerAuthenticated(){
     return false;
 }
 
+bool PlatformToolbox::isSignedIntoGooglePlay(){
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "com/customRobTop/BaseRobTopActivity", "gameServicesIsSignedIn", "()Z")) {
+        return true;
+        }
+    #else
+        return false;
+    #endif
+}
+
+bool PlatformToolbox::isNetworkAvailable(){
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        return false;
+    #else
+        return false;
+    #endif
+}
+
 void PlatformToolbox::activateGameCenter(){
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        // add more functionality here
+        // TODO: add Objective-C code
         return;
     #else
         return;
     #endif
+}
+
+void PlatformToolbox::logEvent(char const* event) {
+    return;
 }

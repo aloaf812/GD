@@ -1,5 +1,8 @@
 #include "GameManager.h"
+#include "SimpleAudioEngine.h"
+
 USING_NS_CC;
+using namespace CocosDenshion;
 
 
 bool GameManager::init(){
@@ -37,14 +40,15 @@ char const* GameManager::getBGTexture(int id)
     return this_00->CCString::getCString();
 }
 
-/*
-void GameManager::fadeInMusic(char *param_1){
-
+void GameManager::fadeInMusic(char const *fileName){
     return;
 }
-*/
 
 GameManager* GameManager::sharedState()
 {
     return NULL;
+}
+
+void GameManager::reportAchievementWithID(char const* ach_ID, int percentage, bool param_3){
+    return;
 }

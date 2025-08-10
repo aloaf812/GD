@@ -6,8 +6,8 @@
 class GameToolbox: public cocos2d::CCLayer {
 public:
     
-    static bool isIOS;
-    // static bool doWeHaveInternet(); not on ios
+    static bool isIOS();
+    static bool doWeHaveInternet();
     // do the rest later
 };
 

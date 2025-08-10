@@ -3,6 +3,9 @@
 
 #include "cocos2d.h"
 
+/**
+@brief Manages platform-specific functionality 
+*/
 class PlatformToolbox {
 public:
     static void gameDidSave();
@@ -10,6 +13,9 @@ public:
     static bool isHD();
     static bool isLocalPlayerAuthenticated();
     static void activateGameCenter();
+    static bool isSignedIntoGooglePlay();
+    static bool isNetworkAvailable();
+    static void logEvent(char const* event);
     // android only // void reportLoadingFinished();
 };
 

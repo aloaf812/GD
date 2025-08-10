@@ -1,6 +1,7 @@
+#include "AdToolbox.h"
 #include "AppDelegate.h"
-#include "LoadingLayer.h"
 #include "GameToolbox.h"
+#include "LoadingLayer.h"
 #include "PlatformToolbox.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
@@ -12,7 +13,7 @@ AppDelegate::AppDelegate() {
     }
     else {
         ccGLInvalidateStateCache();
-        // another robtop function CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
+        // another robtop function: CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
         CCNotificationCenter::sharedNotificationCenter()->postNofitication("event_come_to_foreground");
         CCDirector::sharedDirector()->setGLDefaultValues();
     }
@@ -28,17 +29,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
     pDirector->setOpenGLView(pEGLView);
-	
-    // turn on display FPS
-    pDirector->setDisplayStats(true);
 
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
-    
-    // create a scene. it's an autorelease object
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
+
     pDirector->setDepthTest(false);
+    AdToolbox::setupAds();
+    
     // run
     CCScene *pScene = LoadingLayer::scene();
     pDirector->runWithScene(pScene);
@@ -48,6 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
+    AppDelegate::pauseGame();
+    AppDelegate::trySaveGame();
     CCDirector::sharedDirector()->pause();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
     // if you use SimpleAudioEngine, it must be pause
@@ -75,10 +74,17 @@ void AppDelegate::applicationWillEnterForeground() {
     }
 }
 
-
+void pauseGame(){
+    return;
+}
 
 void trySaveGame(bool p0){
     PlatformToolbox::gameDidSave();
+    return;
+}
+
+AppDelegate* AppDelegate::get(){
+    
     return;
 }
 

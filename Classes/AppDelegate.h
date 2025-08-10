@@ -35,10 +35,11 @@ public:
     // virtual void loadingIsFinished();
     void resumeSound();
     static bool musicTest();
-    // static AppDelegate* get();
+    void pauseGame();
+    virtual void trySaveGame();
+    static AppDelegate* get();
     
     // do not implement this right now: virtual void willSwitchToScene(cocos2d::CCScene* p0);
-    // virtual void trySaveGame();
 };
 
 #endif // _APP_DELEGATE_H_

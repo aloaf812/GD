@@ -1,5 +1,6 @@
 #include "LoadingLayer.h"
 #include "GameManager.h"
+#include "GameSoundManager.h"
 #include "MenuLayer.h"
 #include "LevelTools.h"
 USING_NS_CC;
@@ -10,9 +11,11 @@ CCScene* LoadingLayer::scene()
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
+    // create() should be renamed to node()
     LoadingLayer *layer = LoadingLayer::create();
     
     // add layer as a child to scene
+    // the only line in this function that isn't accurate
     scene->addChild(layer);
     
     // return the scene
@@ -25,10 +28,10 @@ bool LoadingLayer::init() {
         return false;
     }
     
-    // why does it have to be this way
-    
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+    GameSoundManager::GameSoundManager()->setup();
 
     CCTextureCache *this_01 = CCTextureCache::sharedTextureCache();
     this_01->addImage("GJ_LaunchSheet.png");
@@ -39,21 +42,18 @@ bool LoadingLayer::init() {
     GameManager *something = GameManager::sharedState();
     CCSprite* bgSprite = CCSprite::create(something->getBGTexture(1));
     bgSprite->createWithSpriteFrameName("GJ_logo_001.png");
+
+    // renders the geometry dash logo to the middle of the screen
     CCSprite* logoSprite = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     logoSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(logoSprite, 0);
 
-    // this is a custom function CCDirector::sharedDirector->getScreenScaleFactorMax();
+    // this is a custom function: CCDirector::sharedDirector->getScreenScaleFactorMax();
     return true;
 }
 
-/* error: variable or field 'loadAssets' declared void
-void LoadingLayer::loadAssets{
-    return;
-}
-*/
 
-const char* LoadingLayer::getLoadingString(){
+const char* LoadingLayer::getLoadingString() {
     
     int stringNum = (rand() % 10 + 1);
     switch(stringNum) {
@@ -89,6 +89,12 @@ const char* LoadingLayer::getLoadingString(){
     }
 }
 
-void LoadingLayer::loadingFinished(){
-    MenuLayer::scene();
+void LoadingLayer::loadingFinished() {
+    CCScene *pScene = MenuLayer::scene();
+    CCDirector::sharedDirector()->replaceScene(pScene);
+    return;
+}
+
+void LoadingLayer::loadAssets() {
+    return;
 }

@@ -11,9 +11,19 @@ class LoadingLayer : public cocos2d::CCLayer
 {
 public:
     static cocos2d::CCScene* scene();
+    /**
+    @brief Randomly picks a loading message to be shown while the game is loading
+    @returns A randomly picked loading message
+    */
     const char* getLoadingString();
     bool init();
-    // void loadAssets();
+    /**
+    @brief Loads all of the game's assets.
+    */
+    void loadAssets();
+    /**
+    @brief Changes the LoadingLayer scene to the MenuLayer scene.
+    */
     void loadingFinished();
     void updateProgress(int param_1);
     CREATE_FUNC(LoadingLayer);
