@@ -3,6 +3,7 @@
 #include "GameSoundManager.h"
 #include "MenuLayer.h"
 #include "LevelTools.h"
+#include "TextArea.h"
 USING_NS_CC;
 
 CCScene* LoadingLayer::scene()
@@ -48,6 +49,7 @@ bool LoadingLayer::init() {
     logoSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(logoSprite, 0);
 
+    // CCCallFunc::create();
     // this is a custom function: CCDirector::sharedDirector->getScreenScaleFactorMax();
     return true;
 }

@@ -11,20 +11,17 @@ bool GameManager::init(){
     return true;
 }
 
-/* i don't understand this function
-void GameManager::loadBackground(int p0)
+void GameManager::loadBackground(int param_1)
 {
-    int bgID = p0;
-    if (3 < p0) {
+    int bgID = param_1;
+    if (3 < param_1) {
         bgID = 4;
     }
-    if (p0 < 1) {
+    if (param_1 < 1) {
         bgID = 1;
     }
-    CCString *this_00 = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
     return;
 }
-*/
 
 char const* GameManager::getBGTexture(int id)
 {
@@ -35,7 +32,7 @@ char const* GameManager::getBGTexture(int id)
     if (id < 1) {
         bgID = 1;
     }
-    // GameManager::loadBackground(bgid);
+    GameManager::loadBackground(bgID);
     CCString *this_00 = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
     return this_00->CCString::getCString();
 }

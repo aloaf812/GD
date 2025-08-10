@@ -4,11 +4,14 @@
 #include "LoadingLayer.h"
 #include "PlatformToolbox.h"
 #include "SimpleAudioEngine.h"
+#include "GameManager.h"
+#include "GManager.h"
+#include "LocalLevelManager.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate() {
-    if false {
+    if (false) {
         // do this
     }
     else {
@@ -74,12 +77,14 @@ void AppDelegate::applicationWillEnterForeground() {
     }
 }
 
-void pauseGame(){
+void AppDelegate::pauseGame(){
     return;
 }
 
-void trySaveGame(bool p0){
-    PlatformToolbox::gameDidSave();
+void AppDelegate::trySaveGame(){
+    GManager* pManagers = GameManager::sharedState();
+    pManagers()->GManager::save();
+    LocalLevelManager::sharedState()->GManager::save();
     return;
 }
 

@@ -21,7 +21,7 @@ public:
     @param fileName The file of the music which will be faded in.
     */
     void fadeInMusic(char const* fileName);
-    // void loadBackground(int p0);
+    void loadBackground(int param_1);
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

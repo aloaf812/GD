@@ -27,6 +27,12 @@ public:
     void loadingFinished();
     void updateProgress(int param_1);
     CREATE_FUNC(LoadingLayer);
+
+    // class fields
+    int m_loadStep;
+    float m_sliderGrooveXPos;
+    float m_sliderGrooveXHeight;
+    cocos2d::CCSprite* m_sliderBar;
 };
 
 #endif

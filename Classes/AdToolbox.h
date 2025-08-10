@@ -4,11 +4,8 @@
 #include "cocos2d.h"
 
 /**
-
-@brief Used in GD Lite to load ads
-
+@brief Used in GD Lite to load ads.
 */
-
 class AdToolbox {
 public:
     void setupAds();

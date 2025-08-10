@@ -2,24 +2,13 @@
 
 Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. It is not in a usable state and cannot be used to play Geometry Dash.
 
-## Build Instructions
+# Build Instructions
 
-### Prerequisites
-* cocos2d-x 2.2.3 (the github version is missing some files so download it through [this](https://archive.org/download/cocos2dx223/cocos2d-x-2.2.3.zip) link)
-### Android
+You can find the build instructions for both iOS and Android [here](https://github.com/aloaf812/GD/blob/1.7/USAGE.md).
 
-1. Download Android NDK r8e ([Windows](https://dl.google.com/android/ndk/android-ndk-r8e-windows-x86_64.zip) | [Linux](https://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2) | [Darwin (Mac)](https://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2)) and extract it somewhere on your drive.
-2. Go to the proj.android directory and run the `build_native.sh` file. This should generate the `assets`, `jni`, `libs`, and `obj` folders.
-#### iOS
-* Any version of **Mac OS X** compatible with your Xcode version 
-* **[Xcode 4](https://developer.apple.com/services-account/download?path=/Developer_Tools/xcode_4_and_ios_sdk_4.3__final/xcode_4_and_ios_sdk_4.3__final.dmg)** or above ([Xcode 5.1.1](https://developer.apple.com/services-account/download?path=/Developer_Tools/xcode_5.1.1/xcode_5.1.1.dmg) was used to build 1.7)
+# Why decompile 1.7?
 
-### TODO: Finish this README or turn it into a wiki
-
-
-## Why decompile 1.7?
-
-GD 1.7 was the first and only version to use [cocos2d-x 2.2.3](https://github.com/cocos2d/cocos2d-x/releases/tag/cocos2d-x-2.2.3) without any modifications, which removes the need to decompile the engine, making decompilation much more straightforward.
+GD 1.7 was the first and only version to use [cocos2d-x 2.2.3](https://github.com/cocos2d/cocos2d-x/releases/tag/cocos2d-x-2.2.3) mostly without any modifications, which removes the need to decompile the engine, making decompilation much more straightforward.
 
 ## SHA-1 File Hashes
 ### Android
