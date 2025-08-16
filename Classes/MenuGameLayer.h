@@ -5,6 +5,7 @@
 
 class MenuGameLayer: public cocos2d::CCLayer {
 public:
+    virtual bool init();
     cocos2d::ccColor3B getBGColor(int p0);
 };
 

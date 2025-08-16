@@ -1,4 +1,4 @@
-# Geometry Dash Decompilation (1.7 branch)
+# Geometry Dash (1.700) Decompilation
 
 Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. It is not in a usable state and cannot be used to play Geometry Dash.
 

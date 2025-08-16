@@ -6,6 +6,5 @@
 
 class LocalLevelManager : public GManager {
     public:
-        static LocalLevelManager* sharedState();
 };
 #endif

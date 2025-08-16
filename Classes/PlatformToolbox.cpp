@@ -1,10 +1,11 @@
 #include "PlatformToolbox.h"
+USING_NS_CC;
 
 void PlatformToolbox::gameDidSave(){
     return;
 }
 
-uint PlatformToolbox::shouldResumeSound(){
+bool PlatformToolbox::shouldResumeSound(){
     return true;
 }
 
@@ -45,5 +46,5 @@ void PlatformToolbox::activateGameCenter(){
 }
 
 void PlatformToolbox::logEvent(char const* event) {
-    return;
+    CCLOG(event);
 }

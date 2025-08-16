@@ -10,6 +10,6 @@ class AdToolbox {
 public:
     void setupAds();
     void showInterstitial();
-}
+};
 
 #endif

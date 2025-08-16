@@ -5,11 +5,15 @@
 #include "GManager.h"
 #include <stdio.h>
 
+class IconType;
+
 class GameManager: public GManager {
 public:
     static GameManager* sharedState();
+    /**
+    @returns A texture file depending on the value in the id field.
+    */
     char const* getBGTexture(int id);
-    // void fadeInMusic(char const*);
     virtual bool init();
     /**
     @param ach_ID The ID of the achievment of the achievement being reported (e.g. geometry.ach.moreGames)
@@ -21,7 +25,9 @@ public:
     @param fileName The file of the music which will be faded in.
     */
     void fadeInMusic(char const* fileName);
+    // char const* iconKey(int id, IconType type);
     void loadBackground(int param_1);
+    void syncPlatformAchievements();
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

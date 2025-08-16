@@ -11,11 +11,5 @@ bool GameToolbox::isIOS(){
 }
 
 bool GameToolbox::doWeHaveInternet(){
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        #if (! PlatformToolbox::isNetworkAvailable()) {
-            return false;
-        }
-    #else
-        return false;
-    #endif
+    return true;
 }

@@ -11,15 +11,6 @@ USING_NS_CC;
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate() {
-    if (false) {
-        // do this
-    }
-    else {
-        ccGLInvalidateStateCache();
-        // another robtop function: CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
-        CCNotificationCenter::sharedNotificationCenter()->postNofitication("event_come_to_foreground");
-        CCDirector::sharedDirector()->setGLDefaultValues();
-    }
 }
 
 AppDelegate::~AppDelegate() 
@@ -27,17 +18,23 @@ AppDelegate::~AppDelegate()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+    
+    CCSize contentSize(480.0f, 320.0f);
+    
     // initialize director
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
     pDirector->setOpenGLView(pEGLView);
 
+    const CCSize windowSize = pEGLView->getFrameSize();
+    pDirector->setupScreenScale(contentSize, windowSize);
+    
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
 
     pDirector->setDepthTest(false);
-    AdToolbox::setupAds();
+    // AdToolbox::setupAds();
     
     // run
     CCScene *pScene = LoadingLayer::scene();
@@ -82,19 +79,22 @@ void AppDelegate::pauseGame(){
 }
 
 void AppDelegate::trySaveGame(){
-    GManager* pManagers = GameManager::sharedState();
-    pManagers()->GManager::save();
-    LocalLevelManager::sharedState()->GManager::save();
+    // GManager* pManagers = GameManager::sharedState();
+    // pManagers()->GManager::save();
+    // LocalLevelManager::sharedState()->GManager::save();
     return;
 }
 
-AppDelegate* AppDelegate::get(){
-    
-    return;
-}
-
-/* void loadingIsFinished()
+float AppDelegate::bgScale()
 {
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    float scaleFactor = pDirector->getScreenScaleFactorMax();
+    
+    return scaleFactor;
+}
+
+void AppDelegate::loadingIsFinished()
+{
+    // :wilted_rose:
     return;
 }
-*/

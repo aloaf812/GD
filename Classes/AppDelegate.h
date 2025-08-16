@@ -32,12 +32,19 @@ public:
     */
     virtual void applicationWillEnterForeground();
     
-    // virtual void loadingIsFinished();
+    virtual void loadingIsFinished();
     void resumeSound();
     static bool musicTest();
     void pauseGame();
     virtual void trySaveGame();
-    static AppDelegate* get();
+    float bgScale();
+    cocos2d::CCScene* mMenuScene;
+    
+    static AppDelegate* get()
+    {
+        return static_cast<AppDelegate*>(sharedApplication());
+    }
+
     
     // do not implement this right now: virtual void willSwitchToScene(cocos2d::CCScene* p0);
 };

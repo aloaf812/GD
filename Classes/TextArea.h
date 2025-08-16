@@ -3,8 +3,14 @@
 
 #include "cocos2d.h"
 
+#include <stdio.h>
+
 class TextArea : public cocos2d::CCSprite {
-    static TextArea* create(char const* font, float scale, float width, cocos2d::CCPoint anchor, float lineHeight, bool disableColor);
+public:
+    // some of these variable names match those of geode, some don't
+    // i'll see what they do and rename them to their appropriate names
+    bool init(std::string str, const char* font, float separation, float width, cocos2d::CCPoint anchor, float lineSeparation, bool plainText);
+    static TextArea* create(std::string str, const char* font, float separation, float width, cocos2d::CCPoint anchor, float lineSeparation, bool plainText);
 };
 
 #endif /* defined(__GeometryDash__TextArea__) */

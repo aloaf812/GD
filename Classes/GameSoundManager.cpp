@@ -8,7 +8,3 @@ bool GameSoundManager::init() {
 void GameSoundManager::setup() {
     return;
 }
-
-GameSoundManager* GameSoundManager::GameSoundManager() {
-    return;
-}
