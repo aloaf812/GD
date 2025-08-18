@@ -9,6 +9,9 @@ using namespace CocosDenshion;
 
 
 bool GameManager::init(){
+    // just list variables here as their initial state until a proper save system has been implemented
+    m_clickedEditor = false;
+    m_clickedGarage = false;
     // weird function here
     // creates "CCGameManager.dat" file
     return true;
@@ -89,4 +92,14 @@ GameManager* GameManager::sharedState()
 void GameManager::reportAchievementWithID(char const* ach_ID, int percentage, bool param_3)
 {
     // todo: implement achievements
+}
+
+void GameManager::followTwitter()
+{
+    
+}
+
+void GameManager::likeFacebook()
+{
+    
 }

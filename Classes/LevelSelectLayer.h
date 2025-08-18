@@ -2,6 +2,7 @@
 #define _LEVEL_SELECT_LAYER_H_
 
 #include "cocos2d.h"
+#include "BoomScrollLayer.h"
 
 class LevelSelectLayer : public cocos2d::CCLayer
 {

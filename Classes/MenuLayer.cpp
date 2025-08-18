@@ -2,7 +2,11 @@
 
 #include "AppDelegate.h"
 #include "CCMenuItemSpriteExtra.h"
+
+// main button layers
 #include "LevelSelectLayer.h"
+#include "GJGarageLayer.h"
+
 #include "PlatformToolbox.h"
 #include "GameManager.h"
 USING_NS_CC;
@@ -66,7 +70,7 @@ void MenuLayer::onGarage(CCObject* sender)
     // for some reason this is called but never used
     // GameManager* pGameManager = GameManager::sharedState();
     CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene *pScene = LevelSelectLayer::scene(0);
+    CCScene *pScene = GJGarageLayer::scene();
     CCLOG("garage button clicked");
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
@@ -148,11 +152,25 @@ bool MenuLayer::init() {
     mainMenu->addChild(garageExtra);
     garageExtra->setPosition(playExtra->getPosition() + CCPoint(-110.0f, 0.0f));
     
+    if (!pGameManager->m_clickedGarage)
+    {
+        CCSprite* chrSel = CCSprite::createWithSpriteFrameName("GJ_chrSel_001.png");
+        this->addChild(chrSel);
+        chrSel->setPosition(mainMenu->convertToWorldSpace(garageExtra->getPosition()) + CCPoint(-50.0f, -50.0f));
+    }
+    
     // creates the creator button
     CCSprite* creatorButton = CCSprite::createWithSpriteFrameName("GJ_creatorBtn_001.png");
     CCMenuItemSpriteExtra* creatorExtra = CCMenuItemSpriteExtra::create(creatorButton, NULL, this, menu_selector(MenuLayer::onCreator));
     mainMenu->addChild(creatorExtra);
     creatorExtra->setPosition(playExtra->getPosition() + CCPoint(110.0f, 0.0f));
+    
+    if (!pGameManager->m_clickedEditor)
+    {
+        CCSprite* lvlEdit = CCSprite::createWithSpriteFrameName("GJ_lvlEdit_001.png");
+        this->addChild(lvlEdit);
+        lvlEdit->setPosition(mainMenu->convertToWorldSpace(creatorExtra->getPosition()) + CCPoint(50.0f, -50.0f));
+    }
     
     CCMenu* bottomMenu = CCMenu::create();
     this->addChild(bottomMenu);
@@ -160,8 +178,8 @@ bool MenuLayer::init() {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         CCSprite* gplusButton = CCSprite::createWithSpriteFrameName("GJ_gpBtn_001.png");
         gplusButton->setScale(1.0f);
-        // CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(gplusButton, NULL, this, menu_selector(MenuLayer::onAchievements));
-        // bottomMenu->addChild(achievementsExtra);
+        CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(gplusButton, NULL, this, menu_selector(MenuLayer::onAchievements));
+        bottomMenu->addChild(gplusExtra);
     #endif
     
     CCSprite* achievementsButton = CCSprite::createWithSpriteFrameName("GJ_achBtn_001.png");

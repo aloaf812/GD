@@ -138,6 +138,7 @@ bool LoadingLayer::init() {
     return true;
 }
 
+// todo: hd textures
 void LoadingLayer::loadAssets() {
     AppDelegate* pApp = AppDelegate::get();
     CCDirector* pDirector = CCDirector::sharedDirector();

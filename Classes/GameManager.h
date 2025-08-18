@@ -28,6 +28,10 @@ public:
     // char const* iconKey(int id, IconType type);
     void loadBackground(int param_1);
     void syncPlatformAchievements();
+    void followTwitter();
+    void likeFacebook();
+    bool m_clickedGarage;
+    bool m_clickedEditor;
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

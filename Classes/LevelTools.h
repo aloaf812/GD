@@ -1,5 +1,5 @@
-#ifndef __GeometryDash__LevelTools__
-#define __GeometryDash__LevelTools__
+#ifndef _LEVEL_TOOLS_H_
+#define _LEVEL_TOOLS_H_
 
 #include "cocos2d.h"
 #include <stdio.h>

@@ -87,6 +87,7 @@ xcschememanagement.plist
 build/
 .DS_Store
 ._.*
+._*
 xcuserdata/
 DerivedData/
 *.xccheckout
