@@ -18,14 +18,14 @@ bool PlatformToolbox::isLocalPlayerAuthenticated(){
 }
 
 bool PlatformToolbox::isSignedIntoGooglePlay(){
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniMethodInfo methodInfo;
+    /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     JniMethodInfo methodInfo;
     if (! JniHelper::getStaticMethodInfo(methodInfo, "com/customRobTop/BaseRobTopActivity", "gameServicesIsSignedIn", "()Z")) {
         return true;
         }
-    #else
-        return false;
-    #endif
+    #else*/
+    return false;
+    // #endif
 }
 
 bool PlatformToolbox::isNetworkAvailable(){
