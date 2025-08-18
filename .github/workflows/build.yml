@@ -19,7 +19,7 @@ jobs:
     - name: Checkout GD
       uses: actions/checkout@v4
       with:
-        path: cocos2d-x/projects/GD/
+        path: projects/GD/
 
 
     - name: Setup Android NDK
@@ -28,24 +28,30 @@ jobs:
         wget https://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2
         tar -xjf android-ndk-r8e-linux-x86_64.tar.bz2
         ls
-        cd android-ndk-r8e-linux-x86_64
-        cd android-ndk-r8e
         
 
     - name: Run Build Script
       run: |
-        cd proj.android
+        cd =/home/runner/work/GD/GD/projects/GD/proj.android
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
-        NDK_ROOT: NDK_ROOT=/home/runner/work/GD/GD//android-ndk-r8e-linux-x86_64/android-ndk-r8e        
+        NDK_ROOT: NDK_ROOT=/home/runner/work/GD/GD/android-ndk-r8e        
 
+    - name: Rename Artifacts
+      run: |
+        cd /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi
+        mv libcocos2dcpp.so libcocos2dcpp-arm.so
+        cd /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi-v7a
+        mv libcocos2dcpp.so libcocos2dcpp-v7a.so
+        cd /home/runner/work/GD/GD/projects/GD/proj.android/libs/x86
+        mv libcocos2dcpp.so libcocos2dcpp-x86.so
       
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: binaries
         path: |
-          libs/armeabi/libcocos2dcpp.so
-          libs/armeabi-v7a/libcocos2dcpp.so
-          libs/x86/libcocos2dcpp.so
+          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi/libcocos2dcpp-arm.so
+          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi-v7a/libcocos2dcpp-v7a.so
+          /home/runner/work/GD/GD/projects/GD/proj.android/libs/x86/libcocos2dcpp-x86.so
