@@ -3,7 +3,7 @@ name: Build Android Binaries
 on:
   push:
     branches:
-      - main
+      - 1.7
 
 jobs:
   build:
