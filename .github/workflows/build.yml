@@ -32,7 +32,7 @@ jobs:
 
     - name: Run Build Script
       run: |
-        cd =/home/runner/work/GD/GD/projects/GD/proj.android
+        cd /home/runner/work/GD/GD/projects/GD/proj.android
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
