@@ -23,9 +23,12 @@ jobs:
 
 
     - name: Setup Android NDK
-      uses: aloaf812/setup-ndk@v1
-      with:
-        ndk-version: r8e
+      run: |
+        wget https://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2
+        tar -xjf android-ndk-r9d-linux-x86_64.tar.bz2
+        cd android-ndk-r8e-linux-x86_64
+        cd android-ndk-r8e
+        pwd
 
     - name: Run Build Script
       run: |
@@ -33,7 +36,7 @@ jobs:
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
-        NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
+        NDK_ROOT: /android-ndk-r8e-linux-x86_64/android-ndk-r8e
         
       
     - name: Upload Artifacts
