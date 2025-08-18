@@ -36,7 +36,7 @@ jobs:
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
-        NDK_ROOT: NDK_ROOT=/home/runner/work/GD/GD/android-ndk-r8e        
+        NDK_ROOT: /home/runner/work/GD/GD/android-ndk-r8e        
 
     - name: Rename Artifacts
       run: |
