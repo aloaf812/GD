@@ -1,0 +1,47 @@
+name: Build Android Binaries
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout cocos2d-x
+      uses: actions/checkout@v4
+      with:
+        repository: aloaf812/cocos2d-x
+
+
+    - name: Checkout GD
+      uses: actions/checkout@v4
+      with:
+        path: cocos2d-x/projects/GD/
+
+
+    - name: Setup Android NDK
+      uses: nttld/setup-ndk@v1
+      with:
+        ndk-version: r8e
+        id: setup-ndk
+
+    - name: Run Build Script
+      run: |
+        cd proj.android
+        chmod +x ./build_native.sh
+        ./build_native.sh
+      env:
+        NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
+        
+      
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: binaries
+        path: |
+          libs/armeabi/libcocos2dcpp.so
+          libs/armeabi-v7a/libcocos2dcpp.so
+          libs/x86/libcocos2dcpp.so
