@@ -24,11 +24,11 @@ jobs:
 
     - name: Setup Android NDK
       run: |
-        wget https://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2
-        tar -xjf android-ndk-r9d-linux-x86_64.tar.bz2
+        pwd
+        wget https://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2
+        tar -xjf android-ndk-r8e-linux-x86_64.tar.bz2
         cd android-ndk-r8e-linux-x86_64
         cd android-ndk-r8e
-        pwd
 
     - name: Run Build Script
       run: |
