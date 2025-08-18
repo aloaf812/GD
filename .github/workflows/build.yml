@@ -23,10 +23,9 @@ jobs:
 
 
     - name: Setup Android NDK
-      uses: nttld/setup-ndk@v1
+      uses: aloaf812/setup-ndk@v1
       with:
         ndk-version: r8e
-        id: setup-ndk
 
     - name: Run Build Script
       run: |
