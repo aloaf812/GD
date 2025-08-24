@@ -30,13 +30,14 @@ bool PlatformToolbox::isLocalPlayerAuthenticated(){
 
 bool PlatformToolbox::isSignedInGooglePlay(){
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniMethodInfo methodInfo;
+    /* JniMethodInfo methodInfo;
     if (! JniHelper::getStaticMethodInfo(methodInfo,
                                          "com/customRobTop/BaseRobTopActivity",
                                          "gameServicesIsSignedIn",
                                          "()Z")) {
+        */
         return true;
-        }
+    // }
     #else
         return false;
     #endif
