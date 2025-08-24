@@ -7,12 +7,12 @@ class SimplePlayer : public cocos2d::CCSprite {
 
 };
 
-enum class IconType {
+/*enum class IconType {
         Cube = 0,
         Ship = 1,
         Ball = 2,
         UFO = 3,
         Special = 99
-}
+} todo: correctly implement this later*/
 
 #endif
