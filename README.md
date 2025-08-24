@@ -1,6 +1,6 @@
 # Geometry Dash (1.700) Decompilation
 
-Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. It is not in a usable state and cannot be used to play Geometry Dash.
+Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. Much of the core functionality is not implemented and as it is not in a usable state.
 
 # Build Instructions
 
@@ -8,7 +8,9 @@ You can find the build instructions for both iOS and Android [here](https://gith
 
 # Why decompile 1.7?
 
-GD 1.7 was the first and only version to use [cocos2d-x 2.2.3](https://github.com/cocos2d/cocos2d-x/releases/tag/cocos2d-x-2.2.3) mostly without any modifications, which removes the need to decompile the engine, making decompilation much more straightforward.
+- It uses cocos2d-x 2.2.3 (the older version GD used has broken screen orientations)
+- It does not have slopes
+- SimpleAudioEngine is used as the audio engine (instead of FMOD which is used in current versions)
 
 ## SHA-1 File Hashes
 ### Android

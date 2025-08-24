@@ -1,3 +1,4 @@
+// Partially decompiled by ProjectReversio: https://github.com/ProjectReversio/GeometryDash/blob/master/GeometryDash/Classes/MenuLayer.cpp
 #include "MenuLayer.h"
 
 #include "AppDelegate.h"
@@ -6,9 +7,11 @@
 // main button layers
 #include "LevelSelectLayer.h"
 #include "GJGarageLayer.h"
+#include "CreatorLayer.h"
 
 #include "PlatformToolbox.h"
 #include "GameManager.h"
+#include "GameToolbox.h"
 USING_NS_CC;
 
 CCScene* MenuLayer::scene(){
@@ -48,6 +51,7 @@ MenuLayer* MenuLayer::node()
 
 void MenuLayer::onMoreGames(CCObject* sender)
 {
+    PlatformToolbox::isHD();
     GameManager* pGameManager = GameManager::sharedState();
     PlatformToolbox::logEvent("MoreGames");
     pGameManager->reportAchievementWithID("geometry.ach.moreGames", 100, false);
@@ -59,7 +63,6 @@ void MenuLayer::onPlay(CCObject* sender) {
     // GameManager* pGameManager = GameManager::sharedState();
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = LevelSelectLayer::scene(0);
-    CCLOG("play button clicked");
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
     return;
@@ -71,7 +74,6 @@ void MenuLayer::onGarage(CCObject* sender)
     // GameManager* pGameManager = GameManager::sharedState();
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = GJGarageLayer::scene();
-    CCLOG("garage button clicked");
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
     return;
@@ -83,8 +85,7 @@ void MenuLayer::onCreator(CCObject* sender)
     // for some reason this is called but never used
     // GameManager* pGameManager = GameManager::sharedState();
     CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene *pScene = LevelSelectLayer::scene(0);
-    // CCLOG("creator button clicked");
+    CCScene *pScene = CreatorLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
     return;
@@ -114,12 +115,48 @@ void MenuLayer::onRobTop(CCObject* sender)
 
 void MenuLayer::onFacebook(CCObject* sender)
 {
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->likeFacebook();
     
 }
 
 void MenuLayer::onTwitter(CCObject* sender)
 {
-    
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->followTwitter();
+}
+
+void MenuLayer::onTrailer(CCObject* sender)
+{
+    PlatformToolbox::logEvent("gjl_trailer");
+    if (!GameToolbox::doWeHaveInternet()) {
+        CCApplication* pApplication = CCApplication::sharedApplication();
+        pApplication->openURL("https://www.youtube.com/watch?v=k90y6PIzIaE");
+    }
+}
+
+void MenuLayer::onGooglePlayGames(CCObject* sender)
+{
+    if (!PlatformToolbox::isSignedInGooglePlay())
+    {
+        GameManager* pGameManager = GameManager::sharedState();
+        pGameManager->syncPlatformAchievements();
+        PlatformToolbox::showAchievements();
+    }
+    PlatformToolbox::signInGooglePlay();
+}
+
+void MenuLayer::onGameCenter(CCObject *param_1)
+{
+    /*
+     GameManager* pGameManager = GameManager::sharedState();
+     // bro what is this :sob: int iVar2 = (**(code **)(*pGameManager + 0x1e4))();
+     if (iVar2 == 0) {
+     showGCQuestion();
+     }*/
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->syncPlatformAchievements();
+    PlatformToolbox::showAchievements();
 }
 
 bool MenuLayer::init() {
@@ -175,11 +212,17 @@ bool MenuLayer::init() {
     CCMenu* bottomMenu = CCMenu::create();
     this->addChild(bottomMenu);
     
+    // todo: add functionality to all of these buttons
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         CCSprite* gplusButton = CCSprite::createWithSpriteFrameName("GJ_gpBtn_001.png");
         gplusButton->setScale(1.0f);
         CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(gplusButton, NULL, this, menu_selector(MenuLayer::onAchievements));
         bottomMenu->addChild(gplusExtra);
+    #else
+        CCSprite* gcButton = CCSprite::createWithSpriteFrameName("GJ_gkBtn_001.png");
+        gcButton->setScale(1.0f);
+        CCMenuItemSpriteExtra* gcExtra = CCMenuItemSpriteExtra::create(gcButton, NULL, this, menu_selector(MenuLayer::onGameCenter));
+        bottomMenu->addChild(gcExtra);
     #endif
     
     CCSprite* achievementsButton = CCSprite::createWithSpriteFrameName("GJ_achBtn_001.png");

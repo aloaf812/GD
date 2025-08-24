@@ -1,3 +1,4 @@
+// Mostly decompiled by ProjectReversio: https://github.com/ProjectReversio/GeometryDash/blob/master/GeometryDash/Classes/LevelSelectLayer.cpp
 #include "LevelSelectLayer.h"
 
 #include "AppDelegate.h"
@@ -55,7 +56,6 @@ bool LevelSelectLayer::init(int page)
     CCSize winSize = pDirector->getWinSize();
     
     m_backgroundSprite = CCSprite::create("GJ_gradientBG.png");
-    CCLOG("hi");
     m_backgroundSprite->setAnchorPoint(CCPoint(0.0f, 0.0f));
     this->addChild(m_backgroundSprite, -2);
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
@@ -125,7 +125,7 @@ bool LevelSelectLayer::init(int page)
 
 void LevelSelectLayer::onDownload(CCObject* sender)
 {
-    CCLOG("clicked the download thing");
+    
 }
 
 void LevelSelectLayer::onBack(CCObject* sender)
@@ -138,5 +138,5 @@ void LevelSelectLayer::onBack(CCObject* sender)
 
 void LevelSelectLayer::onInfo(CCObject* sender)
 {
-    CCLOG("INFO");
+
 }

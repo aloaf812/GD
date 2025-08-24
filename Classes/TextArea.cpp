@@ -1,3 +1,4 @@
+// Decompiled by ProjectReversio: https://github.com/ProjectReversio/GeometryDash/blob/master/GeometryDash/Classes/TextArea.cpp
 #include "TextArea.h"
 USING_NS_CC;
 

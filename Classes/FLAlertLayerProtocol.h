@@ -4,7 +4,10 @@
 #include "cocos2d.h"
 // HOW DO I FIX THIS  #include "FLAlertLayer.h"
 
+class FLAlertLayer;
+
 class FLAlertLayerProtocol {
-    // virtual void FLAlert_Clicked(FLAlertLayer* param_1, bool param_2);
+public:
+    virtual void FLAlert_Clicked(FLAlertLayer* param_1, bool param_2);
 };
 #endif

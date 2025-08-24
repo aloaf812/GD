@@ -11,6 +11,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
                    ../../Classes/CCMenuItemSpriteExtra.cpp \
+                   ../../Classes/CreatorLayer.cpp \
+                   ../../Classes/EndLevelLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \
                    ../../Classes/FLAlertLayerProtocol.cpp \
                    ../../Classes/GameManager.cpp \
@@ -18,6 +20,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameToolbox.cpp \
                    ../../Classes/GJDropDownLayer.cpp \
                    ../../Classes/GJGarageLayer.cpp \
+                   ../../Classes/GJListLayer.cpp \
                    ../../Classes/GManager.cpp \
                    ../../Classes/LevelSelectLayer.cpp \
                    ../../Classes/LevelTools.cpp \
@@ -25,7 +28,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/LocalLevelManager.cpp \
                    ../../Classes/MenuGameLayer.cpp \
                    ../../Classes/MenuLayer.cpp \
+                   ../../Classes/OptionsLayer.cpp \
                    ../../Classes/PlatformToolbox.cpp \
+                   ../../Classes/SimplePlayer.cpp \
+                   ../../Classes/SongInfoLayer.cpp \
                    ../../Classes/TextArea.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes

@@ -19,6 +19,9 @@ public:
     void onRobTop(CCObject* sender);
     void onFacebook(CCObject* sender);
     void onTwitter(CCObject* sender);
+    void onTrailer(CCObject* sender);
+    void onGooglePlayGames(CCObject* sender);
+    void onGameCenter(CCObject* sender);
     /**
      @brief Runs when the "More Games" button is pressed in the main menu
      */

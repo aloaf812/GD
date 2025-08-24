@@ -1,3 +1,4 @@
+// Decompiled by ProjectReversio: https://github.com/ProjectReversio/GeometryDash/blob/master/GeometryDash/Classes/LoadingLayer.cpp
 #include "LoadingLayer.h"
 #include "AppDelegate.h"
 #include "GameManager.h"
@@ -151,21 +152,18 @@ void LoadingLayer::loadAssets() {
         case 0:
         default:
         {
-            // CCLOG("step 1");
             pTextureCache->addImage("GJ_GameSheet.png");
             pSpriteFrameCache->addSpriteFramesWithFile("GJ_GameSheet.plist");
             break;
         }
         case 1:
         {
-            // CCLOG("step 2");
             pTextureCache->addImage("GJ_GameSheet02.png");
             pSpriteFrameCache->addSpriteFramesWithFile("GJ_GameSheet02.plist");
             break;
         }
         case 2:
         {
-            // CCLOG("step 3");
             pTextureCache->addImage("CCControlColourPickerSpriteSheet.png");
             pSpriteFrameCache->addSpriteFramesWithFile("CCControlColourPickerSpriteSheet.plist");
             
@@ -179,7 +177,6 @@ void LoadingLayer::loadAssets() {
         }
         case 3:
         {
-            // CCLOG("step 4");
             pTextureCache->addImage("goldFont.png");
             pTextureCache->addImage("bigFont.png");
             
@@ -192,7 +189,6 @@ void LoadingLayer::loadAssets() {
         {
             // i'm pretty sure this one is matching
             
-            // CCLOG("loading finished");
             pApp->loadingIsFinished();
             pGameManager->fadeInMusic("menuLoop.mp3");
             pGameManager->syncPlatformAchievements();
@@ -228,35 +224,16 @@ const char* LoadingLayer::getLoadingString() {
     
     int stringNum = (rand() % 10 + 1);
     switch(stringNum) {
-    case 1:
-        return "Listen to the music to help time your jumps";
-        break;
-    case 2:
-        return "Back for more are ya?";
-        break;
-    case 3:
-        return "Use practice mode to learn the layout of a level";
-        break;
-    case 4:
-        return "Build your own levels using the level editor";
-        break;
-    case 5:
-        return "Go online to play other players levels!";
-        break;
-    case 6:
-        return "If at first you don't succeed, try, try again...";
-        break;
-    case 7:
-        return "Can you beat them all?";
-        break;
-    case 8:
-        return "Customize your character's icon and color!";
-        break;
-    case 9:
-        return "You can download all songs from the level select page!";
-        break;
-    default:
-        return "Unlock new icons and colors by completing achievements!";    
+    case 1: return "Listen to the music to help time your jumps"; break;
+    case 2: return "Back for more are ya?"; break;
+    case 3: return "Use practice mode to learn the layout of a level"; break;
+    case 4: return "Build your own levels using the level editor"; break;
+    case 5: return "Go online to play other players levels!"; break;
+    case 6: return "If at first you don't succeed, try, try again..."; break;
+    case 7: return "Can you beat them all?"; break;
+    case 8: return "Customize your character's icon and color!"; break;
+    case 9: return "You can download all songs from the level select page!"; break;
+    default: return "Unlock new icons and colors by completing achievements!";    
     }
 }
 

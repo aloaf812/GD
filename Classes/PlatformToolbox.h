@@ -13,10 +13,15 @@ public:
     static bool isHD();
     static bool isLocalPlayerAuthenticated();
     static void activateGameCenter();
-    static bool isSignedIntoGooglePlay();
     static bool isNetworkAvailable();
     static void logEvent(char const* event);
-    // android only // void reportLoadingFinished();
+    // google play
+    static bool isSignedInGooglePlay();
+    static void signInGooglePlay();
+    // achievements
+    static void showAchievements();
+    static void openAppPage();
+    // android only? // void reportLoadingFinished();
 };
 
 #endif /* defined(__GeometryDash__PlatformToolbox__) */

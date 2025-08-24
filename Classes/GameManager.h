@@ -5,7 +5,15 @@
 #include "GManager.h"
 #include <stdio.h>
 
-class IconType;
+// thanks geode
+enum class UnlockType {
+    Cube = 0x1,
+    Col1 = 0x2,
+    Col2 = 0x3,
+    Ship = 0x4,
+    Ball = 0x5,
+    Bird = 0x6,
+};
 
 class GameManager: public GManager {
 public:
@@ -32,6 +40,11 @@ public:
     void likeFacebook();
     bool m_clickedGarage;
     bool m_clickedEditor;
+    bool m_clickedName;
+    void firstLoad();
+    void rateGame();
+    int colorForPos(int color);
+    std::string colorKey(int param_1, UnlockType param_2);
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */
