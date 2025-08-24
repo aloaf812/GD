@@ -5,4 +5,6 @@
 
 class EndLevelLayer : public GJDropDownLayer {
     char const* getEndText();
-}
+};
+
+#endif
