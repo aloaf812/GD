@@ -14,11 +14,11 @@ class CCMenuItemSpriteExtra : public cocos2d::CCMenuItemSprite
 {
 public:
     CCMenuItemSpriteExtra();
-    ~CCMenuItemSpriteExtra() override;
+    ~CCMenuItemSpriteExtra();
 
-    void selected() override;
-    void activate() override;
-    void unselected() override;
+    void selected();
+    void activate();
+    void unselected();
     void useAnimationType(MenuAnimationType type);
     void setSizeMult(float size);
 
