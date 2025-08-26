@@ -60,7 +60,7 @@ bool CreatorLayer::init()
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSize winSize = pDirector->getWinSize();
     
-    cocos2d::CCSprite* m_backgroundSprite;
+    CCSprite* m_backgroundSprite;
     
     m_backgroundSprite = CCSprite::create("GJ_gradientBG.png");
     m_backgroundSprite->setAnchorPoint(CCPoint(0.0f, 0.0f));

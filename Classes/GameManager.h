@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GManager.h"
+#include "SimplePlayer.h"
 #include <stdio.h>
 
 // thanks geode
@@ -17,6 +18,8 @@ enum class UnlockType {
 
 class GameManager: public GManager {
 public:
+    GameManager();
+    ~GameManager();
     static GameManager* sharedState();
     /**
     @returns A texture file depending on the value in the id field.
@@ -45,6 +48,49 @@ public:
     void rateGame();
     int colorForPos(int color);
     std::string colorKey(int param_1, UnlockType param_2);
+    virtual void dataLoaded(DS_Dictionary* param_1);
+protected:
+    // dictionaries
+    cocos2d::CCDictionary* m_valueKeeper;
+    bool m_gameCenterEnabled;
+    bool m_firstSetup;
+    bool m_showedFirstTutorial;
+    bool m_musicEnabled;
+    bool m_fxEnabled;
+    bool m_musicEnabled;
+    bool m_autoCheckpoints;
+    bool m_showSongMarkers;
+    bool m_showBPMMarkers;
+    bool m_autoRetry;
+    bool m_showProgressBar;
+    bool m_commentSortRecent;
+    bool m_performanceMode;
+    bool m_enableTutorial;
+    bool m_didSyncAchievements;
+    int m_loadedBgID;
+    // icons
+    int m_playerColor;
+    int m_playerColor2;
+    int m_playerFrame;
+    int m_playerShip;
+    int m_playerBall;
+    int m_playerBird;
+    int m_playerStreak;
+    IconType m_playerIconType;
+    // unknown values
+    bool offset_0x5;
+    bool offset_0xf;
+    // social media
+    bool m_clickedFacebook;
+    bool m_clickedTwitter;
+    // i can't figure this out: bool offset_0x6;
+    bool m_showedRateDiffDialog;
+    bool m_showedRateStarDialog;
+    bool m_showedLowDetailDialog;
+    bool m_recordGameplay;
+    bool m_playerScoreValid;
+    std::string m_playerName;
+    std::string m_playerUDID;
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

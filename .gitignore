@@ -10,7 +10,6 @@ proj.marmalade/**
 proj.tizen/**
 proj.win32/**
 proj.winrt/**
-proj.wp8/**
 proj.wp8-xaml/**
 
 # Ignore thumbnails created by windows

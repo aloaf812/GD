@@ -5,19 +5,108 @@
 #include "GameToolbox.h"
 #include "PlatformToolbox.h"
 #include <stdio.h>
+// 186 FUNCTIONS WHAT THE friendly BRO
 
+// 65 variables aren't that insane for a class that manages save files
 USING_NS_CC;
 using namespace CocosDenshion;
 
+GameManager::GameManager()
+{
+    this->offset_0x5 = false;                        
+    this->m_didSyncAchievements = false;
+    this->m_playerScoreValid = false;
+    this->m_musicEnabled = false;
+    this->m_fxEnabled = false;
+    this->m_hasRatedGame = false;
+    this->m_clickedFacebook = false;
+    this->m_clickedTwitter = false;
+    this->m_playerFrame = 0;
+    this->m_playerShip = 0;
+    this->m_playerBall = 0;
+    this->m_playerBird = 0;
+    this->m_playerColor = 0;
+    this->m_playerColor2 = 0;
+    this->m_playerStreak = 0;
+    this->m_playerIconType = 0;
+    this->m_autoCheckpoints = false;
+    this->m_showSongMarkers = false;
+    this->m_showBPMMarkers = false;
+    this->m_recordGameplay = false;
+    this->m_autoRetry = false;
+    this->m_showProgressBar = false;
+    this->m_performanceMode = false;
+    this->m_commentSortRecent = false;
+    this->m_showedPirate = false;
+    this->m_clickedGarage = false;
+    this->m_clickedEditor = false;
+    this->m_clickedName = false;
+    this->m_clickedPractice = false;
+    this->m_showedEditorGuide = false;
+    this->m_showedRateDiffDialog = false;
+    this->m_showedRateStarDialog = false;
+    this->m_showedLowDetailDialog = false;
+    this->m_gameRateDelegate = 0;
+    this->m_lastLevelID = 0;
+    this->m_loadedBgID = 0;
+    this->m_loadedGroundID = 0;
+    this->m_totalAttempts = 0;
+    this->m_enableTutorial = false;
+}
 
-bool GameManager::init(){
-    // just list variables here as their initial state until a proper save system has been implemented
-    m_clickedEditor = false;
-    m_clickedGarage = false;
-    m_clickedName = false;
-    // weird function here
-    // creates "CCGameManager.dat" file
-    return true;
+bool GameManager::init()
+{
+    // FUN_003b19f8(&this->data,"CCGameManager.dat");
+    this->offset_0x5 = false;
+    this->m_didSyncAchievements = false;
+    this->offset_0xf = false;
+    // this->data).offset_0x13 = 0;
+    // FUN_003b19f8(&(this->data).offset_0x17,&DAT_00403859);
+    // (this->data).offset_0x6 = 0;
+  return true;
+}
+
+void GameManager::dataLoaded(DS_Dictionary* param_1)
+{   // robtop why
+
+    // dicionaries
+    this->m_valueKeeper = 
+
+    // bools
+    this->m_gameCenterEnabled = DS_Dictionary::getBoolForKey("gameCenterEnabled");
+    this->m_firstSetup = DS_Dictionary::getBoolForKey("firstSetup");
+    this->m_showedFirstTutorial = DS_Dictionary::getBoolForKey("showedFirstTutorial");
+    this->m_musicEnabled = DS_Dictionary::getBoolForKey("musicEnabled");
+    // broken? m_fxEnabled = DS_Dictionary::getBoolForKey("fxEnabled");
+
+    // intergers
+    this->m_playerUserID = DS_Dictionary::getIntegerForKey("playerUserID");
+    this->m_playerFrame = DS_Dictionary::getIntegerForKey("playerFrame");
+    this->m_playerColor = DS_Dictionary::getIntegerForKey("playerColor");
+    this->m_playerColor2 = DS_Dictionary::getIntegerForKey("playerColor2");
+
+    // iVar9 = DS_Dictionary::getIntegerForKey("playerShip");
+
+    // more bools
+    this->m_autoCheckpoints = DS_Dictionary::getBoolForKey("autoCheckpoints");
+    this->m_showSongMarkers = DS_Dictionary::getBoolForKey("showSongMarkers");
+    this->m_showBPMMarkers = DS_Dictionary::getBoolForKey("showBPMMarkers");
+    this->m_recordGameplay = DS_Dictionary::getBoolForKey("recordGameplay");
+    this->m_autoRetry = DS_Dictionary::getBoolForKey("autoRetryLevel");
+    this->m_showProgressBar = DS_Dictionary::getBoolForKey("showProgressBar");
+    this->m_commentSortRecent = DS_Dictionary::getBoolForKey("commentSortRecent");
+    this->m_performanceMode = DS_Dictionary::getBoolForKey("performanceMode");
+    this->m_clickedEditor = DS_Dictionary::getBoolForKey("clickedEditor");
+    this->m_clickedGarage = DS_Dictionary::getBoolForKey("clickedGarage");
+    this->m_clickedName = DS_Dictionary::getBoolForKey("clickedName");
+    this->m_clickedPractice = DS_Dictionary::getBoolForKey("clickedPractice");
+    this->m_showedEditorGuide = DS_Dictionary::getBoolForKey("showedEditorGuide");
+    this->m_playerScoreValid = DS_Dictionary::getBoolForKey("playerScoreValid");
+    this->m_enableTutorial = DS_Dictionary::getBoolForKey("kEnableTutorial");
+    this->m_showedRateDiffDialog = DS_Dictionary::getBoolForKey("showedRateDiffDialog");
+    this->m_showedRateStarDialog = DS_Dictionary::getBoolForKey("showedRateStarDialog");
+    this->m_showedLowDetailDialog = DS_Dictionary::getBoolForKey("showedLowDetailDialog");
+
 }
 
 void GameManager::loadBackground(int param_1)
@@ -29,7 +118,7 @@ void GameManager::loadBackground(int param_1)
     if (param_1 < 1) {
         bgID = 1;
     }
-    return;
+    if (bgID != m_loadedBgID)
 }
 
 char const* GameManager::getBGTexture(int id)
@@ -42,7 +131,7 @@ char const* GameManager::getBGTexture(int id)
         bgID = 1;
     }
 	this->loadBackground(bgID);
-	return cocos2d::CCString::createWithFormat("game_bg_%02d_001.png", bgID)->getCString();
+	return CCString::createWithFormat("game_bg_%02d_001.png", bgID)->getCString();
 }
 
 /* char const* GameManager::iconKey(int id, IconType type){
@@ -102,7 +191,7 @@ void GameManager::likeFacebook()
     if (GameToolbox::doWeHaveInternet()) {
         CCApplication* pApplication = CCApplication::sharedApplication();
         pApplication->openURL("https://www.facebook.com/geometrydash");
-        // changes some value in save file: (this->data).offset_0x4b = 1;
+        this->m_clickedFacebook = true;
     }
 }
 
@@ -111,7 +200,7 @@ void GameManager::followTwitter()
     if (GameToolbox::doWeHaveInternet()) {
         CCApplication* pApplication = CCApplication::sharedApplication();
         pApplication->openURL("https://twitter.com/robtopgames");
-        // changes some value in save file: (this->data).offset_0x4c = 1;
+        this->m_clickedTwitter = true;
     }
 }
 
@@ -161,51 +250,49 @@ void GameManager::firstLoad()
      float extraout_s0;
      float extraout_s0_00;
      undefined1 auStack_14 [4];
-     
+    
      pCVar1 = (CCObject *)cocos2d::CCDictionary::create();
      (this->data).offset_0x7 = pCVar1;
-     cocos2d::CCObject::retain(pCVar1);
-     pCVar1 = (CCObject *)cocos2d::CCDictionary::create();
-     (this->data).offset_0xb = pCVar1;
-     cocos2d::CCObject::retain(pCVar1);
-     PlatformToolbox::getUniqueUserID();
+     cocos2d::CCObject::retain(pCVar1);*/
+    this->m_valueKeeper = CCDictionary::create()->retain;
+    /* PlatformToolbox::getUniqueUserID();
      FUN_003b28d4(&(this->data).offset_0x3b,auStack_14);
      FUN_003b16dc(auStack_14);
-     pGVar2 = (GameSoundManager *)FUN_003b19f8(&(this->data).offset_0x3f,"Player");
-     (this->data).offset_0x43 = 0;
-     (this->data).offset_0x6f = 3;
-     (this->data).offset_0x37 = 0;
-     (this->data).offset_0x38 = 1;
-     (this->data).offset_0x39 = 0;
-     (this->data).offset_0x6b = 0;
-     (this->data).offset_0x5b = 1;
-     (this->data).offset_0x5f = 1;
-     (this->data).offset_0x63 = 1;
-     (this->data).offset_0x67 = 1;
-     (this->data).offset_0x73 = 1;
-     (this->data).offset_0x77 = 0;
-     (this->data).offset_0x48 = 1;
-     (this->data).offset_0x49 = 1;
-     pGVar2 = GameSoundManager::GameSoundManager(pGVar2);
+     pGVar2 = (GameSoundManager *)FUN_003b19f8(&(this->data).offset_0x3f,"Player");*/
+    this->m_playerUserID = 0;
+    this->m_playerColor2 = 3;
+    this->m_gameCenterEnabled = false;
+    this->m_firstSetup = true;
+    this->m_showedFirstTutorial = false;
+    this->m_playerColor = 0;
+    this->m_playerFrame = 1;
+    this->m_playerShip = 1;
+    this->m_playerBall = 1;
+    this->m_playerBird = 1;
+    this->m_playerStreak = 1;
+    this->m_playerIconType = 0;
+    this->m_musicEnabled = true;
+    this->m_fxEnabled = true;
+    /* pGVar2 = GameSoundManager::GameSoundManager(pGVar2);
      GameSoundManager::setBGMusicVolume(pGVar2,extraout_s0);
      this_00 = (SimpleAudioEngine *)CocosDenshion::SimpleAudioEngine::sharedEngine();
      CocosDenshion::SimpleAudioEngine::setEffectsVolume(this_00,extraout_s0_00);
      this_01 = (GameLevelManager *)GameLevelManager::sharedState();
      pGVar3 = (GameStatsManager *)GameLevelManager::firstSetup(this_01);
      pGVar3 = GameStatsManager::GameStatsManager(pGVar3);
-     GameStatsManager::firstSetup(pGVar3);
-     (this->data).offset_0x7b = 1;
-     (this->data).offset_0x7c = 1;
-     (this->data).offset_0x7d = 0;
-     (this->data).offset_0x7f = 1;
-     (this->data).offset_0x80 = 0;
-     (this->data).offset_0x82 = 0;
-     (this->data).offset_0x81 = 0;
-     (this->data).offset_0xa7 = 0;
-     (this->data).offset_0x6 = 1;
-     (this->data).offset_0x89 = 0;
-     (this->data).offset_0x8a = 0;
-     (this->data).offset_0x8b = 0;
-     (this->data).offset_0x7e = 0;
-     (this->data).offset_0x47 = 0;*/
+     GameStatsManager::firstSetup(pGVar3);*/
+    this->m_autoCheckpoints = true;
+    this->m_showSongMarkers = true;
+    this->m_showBPMMarkers = false;
+    this->m_autoRetry = true;
+    this->m_showProgressBar = false;
+    this->m_commentSortRecent = false;
+    this->m_performanceMode = false;
+    this->m_enableTutorial = false;
+    // (this->data).offset_0x6 = 1;
+    this->m_showedRateDiffDialog = false;
+    this->m_showedRateStarDialog = false;
+    this->m_showedLowDetailDialog = false;
+    this->m_recordGameplay = false;
+    this->m_playerScoreValid = false;
 }
