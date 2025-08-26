@@ -13,7 +13,7 @@ enum class UnlockType {
     Col2 = 0x3,
     Ship = 0x4,
     Ball = 0x5,
-    Bird = 0x6,
+    Bird = 0x6
 };
 
 class GameManager: public GManager {
@@ -57,7 +57,6 @@ protected:
     bool m_showedFirstTutorial;
     bool m_musicEnabled;
     bool m_fxEnabled;
-    bool m_musicEnabled;
     bool m_autoCheckpoints;
     bool m_showSongMarkers;
     bool m_showBPMMarkers;

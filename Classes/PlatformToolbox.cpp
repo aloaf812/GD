@@ -1,7 +1,7 @@
 #include "PlatformToolbox.h"
 USING_NS_CC;
 
-// this is actually seperated in to a PlatformToolbox.m file on iOS so all of this ios is useless
+// this is actually seperated into a PlatformToolbox.m file on iOS so all of this ios is useless
 
 void PlatformToolbox::gameDidSave(){
     return;

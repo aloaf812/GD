@@ -1,8 +1,49 @@
-# Project Setup
+maybe a rewrite of this entire file should be considered due to how messy it is
+# Contributing
 
+## The Process
+
+js gimme some time i'll add it soon
+
+## Resources
+
+### - [GD Docs:](https://wyliemaster.github.io/gddocs/) provides useful information on some aspects of the game.
+### - [Geode Docs:](https://docs.geode-sdk.org/) provides variable names, classes, and return types as well as some other useful infoformation.
+### - [Library of Geometria:](https://a-zalt.github.io/) Provides knowledge on the game's technical quirks and changes between versions
+## Previous Decompilation Attempts
+- [ProjectReversio](https://github.com/ProjectReversio/GeometryDash) (2.113 + lite versions)
+- [WylieMaster](https://github.com/WylieMaster/GD-Decompiled) (2.113)
+- [CallocGD](https://github.com/callocgd/gd-2.205-decompiled) (2.205) [fork of wylie's decomp]
+## Disassemblers
+
+### Setup
+- *"If you want to decompile a game, first you need to know what the game does."*
+
+    ***aloaf812***
+
+That's why we use tools like **Ghidra** (free) or **[IDA Pro](https://hex-rays.com/ida-proz/)** (for those who have $1k+ to spare) to give us pseudocode representations of an app's binaries into something that's much more easily understandable for a human.
+
+For this project I'm using Ghidra since I can't afford IDA and I already have past experience with it.
+
+Before you get started decompiling a binary, you need to [**Install Ghidra**](https://github.com/NationalSecurityAgency/ghidra#Install).
+
+todo: finish this usage/contribution/decompilation guide
+
+# IDE Setup
+
+### VS Code: 
+lowkey can't do this part yet
+
+### Xcode: 
+also this part
+
+
+
+# Project Setup
+i might make a script to do all of this without having to follow a guide
 ### Prerequisites
 
-- cocos2d-x 2.2.3 ([from archive.org](https://archive.org/download/cocos2dx223/cocos2d-x-2.2.3.zip))
+- cocos2d-x 2.2.3 ([from my github repo](https://github.com/aloaf812/cocos2d-x))
 
 ### 1. Set up `projects` folder
 
@@ -48,7 +89,7 @@ First, create a `Resources` folder in your new `GD` folder. Then, find and extra
     - `jni` Makefiles and main.cpp
     - `res` App icons
     - `src` Decompiled Java code
-
+- [`proj.wp8`](https://github.com/aloaf812/GD/tree/1.7/proj.wp8) Source code for the Windows Phone version
 - [`proj.ios`](https://github.com/aloaf812/GD/tree/1.7/proj.ios) Xcode project for iOS
 
 - `Resources` Contains all of GD's assets. They can be extracted from either the APK or IPA (which will only render correctly on macOS). This folder isn't included in the repository to prevent piracy.

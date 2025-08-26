@@ -1,10 +1,10 @@
 # Geometry Dash (1.700) Decompilation
 
-Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. Much of the core functionality is not implemented and as it is not in a usable state.
+Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. Much of the core functionality is not implemented and it is not in a usable state.
 
-# Build Instructions
+# Building/Contributing
 
-You can find the build instructions for both iOS and Android [here](https://github.com/aloaf812/GD/blob/1.7/USAGE.md).
+You can find instructions on how to build this project as well as contributing to it in the [USAGE.md](https://github.com/aloaf812/GD/blob/1.7/USAGE.md) file.
 
 # Why decompile 1.7?
 
