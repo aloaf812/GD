@@ -56,7 +56,6 @@ libs/
 bin/
 obj/
 gen/
-assets/
 .settings/
 local.properties
 
