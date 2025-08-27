@@ -242,18 +242,8 @@ void GameManager::rateGame()
 void GameManager::firstLoad()
 {
     // TODO: give proper names to these values, define in header file
-    /*CCObject *pCVar1;
-     GameSoundManager *pGVar2;
-     SimpleAudioEngine *this_00;
-     GameLevelManager *this_01;
-     GameStatsManager *pGVar3;
-     float extraout_s0;
-     float extraout_s0_00;
-     undefined1 auStack_14 [4];
-    
-     pCVar1 = (CCObject *)cocos2d::CCDictionary::create();
-     (this->data).offset_0x7 = pCVar1;
-     cocos2d::CCObject::retain(pCVar1);*/
+
+    // this->m_scoreKeeper = CCDictionary::create()->retain;
     this->m_valueKeeper = CCDictionary::create()->retain;
     /* PlatformToolbox::getUniqueUserID();
      FUN_003b28d4(&(this->data).offset_0x3b,auStack_14);

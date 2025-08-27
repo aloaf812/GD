@@ -7,14 +7,14 @@
 #include <stdio.h>
 
 // thanks geode
-enum class UnlockType {
-    Cube = 0x1,
-    Col1 = 0x2,
-    Col2 = 0x3,
-    Ship = 0x4,
-    Ball = 0x5,
-    Bird = 0x6
-};
+/*enum class UnlockType {
+    Cube = 1,
+    Col1 = 2,
+    Col2 = 3,
+    Ship = 4,
+    Ball = 5,
+    Bird = 6
+};*/
 
 class GameManager: public GManager {
 public:
