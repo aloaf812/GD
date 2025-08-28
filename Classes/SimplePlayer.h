@@ -13,5 +13,5 @@ enum class IconType {
         Ball = 2,
         UFO = 3,
         Special = 99
-}
+};
 #endif

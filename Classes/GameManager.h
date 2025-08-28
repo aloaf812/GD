@@ -7,14 +7,14 @@
 #include <stdio.h>
 
 // thanks geode
-/*enum class UnlockType {
+enum class UnlockType {
     Cube = 1,
     Col1 = 2,
     Col2 = 3,
     Ship = 4,
     Ball = 5,
     Bird = 6
-};*/
+};
 
 class GameManager: public GManager {
 public:
@@ -66,7 +66,15 @@ protected:
     bool m_performanceMode;
     bool m_enableTutorial;
     bool m_didSyncAchievements;
+    bool m_showedPirate;
+    bool m_hasRatedGame;
+    bool m_clickedPractice;
+    bool m_showedEditorGuide;
     int m_loadedBgID;
+    int m_loadedGroundID;
+    int m_lastLevelID;
+    int m_totalAttempts;
+    int m_playerUserID;
     // icons
     int m_playerColor;
     int m_playerColor2;

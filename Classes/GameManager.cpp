@@ -28,7 +28,7 @@ GameManager::GameManager()
     this->m_playerColor = 0;
     this->m_playerColor2 = 0;
     this->m_playerStreak = 0;
-    this->m_playerIconType = 0;
+    this->m_playerIconType = IconType::Cube;
     this->m_autoCheckpoints = false;
     this->m_showSongMarkers = false;
     this->m_showBPMMarkers = false;
@@ -46,7 +46,7 @@ GameManager::GameManager()
     this->m_showedRateDiffDialog = false;
     this->m_showedRateStarDialog = false;
     this->m_showedLowDetailDialog = false;
-    this->m_gameRateDelegate = 0;
+    // this->m_gameRateDelegate = 0;
     this->m_lastLevelID = 0;
     this->m_loadedBgID = 0;
     this->m_loadedGroundID = 0;
@@ -70,10 +70,10 @@ void GameManager::dataLoaded(DS_Dictionary* param_1)
 {   // robtop why
 
     // dicionaries
-    this->m_valueKeeper = 
+    // what?: this->m_valueKeeper =
 
     // bools
-    this->m_gameCenterEnabled = DS_Dictionary::getBoolForKey("gameCenterEnabled");
+    /*this->m_gameCenterEnabled = DS_Dictionary::getBoolForKey("gameCenterEnabled");
     this->m_firstSetup = DS_Dictionary::getBoolForKey("firstSetup");
     this->m_showedFirstTutorial = DS_Dictionary::getBoolForKey("showedFirstTutorial");
     this->m_musicEnabled = DS_Dictionary::getBoolForKey("musicEnabled");
@@ -105,7 +105,7 @@ void GameManager::dataLoaded(DS_Dictionary* param_1)
     this->m_enableTutorial = DS_Dictionary::getBoolForKey("kEnableTutorial");
     this->m_showedRateDiffDialog = DS_Dictionary::getBoolForKey("showedRateDiffDialog");
     this->m_showedRateStarDialog = DS_Dictionary::getBoolForKey("showedRateStarDialog");
-    this->m_showedLowDetailDialog = DS_Dictionary::getBoolForKey("showedLowDetailDialog");
+    this->m_showedLowDetailDialog = DS_Dictionary::getBoolForKey("showedLowDetailDialog");*/
 
 }
 
@@ -118,7 +118,9 @@ void GameManager::loadBackground(int param_1)
     if (param_1 < 1) {
         bgID = 1;
     }
-    if (bgID != m_loadedBgID)
+    if (bgID != m_loadedBgID) {
+        
+    }
 }
 
 char const* GameManager::getBGTexture(int id)
@@ -243,8 +245,8 @@ void GameManager::firstLoad()
 {
     // TODO: give proper names to these values, define in header file
 
-    // this->m_scoreKeeper = CCDictionary::create()->retain;
-    this->m_valueKeeper = CCDictionary::create()->retain;
+    // this->m_scoreKeeper = CCDictionary::create()->retain();
+    // this->m_valueKeeper = CCDictionary::create()->retain();
     /* PlatformToolbox::getUniqueUserID();
      FUN_003b28d4(&(this->data).offset_0x3b,auStack_14);
      FUN_003b16dc(auStack_14);
@@ -260,7 +262,7 @@ void GameManager::firstLoad()
     this->m_playerBall = 1;
     this->m_playerBird = 1;
     this->m_playerStreak = 1;
-    this->m_playerIconType = 0;
+    this->m_playerIconType = IconType::Cube;
     this->m_musicEnabled = true;
     this->m_fxEnabled = true;
     /* pGVar2 = GameSoundManager::GameSoundManager(pGVar2);
