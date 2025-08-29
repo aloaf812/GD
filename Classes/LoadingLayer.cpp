@@ -96,7 +96,7 @@ bool LoadingLayer::init() {
     }
     
     float textScale;
-    if (m_caption->getScale() < 0.7f)
+    if (m_caption->getScale() <= 0.7f)
     {
         textScale = m_caption->getScale();
     } else
@@ -120,7 +120,7 @@ bool LoadingLayer::init() {
     m_sliderBar->setAnchorPoint(CCPoint(0.0f, 0.0f));
     m_sliderBar->setPosition(CCPoint(2.0f, 4.0f));
     
-    sliderGroove->setPosition(CCPoint(m_caption->getPosition().x, m_textArea->getPosition().y + 40.0f));
+    sliderGroove->setPosition(CCPoint(m_caption->getPosition().x, m_textArea->getPosition().y + 70.0f));
     
     this->updateProgress(0);
     
@@ -226,13 +226,13 @@ const char* LoadingLayer::getLoadingString() {
     switch(stringNum) {
     case 1: return "Listen to the music to help time your jumps"; break;
     case 2: return "Back for more are ya?"; break;
-    case 3: return "Use practice mode to learn the layout of a level"; break;
-    case 4: return "Build your own levels using the level editor"; break;
-    case 5: return "Go online to play other players levels!"; break;
-    case 6: return "If at first you don't succeed, try, try again..."; break;
-    case 7: return "Can you beat them all?"; break;
-    case 8: return "Customize your character's icon and color!"; break;
-    case 9: return "You can download all songs from the level select page!"; break;
+    case 3: return "Use practice mode to learn the layout of a level";
+    case 4: return "Build your own levels using the level editor";
+    case 5: return "Go online to play other players levels!";
+    case 6: return "If at first you don't succeed, try, try again...";
+    case 7: return "Can you beat them all?";
+    case 8: return "Customize your character's icon and color!";
+    case 9: return "You can download all songs from the level select page!";
     default: return "Unlock new icons and colors by completing achievements!";    
     }
 }

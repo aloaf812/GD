@@ -3,6 +3,7 @@
 
 #include "AppDelegate.h"
 #include "CCMenuItemSpriteExtra.h"
+#include "MenuGameLayer.h"
 
 // main button layers
 #include "LevelSelectLayer.h"
@@ -70,8 +71,8 @@ void MenuLayer::onPlay(CCObject* sender) {
 
 void MenuLayer::onGarage(CCObject* sender)
 {
-    // for some reason this is called but never used
-    // GameManager* pGameManager = GameManager::sharedState();
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->m_clickedGarage = true;
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = GJGarageLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -82,8 +83,8 @@ void MenuLayer::onGarage(CCObject* sender)
 
 void MenuLayer::onCreator(CCObject* sender)
 {
-    // for some reason this is called but never used
-    // GameManager* pGameManager = GameManager::sharedState();
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->m_clickedEditor = true;
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = CreatorLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -169,6 +170,9 @@ bool MenuLayer::init() {
     
     pGameManager->fadeInMusic("menuLoop.mp3");
     
+    MenuGameLayer* MGL = MenuGameLayer::create();
+    this->addChild(MGL);
+    
     // creates the logo
     CCSprite* logo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     this->addChild(logo, 2);
@@ -253,19 +257,17 @@ bool MenuLayer::init() {
     socialsMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 50.0f, pDirector->getScreenBottom() + 30.0f - 6.0f));
     
     CCSprite* facebookIcon = CCSprite::createWithSpriteFrameName("gj_fbIcon_001.png");
-    facebookIcon->setScale(0.8f);
     CCMenuItemSpriteExtra* facebookExtra = CCMenuItemSpriteExtra::create(facebookIcon, NULL, this, menu_selector(MenuLayer::onFacebook));
     facebookExtra->setSizeMult(1.5f);
     socialsMenu->addChild(facebookExtra);
     
     CCSprite* twitterIcon = CCSprite::createWithSpriteFrameName("gj_twIcon_001.png");
-    twitterIcon->setScale(0.8f);
     CCMenuItemSpriteExtra* twitterExtra = CCMenuItemSpriteExtra::create(twitterIcon, NULL, this, menu_selector(MenuLayer::onTwitter));
     twitterExtra->setSizeMult(1.5f);
     socialsMenu->addChild(twitterExtra);
     
-    facebookExtra->setPosition(socialsMenu->convertToNodeSpace(CCPoint(pDirector->getScreenLeft() + 22.0f, pDirector->getScreenBottom() + 30.0f + 25.0f)));
-    twitterExtra->setPosition(facebookExtra->getPosition() + CCPoint(30.0f, 0.0f));
+    facebookExtra->setPosition(socialsMenu->convertToNodeSpace(CCPoint(pDirector->getScreenLeft() + 30.0f, pDirector->getScreenBottom() + 30.0f + 30.0f)));
+    twitterExtra->setPosition(facebookExtra->getPosition() + CCPoint(40.0, 0.0f));
     
     CCSprite* freeLevelsButton = CCSprite::createWithSpriteFrameName("GJ_moreGamesBtn_001.png");
     CCMenuItemSpriteExtra* freeLevelsExtra = CCMenuItemSpriteExtra::create(freeLevelsButton, NULL, this, menu_selector(MenuLayer::onMoreGames));
@@ -274,7 +276,6 @@ bool MenuLayer::init() {
     this->addChild(extraMenu, 2);
     
     extraMenu->setPosition(CCPoint(pDirector->getScreenRight() - 43.0f, pDirector->getScreenBottom() + 45.0f));
-    // add more code here
 
     return true;
 }

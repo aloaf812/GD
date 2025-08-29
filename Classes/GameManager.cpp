@@ -28,7 +28,7 @@ GameManager::GameManager()
     this->m_playerColor = 0;
     this->m_playerColor2 = 0;
     this->m_playerStreak = 0;
-    this->m_playerIconType = IconType::Cube;
+    // this->m_playerIconType = IconType::Cube;
     this->m_autoCheckpoints = false;
     this->m_showSongMarkers = false;
     this->m_showBPMMarkers = false;
@@ -237,7 +237,7 @@ void GameManager::rateGame()
 {
     if (!GameToolbox::doWeHaveInternet()) {
         PlatformToolbox::openAppPage();
-        // changes bool to true and unlocks the "supporter" achievement: (this->data).offset_0x4a = 1;
+        this->m_hasRatedGame = true;
     }
 }
 
@@ -262,7 +262,7 @@ void GameManager::firstLoad()
     this->m_playerBall = 1;
     this->m_playerBird = 1;
     this->m_playerStreak = 1;
-    this->m_playerIconType = IconType::Cube;
+    // this->m_playerIconType = IconType::Cube;
     this->m_musicEnabled = true;
     this->m_fxEnabled = true;
     /* pGVar2 = GameSoundManager::GameSoundManager(pGVar2);

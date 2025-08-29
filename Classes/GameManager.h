@@ -19,7 +19,7 @@ enum class UnlockType {
 class GameManager: public GManager {
 public:
     GameManager();
-    ~GameManager();
+    // ~GameManager();
     static GameManager* sharedState();
     /**
     @returns A texture file depending on the value in the id field.
