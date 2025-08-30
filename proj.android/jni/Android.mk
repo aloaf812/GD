@@ -18,6 +18,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameManager.cpp \
                    ../../Classes/GameSoundManager.cpp \
                    ../../Classes/GameToolbox.cpp \
+                   ../../Classes/GJBaseGameLayer.cpp \
                    ../../Classes/GJDropDownLayer.cpp \
                    ../../Classes/GJGarageLayer.cpp \
                    ../../Classes/GJListLayer.cpp \
@@ -30,6 +31,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/MenuLayer.cpp \
                    ../../Classes/OptionsLayer.cpp \
                    ../../Classes/PlatformToolbox.cpp \
+                   ../../Classes/PlayLayer.cpp \
                    ../../Classes/SimplePlayer.cpp \
                    ../../Classes/SongInfoLayer.cpp \
                    ../../Classes/TextArea.cpp

@@ -57,12 +57,12 @@ bool AppDelegate::musicTest(){
     return true;
 }
 void AppDelegate::resumeSound(){
-    if (!AppDelegate::musicTest())
+    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+    if (!musicTest())
     {
-        SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+        SAE->resumeBackgroundMusic();
     }
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
-    return;
+    SAE->resumeAllEffects();
 }
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {

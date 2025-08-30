@@ -199,7 +199,7 @@ void LoadingLayer::loadAssets() {
     m_loadStep++;
     updateProgress(m_loadStep * 25	);
     CCActionManager* pActionManager = pDirector->getActionManager();
-    CCDelayTime* delayTime = CCDelayTime::create(0.01f);
+    CCDelayTime* delayTime = CCDelayTime::create(0.0f);
     CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(LoadingLayer::loadAssets));
     CCSequence* sequence = CCSequence::create(delayTime, callFunc, NULL);
     pActionManager->addAction(sequence, this, false);
