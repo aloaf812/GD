@@ -110,21 +110,32 @@ bool CreatorLayer::init()
     creatorMenu->addChild(createExtra);
     this->addChild(creatorMenu);
     creatorMenu->setPosition(CCPoint(winSize.width * 0.5f, (winSize.height * 0.5f) + 10.0f));
-    createExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(-110.0f, 0.0f));
+    createExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(-110.0f, 55.0f));
     
     CCSprite* savedBtn = CCSprite::createWithSpriteFrameName("GJ_savedBtn_001.png");
     CCMenuItemSpriteExtra* savedExtra = CCMenuItemSpriteExtra::create(savedBtn, NULL, this, menu_selector(CreatorLayer::onBack));
     creatorMenu->addChild(savedExtra);
-    savedExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(0.0f, 0.0f));
+    savedExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(0.0f, 55.0f));
     
     CCSprite* scoreBtn = CCSprite::createWithSpriteFrameName("GJ_highscoreBtn_001.png");
     CCMenuItemSpriteExtra* scoreExtra = CCMenuItemSpriteExtra::create(scoreBtn, NULL, this, menu_selector(CreatorLayer::onBack));
     creatorMenu->addChild(scoreExtra);
-    scoreExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(110.0f, 0.0f));
+    scoreExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(110.0f, 55.0f));
     
-    // this function uses something like the code below but i'm just too lazy to actually implement it
-    // creatorMenu->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 45.0f));
-    // creatorMenu->alignItemsHorizontallyWithPadding(5.0f);
+    CCSprite* featuredBtn = CCSprite::createWithSpriteFrameName("GJ_featuredBtn_001.png");
+    CCMenuItemSpriteExtra* featuredExtra = CCMenuItemSpriteExtra::create(featuredBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+    creatorMenu->addChild(featuredExtra);
+    featuredExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(-110.0f, -55.0f));
+    
+    CCSprite* mapPacksBtn = CCSprite::createWithSpriteFrameName("GJ_mapPacksBtn_001.png");
+    CCMenuItemSpriteExtra* mapPacksExtra = CCMenuItemSpriteExtra::create(mapPacksBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+    creatorMenu->addChild(mapPacksExtra);
+    mapPacksExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(0.0f, -55.0f));
+    
+    CCSprite* searchBtn = CCSprite::createWithSpriteFrameName("GJ_searchBtn_001.png");
+    CCMenuItemSpriteExtra* searchExtra = CCMenuItemSpriteExtra::create(searchBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+    creatorMenu->addChild(searchExtra);
+    searchExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(110.0f, -55.0f));
     
     return true;
 }

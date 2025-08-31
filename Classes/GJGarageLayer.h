@@ -10,5 +10,7 @@ public:
     static GJGarageLayer* node();
     virtual bool init();
     void onBack(CCObject* sender);
+protected:
+    cocos2d::CCSprite* m_backgroundSprite;
 };
 #endif
