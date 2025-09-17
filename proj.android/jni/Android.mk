@@ -15,20 +15,25 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/EndLevelLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \
                    ../../Classes/FLAlertLayerProtocol.cpp \
+                   ../../Classes/GameLevelManager.cpp \
                    ../../Classes/GameManager.cpp \
                    ../../Classes/GameSoundManager.cpp \
                    ../../Classes/GameToolbox.cpp \
                    ../../Classes/GJBaseGameLayer.cpp \
                    ../../Classes/GJDropDownLayer.cpp \
+                   ../../Classes/GJGameLevel.cpp \
                    ../../Classes/GJGarageLayer.cpp \
+                   ../../Classes/GJGroundLayer.cpp \
                    ../../Classes/GJListLayer.cpp \
                    ../../Classes/GManager.cpp \
+                   ../../Classes/LevelInfoLayer.cpp \
                    ../../Classes/LevelSelectLayer.cpp \
                    ../../Classes/LevelTools.cpp \
                    ../../Classes/LoadingLayer.cpp \
                    ../../Classes/LocalLevelManager.cpp \
                    ../../Classes/MenuGameLayer.cpp \
                    ../../Classes/MenuLayer.cpp \
+                   ../../Classes/MyLevelsLayer.cpp \
                    ../../Classes/OptionsLayer.cpp \
                    ../../Classes/PlatformToolbox.cpp \
                    ../../Classes/PlayLayer.cpp \

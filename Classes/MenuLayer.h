@@ -22,6 +22,7 @@ public:
     void onTrailer(CCObject* sender);
     void onGooglePlayGames(CCObject* sender);
     void onGameCenter(CCObject* sender);
+    void willClose();
     /**
      @brief Runs when the "More Games" button is pressed in the main menu
      */

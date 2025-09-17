@@ -13,6 +13,7 @@
 #include "PlatformToolbox.h"
 #include "GameManager.h"
 #include "GameToolbox.h"
+#include "GameLevelManager.h"
 USING_NS_CC;
 
 CCScene* MenuLayer::scene(){
@@ -59,9 +60,11 @@ void MenuLayer::onMoreGames(CCObject* sender)
     return;
 }
 
-void MenuLayer::onPlay(CCObject* sender) {
-    // for some reason this is called but never used
-    // GameManager* pGameManager = GameManager::sharedState();
+void MenuLayer::onPlay(CCObject* sender)
+{
+    this->willClose();
+    GameManager* pGameManager = GameManager::sharedState();
+    // pGameManager->setLastScene(8);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = LevelSelectLayer::scene(0);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -71,8 +74,9 @@ void MenuLayer::onPlay(CCObject* sender) {
 
 void MenuLayer::onGarage(CCObject* sender)
 {
+    this->willClose();
     GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->m_clickedGarage = true;
+    pGameManager->setClickedGarage(true);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = GJGarageLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -83,8 +87,9 @@ void MenuLayer::onGarage(CCObject* sender)
 
 void MenuLayer::onCreator(CCObject* sender)
 {
+    this->willClose();
     GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->m_clickedEditor = true;
+    pGameManager->setClickedEditor(true);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = CreatorLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -160,6 +165,12 @@ void MenuLayer::onGameCenter(CCObject *param_1)
     PlatformToolbox::showAchievements();
 }
 
+void MenuLayer::willClose()
+{
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->setMainMenuActive(false);
+}
+
 bool MenuLayer::init() {
     if (!CCLayer::init())
         return false;
@@ -193,7 +204,7 @@ bool MenuLayer::init() {
     mainMenu->addChild(garageExtra);
     garageExtra->setPosition(playExtra->getPosition() + CCPoint(-110.0f, 0.0f));
     
-    if (!pGameManager->m_clickedGarage)
+    if (!pGameManager->getClickedGarage())
     {
         CCSprite* chrSel = CCSprite::createWithSpriteFrameName("GJ_chrSel_001.png");
         this->addChild(chrSel);
@@ -205,8 +216,8 @@ bool MenuLayer::init() {
     CCMenuItemSpriteExtra* creatorExtra = CCMenuItemSpriteExtra::create(creatorButton, NULL, this, menu_selector(MenuLayer::onCreator));
     mainMenu->addChild(creatorExtra);
     creatorExtra->setPosition(playExtra->getPosition() + CCPoint(110.0f, 0.0f));
-    
-    if (!pGameManager->m_clickedEditor)
+
+    if (!pGameManager->getClickedEditor())
     {
         CCSprite* lvlEdit = CCSprite::createWithSpriteFrameName("GJ_lvlEdit_001.png");
         this->addChild(lvlEdit);
@@ -277,5 +288,6 @@ bool MenuLayer::init() {
     
     extraMenu->setPosition(CCPoint(pDirector->getScreenRight() - 43.0f, pDirector->getScreenBottom() + 45.0f));
 
+    pGameManager->setFirstSetup(false);
     return true;
 }

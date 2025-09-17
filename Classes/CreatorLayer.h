@@ -11,6 +11,7 @@ public:
     static CreatorLayer* create();
     bool init();
     void onBack(cocos2d::CCObject* sender);
+    void onSearch(cocos2d::CCObject* sender);
 };
 
 #endif /* defined(__GeometryDash__CreatorLayer__) */

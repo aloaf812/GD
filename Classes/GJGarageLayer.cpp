@@ -3,6 +3,7 @@
 #include "AppDelegate.h"
 #include "CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
+#include "SimplePlayer.h"
 USING_NS_CC;
 
 
@@ -90,7 +91,12 @@ bool GJGarageLayer::init()
     editBarBG->setPosition(CCPoint(pDirector->getScreenLeft(), pDirector->getScreenBottom()));
     this->addChild(editBarBG, 1);
 
-
+    SimplePlayer* player = SimplePlayer::create(4);
+    player->setAnchorPoint(CCPoint(0.0f, 0.0f));
+    player->setPosition(CCPoint(pDirector->getScreenRight() - 1.0f, pDirector->getScreenTop() - 1.0f));
+    this->addChild(player, 1);
+    
+    
 
 /*  piVar2 = (int *)GameManager::sharedState();
   (**(code **)(*piVar2 + 0x1d8))(piVar2,1);

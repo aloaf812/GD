@@ -1,6 +1,7 @@
 #include "PlayLayer.h"
 #include "SimpleAudioEngine.h"
 #include "GameManager.h"
+#include "AppDelegate.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 
@@ -17,4 +18,47 @@ void PlayLayer::onQuit()
     pGameManager->fadeInMusic("menuLoop.mp3");
     return;
     
+}
+
+CCScene* PlayLayer::scene(GJGameLevel* level)
+{
+    CCScene *scene = CCScene::create();
+    AppDelegate* pApp = AppDelegate::get();
+    PlayLayer* layer = PlayLayer::create(level);
+    scene->addChild(layer);
+    return scene;
+}
+
+PlayLayer* PlayLayer::create(GJGameLevel* level)
+{
+    PlayLayer* pRet = new PlayLayer();
+    if (pRet && pRet->init(level))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        delete pRet;
+        pRet = NULL;
+        return NULL;
+    }
+}
+
+PlayLayer::PlayLayer()
+{
+    
+}
+
+bool PlayLayer::init(GJGameLevel* level)
+{
+    if (!CCLayer::init())
+        return false;
+    
+    GameManager* pGameManager = GameManager::sharedState();
+    pGameManager->setEditMode(false);
+    // pGameManager->setPlayLayer(this);
+    pGameManager->setWasHigh(false);
+    
+    return true;
 }

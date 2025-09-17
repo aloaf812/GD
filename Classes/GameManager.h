@@ -16,6 +16,12 @@ enum class UnlockType {
     Bird = 6
 };
 
+enum class LastGameScene {
+    Menuaaayer = 8,
+    MenuPlayer = 0,
+    MenuGamePlae = 20
+};
+
 class GameManager: public GManager {
 public:
     GameManager();
@@ -41,17 +47,31 @@ public:
     void syncPlatformAchievements();
     void followTwitter();
     void likeFacebook();
-    bool m_clickedGarage;
-    bool m_clickedEditor;
-    bool m_clickedName;
     void firstLoad();
     void rateGame();
     int colorForPos(int color);
     std::string colorKey(int param_1, UnlockType param_2);
     virtual void dataLoaded(DS_Dictionary* param_1);
+    // get functions
+    bool getClickedGarage();
+    bool getClickedEditor();
+    bool getEditMode();
+    // set functions
+    void setMainMenuActive(bool active);
+    void setClickedGarage(bool clickedGarage);
+    void setClickedEditor(bool clickedEditor);
+    void setFirstSetup(bool firstSetup);
+    void setLastScene(LastGameScene scene);
+    void setEditMode(bool edit);
+    void setWasHigh(bool wasHigh);
 protected:
+    // made before i started with the variables
+    bool m_clickedGarage;
+    bool m_clickedEditor;
+    bool m_clickedName;
     // dictionaries
     cocos2d::CCDictionary* m_valueKeeper;
+    bool m_mainMenuActive;
     bool m_gameCenterEnabled;
     bool m_firstSetup;
     bool m_showedFirstTutorial;
@@ -75,6 +95,7 @@ protected:
     int m_lastLevelID;
     int m_totalAttempts;
     int m_playerUserID;
+    LastGameScene m_lastScene;
     // icons
     int m_playerColor;
     int m_playerColor2;
@@ -98,6 +119,8 @@ protected:
     bool m_playerScoreValid;
     std::string m_playerName;
     std::string m_playerUDID;
+    bool m_editMode;
+    bool m_wasHigh;
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

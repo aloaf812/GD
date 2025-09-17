@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
+#include "GameLevelManager.h"
 
 #include "CreatorLayer.h"
 USING_NS_CC;
@@ -50,6 +51,16 @@ void CreatorLayer::onBack(CCObject* sender)
     CCScene* scene = MenuLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
     pDirector->replaceScene(fade);
+}
+
+void CreatorLayer::onSearch(CCObject* sender)
+{
+    GameLevelManager* GLM = GameLevelManager::sharedState();
+    // used for testing: GLM->downloadLevel(108);
+    /*CCDirector* pDirector = CCDirector::sharedDirector();
+    CCScene* scene = LevelInfoLayer::scene();
+    CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
+    pDirector->replaceScene(fade);*/
 }
 
 bool CreatorLayer::init()
@@ -133,7 +144,7 @@ bool CreatorLayer::init()
     mapPacksExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(0.0f, -55.0f));
     
     CCSprite* searchBtn = CCSprite::createWithSpriteFrameName("GJ_searchBtn_001.png");
-    CCMenuItemSpriteExtra* searchExtra = CCMenuItemSpriteExtra::create(searchBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+    CCMenuItemSpriteExtra* searchExtra = CCMenuItemSpriteExtra::create(searchBtn, NULL, this, menu_selector(CreatorLayer::onSearch));
     creatorMenu->addChild(searchExtra);
     searchExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(110.0f, -55.0f));
     

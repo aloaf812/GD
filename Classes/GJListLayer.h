@@ -9,7 +9,9 @@ class BoomListView;
 class GJListLayer : public cocos2d::CCLayerColor
 {
 public:
-    static GJListLayer* create(BoomListView* p0, char const* p1, cocos2d::ccColor4B p2, float p3, float p4);
+    GJListLayer();
+    static GJListLayer* create(BoomListView* p0, char const* p1, cocos2d::ccColor4B color, float width, float height);
+    bool init(cocos2d::ccColor4B color, float width, float height);
 };
 
 #endif

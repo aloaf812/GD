@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include <stdio.h>
+#include "GJGameLevel.h"
 
 class LevelTools
 {
@@ -13,7 +14,7 @@ public:
      */
     static std::string getAudioTitle(int p0);
     static std::string getAudioFileName(int p0);
-
+    static GJGameLevel* getLevel(int level);
 };
 
 #endif

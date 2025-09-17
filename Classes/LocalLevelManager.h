@@ -5,6 +5,7 @@
 #include "GManager.h"
 
 class LocalLevelManager : public GManager {
-    public:
+public:
+    virtual void setup();
 };
 #endif

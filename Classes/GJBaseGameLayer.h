@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class GJBaseGameLayer {
+class GJBaseGameLayer : public cocos2d::CCLayer {
     
 };
 

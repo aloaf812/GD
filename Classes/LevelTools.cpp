@@ -1,7 +1,8 @@
 #include "LevelTools.h"
 USING_NS_CC;
 
-std::string getAudioTitle(int p0){
+std::string LevelTools::getAudioTitle(int p0)
+{
     switch (p0) {
         case 0: return "Stereo Madness";
         case 1: return "Back On Track";
@@ -24,7 +25,8 @@ std::string getAudioTitle(int p0){
     }
 }
 
-std::string getAudioFileName(int p0){
+std::string LevelTools::getAudioFileName(int p0)
+{
     switch (p0) {
         case 0: return "StereoMadness.mp3";
         case 1: return "BackOnTrack.mp3";
@@ -42,5 +44,54 @@ std::string getAudioFileName(int p0){
         case 13: return "Clubstep.mp3";
         case 14: return "Electrodynamix.mp3";
         case 15: return "Active.mp3";
+    }
+}
+
+GJGameLevel* LevelTools::getLevel(int level)
+{
+    GJGameLevel* m_level = GJGameLevel::create();
+    switch (level) {
+        // Stereo Madness
+        case 1:
+            m_level->setLevelName(getAudioTitle(0));
+            m_level->setAudioTrack(0);
+            m_level->setDifficulty(1);
+            m_level->setStars(1);
+        // Back on Track
+        case 2:
+            m_level->setLevelName(getAudioTitle(1));
+            m_level->setAudioTrack(1);
+            m_level->setDifficulty(2);
+            m_level->setStars(2);
+        // Polargeist
+        case 3:
+            m_level->setLevelName(getAudioTitle(2));
+            m_level->setAudioTrack(2);
+            m_level->setDifficulty(3);
+            m_level->setStars(3);
+        // Dry Out
+        case 4:
+            m_level->setLevelName(getAudioTitle(3));
+            m_level->setAudioTrack(3);
+            m_level->setDifficulty(4);
+            m_level->setStars(4);
+        // Base After Base
+        case 5:
+            m_level->setLevelName(getAudioTitle(4));
+            m_level->setAudioTrack(4);
+            m_level->setDifficulty(4);
+            m_level->setStars(5);
+        // Cant Let Go
+        case 6:
+            m_level->setLevelName(getAudioTitle(5));
+            m_level->setAudioTrack(5);
+            m_level->setDifficulty(5);
+            m_level->setStars(6);
+        // Jumper
+        case 7:
+            m_level->setLevelName(getAudioTitle(6));
+            m_level->setAudioTrack(6);
+            m_level->setDifficulty(5);
+            m_level->setStars(7);
     }
 }

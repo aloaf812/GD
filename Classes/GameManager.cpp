@@ -15,12 +15,14 @@ GameManager::GameManager()
 {
     this->offset_0x5 = false;                        
     this->m_didSyncAchievements = false;
+    this->m_mainMenuActive = false;
     this->m_playerScoreValid = false;
     this->m_musicEnabled = false;
     this->m_fxEnabled = false;
     this->m_hasRatedGame = false;
     this->m_clickedFacebook = false;
     this->m_clickedTwitter = false;
+    // this->m_lastScene = 0;
     this->m_playerFrame = 0;
     this->m_playerShip = 0;
     this->m_playerBall = 0;
@@ -52,6 +54,8 @@ GameManager::GameManager()
     this->m_loadedGroundID = 0;
     this->m_totalAttempts = 0;
     this->m_enableTutorial = false;
+    this->m_editMode = false;
+    this->m_wasHigh = false;
 }
 
 bool GameManager::init()
@@ -287,4 +291,56 @@ void GameManager::firstLoad()
     this->m_showedLowDetailDialog = false;
     this->m_recordGameplay = false;
     this->m_playerScoreValid = false;
+}
+
+// get functions
+bool GameManager::getClickedGarage()
+{
+    return this->m_clickedGarage;
+}
+
+bool GameManager::getClickedEditor()
+{
+    return this->m_clickedEditor;
+}
+
+bool GameManager::getEditMode()
+{
+    return this->m_editMode;
+}
+
+// set functions
+void GameManager::setMainMenuActive(bool active)
+{
+    this->m_mainMenuActive = active;
+}
+
+void GameManager::setClickedGarage(bool clickedGarage)
+{
+    this->m_clickedGarage = clickedGarage;
+}
+
+void GameManager::setClickedEditor(bool clickedEditor)
+{
+    this->m_clickedGarage = clickedEditor;
+}
+
+void GameManager::setFirstSetup(bool firstSetup)
+{
+    this->m_firstSetup = firstSetup;
+}
+
+void GameManager::setLastScene(LastGameScene scene)
+{
+    this->m_lastScene = scene;
+}
+
+void GameManager::setEditMode(bool edit)
+{
+    this->m_editMode = edit;
+}
+
+void GameManager::setWasHigh(bool wasHigh)
+{
+    this->m_wasHigh = wasHigh;
 }
