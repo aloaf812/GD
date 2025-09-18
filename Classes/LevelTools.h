@@ -16,10 +16,10 @@ public:
     static std::string getAudioFileName(int audio);
     static GJGameLevel* getLevel(int level);
     static std::string getAudioString(int audio);
-    static char nameForArtist(int artist);
-    static char ytURLForArtist(int artist);
-    static char ngURLforArtist(int artist);
-    static char urlForAudio(int audio);
+    static const char* nameForArtist(int artist);
+    static const char* ytURLForArtist(int artist);
+    static const char* ngURLforArtist(int artist);
+    static const char* urlForAudio(int audio);
 };
 
 #endif

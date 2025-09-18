@@ -163,13 +163,13 @@ GJGameLevel* LevelTools::getLevel(int level)
     m_level->setCoins(3);
 }
 
-char LevelTools::getAudioString()
+const char* LevelTools::getAudioString()
 {
     // too much work i'll do it later
     return NULL;
 }
 
-char LevelTools::nameForArtist(int artist)
+const char* LevelTools::nameForArtist(int artist)
 {
    switch(artist) {
    case 0: return "DJVI";
@@ -182,7 +182,7 @@ char LevelTools::nameForArtist(int artist)
    }
 }
 
-char LevelTools::ytURLForArtist(int artist)
+const char* LevelTools::ytURLForArtist(int artist)
 {
     switch (artist) {
     case 0: return "http://www.youtube.com/user/DJVITechno";
@@ -194,7 +194,7 @@ char LevelTools::ytURLForArtist(int artist)
     }
 }
 
-char LevelTools::ngURLForArtist(int artist)
+const char* LevelTools::ngURLForArtist(int artist)
 {
     switch(artist) {
     case 0: return "http://djvi.newgrounds.com/";
@@ -207,7 +207,7 @@ char LevelTools::ngURLForArtist(int artist)
     }
 }
 
-char LevelTools::urlForAudio(int audio)
+const char* LevelTools::urlForAudio(int audio)
 {
     switch (audio) {
     case 0: return "http://www.youtube.com/watch?v=JhKyKEDxo8Q";
