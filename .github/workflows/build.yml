@@ -25,8 +25,8 @@ jobs:
     - name: Setup Android NDK
       run: |
         pwd
-        wget https://dl.google.com/android/ndk/android-ndk-r9b-linux-x86_64.tar.bz2
-        tar -xjf android-ndk-r9b-linux-x86_64.tar.bz2
+        wget https://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2
+        tar -xjf android-ndk-r9c-linux-x86_64.tar.bz2
         ls
         
 
@@ -36,7 +36,7 @@ jobs:
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
-        NDK_ROOT: /home/runner/work/GD/GD/android-ndk-r9b        
+        NDK_ROOT: /home/runner/work/GD/GD/android-ndk-r9c        
 
     - name: Rename Artifacts
       run: |
