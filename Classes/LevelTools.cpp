@@ -146,7 +146,7 @@ GJGameLevel* LevelTools::getLevel(int level)
             m_level->setAudioTrack(13);
             m_level->setDifficulty(5);
             m_level->setStars(7);
-            m_level->setRequiredCoins(20);
+            // m_level->setRequiredCoins(20);
             m_level->setDemon(true);
             break;
         // Electrodynamix
