@@ -64,7 +64,7 @@ GJGameLevel::GJGameLevel()
     this->m_lastBuildTab = 0;
     this->m_lastEditorZoom = 0;
     this->m_lastBuildPage = 0;
-    this->m_levelType = GJLevelType::LocalLevel;
+    this->m_levelType = 0;
     this->m_M_ID = 0;
 }
 
