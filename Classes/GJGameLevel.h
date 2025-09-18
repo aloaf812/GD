@@ -88,7 +88,7 @@ public:
     int m_lastBuildTab;
     int m_lastEditorZoom;
     int m_lastBuildPage;
-    GJLevelType m_levelType;
+    int m_levelType;
     int m_M_ID;
 };
 
