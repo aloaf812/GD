@@ -14,7 +14,7 @@ class LoadingLayer : public cocos2d::CCLayer
 {
 public:
     LoadingLayer();
-    static cocos2d::CCScene* scene();
+    static cocos2d::CCScene* node();
     /**
     @brief Randomly picks a loading message to be shown while the game is loading
     @returns A randomly picked loading message

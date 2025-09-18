@@ -37,7 +37,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // AdToolbox::setupAds();
     
     // run
-    CCScene *pScene = LoadingLayer::scene();
+    CCScene *pScene = LoadingLayer::node();
     pDirector->runWithScene(pScene);
 
     return true;

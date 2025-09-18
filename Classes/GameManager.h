@@ -50,7 +50,7 @@ public:
     void firstLoad();
     void rateGame();
     int colorForPos(int color);
-    std::string colorKey(int param_1, UnlockType param_2);
+    std::string colorKey(int param_1, bool param_2);
     virtual void dataLoaded(DS_Dictionary* param_1);
     // get functions
     bool getClickedGarage();

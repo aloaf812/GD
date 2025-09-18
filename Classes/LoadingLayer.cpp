@@ -10,13 +10,12 @@
 #include <stdio.h>
 USING_NS_CC;
 
-CCScene* LoadingLayer::scene()
+CCScene* LoadingLayer::node()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    // create() should be renamed to node()
     LoadingLayer *layer = LoadingLayer::create();
     
     // add layer as a child to scene

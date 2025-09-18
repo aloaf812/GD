@@ -4,6 +4,13 @@
 #include "cocos2d.h"
 #include <stdio.h>
 
+enum class GJLevelType {
+    MainLevel = 1,
+    // i may be wrong with these two
+    OnlineLevel = 2,
+    LocalLevel = 0
+};
+
 class GJGameLevel : public cocos2d::CCNode {
 public:
     GJGameLevel();
@@ -30,6 +37,8 @@ public:
     void setAutoLevel(bool autoLevel);
     void setDifficulty(int difficulty);
     void setStars(int stars);
+    void setLevelType(GJLevelType levelType);
+    void setCoins(int coins);
 // protected:
     int m_levelID;
     std::string m_levelName;
@@ -79,7 +88,7 @@ public:
     int m_lastBuildTab;
     int m_lastEditorZoom;
     int m_lastBuildPage;
-    int m_levelType;
+    GJLevelType m_levelType;
     int m_M_ID;
 };
 
