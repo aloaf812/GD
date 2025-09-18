@@ -37,7 +37,7 @@ public:
     void setAutoLevel(bool autoLevel);
     void setDifficulty(int difficulty);
     void setStars(int stars);
-    void setLevelType(GJLevelType levelType);
+    void setLevelType(int levelType);
     void setCoins(int coins);
 // protected:
     int m_levelID;
