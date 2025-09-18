@@ -163,7 +163,7 @@ GJGameLevel* LevelTools::getLevel(int level)
     m_level->setCoins(3);
 }
 
-const char* LevelTools::getAudioString()
+std::string LevelTools::getAudioString(int audio)
 {
     // too much work i'll do it later
     return NULL;
