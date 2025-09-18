@@ -25,7 +25,7 @@ jobs:
     - name: Setup Android NDK
       run: |
         pwd
-        wget https://dl.google.com/android/ndk/android-ndk-r10-linux-x86_64.tar.bz2
+        wget https://dl.google.com/android/repository/android-ndk-r10-linux-x86_64.tar.bz2
         tar -xjf android-ndk-r10-linux-x86_64.tar.bz2
         ls
         
