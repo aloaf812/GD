@@ -210,9 +210,9 @@ void GameManager::followTwitter()
     }
 }
 
-std::string GameManager::colorKey(int param_1, UnlockType param_2)
+std::string GameManager::colorKey(int param_1, bool param_2)
 {
-    return CCString::createWithFormat("c%i_%i", param_1, param_2)->getCString();
+    return CCString::createWithFormat("c%i_%d", param_1, param_2)->getCString();
 }
 
 int GameManager::colorForPos(int color)
