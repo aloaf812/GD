@@ -222,3 +222,13 @@ void GJGameLevel::setStars(int stars)
 {
     this->m_stars = stars;
 }
+
+void setLevelType(int levelType)
+{
+
+}
+
+void setCoins(int coins)
+{
+
+}
