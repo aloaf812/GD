@@ -159,7 +159,7 @@ GJGameLevel* LevelTools::getLevel(int level)
         default: return getLevel(1);
     }
     m_level->setLevelID(level);
-    m_level->setLevelType(GJLevelType::MainLevel);
+    m_level->setLevelType(1);
     m_level->setCoins(3);
 }
 

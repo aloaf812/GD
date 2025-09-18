@@ -18,7 +18,7 @@ public:
     static std::string getAudioString(int audio);
     static const char* nameForArtist(int artist);
     static const char* ytURLForArtist(int artist);
-    static const char* ngURLforArtist(int artist);
+    static const char* ngURLForArtist(int artist);
     static const char* urlForAudio(int audio);
 };
 
