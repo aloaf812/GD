@@ -166,7 +166,7 @@ GJGameLevel* LevelTools::getLevel(int level)
 std::string LevelTools::getAudioString(int audio)
 {
     // too much work i'll do it later
-    return NULL;
+    return nullptr;
 }
 
 const char* LevelTools::nameForArtist(int artist)
@@ -187,7 +187,7 @@ const char* LevelTools::ytURLForArtist(int artist)
     switch (artist) {
     case 0: return "http://www.youtube.com/user/DJVITechno";
     case 1: return "http://www.youtube.com/user/waterflame89";
-    default: return NULL;
+    default: return nullptr;
     case 3: return "http://www.youtube.com/user/ForeverBoundOfficial";
     case 4: return "http://www.youtube.com/user/NGStep";
     case 5: return "http://www.robtopgames.com/djnate";
@@ -203,7 +203,7 @@ const char* LevelTools::ngURLForArtist(int artist)
     case 3: return "http://foreverbound.newgrounds.com/";
     case 4: return "http://step.newgrounds.com/";
     case 5: return "http://dj-nate.newgrounds.com/";
-    default: return NULL;
+    default: return nullptr;
     }
 }
 
@@ -227,6 +227,6 @@ const char* LevelTools::urlForAudio(int audio)
     case 14: return "http://www.newgrounds.com/audio/listen/368392";
     case 15: return "http://www.youtube.com/watch?v=scaU56CWyJ4";
     case -1: return "http://www.youtube.com/watch?v=5Epc1Beme90";
-    default: return NULL;
+    default: return nullptr;
     }
 }
