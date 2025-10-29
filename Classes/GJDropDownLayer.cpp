@@ -1,6 +1,6 @@
 // Decompiled by WylieMaster: https://github.com/Wyliemaster/GD-Decompiled/blob/main/GD/code/src/GJDropDownLayer.cpp
 #include "GJDropDownLayer.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 USING_NS_CC;
 GJDropDownLayer::GJDropDownLayer() {
     this->m_endPosition = ccp(0, 0);
@@ -148,15 +148,13 @@ bool GJDropDownLayer::init(const char* title, float height) {
     this->m_listLayer = GJListLayer::create(NULL, title, listColor, 356.0, height); // it shows -76 in decomp but 0xB4 in asm so i guess its 0xB4 :P
     this->m_mainLayer->addChild(this->m_listLayer);
     
-    // this->m_listLayer->setPosition({ (winSize.width - 356.0) * 0.5, (((winSize.height - height) * 0.5) - 10.0) + 5.0 });
-    // fixed this
     this->m_listLayer->setPosition(CCPoint((winSize.width - 356.0f) * 0.5f, (((winSize.height - height) * 0.5f) - 10.0f) + 5.0f));
 
-    CCSprite* spr = CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
-    CCMenuItemSpriteExtra* btn = CCMenuItemSpriteExtra::create(spr, NULL, this, menu_selector(GJDropDownLayer::exitLayer)); // not sure about GJDropDownLayer::exitLayer, again &stru_274.st_value
-    btn->setSizeMult(1.6);
+    CCSprite* backBtnSprite = CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
+    CCMenuItemSpriteExtra* backBtn = CCMenuItemSpriteExtra::create(backBtnSprite, NULL, this, menu_selector(GJDropDownLayer::exitLayer));
+    backBtn->setSizeMult(1.6f);
     
-    this->m_buttonMenu = CCMenu::create(btn);
+    this->m_buttonMenu = CCMenu::create(backBtn, NULL);
     // this->m_buttonMenu->setPosition(CCPoint((winSize.width * 0.5) + 178.0, (winSize.height * 0.5) - (height * 0.5));
     // also fixed
     this->m_buttonMenu->setPosition(CCPoint((winSize.width * 0.5f) + 178.0f, (winSize.height * 0.5f) - (height * 0.5f)));

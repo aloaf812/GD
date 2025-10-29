@@ -1,7 +1,7 @@
 #include "GJGarageLayer.h"
 
 #include "AppDelegate.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
 #include "SimplePlayer.h"
 USING_NS_CC;

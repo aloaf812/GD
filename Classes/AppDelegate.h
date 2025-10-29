@@ -36,6 +36,7 @@ public:
     void resumeSound();
     static bool musicTest();
     void pauseGame();
+    void checkSound();
     virtual void trySaveGame();
     float bgScale();
     cocos2d::CCScene* mMenuScene;

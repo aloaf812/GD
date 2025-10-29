@@ -45,17 +45,29 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
-    AppDelegate::pauseGame();
-    AppDelegate::trySaveGame();
-    CCDirector::sharedDirector()->pause();
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+    // what?: pDirector->__cxa_pure_virtual)();
+    pDirector->pause();
     SimpleAudioEngine::sharedEngine()->pauseAllEffects();
-    // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    if (false) {
+        SAE->pauseBackgroundMusic();
+        PlatformToolbox::onNativePause();
+        GameManager::sharedState()->applicationDidEnterBackground();
+    }
 }
 
 bool AppDelegate::musicTest(){
     return true;
 }
+
+void AppDelegate::checkSound()
+{
+    if (!musicTest()) {
+        SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    }
+}
+
 void AppDelegate::resumeSound(){
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     if (!musicTest())
@@ -66,12 +78,14 @@ void AppDelegate::resumeSound(){
 }
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
-    CCDirector::sharedDirector()->startAnimation();
-
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    GameManager* pGameManager = GameManager::sharedState();
+    pDirector->startAnimation();
     if (!PlatformToolbox::shouldResumeSound())
     {
-        AppDelegate::resumeSound();
+        resumeSound();
     }
+    pGameManager->applicationWillEnterForeground();
 }
 
 void AppDelegate::pauseGame(){

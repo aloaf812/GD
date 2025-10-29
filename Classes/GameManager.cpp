@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+#include "AchievementManager.h"
 #include "GameSoundManager.h"
 #include "SimpleAudioEngine.h"
 #include "GameToolbox.h"
@@ -70,46 +71,69 @@ bool GameManager::init()
   return true;
 }
 
-void GameManager::dataLoaded(DS_Dictionary* param_1)
+void GameManager::applicationDidEnterBackground()
+{
+
+}
+
+void GameManager::applicationWillEnterForeground()
+{
+    if (this->m_hasRatedGame != false) {
+        GameManager* pGameManager = sharedState();
+        pGameManager->reportAchievementWithID("geometry.ach.rate", 100, false);
+    }
+    CCLOG("clicked FB: %i", m_clickedFacebook);
+    if (this->m_clickedFacebook != false) {
+        GameManager* pGameManager = sharedState();
+        pGameManager->reportAchievementWithID("geometry.ach.facebook", 100, false);
+    }
+    /* TODO: IMPLEMENT GameRateDelegate
+    GameRateDelegate* rateDelegate = m_gameRateDelegate;
+    if (rateDelegate != nullptr) {
+        rateDelegate->updateRate();
+    }*/
+}
+
+void GameManager::dataLoaded(DS_Dictionary* dict)
 {   // robtop why
 
     // dicionaries
     // what?: this->m_valueKeeper =
 
     // bools
-    /*this->m_gameCenterEnabled = DS_Dictionary::getBoolForKey("gameCenterEnabled");
-    this->m_firstSetup = DS_Dictionary::getBoolForKey("firstSetup");
-    this->m_showedFirstTutorial = DS_Dictionary::getBoolForKey("showedFirstTutorial");
-    this->m_musicEnabled = DS_Dictionary::getBoolForKey("musicEnabled");
-    // broken? m_fxEnabled = DS_Dictionary::getBoolForKey("fxEnabled");
+    /*this->m_gameCenterEnabled = dict->getBoolForKey("gameCenterEnabled");
+    this->m_firstSetup = dict->getBoolForKey("firstSetup");
+    this->m_showedFirstTutorial = dict->getBoolForKey("showedFirstTutorial");
+    this->m_musicEnabled = dict->getBoolForKey("musicEnabled");
+    this->m_fxEnabled = dict->getBoolForKey("fxEnabled");
 
     // intergers
-    this->m_playerUserID = DS_Dictionary::getIntegerForKey("playerUserID");
-    this->m_playerFrame = DS_Dictionary::getIntegerForKey("playerFrame");
-    this->m_playerColor = DS_Dictionary::getIntegerForKey("playerColor");
-    this->m_playerColor2 = DS_Dictionary::getIntegerForKey("playerColor2");
+    this->m_playerUserID = dict->getIntegerForKey("playerUserID");
+    this->m_playerFrame = dict->getIntegerForKey("playerFrame");
+    this->m_playerColor = dict->getIntegerForKey("playerColor");
+    this->m_playerColor2 = dict->getIntegerForKey("playerColor2");
 
-    // iVar9 = DS_Dictionary::getIntegerForKey("playerShip");
+    // iVar9 = dict->getIntegerForKey("playerShip");
 
     // more bools
-    this->m_autoCheckpoints = DS_Dictionary::getBoolForKey("autoCheckpoints");
-    this->m_showSongMarkers = DS_Dictionary::getBoolForKey("showSongMarkers");
-    this->m_showBPMMarkers = DS_Dictionary::getBoolForKey("showBPMMarkers");
-    this->m_recordGameplay = DS_Dictionary::getBoolForKey("recordGameplay");
-    this->m_autoRetry = DS_Dictionary::getBoolForKey("autoRetryLevel");
-    this->m_showProgressBar = DS_Dictionary::getBoolForKey("showProgressBar");
-    this->m_commentSortRecent = DS_Dictionary::getBoolForKey("commentSortRecent");
-    this->m_performanceMode = DS_Dictionary::getBoolForKey("performanceMode");
-    this->m_clickedEditor = DS_Dictionary::getBoolForKey("clickedEditor");
-    this->m_clickedGarage = DS_Dictionary::getBoolForKey("clickedGarage");
-    this->m_clickedName = DS_Dictionary::getBoolForKey("clickedName");
-    this->m_clickedPractice = DS_Dictionary::getBoolForKey("clickedPractice");
-    this->m_showedEditorGuide = DS_Dictionary::getBoolForKey("showedEditorGuide");
-    this->m_playerScoreValid = DS_Dictionary::getBoolForKey("playerScoreValid");
-    this->m_enableTutorial = DS_Dictionary::getBoolForKey("kEnableTutorial");
-    this->m_showedRateDiffDialog = DS_Dictionary::getBoolForKey("showedRateDiffDialog");
-    this->m_showedRateStarDialog = DS_Dictionary::getBoolForKey("showedRateStarDialog");
-    this->m_showedLowDetailDialog = DS_Dictionary::getBoolForKey("showedLowDetailDialog");*/
+    this->m_autoCheckpoints = dict->getBoolForKey("autoCheckpoints");
+    this->m_showSongMarkers = dict->getBoolForKey("showSongMarkers");
+    this->m_showBPMMarkers = dict->getBoolForKey("showBPMMarkers");
+    this->m_recordGameplay = dict->getBoolForKey("recordGameplay");
+    this->m_autoRetry = dict->getBoolForKey("autoRetryLevel");
+    this->m_showProgressBar = dict->getBoolForKey("showProgressBar");
+    this->m_commentSortRecent = dict->getBoolForKey("commentSortRecent");
+    this->m_performanceMode = dict->getBoolForKey("performanceMode");
+    this->m_clickedEditor = dict->getBoolForKey("clickedEditor");
+    this->m_clickedGarage = dict->getBoolForKey("clickedGarage");
+    this->m_clickedName = dict->getBoolForKey("clickedName");
+    this->m_clickedPractice = dict->getBoolForKey("clickedPractice");
+    this->m_showedEditorGuide = dict->getBoolForKey("showedEditorGuide");
+    this->m_playerScoreValid = dict->getBoolForKey("playerScoreValid");
+    this->m_enableTutorial = dict->getBoolForKey("kEnableTutorial");
+    this->m_showedRateDiffDialog = dict->getBoolForKey("showedRateDiffDialog");
+    this->m_showedRateStarDialog = dict->getBoolForKey("showedRateStarDialog");
+    this->m_showedLowDetailDialog = dict->getBoolForKey("showedLowDetailDialog");*/
 
 }
 
@@ -127,17 +151,55 @@ void GameManager::loadBackground(int param_1)
     }
 }
 
-char const* GameManager::getBGTexture(int id)
+void GameManager::loadGround(int gID)
 {
-    int bgID = id;
-    if (3 < id) {
-        bgID = 4;
+    int groundID = gID;
+    if (3 < gID) {
+        groundID = 4;
     }
-    if (id < 1) {
-        bgID = 1;
+    if (gID < 1) {
+        groundID = 1;
     }
-	this->loadBackground(bgID);
-	return CCString::createWithFormat("game_bg_%02d_001.png", bgID)->getCString();
+    if (groundID != this->m_loadedGroundID)
+    {
+        CCString* groundStr;
+        CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
+        if (this->m_loadedGroundID != 0)
+        {
+            groundStr = CCString::createWithFormat("groundSquare_%02d_001.png", groundID);
+            // MISSING CC FUNCTION: pTextureCache->removeTextureForKey(groundStr->getCString);
+        }
+        groundStr = CCString::createWithFormat("groundSquare_%02d_001.png", groundID);
+        pTextureCache->addImage(groundStr->getCString());
+        this->m_loadedGroundID = groundID;
+    }
+}
+
+// m_id in these 2 functions is a temporary variable used as a failsafe for overshooting on ground and background ids
+char const* GameManager::getBGTexture(int bgID)
+{
+    int m_id = bgID;
+    if (3 < bgID) {
+        m_id = 4;
+    }
+    if (bgID < 1) {
+        m_id = 1;
+    }
+	this->loadBackground(m_id);
+	return CCString::createWithFormat("game_bg_%02d_001.png", m_id)->getCString();
+}
+
+char const* GameManager::getGTexture(int gID)
+{
+    int m_id = gID;
+    if (3 < gID) {
+        m_id = 4;
+    }
+    if (gID < 1) {
+        m_id = 1;
+    }
+    this->loadGround(m_id);
+    return CCString::createWithFormat("groundSquare_%02d_001.png", m_id)->getCString();
 }
 
 /* char const* GameManager::iconKey(int id, IconType type){
@@ -189,7 +251,19 @@ GameManager* GameManager::sharedState()
 
 void GameManager::reportAchievementWithID(char const* ach_ID, int percentage, bool param_3)
 {
-    // todo: implement achievements
+    AchievementManager* achMan = AchievementManager::sharedState();
+    if (!achMan->isAchievementEarned(ach_ID)) {
+        // literally no point in this: achMan = nullptr;
+        if (99 < percentage) {
+            this->completedAchievement(ach_ID);
+        }
+        achMan->reportAchievementWithID(ach_ID, percentage, param_3);
+    }
+}
+
+void GameManager::completedAchievement(char const* ach_ID)
+{
+
 }
 
 void GameManager::likeFacebook()
@@ -307,6 +381,11 @@ bool GameManager::getClickedEditor()
 bool GameManager::getEditMode()
 {
     return this->m_editMode;
+}
+
+bool GameManager::getGameCenterEnabled()
+{
+    return this->m_gameCenterEnabled;
 }
 
 // set functions

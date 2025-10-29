@@ -26,6 +26,7 @@ CCScene* PlayLayer::scene(GJGameLevel* level)
     AppDelegate* pApp = AppDelegate::get();
     PlayLayer* layer = PlayLayer::create(level);
     scene->addChild(layer);
+    // scene->setObjType(5);
     return scene;
 }
 
@@ -54,11 +55,15 @@ bool PlayLayer::init(GJGameLevel* level)
 {
     if (!CCLayer::init())
         return false;
-    
+    // GameEffectsManager TODO
+
     GameManager* pGameManager = GameManager::sharedState();
     pGameManager->setEditMode(false);
     // pGameManager->setPlayLayer(this);
     pGameManager->setWasHigh(false);
+
+    CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
+    CCSpriteBatchNode::createWithTexture(pTextureCache->addImage("GJ_GameSheet.png"), 29);
     
     return true;
 }

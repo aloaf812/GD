@@ -2,7 +2,7 @@
 #include "MenuLayer.h"
 
 #include "AppDelegate.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuGameLayer.h"
 
 // main button layers
@@ -14,6 +14,7 @@
 #include "GameManager.h"
 #include "GameToolbox.h"
 #include "GameLevelManager.h"
+#include "OptionsLayer.h"
 USING_NS_CC;
 
 CCScene* MenuLayer::scene(){
@@ -105,7 +106,7 @@ void MenuLayer::onAchievements(CCObject* sender)
 
 void MenuLayer::onOptions(CCObject* sender)
 {
-    
+    OptionsLayer::create()->enterLayer();
 }
 
 void MenuLayer::onStats(CCObject* sender)
@@ -141,6 +142,21 @@ void MenuLayer::onTrailer(CCObject* sender)
     }
 }
 
+void MenuLayer::onGameCenter(CCObject* sender)
+{
+    GameManager* pGameManager = GameManager::sharedState();
+    if (!pGameManager->getGameCenterEnabled()) {
+        showGCQuestion();
+    }
+    pGameManager->syncPlatformAchievements();
+    PlatformToolbox::showAchievements();
+}
+
+void MenuLayer::showGCQuestion()
+{
+
+}
+
 void MenuLayer::onGooglePlayGames(CCObject* sender)
 {
     if (!PlatformToolbox::isSignedInGooglePlay())
@@ -150,19 +166,6 @@ void MenuLayer::onGooglePlayGames(CCObject* sender)
         PlatformToolbox::showAchievements();
     }
     PlatformToolbox::signInGooglePlay();
-}
-
-void MenuLayer::onGameCenter(CCObject *param_1)
-{
-    /*
-     GameManager* pGameManager = GameManager::sharedState();
-     // bro what is this :sob: int iVar2 = (**(code **)(*pGameManager + 0x1e4))();
-     if (iVar2 == 0) {
-     showGCQuestion();
-     }*/
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->syncPlatformAchievements();
-    PlatformToolbox::showAchievements();
 }
 
 void MenuLayer::willClose()

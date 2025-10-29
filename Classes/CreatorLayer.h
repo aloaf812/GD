@@ -12,6 +12,7 @@ public:
     bool init();
     void onBack(cocos2d::CCObject* sender);
     void onSearch(cocos2d::CCObject* sender);
+    void onLeaderboards(cocos2d::CCObject* sender);
 };
 
 #endif /* defined(__GeometryDash__CreatorLayer__) */

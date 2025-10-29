@@ -12,8 +12,8 @@ public:
     @brief Fetches the audio title of a song
     @param audio The number of the song you want to get the name of
      */
-    static std::string getAudioTitle(int audio);
-    static std::string getAudioFileName(int audio);
+    static const char* getAudioTitle(int audio);
+    static const char* getAudioFileName(int audio);
     static GJGameLevel* getLevel(int level);
     static std::string getAudioString(int audio);
     static const char* nameForArtist(int artist);

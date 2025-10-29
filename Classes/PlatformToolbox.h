@@ -15,6 +15,7 @@ public:
     static void activateGameCenter();
     static bool isNetworkAvailable();
     static void logEvent(char const* event);
+    static void onNativePause();
     // google play
     static bool isSignedInGooglePlay();
     static void signInGooglePlay();

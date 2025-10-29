@@ -2,7 +2,7 @@
 #include "LevelSelectLayer.h"
 
 #include "AppDelegate.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
 USING_NS_CC;
 

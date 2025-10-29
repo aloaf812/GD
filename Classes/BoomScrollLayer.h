@@ -3,25 +3,23 @@
 
 #include "cocos2d.h"
 
-/*struct DynamicScrollDelegate
-{
-public:
-    virtual void updatePageWithObject(cocos2d::CCObject* obj1, cocos2d::CCObject* obj2) = 0;
-};
+class BoomScrollLayerDelegate;
 
-class BoomScrollLayer : public cocos2d::CCLayer
-{
+class BoomScrollLayer : public cocos2d::CCLayer {
 public:
-    virtual bool init(cocos2d::CCArray* pages, int unk1, bool unk2, cocos2d::CCArray* unk3, DynamicScrollDelegate* delegate);
+	BoomScrollLayer();
+    static BoomScrollLayer* create(cocos2d::CCArray* pages, int param1, bool param2);
+    virtual bool init();
 
+    BoomScrollLayerDelegate* m_bslDelegate;
 };
 
 class BoomScrollLayerDelegate {
 public:
-    virtual void scrollLayerScrollingStarted(BoomScrollLayer*);
-    virtual void scrollLayerScrolledToPage(BoomScrollLayer*, int);
-    virtual void scrollLayerMoved(cocos2d::CCPoint);
-    virtual void scrollLayerWillScrollToPage(BoomScrollLayer*, int);
-};*/
+    virtual void scrollLayerMoved(cocos2d::CCPoint p0);
+    virtual void scrollLayerScrolledToPage(BoomScrollLayer* bsl, int p1);
+    virtual void scrollLayerScrollingStarted(BoomScrollLayer* bsl);
+};
+
 
 #endif

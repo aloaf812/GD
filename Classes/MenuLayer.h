@@ -10,18 +10,19 @@ public:
     static cocos2d::CCScene* scene();
     static MenuLayer* node();
     virtual bool init();
-    void onPlay(CCObject* sender);
-    void onGarage(CCObject* sender);
-    void onCreator(CCObject* sender);
-    void onOptions(CCObject* sender);
-    void onAchievements(CCObject* sender);
-    void onStats(CCObject* sender);
-    void onRobTop(CCObject* sender);
-    void onFacebook(CCObject* sender);
-    void onTwitter(CCObject* sender);
-    void onTrailer(CCObject* sender);
-    void onGooglePlayGames(CCObject* sender);
-    void onGameCenter(CCObject* sender);
+    void onPlay(cocos2d::CCObject* sender);
+    void onGarage(cocos2d::CCObject* sender);
+    void onCreator(cocos2d::CCObject* sender);
+    void onOptions(cocos2d::CCObject* sender);
+    void onAchievements(cocos2d::CCObject* sender);
+    void onStats(cocos2d::CCObject* sender);
+    void onRobTop(cocos2d::CCObject* sender);
+    void onFacebook(cocos2d::CCObject* sender);
+    void onTwitter(cocos2d::CCObject* sender);
+    void onTrailer(cocos2d::CCObject* sender);
+    void onGooglePlayGames(cocos2d::CCObject* sender);
+    void onGameCenter(cocos2d::CCObject* sender);
+    void showGCQuestion();
     void willClose();
     /**
      @brief Runs when the "More Games" button is pressed in the main menu

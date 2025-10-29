@@ -1,7 +1,7 @@
 #include "LevelTools.h"
 USING_NS_CC;
 
-std::string LevelTools::getAudioTitle(int audio)
+const char* LevelTools::getAudioTitle(int audio)
 {
     switch (audio) {
         case 0: return "Stereo Madness";
@@ -24,8 +24,7 @@ std::string LevelTools::getAudioTitle(int audio)
         default: return "Unknown";
     }
 }
-
-std::string LevelTools::getAudioFileName(int audio)
+const char* LevelTools::getAudioFileName(int audio)
 {
     switch (audio) {
         case 0: return "StereoMadness.mp3";
@@ -159,7 +158,7 @@ GJGameLevel* LevelTools::getLevel(int level)
         default: return getLevel(1);
     }
     m_level->setLevelID(level);
-    m_level->setLevelType(1);
+    m_level->setLevelType(GJLevelType::MainLevel);
     m_level->setCoins(3);
 }
 

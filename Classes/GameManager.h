@@ -28,22 +28,30 @@ public:
     // ~GameManager();
     static GameManager* sharedState();
     /**
-    @returns A texture file depending on the value in the id field.
+    @returns A background texture file depending on the value in the id field.
     */
-    char const* getBGTexture(int id);
+    char const* getBGTexture(int bgID);
+    /**
+    @returns A ground texture file depending on the value in the id field.
+    */
+    char const* getGTexture(int gID);
     virtual bool init();
+    virtual void applicationDidEnterBackground();
+    virtual void applicationWillEnterForeground();
     /**
     @param ach_ID The ID of the achievment of the achievement being reported (e.g. geometry.ach.moreGames)
     @param percentage The completion percentage of the achievement
     @param param_3 A bool parameter 
     */
     void reportAchievementWithID(char const* ach_ID, int percentage, bool param_3);
+    void completedAchievement(char const* ach_ID);
     /**
     @param fileName The file of the music which will be faded in.
     */
     void fadeInMusic(char const* fileName);
     // char const* iconKey(int id, IconType type);
     void loadBackground(int param_1);
+    void loadGround(int gID);
     void syncPlatformAchievements();
     void followTwitter();
     void likeFacebook();
@@ -56,6 +64,7 @@ public:
     bool getClickedGarage();
     bool getClickedEditor();
     bool getEditMode();
+    bool getGameCenterEnabled();
     // set functions
     void setMainMenuActive(bool active);
     void setClickedGarage(bool clickedGarage);

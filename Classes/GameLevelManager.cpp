@@ -32,6 +32,32 @@ void GameLevelManager::downloadLevel(int level_id)
     request->release();
 }
 
+void GameLevelManager::getLeaderboardScores(const char *leaderboardType)
+{
+    extension::CCHttpRequest *request = new extension::CCHttpRequest();
+    request->setUrl("http://www.boomlings.com/database/getGJScores.php");
+    request->setRequestType(extension::CCHttpRequest::kHttpPost);
+    std::string postData = CCString::createWithFormat("secret=Wmfd2893gb7&type=top")->getCString();
+    request->setRequestData(postData.c_str(), postData.length());
+    request->setResponseCallback(this, httpresponse_selector(GameLevelManager::onGetLeaderboardScoresCompleted));
+    extension::CCHttpClient::getInstance()->send(request);
+    request->release();
+
+}
+
+void GameLevelManager::getOnlineLevels()
+{
+    extension::CCHttpRequest *request = new extension::CCHttpRequest();
+    request->setUrl("http://www.boomlings.com/database/downloadGJLevel.php");
+    request->setRequestType(extension::CCHttpRequest::kHttpPost);
+    std::string postData = CCString::createWithFormat("secret=Wmfd2893gb7&type=top")->getCString();
+    request->setRequestData(postData.c_str(), postData.length());
+    request->setResponseCallback(this, httpresponse_selector(GameLevelManager::onGetLeaderboardScoresCompleted));
+    extension::CCHttpClient::getInstance()->send(request);
+    request->release();
+    
+}
+
 /*char GameLevelManager::getLevelKey(int level)
 {
     return CCString::createWithFormat("%i", level)->getCString();
@@ -49,14 +75,32 @@ void GameLevelManager::onDownloadLevelComplete(extension::CCHttpClient* client, 
     std::string responseData(buffer->begin(), buffer->end());
     CCLOG("response data: %s", responseData.c_str());
     CCDirector* pDirector = CCDirector::sharedDirector();
-    GJGameLevel* level = GJGameLevel::create(responseToDict(responseData));
+    GJGameLevel* level = GJGameLevel::create(responseToDict(responseData, false));
     CCScene* scene = LevelInfoLayer::scene(level);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
     pDirector->replaceScene(fade);
 }
 
+void GameLevelManager::onGetLeaderboardScoresCompleted(cocos2d::extension::CCHttpClient* client, cocos2d::extension::CCHttpResponse* response)
+{
+    if (!response || !response->isSucceed())
+    {
+        CCLOG("failed");
+        return;
+    }
+    std::vector<char> *buffer = response->getResponseData();
+    std::string responseData(buffer->begin(), buffer->end());
+    CCLOG("response data: %s", responseData.c_str());
+    /*
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    GJGameLevel* level = GJGameLevel::create(responseToDict(responseData, false));
+    CCScene* scene = LevelInfoLayer::scene(level);
+    CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
+    pDirector->replaceScene(fade);*/
+}
+
 // thanks cvolton: https://github.com/Cvolton/betterinfo-geode/blob/master/src/utils.cpp#L309
-CCDictionary* GameLevelManager::responseToDict(const std::string& response){
+CCDictionary* GameLevelManager::responseToDict(std::string response, bool p0){
     CCDictionary* dict = CCDictionary::create();
     
     std::stringstream responseStream(response);

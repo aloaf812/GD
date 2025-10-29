@@ -17,6 +17,8 @@ public:
     static GJGameLevel* create();
     static GJGameLevel* create(cocos2d::CCDictionary* level);
     virtual bool init();
+
+    void encodeWithCoder(DS_Dictionary* dict);
     // get functions
     static std::string getLevelName();
     // set functions
@@ -37,7 +39,7 @@ public:
     void setAutoLevel(bool autoLevel);
     void setDifficulty(int difficulty);
     void setStars(int stars);
-    void setLevelType(int levelType);
+    void setLevelType(GJLevelType levelType);
     void setCoins(int coins);
 // protected:
     int m_levelID;
@@ -88,7 +90,7 @@ public:
     int m_lastBuildTab;
     int m_lastEditorZoom;
     int m_lastBuildPage;
-    int m_levelType;
+    GJLevelType m_levelType;
     int m_M_ID;
 };
 

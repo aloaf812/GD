@@ -64,7 +64,7 @@ GJGameLevel::GJGameLevel()
     this->m_lastBuildTab = 0;
     this->m_lastEditorZoom = 0;
     this->m_lastBuildPage = 0;
-    this->m_levelType = NULL;
+    this->m_levelType = GJLevelType::LocalLevel;
     this->m_M_ID = 0;
 }
 
@@ -131,6 +131,35 @@ GJGameLevel* GJGameLevel::create(cocos2d::CCDictionary* dict)
     
     return level;
 }
+
+void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
+{
+    dict->setIntegerForKey("kCEK", 4);
+    dict->setIntegerForKey("k1", this->m_levelID);
+    dict->setStringForKey("k2", this->m_levelName);
+    dict->setStringForKey("k3", this->m_levelDesc);
+    if (((this->m_isHidden == false) && (this->m_dontSave == false)) && (this->m_levelType != GJLevelType::MainLevel)) {
+        dict->setStringForKey("k4", this->m_levelString);
+    }
+    else {
+        /*std::string(asStack_14,&DAT_00401d62,&pGStack_18);
+        DS_Dictionary::setStringForKey(in_r1,"k4",asStack_14);
+        FUN_003b16dc(asStack_14);*/
+    }
+    dict->setStringForKey("k5", this->m_creatorName);
+    dict->setStringForKey("k34", this->m_recordString);
+    dict->setIntegerForKey("k6", this->m_userID);
+    dict->setIntegerForKey("k7", this->m_difficulty);
+    dict->setIntegerForKey("k8", this->m_audioTrack);
+    dict->setIntegerForKey("k9", this->m_ratings);
+    dict->setIntegerForKey("k10", this->m_ratingsSum);
+    dict->setIntegerForKey("k11", this->m_downloads);
+    dict->setIntegerForKey("k12", this->m_completes);
+    dict->setBoolForKey("k13", this->m_isEditable);
+    dict->setBoolForKey("k14", this->m_isVerified);
+    dict->setBoolForKey("k15", this->m_isUploaded);
+}
+
 // get functions
 std::string GJGameLevel::getLevelName()
 {
@@ -223,12 +252,12 @@ void GJGameLevel::setStars(int stars)
     this->m_stars = stars;
 }
 
-void GJGameLevel::setLevelType(int levelType)
+void GJGameLevel::setLevelType(GJLevelType levelType)
 {
-
+    this->m_levelType = levelType;
 }
 
 void GJGameLevel::setCoins(int coins)
 {
-
+    this->m_coins = coins;
 }

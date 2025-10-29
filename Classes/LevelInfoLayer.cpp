@@ -1,6 +1,6 @@
 #include "LevelInfoLayer.h"
 #include "AppDelegate.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "PlayLayer.h"
 #include "GameManager.h"
 #include "SimpleAudioEngine.h"
@@ -54,10 +54,11 @@ void LevelInfoLayer::onBack(cocos2d::CCObject *sender)
 void LevelInfoLayer::onPlay(CCObject* sender)
 {
     // GameManager* pGameManager = GameManager::sharedState();
+    // GameSoundManager* GSM = GameSoundManager::GameSoundManager();
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     SAE->stopBackgroundMusic();
     CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene *pScene = PlayLayer::scene(m_level);
+    CCScene* pScene = PlayLayer::scene(m_level);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
     return;
@@ -130,7 +131,7 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     this->addChild(downloadsSpr, 1);
     downloadsSpr->setPosition(playMenu->getPosition() + CCPoint(60.0f, 35.0f));
     
-    CCLabelBMFont* m_downloadCaption = CCLabelBMFont::create("102", "bigFont.fnt");
+    CCLabelBMFont* m_downloadCaption = CCLabelBMFont::create("%d", "bigFont.fnt", level->m_downloads);
     this->addChild(m_downloadCaption);
     const CCPoint downloadTextPos(downloadsSpr->getPosition() + CCPoint(50.0f, 0.0f));
     m_downloadCaption->setPosition(downloadTextPos);
@@ -200,6 +201,17 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     lvlInfoMenu->addChild(lvlInfoExtra);
     this->addChild(lvlInfoMenu);
     lvlInfoExtra->setPosition(sideArtL->getPosition());
+    
+    /*CCSprite* progressSpr = CCSprite::create("GJ_progressBar_001.png");
+    this->addChild(progressSpr, 1);
+    progressSpr->setPosition(CCPoint(284.5f, 75.0f));
+    progressSpr->setScale(1.0f);
+    
+    CCSprite* pprogressSpr = CCSprite::create("GJ_progressBar_001.png");
+    this->addChild(pprogressSpr, 1);
+    pprogressSpr->setPosition(CCPoint(284.5f, 22.0f));
+    pprogressSpr->setScale(1.0f);*/
+    
     
     return true;
 }

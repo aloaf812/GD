@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
 #include "GameLevelManager.h"
 
@@ -56,11 +56,17 @@ void CreatorLayer::onBack(CCObject* sender)
 void CreatorLayer::onSearch(CCObject* sender)
 {
     GameLevelManager* GLM = GameLevelManager::sharedState();
-    // used for testing: GLM->downloadLevel(108);
+    GLM->downloadLevel(108);
     /*CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene* scene = LevelInfoLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
     pDirector->replaceScene(fade);*/
+}
+
+void CreatorLayer::onLeaderboards(cocos2d::CCObject *sender)
+{
+    GameLevelManager* GLM = GameLevelManager::sharedState();
+    GLM->getLeaderboardScores("leaderboards_top");
 }
 
 bool CreatorLayer::init()
@@ -129,7 +135,7 @@ bool CreatorLayer::init()
     savedExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(0.0f, 55.0f));
     
     CCSprite* scoreBtn = CCSprite::createWithSpriteFrameName("GJ_highscoreBtn_001.png");
-    CCMenuItemSpriteExtra* scoreExtra = CCMenuItemSpriteExtra::create(scoreBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+    CCMenuItemSpriteExtra* scoreExtra = CCMenuItemSpriteExtra::create(scoreBtn, NULL, this, menu_selector(CreatorLayer::onLeaderboards));
     creatorMenu->addChild(scoreExtra);
     scoreExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(110.0f, 55.0f));
     

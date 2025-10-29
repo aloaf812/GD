@@ -1,4 +1,7 @@
 #include "PlatformToolbox.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jni/JniHelper.h"
+#endif
 USING_NS_CC;
 
 // this is actually seperated into a PlatformToolbox.m file on iOS so all of this ios is useless
@@ -79,4 +82,15 @@ void PlatformToolbox::logEvent(char const* event)
 {
     // temporary CCLOG while i figure out what this does on ios (i still don't want to code in obj-c)
     CCLOG(event);
+}
+
+void PlatformToolbox::onNativePause()
+{
+    /*JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo,
+                                         "com/customRobTop/BaseRobTopActivity",
+                                         "onNativePause",
+                                         "()V")) {
+        methodInfo.env->callStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+    }*/
 }
