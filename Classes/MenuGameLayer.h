@@ -6,13 +6,14 @@
 #include "cocos2d.h"
 
 class MenuGameLayer : public cocos2d::CCLayer {
-    float m_deltaCount;
-    int m_initCount;
-    cocos2d::CCPoint m_unused1;
+    float m_bgOffset;
+    float m_groundOffset;
+    float m_bgWidth;
+    float m_groundWidth;
+    cocos2d::CCSprite* m_groundSprite;
+    cocos2d::CCLayer* m_groundLayer;
     PlayerObject* m_playerObject;
     cocos2d::CCSprite* m_backgroundSprite;
-    cocos2d::CCMenu* bgSprites;
-    // GJGroundLayer* m_groundLayer;
     float m_backgroundSpeed;
 public:
     MenuGameLayer();
