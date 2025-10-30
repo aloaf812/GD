@@ -23,6 +23,9 @@ public:
     // variables
     bool m_isActive;
     float m_groundWidth;
+    float m_repeatWidth;
+    int m_repeatCount;
+    cocos2d::CCArray* m_tiles;
     cocos2d::CCSprite* m_groundSprite;
     cocos2d::CCSprite* m_line;
 };

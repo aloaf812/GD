@@ -1,13 +1,16 @@
 #include "GJGroundLayer.h"
 #include "GameManager.h"
+#include <cmath>
 USING_NS_CC;
 
 GJGroundLayer::GJGroundLayer()
 {
-	this->m_groundWidth = 0.0;
+	this->m_groundWidth = 0.0f;
 	this->m_groundSprite = NULL;
 	this->m_line = NULL;
 	this->m_isActive = false;
+    m_tiles = nullptr;
+    m_repeatCount = 0;
 }
 
 GJGroundLayer* GJGroundLayer::create(int gID)
@@ -31,14 +34,60 @@ bool GJGroundLayer::init(int gID)
     	return false;
 
     CCDirector* pDirector = CCDirector::sharedDirector();
+    CCSize winSize = pDirector->getWinSize();
+    
     GameManager* pGameManager = GameManager::sharedState();
 
-   	this->m_groundSprite = CCSprite::create(pGameManager->getGTexture(gID));
-
-   	ccColor3B gColor = { 0, 102, 255 };
-   	this->m_groundSprite->setColor(gColor);
-
-
+   	m_groundSprite = CCSprite::create(pGameManager->getGTexture(gID));
+    
+    ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+    m_groundSprite->getTexture()->setTexParameters(&texParams);
+    
+    this->addChild(m_groundSprite, 2);
+    m_groundSprite->setAnchorPoint({0, 1});
+   	m_groundSprite->setColor({ 0, 102, 255 });
+    m_groundSprite->setPosition({0.0f, 90.0f});
+    
+    float groundWidth = m_groundSprite->getTextureRect().size.width;
+    float scaleFactor = getScaleX();
+    m_groundWidth = groundWidth * scaleFactor;
+    
+    m_repeatCount = std::ceil(winSize.width / m_groundWidth) + 1.0f;
+    m_repeatWidth = m_groundWidth * m_repeatCount;
+    
+    m_tiles = CCArray::create();
+    m_tiles->retain();
+    
+    for (int i = 1; i < m_repeatCount; ++i) {
+        CCSprite* tile = CCSprite::create(pGameManager->getGTexture(gID));
+        tile->setAnchorPoint({0, 1});
+        tile->setColor({ 0, 102, 255 });
+        tile->setPosition({m_groundWidth * i, 90.0f});
+        this->addChild(tile);
+        m_tiles->addObject(tile);
+    }
+    
+    CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
+    leftShadow->setAnchorPoint({0.0f, 1.0f});
+    leftShadow->setPosition({pDirector->getScreenLeft() - 1.0f, 90.0f});
+    this->addChild(leftShadow, 3);
+    leftShadow->setOpacity(100);
+    leftShadow->setColor({150, 150, 150});
+    leftShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
+    leftShadow->setTag(0);
+    
+    CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
+    rightShadow->setAnchorPoint({1.0f, 1.0f});
+    rightShadow->setPosition({pDirector->getScreenRight() + 1.0f, 90.0f});
+    rightShadow->setFlipX(true);
+    this->addChild(rightShadow, 3);
+    rightShadow->setOpacity(100);
+    rightShadow->setColor({150, 150, 150});
+    rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
+    rightShadow->setTag(0);
+    
+    m_isActive = false;
+    
     return true;
 }
 

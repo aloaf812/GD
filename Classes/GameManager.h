@@ -60,6 +60,7 @@ public:
     int colorForPos(int color);
     std::string colorKey(int param_1, bool param_2);
     virtual void dataLoaded(DS_Dictionary* param_1);
+    static cocos2d::ccColor3B colorForIdx(int col);
     // get functions
     bool getClickedGarage();
     bool getClickedEditor();
