@@ -2,8 +2,9 @@
 #define __GeometryDash__PlayerObject__
 
 #include "cocos2d.h"
+#include "GameObject.h"
 
-class PlayerObject {
+class PlayerObject : public GameObject {
 public:
     //static PlayerObject* create();
     //virtual void update(float dt);

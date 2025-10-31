@@ -5,6 +5,9 @@
 #include "GManager.h"
 #include "SimplePlayer.h"
 #include <stdio.h>
+#include "PlayLayer.h"
+
+#define PLAY_LAYER GameManager::sharedState()->getPlayLayer()
 
 // thanks geode
 enum class UnlockType {
@@ -131,6 +134,7 @@ protected:
     std::string m_playerUDID;
     bool m_editMode;
     bool m_wasHigh;
+    CC_PROPERTY(PlayLayer*, m_playLayer, PlayLayer);
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */
