@@ -1,6 +1,6 @@
-# Geometry Dash (1.700) Decompilation
+# Geometry Dash (1.710) Decompilation
 
-Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.700. Much of the core functionality is not implemented and it is not in a usable state.
+Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.710. Much of the core functionality is not implemented and it is not in a usable state.
 
 # Building/Contributing
 
@@ -15,6 +15,17 @@ You can find instructions on how to build this project as well as contributing t
 ## SHA-1 File Hashes
 ### Android
 
+### 1.71
+
+* APK File: `aa680e1a03db4840e8f85171f1ab8469e3fbabe5`
+
+  **libcocos2dcpp.so:**
+  * armeabi: `c7146f1d213e9c6bf0501d8e85d7e5a5020205e3`
+  * armeabi-v7a: `b9c694455936aff06578c4f7332512f9950a0f97`
+  * x86: `05c7293d3f78d0bf70568ffa3ea26e9f1b037fde`
+
+### 1.70
+
 * APK File: `4d445903218646cb55bb39a88004a0c488ad2cde`
 
   **libcocos2dcpp.so:**
@@ -23,6 +34,13 @@ You can find instructions on how to build this project as well as contributing t
   * x86: `e474a0ff454a5111d7a037d5f163b9e8e0732d7d`
 
 ###  iOS
+
+### 1.71
+
+* IPA File: `d87adba92976d345cc499a83a8f7d5fa4ec7bcf6`
+* GeometryJump (executable): `1f6f06e6a0798b7e2c15436e5020f261db48c250`
+
+### 1.70
 
 * IPA File: `269eef85b33ff75cba487b7cce77f0eb947d4ab0`
 * GeometryJump (executable): `f1dfe8232462155c02bd610f6b62942118f9cbfa`
