@@ -6,12 +6,12 @@ GameObject::GameObject() {
     this->unk_0x1bc = 0;
     this->unk_0x1c0 = false;
 //  *(_DWORD *)this = &off_486138;
-    this->glowSprite = nullptr;
+    this->m_glowSprite = nullptr;
 //  *((_DWORD *)this + 0x3A) = &off_486538;
 //  *((_DWORD *)this + 0x3E) = &off_486578;
     this->unk_0x1c8 = false;
     this->unk_0x1c9 = false;
-    this->myAction = nullptr;
+    this->m_myAction = nullptr;
     this->unk_0x1d0 = false;
     this->m_poweredOn = false;
     this->unk_0x1d4 = 0;
@@ -141,7 +141,7 @@ GameObject* GameObject::create(const char* frame)
         gGameObject->init(frame);
     }
     
-    return gGJGameLevel;
+    return gGameObject;
 }
 
 void GameObject::disableObject() {
@@ -224,4 +224,90 @@ void GameObject::addColorSprite() {
             this->m_colorSprite->setOpacity(100);
         }
     }
+}
+
+void GameObject::setFlipX(bool flipX) {
+    CCSpritePlus::setFlipX(flipX);
+    if (this->m_glowSprite) {
+        m_glowSprite->setFlipX(flipX);
+    }
+    if (this->m_hasColor) {
+        m_colorSprite->setFlipX(flipX);
+    }
+}
+
+void GameObject::setFlipY(bool flipY) {
+    CCSpritePlus::setFlipY(flipY);
+    if (this->m_glowSprite) {
+        m_glowSprite->setFlipY(flipY);
+    }
+    if (this->m_hasColor) {
+        m_colorSprite->setFlipY(flipY);
+    }
+}
+
+void GameObject::setScaleX(float scaleX) {
+    CCSpritePlus::setScaleX(flipX);
+    if (this->m_glowSprite) {
+        this->m_glowSprite->setScaleX(scaleX);
+    }
+    if (this->m_hasColor) {
+        m_colorSprite->setScaleX(scaleX);
+    }
+}
+
+void GameObject::setScaleY(float scaleY) {
+    CCSpritePlus::setScaleY(flipY);
+    if (this->m_glowSprite) {
+        this->m_glowSprite->setScaleY(scaleY);
+    }
+    if (this->m_hasColor) {
+        m_colorSprite->setScaleY(scaleY);
+    }
+}
+
+void GameObject::resetObject() {
+    this->m_triggerActivated = false;
+    this->m_isSleeping = false;
+    this->unk_0x1de = false;
+}
+
+void GameObject::setGlowColor(cocos2d::ccColor3B color) {
+    if (this->m_glowSprite) {
+        this->m_glowSprite->setColor(color);
+    }
+}
+
+void GameObject::setPosition(cocos2d::CCPoint position) {
+    this->unk_0x218 = true;
+    CCSpritePlus::setPosition(position);
+    if (this->m_particleSystem) {
+        this->m_particleSystem->setPosition()
+    }
+}
+
+CCRepeatForever* GameObject::createRotateAction(float duration) {
+    int sign;
+    if (rand() / RAND_MAX < 0.5) {
+        sign = -1;
+    } else {
+        sign = 1;
+    }
+    return cocos2d::CCRepeatForever::create(cocos2d::CCRotateBy::create(1, duration * sign));
+}
+
+void GameObject::setVisible(bool visible) {
+    if (this->unk_0x1e8 && this->isVisible() != visible) {
+        if (visible) {
+            this->m_particleSystem = PLAY_LAYER->claimParticle(this->unk_0x1e4);
+            this->setPosition(this->getPosition());
+            if (this->m_particleSystem) {
+                PLAY_LAYER->getGameLayer();
+                CCPoint point = this-> + this->unk_0x1ec;
+            }
+        } else {
+            
+        }
+    }
+    cocos2d::CCSprite::setVisible(visible);
 }

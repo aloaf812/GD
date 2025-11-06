@@ -47,7 +47,6 @@ public:
     void powerOnObject();
     void removeGlow();
     void triggerActivated();
-    void disableObject();
 
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);
@@ -65,10 +64,10 @@ public:
     int unk_0x1b8;
     int unk_0x1bc;
     bool unk_0x1c0;
-    cocos2d::CCSprite* glowSprite; // 0x1c4
+    cocos2d::CCSprite* m_glowSprite; // 0x1c4
     bool unk_0x1c8;
     bool unk_0x1c9;
-    cocos2d::CCAction* myAction; // 0x1cc
+    cocos2d::CCAction* m_myAction; // 0x1cc
     bool unk_0x1d0;
     bool m_poweredOn; // 0x1d1
     float unk_0x1d4;
@@ -76,8 +75,8 @@ public:
     CC_PROPERTY_READONLY(bool, m_isActive, IsActive); // 0x1dc
     bool m_hasGlow; // 0x1dd
     bool unk_0x1de;
-    int unk_0x1e0;
-    int unk_0x1e4;
+    cocos2d::CCParticleSystemQuad* m_particleSystem; // 0x1e0
+    std::string* unk_0x1e4;
     bool unk_0x1e8;
     cocos2d::CCPoint unk_0x1ec;
     cocos2d::CCRect unk_0x1f4;
