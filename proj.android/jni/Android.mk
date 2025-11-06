@@ -7,16 +7,20 @@ LOCAL_MODULE := cocos2dcpp_shared
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
-                   ../../Classes/AdToolbox.cpp \
+                   ../../Classes/AchievementBar.cpp \
+                   ../../Classes/AchievementManager.cpp \
+                   ../../Classes/AchievementNotifier.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
                    ../../Classes/CCMenuItemSpriteExtra.cpp \
                    ../../Classes/CreatorLayer.cpp \
+                   ../../Classes/EditorUI.cpp \  
                    ../../Classes/EndLevelLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \
                    ../../Classes/FLAlertLayerProtocol.cpp \
                    ../../Classes/GameLevelManager.cpp \
                    ../../Classes/GameManager.cpp \
+                   ../../Classes/GameObject.cpp \
                    ../../Classes/GameSoundManager.cpp \
                    ../../Classes/GameToolbox.cpp \
                    ../../Classes/GJBaseGameLayer.cpp \
@@ -37,6 +41,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/OptionsLayer.cpp \
                    ../../Classes/PlatformToolbox.cpp \
                    ../../Classes/PlayLayer.cpp \
+                   ../../Classes/SimplePlayer.cpp \
+                   ../../Classes/Slider.cpp \
                    ../../Classes/SimplePlayer.cpp \
                    ../../Classes/SongInfoLayer.cpp \
                    ../../Classes/TextArea.cpp
