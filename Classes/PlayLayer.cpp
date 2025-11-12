@@ -51,19 +51,26 @@ PlayLayer::PlayLayer()
     
 }
 
-bool PlayLayer::init(GJGameLevel* level)
-{
+// bool PlayLayer::init(GJGameLevel* level)
+// {
+//     if (!CCLayer::init())
+//         return false;
+//     // GameEffectsManager TODO
+
+//     GameManager* pGameManager = GameManager::sharedState();
+//     pGameManager->setEditMode(false);
+//     // pGameManager->setPlayLayer(this);
+//     pGameManager->setWasHigh(false);
+
+//     CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
+//     CCSpriteBatchNode::createWithTexture(pTextureCache->addImage("GJ_GameSheet.png"), 29);
+    
+//     return true;
+// }
+
+bool PlayLayer::init(GJGameLevel* level) {
     if (!CCLayer::init())
         return false;
-    // GameEffectsManager TODO
 
     GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setEditMode(false);
-    // pGameManager->setPlayLayer(this);
-    pGameManager->setWasHigh(false);
-
-    CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-    CCSpriteBatchNode::createWithTexture(pTextureCache->addImage("GJ_GameSheet.png"), 29);
-    
-    return true;
 }
