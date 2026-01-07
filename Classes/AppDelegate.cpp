@@ -32,8 +32,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-
+    
     pDirector->setDepthTest(false);
+    // check performance with this: pDirector->setDisplayStats(true);
     // AdToolbox::setupAds();
     
     // run

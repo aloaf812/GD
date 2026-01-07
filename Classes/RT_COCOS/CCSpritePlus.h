@@ -18,12 +18,12 @@ public:
 	void addFollower(cocos2d::CCNode* sprite);
 	
     static CCSpritePlus* createWithSpriteFrame(cocos2d::CCSpriteFrame* frame);
-    static CCSpritePlus* createWithSpriteFrameName(char const*);
+    static CCSpritePlus* createWithSpriteFrameName(char const* frame);
 	void followSprite(CCSpritePlus* sprite);
     
 	
     cocos2d::CCSprite * getFollower();
-    bool initWithSpriteFrameName(char *name);
+    bool initWithSpriteFrameName(char const* name);
     bool initWithTexture (cocos2d::CCTexture2D * texture);
     void removeFollower(cocos2d::CCNode* sprite);
     

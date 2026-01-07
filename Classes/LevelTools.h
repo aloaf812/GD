@@ -19,7 +19,6 @@ public:
     static const char* nameForArtist(int artist);
     static const char* ytURLForArtist(int artist);
     static const char* ngURLForArtist(int artist);
-    static const char* fbURLForArtist(int artist);
     static const char* urlForAudio(int audio);
 };
 

@@ -85,9 +85,7 @@ bool CreatorLayer::init()
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
     m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
     m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    // for some reason every time i want to set a ccColor3B i have to define it as a variable first lol
-    ccColor3B c = {0, 102, 255};
-    m_backgroundSprite->setColor(c);
+    m_backgroundSprite->setColor({0, 102, 255});
     
     CCSprite* sideArtTL = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtTL->setAnchorPoint(CCPoint(0.0f, 0.0f));
@@ -121,6 +119,7 @@ bool CreatorLayer::init()
     backMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 25.0f, pDirector->getScreenTop() - 22.0f));
     
     CCMenu* creatorMenu = CCMenu::create();
+    
     
     CCSprite* createBtn = CCSprite::createWithSpriteFrameName("GJ_createBtn_001.png");
     CCMenuItemSpriteExtra* createExtra = CCMenuItemSpriteExtra::create(createBtn, NULL, this, menu_selector(CreatorLayer::onBack));

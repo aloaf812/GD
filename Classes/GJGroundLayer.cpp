@@ -86,6 +86,10 @@ bool GJGroundLayer::init(int gID)
     rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     rightShadow->setTag(0);
     
+    m_line = CCSprite::createWithSpriteFrameName("floorLine_001.png");
+    this->addChild(m_line, 3);
+    m_line->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 90.0f));
+    
     m_isActive = false;
     
     return true;

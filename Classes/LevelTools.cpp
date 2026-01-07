@@ -1,4 +1,5 @@
 #include "LevelTools.h"
+#include "LocalLevelManager.h"
 USING_NS_CC;
 
 const char* LevelTools::getAudioTitle(int audio)
@@ -127,7 +128,7 @@ GJGameLevel* LevelTools::getLevel(int level)
             m_level->setDifficulty(5);
             m_level->setStars(11);
             break;
-        // Theory of Everything
+        // Theory of Everything (the code is confusing it for electroman somehow)
         case 12:
             m_level->setLevelName(getAudioTitle(11));
             m_level->setAudioTrack(11);
@@ -144,7 +145,7 @@ GJGameLevel* LevelTools::getLevel(int level)
             m_level->setLevelName(getAudioTitle(13));
             m_level->setAudioTrack(13);
             m_level->setDifficulty(5);
-            m_level->setStars(14);
+            m_level->setStars(7);
             // m_level->setRequiredCoins(20);
             m_level->setDemon(true);
             break;
@@ -157,9 +158,11 @@ GJGameLevel* LevelTools::getLevel(int level)
             break;
         default: return getLevel(1);
     }
+    m_level->setLevelString(LocalLevelManager::sharedState()->getMainLevelString(level));
     m_level->setLevelID(level);
     m_level->setLevelType(GJLevelType::MainLevel);
     m_level->setCoins(3);
+    return m_level;
 }
 
 std::string LevelTools::getAudioString(int audio)
@@ -202,18 +205,6 @@ const char* LevelTools::ngURLForArtist(int artist)
     case 3: return "http://foreverbound.newgrounds.com/";
     case 4: return "http://step.newgrounds.com/";
     case 5: return "http://dj-nate.newgrounds.com/";
-    default: return nullptr;
-    }
-}
-
-const char* LevelTools::fbURLForArtist(int artist)
-{
-    switch(artist) {
-    case 0: return "https://www.facebook.com/DJVITechno";
-    case 1: return "http://www.facebook.com/pages/Waterflame/210371073165";
-    case 3: return "https://www.facebook.com/foreverboundofficial";
-    case 4: return "http://step.newgrounds.com/";
-    case 5: return "https://www.facebook.com/pages/Dj-Nate/280339788656689";
     default: return nullptr;
     }
 }

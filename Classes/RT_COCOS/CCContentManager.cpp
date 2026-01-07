@@ -20,10 +20,10 @@ bool CCContentManager::init() {
 
 CCDictionary* CCContentManager::addDict(const char* filePath, bool unk) {
     CCDictionary* obj = static_cast<CCDictionary*>(m_pDicts->objectForKey(filePath));
-    if (obj == nullptr) {
+    if (!obj) {
         DS_Dictionary* dsDict = new DS_Dictionary();
         dsDict->loadRootSubDictFromFile(filePath);
-        obj = dsDict->getDictForKey(nullptr, false);
+        obj = dsDict->getDictForKey(nullptr);
         delete dsDict;
         m_pDicts->setObject(obj, filePath);
     }

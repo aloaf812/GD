@@ -1,11 +1,20 @@
-#ifndef  _LOCAL_LEVEL_MANAGER_H_
-#define  _LOCAL_LEVEL_MANAGER_H_
+#ifndef __GeometryDash__LocalLevelManager__
+#define __GeometryDash__LocalLevelManager__
 
 #include "cocos2d.h"
 #include "GManager.h"
+#include <stdio.h>
 
-class LocalLevelManager : public GManager {
+class LocalLevelManager : GManager {
 public:
-    virtual void setup();
+    LocalLevelManager();
+    static LocalLevelManager* sharedState();
+    virtual bool init();
+    void setup();
+    std::string getMainLevelString(int level);
+protected:
+    cocos2d::CCDictionary* m_mainLevels;
+    std::string m_temp;
 };
-#endif
+
+#endif /* defined(__GeometryDash__LocalLevelManager__) */

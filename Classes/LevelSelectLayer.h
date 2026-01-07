@@ -14,10 +14,12 @@ public:
     void onDownload(CCObject* sender);
     void onBack(CCObject* sender);
     void onInfo(CCObject* sender);
-    // void onPrev(CCObject* sender);
+    void onPrev(CCObject* sender);
+    void onNext(CCObject* sender);
 protected:
     cocos2d::CCSprite* m_backgroundSprite;
-    struct colors;
+    BoomScrollLayer* m_scrollLayer;
+    //struct colors;
 };
 
 #endif

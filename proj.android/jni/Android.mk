@@ -12,15 +12,20 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AchievementNotifier.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
-                   ../../Classes/CCMenuItemSpriteExtra.cpp \
+                   ../../Classes/RT_COCOS/CCContentManager.cpp \
+                   ../../Classes/RT_COCOS/CCMenuItemSpriteExtra.cpp \
+                   ../../Classes/RT_COCOS/CCSpritePlus.cpp \
+                   ../../Classes/RT_COCOS/CCTextInputNode.cpp \
                    ../../Classes/CreatorLayer.cpp \
                    ../../Classes/EditorUI.cpp \  
                    ../../Classes/EndLevelLayer.cpp \
+                   ../../Classes/ExtendedLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \
                    ../../Classes/FLAlertLayerProtocol.cpp \
                    ../../Classes/GameLevelManager.cpp \
                    ../../Classes/GameManager.cpp \
                    ../../Classes/GameObject.cpp \
+                   ../../Classes/GameStatsManager.cpp \
                    ../../Classes/GameSoundManager.cpp \
                    ../../Classes/GameToolbox.cpp \
                    ../../Classes/GJBaseGameLayer.cpp \
@@ -31,14 +36,18 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GJListLayer.cpp \
                    ../../Classes/GManager.cpp \
                    ../../Classes/LevelInfoLayer.cpp \
+                   ../../Classes/LevelPage.cpp \
                    ../../Classes/LevelSelectLayer.cpp \
+                   ../../Classes/LevelSettingsObject.cpp \
                    ../../Classes/LevelTools.cpp \
                    ../../Classes/LoadingLayer.cpp \
                    ../../Classes/LocalLevelManager.cpp \
                    ../../Classes/MenuGameLayer.cpp \
                    ../../Classes/MenuLayer.cpp \
                    ../../Classes/MyLevelsLayer.cpp \
+                   ../../Classes/ObjectToolbox.cpp \
                    ../../Classes/OptionsLayer.cpp \
+                   ../../Classes/PauseLayer.cpp \
                    ../../Classes/PlatformToolbox.cpp \
                    ../../Classes/PlayLayer.cpp \
                    ../../Classes/SimplePlayer.cpp \

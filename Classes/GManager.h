@@ -7,7 +7,7 @@ class GManager : public cocos2d::CCNode
 {
     virtual bool init();
     virtual void setup();
-    void save();
+    // void save();
 };
 
 

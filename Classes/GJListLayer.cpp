@@ -26,6 +26,7 @@ bool GJListLayer::init(ccColor4B color, float width, float height)
     
     CCSprite* bottomTableSpr = CCSprite::createWithSpriteFrameName("GJ_table_bottom_001.png");
     // bottomTableSpr->setPosition();
-
+    this->addChild(bottomTableSpr);
+    
     return true;
 }

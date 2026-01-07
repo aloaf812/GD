@@ -7,6 +7,7 @@
 #include "LevelTools.h"
 #include "TextArea.h"
 #include "PlatformToolbox.h"
+#include "LocalLevelManager.h"
 #include <stdio.h>
 USING_NS_CC;
 
@@ -47,6 +48,8 @@ bool LoadingLayer::init() {
     GameManager* pGameManager = GameManager::sharedState();
 
     // GameSoundManager::GameSoundManager()->setup();
+    
+    LocalLevelManager::sharedState()->setup();
 
     CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
     pTextureCache->addImage("GJ_LaunchSheet.png");
@@ -63,28 +66,24 @@ bool LoadingLayer::init() {
     
     bgSprite->setPosition(winSize * 0.5f);
     bgSprite->setScale(AppDelegate::get()->bgScale());
-    ccColor3B bgColor = { 0, 102, 255 };
-    bgSprite->setColor(bgColor);
+    bgSprite->setColor({ 0, 102, 255 });
 
     CCSprite* gjLogo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     this->addChild(gjLogo);
-    gjLogo->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f + 26.0f));
+    gjLogo->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f));
 
     CCSprite* robTopLogo = CCSprite::createWithSpriteFrameName("RobTopLogoBig_001.png");
     this->addChild(robTopLogo);
-    const CCPoint gjLogoPos = gjLogo->getPosition();
-    const CCPoint logoPos2(0.0f, 80.0f);
-    robTopLogo->setPosition(logoPos2 + gjLogoPos);
+    robTopLogo->setPosition(gjLogo->getPosition() + ccp(0.0f, 80.0f));
     
     // Loading Text
     m_caption = CCLabelBMFont::create(getLoadingString(), "goldFont.fnt");
     this->addChild(m_caption);
-    const CCPoint loadingTextPos(winSize.width * 0.5f, winSize.height * 0.5f - 70.0f);
-    m_caption->setPosition(loadingTextPos);
+    m_caption->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 70.0f));
     m_caption->setScale(0.7f);
     m_caption->setVisible(true);
 
-    m_textArea = TextArea::create(getLoadingString(), "goldFont.fnt", 1.0f, 440.0f, CCPoint(0.5f, 0.5f), 28.0f, false);
+    m_textArea = TextArea::create(getLoadingString(), 400.0f, 0, {0.5f, 0.5f}, "goldFont.fnt", 0.5f);
     this->addChild(m_textArea);
     m_textArea->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f - 100.0f));
     m_textArea->setScale(0.7f);
@@ -119,7 +118,7 @@ bool LoadingLayer::init() {
     m_sliderBar->setAnchorPoint(CCPoint(0.0f, 0.0f));
     m_sliderBar->setPosition(CCPoint(2.0f, 4.0f));
     
-    sliderGroove->setPosition(CCPoint(m_caption->getPosition().x, m_textArea->getPosition().y + 70.0f));
+    sliderGroove->setPosition(CCPoint(m_caption->getPosition().x, m_textArea->getPosition().y + 40.0f));
     
     this->updateProgress(0);
     
@@ -221,7 +220,7 @@ void LoadingLayer::loadingFinished() {
 
 const char* LoadingLayer::getLoadingString() {
     
-    int stringNum = (rand() % 10 + 1);
+    int stringNum = (rand() % 10);
     switch(stringNum) {
     case 1: return "Listen to the music to help time your jumps"; break;
     case 2: return "Back for more are ya?"; break;

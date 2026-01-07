@@ -65,7 +65,7 @@ void MenuLayer::onPlay(CCObject* sender)
 {
     this->willClose();
     GameManager* pGameManager = GameManager::sharedState();
-    // pGameManager->setLastScene(8);
+    pGameManager->setLastScene(LastGameScene::unk8);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = LevelSelectLayer::scene(0);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);

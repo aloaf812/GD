@@ -1,3 +1,4 @@
+
 #ifndef __GeometryDash__GameObject__
 #define __GeometryDash__GameObject__
 
@@ -21,25 +22,25 @@ enum GameObjectType : int32_t {
     BallPortal = 15
 };
 /**
-@brief  Represents an object in a level
-*/
-class GameObject : public cocos2d::CCSpritePlus {
+ @brief  Represents an object in a level
+ */
+class GameObject : public CCSpritePlus {
 public:
-    GameObject();
-
-    static create(const char* spriteName);
+    // GameObject();
+    
+    static GameObject* create(const char* spriteName);
     bool init(const char* spriteName);
-
+    
     // virtual void update(float dt);
     // virtual void setScaleX(float scaleX);
     // virtual void setScaleY(float scaleY);
     // virtual void setScale(float scale);
-    // virtual void setPosition(cocos2d::CCPoint const& position);
+    virtual void setPosition(cocos2d::CCPoint position);
     // virtual void setVisible(bool visible);
     // virtual void setRotation(float rotation);
     // virtual void setOpacity(unsigned char opacity);
-
-    void disableObject();
+    
+    /*void disableObject();
     const char* getBallFrame(int idx);
     void addColorSprite();
     void activateObject();
@@ -47,11 +48,10 @@ public:
     void powerOnObject();
     void removeGlow();
     void triggerActivated();
-
+    
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);
     virtual void resetObject();
-    virtual void activateObject();
     virtual void deactivateObject();
     virtual cocos2d::CCRect getObjectRect();
     virtual cocos2d::CCRect getObjectRect(float scaleModX, float scaleModY);
@@ -59,8 +59,8 @@ public:
     virtual cocos2d::CCRect getObjectTextureRect();
     virtual cocos2d::CCPoint getRealPosition();
     virtual void setStartPos(cocos2d::CCPoint position);
-    virtual std::string getSaveString();
-
+    virtual std::string getSaveString();*/
+    
     int unk_0x1b8;
     int unk_0x1bc;
     bool unk_0x1c0;
@@ -72,7 +72,7 @@ public:
     bool m_poweredOn; // 0x1d1
     float unk_0x1d4;
     float unk_0x1d8;
-    CC_PROPERTY_READONLY(bool, m_isActive, IsActive); // 0x1dc
+    /// CC_PROPERTY_READONLY(bool, m_isActive, IsActive); // 0x1dc
     bool m_hasGlow; // 0x1dd
     bool unk_0x1de;
     cocos2d::CCParticleSystemQuad* m_particleSystem; // 0x1e0
@@ -83,9 +83,9 @@ public:
     bool unk_0x204;
     cocos2d::CCRect unk_0x208;
     bool unk_0x218;
-    CC_PROPERTY_READONLY(bool, m_hasColor, HasColor); // 0x219
+    // CC_PROPERTY_READONLY(bool, m_hasColor, HasColor); // 0x219
     cocos2d::CCSprite* m_colorSprite; // 0x21c
-    CC_PROPERTY(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220
+    /*CC_PROPERTY(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220
     CC_PROPERTY(float, m_radius, Radius); // 0x224
     CC_PROPERTY_READONLY(bool, m_isRotated, IsRotated); // 0x228
     CC_PROPERTY(float, m_scaleModX, ScaleModX); // 0x22c
@@ -95,9 +95,9 @@ public:
     CC_PROPERTY(int, m_sectionIdx, SectionIdx); // 0x23c
     CC_PROPERTY_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
     CC_PROPERTY(bool, m_touchTriggered, TouchTriggered); // 0x241
-    cocos2d::CCPoint m_realPosition; // 0x244
-    CC_PROPERTY_READONLY(std::string*, m_frame, Frame); // 0x24c
-    CC_PROPERTY(bool, m_blendAdditive, BlendAdditive); // 0x250
+    cocos2d::CCPoint m_realPosition; // 0x244*/
+    CC_PROPERTY_READONLY(std::string, m_frame, Frame); // 0x24c
+    /*CC_PROPERTY(bool, m_blendAdditive, BlendAdditive); // 0x250
     CC_PROPERTY_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251
     CC_PROPERTY_READONLY(bool, m_usePlayerColor2, UsePlayerColor2); // 0x252
     CC_PROPERTY(bool, m_isDisabled, IsDisabled); // 0x253
@@ -137,7 +137,7 @@ public:
     CC_PROPERTY(bool, m_editorSelected, EditorSelected); // 0x2b5
     CC_PROPERTY(bool, m_copyPlayerColor1, CopyPlayerColor1); // 0x2b6
     CC_PROPERTY(bool, m_copyPlayerColor2, CopyPlayerColor2); // 0x2b7
-    CC_PROPERTY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2b8
+    CC_PROPERTY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2b8*/
 };
 
 #endif

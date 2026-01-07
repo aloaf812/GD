@@ -17,6 +17,8 @@ public:
     SimplePlayer();
     static SimplePlayer* create(int iconID);
     bool init(int iconID);
+protected:
+    // CC_PROPERTY(int, m_special, Special);
 };
 
 #endif

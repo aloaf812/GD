@@ -1,7 +1,6 @@
 #ifndef _MENU_GAME_LAYER_H
 #define _MENU_GAME_LAYER_H
 
-#include "GJGroundLayer.h"
 #include "PlayerObject.h"
 #include "cocos2d.h"
 

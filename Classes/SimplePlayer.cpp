@@ -55,16 +55,6 @@ bool SimplePlayer::init(int iconID)
     CCSprite* m_pPlayerSpriteDetail = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
     m_pPlayerSpriteLayer1->addChild(m_pPlayerSpriteDetail, 1);
     // m_pPlayerSpriteDetail->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));
-    
-    /*m_pRobotSprite = GJRobotSprite::create();
-    m_pRobotSprite->setVisible(false);
-    addChild(m_pRobotSprite);
-    
-    m_pSpiderSprite = GJSpiderSprite::create();
-    m_pSpiderSprite->setVisible(false);
-    addChild(m_pSpiderSprite);
-    
-    m_pSpiderSprite->setPosition({ 0.0f, -1.5f });*/
     // updatePlayerFrame(id, 0);
     return true;
 }

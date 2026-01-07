@@ -42,7 +42,7 @@ cocos2d::CCSprite * CCSpritePlus::getFollower(){
 }
 
 
-bool CCSpritePlus::initWithSpriteFrameName(char *name){
+bool CCSpritePlus::initWithSpriteFrameName(char const* name){
     m_eObjType = 13;
     return cocos2d::CCSprite::initWithSpriteFrameName(name);
 }

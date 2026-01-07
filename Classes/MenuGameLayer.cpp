@@ -37,9 +37,6 @@ bool MenuGameLayer::init()
     
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSize winSize = pDirector->getWinSize();
-    
-    m_groundLayer = CCLayer::create();
-    this->addChild(m_groundLayer, 3);
 
     m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(1));
     m_backgroundSprite->setAnchorPoint({0, 0});
@@ -50,6 +47,10 @@ bool MenuGameLayer::init()
     m_backgroundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_backgroundSprite->getContentSize().height));
     this->addChild(m_backgroundSprite, -1);
     m_bgWidth = winSize.width;
+    
+    // ground
+    m_groundLayer = CCLayer::create();
+    this->addChild(m_groundLayer, 3);
     
     m_groundSprite = CCSprite::create(pGameManager->getGTexture(1));
     m_groundSprite->getTexture()->setTexParameters(&texParams);

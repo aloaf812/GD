@@ -1,6 +1,6 @@
 #include "GameLevelManager.h"
-#include "GJGameLevel.h"
 #include "LevelInfoLayer.h"
+#include "LevelTools.h"
 USING_NS_CC;
 
 GameLevelManager* GameLevelManager::sharedState()
@@ -118,7 +118,26 @@ CCDictionary* GameLevelManager::responseToDict(std::string response, bool p0){
     return dict;
 }
 
-CCObject* GameLevelManager::getMainLevel(int mainLevel)
-{
+/*void GameLevelManager::storeUserNames(std::string usernameString){
+    CCArray* usernames = CCArray::create();
     
+    std::stringstream responseStream(response);
+    std::string currentKey;
+    std::string keyID;
+    
+    unsigned int i = 0;
+    while(getline(responseStream, currentKey, '|')){
+        
+        if(i % 2 == 0) keyID = currentKey;
+        else usernames->setObject(CCString::create(currentKey.c_str()),keyID);
+        i++;
+    }
+    
+    return dict;
+}*/
+
+
+GJGameLevel* GameLevelManager::getMainLevel(int mainLevel)
+{
+    return LevelTools::getLevel(mainLevel);
 }

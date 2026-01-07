@@ -20,8 +20,8 @@ GJGameLevel::GJGameLevel()
     this->m_levelName = "";
     this->m_levelDesc = "";
     this->m_levelString = "";
-    this->m_creatorName = "";
-    this->m_recordString = "";
+    //this->m_creatorName = "";
+    //this->m_recordString = "";
     this->m_userID = 0;
     this->m_difficulty = 0;
     this->m_audioTrack = 0;
@@ -70,6 +70,16 @@ GJGameLevel::GJGameLevel()
 
 bool GJGameLevel::init()
 {
+    m_levelType = GJLevelType::LocalLevel;
+    m_attempts = 0;
+    m_jumps = 0;
+    m_coins = 0;
+    m_stars = 0;
+    m_demon = false;
+    m_levelSize = 0;
+    m_dontSave = false;
+    m_isHidden = false;
+    m_levelVersion = 1;
     CCDictionary* levelDict = CCDictionary::create();
     levelDict->retain();
     return true;
@@ -97,6 +107,7 @@ GJGameLevel* GJGameLevel::create(cocos2d::CCDictionary* dict)
     valInt = dict->valueForKey("6")->intValue();
     level->setUserID(valInt);
     
+    // on second thought i'm just stupid
     /* can't test this lol, originally used to store the creator's name. might make a gdps for this
     valStr = dict->valueForKey("7")->getCString();
     level->setUserName(valStr); */
@@ -146,8 +157,8 @@ void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
         DS_Dictionary::setStringForKey(in_r1,"k4",asStack_14);
         FUN_003b16dc(asStack_14);*/
     }
-    dict->setStringForKey("k5", this->m_creatorName);
-    dict->setStringForKey("k34", this->m_recordString);
+    //dict->setStringForKey("k5", this->m_creatorName);
+    //dict->setStringForKey("k34", this->m_recordString);
     dict->setIntegerForKey("k6", this->m_userID);
     dict->setIntegerForKey("k7", this->m_difficulty);
     dict->setIntegerForKey("k8", this->m_audioTrack);
@@ -163,7 +174,43 @@ void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
 // get functions
 std::string GJGameLevel::getLevelName()
 {
-//     return this->m_levelName;
+     return m_levelName;
+}
+
+std::string GJGameLevel::getLevelDesc()
+{
+    return m_levelDesc;
+}
+
+std::string GJGameLevel::getLevelString()
+{
+    return m_levelString;
+}
+
+int GJGameLevel::getLevelID()
+{
+    return m_levelID;
+}
+
+int GJGameLevel::getAudioTrack() { return m_audioTrack; }
+
+int GJGameLevel::getDifficulty() { return m_difficulty; }
+
+int GJGameLevel::getNormalPercent() { return m_normalPercent; }
+
+int GJGameLevel::getDownloads()
+{
+    return m_downloads;
+}
+
+int GJGameLevel::getStars()
+{
+    return m_stars;
+}
+
+int GJGameLevel::getCoins()
+{
+    return m_coins;
 }
 
 // set functions
@@ -174,7 +221,7 @@ void GJGameLevel::setLevelID(int ID)
 
 void GJGameLevel::setLevelName(std::string name)
 {
-    this->m_levelName = name;
+    m_levelName = name;
 }
 
 void GJGameLevel::setLevelDesc(std::string desc)
@@ -244,7 +291,7 @@ void GJGameLevel::setAutoLevel(bool autoLevel)
 
 void GJGameLevel::setDifficulty(int difficulty)
 {
-    this->m_difficulty = difficulty;
+    m_difficulty = difficulty;
 }
 
 void GJGameLevel::setStars(int stars)
@@ -260,4 +307,9 @@ void GJGameLevel::setLevelType(GJLevelType levelType)
 void GJGameLevel::setCoins(int coins)
 {
     this->m_coins = coins;
+}
+
+void GJGameLevel::setNormalPercent(int var)
+{
+    m_normalPercent = var;
 }

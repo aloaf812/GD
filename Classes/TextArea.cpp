@@ -2,7 +2,7 @@
 #include "TextArea.h"
 USING_NS_CC;
 
-bool TextArea::init(std::string str, const char* font, float separation, float width, cocos2d::CCPoint anchor, float lineSeparation, bool plainText)
+bool TextArea::init(char const* str, float unk1, int unk2, cocos2d::CCPoint position, char const* unk3, float unk4)
 {
     if (!CCSprite::init())
         return false;
@@ -10,10 +10,10 @@ bool TextArea::init(std::string str, const char* font, float separation, float w
     return true;
 }
 
-TextArea* TextArea::create(std::string str, const char* font, float separation, float width, cocos2d::CCPoint anchor, float lineSeparation, bool plainText)
+TextArea* TextArea::create(char const* str, float unk1, int unk2, cocos2d::CCPoint position, char const* unk3, float unk4)
 {
     TextArea* pRet = new TextArea();
-    if (pRet && pRet->init(str, font, separation, width, anchor, lineSeparation, plainText))
+    if (pRet && pRet->init(str, unk1, unk2, position, unk3, unk4))
     {
         pRet->autorelease();
         return pRet;

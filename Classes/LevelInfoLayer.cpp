@@ -81,9 +81,7 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
     m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
     m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    // for some reason every time i want to set a ccColor3B i have to define it as a variable first lol
-    ccColor3B c = {0, 102, 255};
-    m_backgroundSprite->setColor(c);
+    m_backgroundSprite->setColor({0, 102, 255});
     
     CCSprite* sideArtL = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtL->setAnchorPoint(CCPoint(0.0f, 0.0f));
@@ -104,7 +102,7 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     backMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 25.0f, pDirector->getScreenTop() - 22.0f));
     
     // this is being held together by hopes and dreams and it works perfectly
-    CCLabelBMFont* m_levelCaption = CCLabelBMFont::create(level->m_levelName.c_str(), "bigFont.fnt");
+    CCLabelBMFont* m_levelCaption = CCLabelBMFont::create(level->getLevelName().c_str(), "bigFont.fnt");
     this->addChild(m_levelCaption);
     const CCPoint levelTextPos(winSize.width * 0.5f, pDirector->getScreenTop() - 30.0f);
     m_levelCaption->setPosition(levelTextPos);
@@ -131,7 +129,7 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     this->addChild(downloadsSpr, 1);
     downloadsSpr->setPosition(playMenu->getPosition() + CCPoint(60.0f, 35.0f));
     
-    CCLabelBMFont* m_downloadCaption = CCLabelBMFont::create("%d", "bigFont.fnt", level->m_downloads);
+    CCLabelBMFont* m_downloadCaption = CCLabelBMFont::create("%d", "bigFont.fnt", level->getDownloads());
     this->addChild(m_downloadCaption);
     const CCPoint downloadTextPos(downloadsSpr->getPosition() + CCPoint(50.0f, 0.0f));
     m_downloadCaption->setPosition(downloadTextPos);

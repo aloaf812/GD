@@ -39,8 +39,8 @@ void AchievementManager::notifyAchievementWithID(char const* achID)
 {
     // houston, we have a problem.
     CCLOG("notifying achievement %s", achID);
-	/*if (this->m_dontNotifyAch == false) {
-		if (m_achDict->objectForKey(achID) != nullptr) {
+	if (this->m_dontNotifyAch == false) {
+		/*if (m_achDict->objectForKey(achID) != nullptr) {
 			const char* title = m_achDict->valueForKey("title")->getCString();
             CCLOG(title);
 			const char* description = m_achDict->valueForKey("achievedDescription")->getCString();
@@ -49,8 +49,8 @@ void AchievementManager::notifyAchievementWithID(char const* achID)
             CCLOG(icon);
             AchievementNotifier* pAchNotifier = AchievementNotifier::sharedState();
 			pAchNotifier->notifyAchievement(title, description, icon);
-		}
-	}*/
+		}*/
+	}
 }
 
 void AchievementManager::reportAchievementWithID(char const* achID, int percentage, bool param_3)

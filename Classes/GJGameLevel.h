@@ -19,43 +19,39 @@ public:
     virtual bool init();
 
     void encodeWithCoder(DS_Dictionary* dict);
-    // get functions
-    static std::string getLevelName();
+    // le CC_PROPERTY
+    CC_PROPERTY(int, m_levelID, LevelID);
+    CC_PROPERTY(std::string, m_levelName, LevelName);
+    CC_PROPERTY(std::string, m_levelDesc, LevelDesc);
+    CC_PROPERTY(std::string, m_levelString, LevelString);
+    //CC_PROPERTY(std::string, m_creatorName, CreatorName);
+    //CC_PROPERTY(std::string, m_recordString, RecordString);
+    CC_PROPERTY(int, m_difficulty, Difficulty);
+    CC_PROPERTY(int, m_normalPercent, NormalPercent);
+    CC_PROPERTY(int, m_downloads, Downloads);
+    CC_PROPERTY(int, m_stars, Stars);
+    CC_PROPERTY(int, m_coins, Coins);
+    CC_PROPERTY(int, m_audioTrack, AudioTrack);
+    
     // set functions
-    void setLevelID(int ID);
-    void setLevelName(std::string name);
-    void setLevelDesc(std::string desc);
-    void setLevelString(std::string string);
+    //void setLevelDesc(std::string desc);
+    //void setLevelString(std::string string);
     void setLevelVersion(int version);
     void setUserID(int userID);
     void setRatings(int ratings);
     void setRatingsSum(int ratingsSum);
-    void setDownloads(int downloads);
     void setCompletes(int completes);
-    void setAudioTrack(int audioTrack);
     void setGameVersion(int gameVersion);
     void setLikes(int likes);
     void setDemon(bool demon);
     void setAutoLevel(bool autoLevel);
-    void setDifficulty(int difficulty);
-    void setStars(int stars);
     void setLevelType(GJLevelType levelType);
-    void setCoins(int coins);
-// protected:
-    int m_levelID;
-    std::string m_levelName;
-    std::string m_levelDesc;
-    std::string m_levelString;
-    std::string m_creatorName;
-    std::string m_recordString;
+protected:
     int m_userID;
-    int m_difficulty;
-    int m_audioTrack;
     // ??? m_uploadDate;
     // ??? m_updateDate;
     int m_ratings;
     int m_ratingsSum;
-    int m_downloads;
     int m_completes;
     bool m_isEditable;
     bool m_isVerified;
@@ -64,16 +60,13 @@ public:
     int m_gameVersion;
     int m_attempts;
     int m_jumps;
-    int m_normalPercent;
     int m_practicePercent;
     int m_likes;
     int m_dislikes;
     int m_levelLength;
     int m_featured;
     bool m_demon;
-    int m_stars;
     bool m_autoLevel;
-    int m_coins;
     int m_levelSize;
     int m_password;
     int m_failedPasswordAttempts;

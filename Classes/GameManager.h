@@ -5,7 +5,9 @@
 #include "GManager.h"
 #include "SimplePlayer.h"
 #include <stdio.h>
+// layers
 #include "PlayLayer.h"
+#include "LevelSelectLayer.h"
 
 #define PLAY_LAYER GameManager::sharedState()->getPlayLayer()
 
@@ -19,10 +21,18 @@ enum class UnlockType {
     Bird = 6
 };
 
+// i'll figure these values out when i can
 enum class LastGameScene {
-    Menuaaayer = 8,
-    MenuPlayer = 0,
-    MenuGamePlae = 20
+    unk0 = 0,
+    unk1 = 1,
+    unk2 = 2,
+    unk3 = 3,
+    unk4 = 4,
+    unk5 = 5,
+    unk6 = 6,
+    unk7 = 7,
+    unk8 = 8,
+    LevelSelect = 9
 };
 
 class GameManager: public GManager {
@@ -60,31 +70,45 @@ public:
     void likeFacebook();
     void firstLoad();
     void rateGame();
+    void toggleFX();
+    void toggleMusic();
     int colorForPos(int color);
     std::string colorKey(int param_1, bool param_2);
     virtual void dataLoaded(DS_Dictionary* param_1);
+    /**
+    @param col The number of the player color.
+    @returns an RGB color in ccColor3B form corresponding to the player color #.
+    */
     static cocos2d::ccColor3B colorForIdx(int col);
+    // clean CC_PROPERTY lines
+    CC_PROPERTY(bool, m_clickedGarage, ClickedGarage);
+    CC_PROPERTY(bool, m_clickedEditor, ClickedEditor);
+    // icons
+    CC_PROPERTY(int, m_playerColor, PlayerColor);
+    CC_PROPERTY(int, m_playerColor2, PlayerColor2);
+    CC_PROPERTY(int, m_playerFrame, PlayerFrame);
+    CC_PROPERTY(int, m_playerShip, PlayerShip);
+    CC_PROPERTY(int, m_playerBall, PlayerBall);
+    CC_PROPERTY(int, m_playerBird, PlayerBird);
+    CC_PROPERTY(int, m_playerStreak, PlayerStreak);
+    CC_PROPERTY(IconType, m_playerIconType, PlayerIconType);
+    // layers
+    CC_PROPERTY(PlayLayer*, m_playLayer, PlayLayer);
+    CC_PROPERTY(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer);
+    CC_PROPERTY(bool, m_mainMenuActive, MainMenuActive);
     // get functions
-    bool getClickedGarage();
-    bool getClickedEditor();
     bool getEditMode();
     bool getGameCenterEnabled();
     // set functions
-    void setMainMenuActive(bool active);
-    void setClickedGarage(bool clickedGarage);
-    void setClickedEditor(bool clickedEditor);
     void setFirstSetup(bool firstSetup);
     void setLastScene(LastGameScene scene);
     void setEditMode(bool edit);
     void setWasHigh(bool wasHigh);
 protected:
     // made before i started with the variables
-    bool m_clickedGarage;
-    bool m_clickedEditor;
     bool m_clickedName;
     // dictionaries
     cocos2d::CCDictionary* m_valueKeeper;
-    bool m_mainMenuActive;
     bool m_gameCenterEnabled;
     bool m_firstSetup;
     bool m_showedFirstTutorial;
@@ -109,15 +133,6 @@ protected:
     int m_totalAttempts;
     int m_playerUserID;
     LastGameScene m_lastScene;
-    // icons
-    int m_playerColor;
-    int m_playerColor2;
-    int m_playerFrame;
-    int m_playerShip;
-    int m_playerBall;
-    int m_playerBird;
-    int m_playerStreak;
-    IconType m_playerIconType;
     // unknown values
     bool offset_0x5;
     bool offset_0xf;
@@ -134,7 +149,6 @@ protected:
     std::string m_playerUDID;
     bool m_editMode;
     bool m_wasHigh;
-    CC_PROPERTY(PlayLayer*, m_playLayer, PlayLayer);
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

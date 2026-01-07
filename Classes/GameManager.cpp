@@ -284,6 +284,27 @@ void GameManager::followTwitter()
     }
 }
 
+void GameManager::toggleFX()
+{
+    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+    float volume;
+    
+    if (!(m_fxEnabled ^ 1)) { volume = 1.0f; }
+    else { volume = 0.0f; }
+    SAE->setEffectsVolume(volume);
+}
+
+void GameManager::toggleMusic()
+{
+    // GameSoundManager not yet implemented
+    // GameSoundManager* GSM = GameSoundManager::sharedManager();
+    float volume;
+    
+    if (!(m_musicEnabled ^ 1)) { volume = 1.0f; }
+    else { volume = 0.0f; }
+    // GSM->setBGMusicVolume(volume);
+}
+
 std::string GameManager::colorKey(int param_1, bool param_2)
 {
     return CCString::createWithFormat("c%i_%d", param_1, param_2)->getCString();
@@ -313,7 +334,6 @@ int GameManager::colorForPos(int color)
 
 ccColor3B GameManager::colorForIdx(int col)
 {
-	// these are all dummy values
     switch (col) {
         case 0: return ccColor3B{125, 255, 0};
         case 1: return ccColor3B{0, 255, 0};
@@ -414,6 +434,61 @@ bool GameManager::getGameCenterEnabled()
     return this->m_gameCenterEnabled;
 }
 
+PlayLayer* GameManager::getPlayLayer()
+{
+    return m_playLayer;
+}
+
+LevelSelectLayer* GameManager::getLevelSelectLayer()
+{
+    return m_levelSelectLayer;
+}
+
+int GameManager::getPlayerColor()
+{
+    return m_playerColor;
+}
+
+int GameManager::getPlayerColor2()
+{
+    return m_playerColor2;
+}
+
+int GameManager::getPlayerFrame()
+{
+    return m_playerFrame;
+}
+
+int GameManager::getPlayerShip()
+{
+    return m_playerShip;
+}
+
+int GameManager::getPlayerBall()
+{
+    return m_playerBall;
+}
+
+int GameManager::getPlayerBird()
+{
+    return m_playerBird;
+}
+
+int GameManager::getPlayerStreak()
+{
+    return m_playerStreak;
+}
+
+IconType GameManager::getPlayerIconType()
+{
+    return m_playerIconType;
+}
+
+bool GameManager::getMainMenuActive()
+{
+    return m_mainMenuActive;
+}
+
 // set functions
 void GameManager::setMainMenuActive(bool active)
 {
@@ -427,7 +502,7 @@ void GameManager::setClickedGarage(bool clickedGarage)
 
 void GameManager::setClickedEditor(bool clickedEditor)
 {
-    this->m_clickedGarage = clickedEditor;
+    this->m_clickedEditor = clickedEditor;
 }
 
 void GameManager::setFirstSetup(bool firstSetup)
@@ -437,7 +512,17 @@ void GameManager::setFirstSetup(bool firstSetup)
 
 void GameManager::setLastScene(LastGameScene scene)
 {
-    this->m_lastScene = scene;
+    m_lastScene = scene;
+}
+
+void GameManager::setPlayLayer(PlayLayer *var)
+{
+    m_playLayer = var;
+}
+
+void GameManager::setLevelSelectLayer(LevelSelectLayer *var)
+{
+    m_levelSelectLayer = var;
 }
 
 void GameManager::setEditMode(bool edit)
@@ -448,4 +533,44 @@ void GameManager::setEditMode(bool edit)
 void GameManager::setWasHigh(bool wasHigh)
 {
     this->m_wasHigh = wasHigh;
+}
+
+void GameManager::setPlayerColor(int var)
+{
+    m_playerColor = var;
+}
+
+void GameManager::setPlayerColor2(int var)
+{
+    m_playerColor2 = var;
+}
+
+void GameManager::setPlayerFrame(int var)
+{
+    m_playerFrame = var;
+}
+
+void GameManager::setPlayerShip(int var)
+{
+    m_playerShip = var;
+}
+
+void GameManager::setPlayerBall(int var)
+{
+    m_playerBall = var;
+}
+
+void GameManager::setPlayerBird(int var)
+{
+    m_playerBird = var;
+}
+
+void GameManager::setPlayerStreak(int var)
+{
+    m_playerStreak = var;
+}
+
+void GameManager::setPlayerIconType(IconType var)
+{
+    m_playerIconType = var;
 }

@@ -9,7 +9,7 @@ class GameSoundManager : public cocos2d::CCNode {
 public:
     bool init();
     void setup();
-    static GameSoundManager* sharedState() {
+    static GameSoundManager* sharedManager() {
         return 0;
     }
 };
