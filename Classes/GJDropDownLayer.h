@@ -17,7 +17,7 @@ public:
     virtual void disableUI();
     void enableUI();
     void draw();
-    virtual void exitLayer(cocos2d::CCObject* obj);
+    void exitLayer(cocos2d::CCObject* obj);
     virtual void hideLayer(bool instantHide);
     void showLayer(bool instantShow);
     void keyBackClicked();

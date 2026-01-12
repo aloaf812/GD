@@ -85,7 +85,7 @@ bool GJGameLevel::init()
     return true;
 }
 
-GJGameLevel* GJGameLevel::create(cocos2d::CCDictionary* dict)
+GJGameLevel* GJGameLevel::create(CCDictionary* dict)
 {
     GJGameLevel* level = GJGameLevel::create();
     
@@ -143,9 +143,11 @@ GJGameLevel* GJGameLevel::create(cocos2d::CCDictionary* dict)
     return level;
 }
 
-void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
+// yep. you know the drill.
+// void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
+void GJGameLevel::encodeWithCoder(CCDictionary* dict)
 {
-    dict->setIntegerForKey("kCEK", 4);
+    /*dict->setIntegerForKey("kCEK", 4);
     dict->setIntegerForKey("k1", this->m_levelID);
     dict->setStringForKey("k2", this->m_levelName);
     dict->setStringForKey("k3", this->m_levelDesc);
@@ -153,10 +155,10 @@ void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
         dict->setStringForKey("k4", this->m_levelString);
     }
     else {
-        /*std::string(asStack_14,&DAT_00401d62,&pGStack_18);
+        std::string(asStack_14,&DAT_00401d62,&pGStack_18);
         DS_Dictionary::setStringForKey(in_r1,"k4",asStack_14);
-        FUN_003b16dc(asStack_14);*/
-    }
+        FUN_003b16dc(asStack_14);
+    //}
     //dict->setStringForKey("k5", this->m_creatorName);
     //dict->setStringForKey("k34", this->m_recordString);
     dict->setIntegerForKey("k6", this->m_userID);
@@ -168,7 +170,7 @@ void GJGameLevel::encodeWithCoder(DS_Dictionary* dict)
     dict->setIntegerForKey("k12", this->m_completes);
     dict->setBoolForKey("k13", this->m_isEditable);
     dict->setBoolForKey("k14", this->m_isVerified);
-    dict->setBoolForKey("k15", this->m_isUploaded);
+    dict->setBoolForKey("k15", this->m_isUploaded);*/
 }
 
 // get functions

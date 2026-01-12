@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GJGameLevel.h"
+#include <algorithm>
 
 class LevelPage : public cocos2d::CCLayer {
     GJGameLevel* m_level;

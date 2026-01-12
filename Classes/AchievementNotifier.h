@@ -2,6 +2,7 @@
 #define _ACHIEVEMENT_NOTIFIER_H_
 
 #include "cocos2d.h"
+#include "AchievementBar.h"
 
 class AchievementNotifier : public cocos2d::CCNode {
 public:
@@ -12,6 +13,9 @@ public:
 	void showNextAchievement();
 	void achievementDisplayFinished();
 	void willSwitchToScene(cocos2d::CCScene* scene);
+protected:
+	cocos2d::CCArray* m_achArray;
+	AchievementBar* m_currentAch;
 };
 
 #endif

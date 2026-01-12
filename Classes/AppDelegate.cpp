@@ -32,11 +32,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-    
+
     pDirector->setDepthTest(false);
     // check performance with this: pDirector->setDisplayStats(true);
     // AdToolbox::setupAds();
-    
+
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		CCFileUtils::sharedFileUtils()->addSearchPath("Resources");
+	#endif
+
     // run
     CCScene *pScene = LoadingLayer::node();
     pDirector->runWithScene(pScene);

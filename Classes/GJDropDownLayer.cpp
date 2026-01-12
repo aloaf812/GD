@@ -35,7 +35,7 @@ void GJDropDownLayer::enterLayer() {
     this->showLayer(false);
 }
 
-void GJDropDownLayer::exitLayer(CCObject* p) {
+void GJDropDownLayer::exitLayer(CCObject* obj) {
     this->setKeypadEnabled(false);
     
     // auto director = CCDirector::sharedDirector();
@@ -59,11 +59,11 @@ void GJDropDownLayer::hideLayer(bool instantHide) {
         this->layerHidden();
     }
     else {
-        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.);
+        /*CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.);
         CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::exitLayer));
         CCSequence* seq = CCSequence::create(action, callback);
         this->m_mainLayer->runAction(seq);
-        this->runAction(CCFadeTo::create(0.5, 0));
+        this->runAction(CCFadeTo::create(0.5, 0));*/
     }
 }
 

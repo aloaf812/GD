@@ -46,7 +46,7 @@ LevelInfoLayer* LevelInfoLayer::create(GJGameLevel *level)
     }
 }
 
-void LevelInfoLayer::onBack(cocos2d::CCObject *sender)
+void LevelInfoLayer::onBack(CCObject *sender)
 {
     
 }
@@ -161,28 +161,28 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     CCMenu* sideMenu = CCMenu::create();
     
     CCSprite* deleteBtn = CCSprite::createWithSpriteFrameName("GJ_deleteBtn_001.png");
-    CCMenuItemSpriteExtra* deleteExtra = CCMenuItemSpriteExtra::create(deleteBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+    CCMenuItemSpriteExtra* deleteExtra = CCMenuItemSpriteExtra::create(deleteBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     sideMenu->addChild(deleteExtra);
     this->addChild(sideMenu, 2);
     
     CCSprite* updateBtn = CCSprite::createWithSpriteFrameName("GJ_updateBtn_001.png");
-    CCMenuItemSpriteExtra* updateExtra = CCMenuItemSpriteExtra::create(updateBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+    CCMenuItemSpriteExtra* updateExtra = CCMenuItemSpriteExtra::create(updateBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     sideMenu->addChild(updateExtra);
     
     CCSprite* infoBtn = CCSprite::createWithSpriteFrameName("GJ_infoBtn_001.png");
-    CCMenuItemSpriteExtra* infoExtra = CCMenuItemSpriteExtra::create(infoBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+    CCMenuItemSpriteExtra* infoExtra = CCMenuItemSpriteExtra::create(infoBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     sideMenu->addChild(infoExtra);
     
     CCSprite* rateDiffBtn = CCSprite::createWithSpriteFrameName("GJ_rateDiffBtn_001.png");
-    CCMenuItemSpriteExtra* rateDiffExtra = CCMenuItemSpriteExtra::create(rateDiffBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+    CCMenuItemSpriteExtra* rateDiffExtra = CCMenuItemSpriteExtra::create(rateDiffBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     sideMenu->addChild(rateDiffExtra);
     
     CCSprite* likeBtn = CCSprite::createWithSpriteFrameName("GJ_like2Btn_001.png");
-    CCMenuItemSpriteExtra* likeExtra = CCMenuItemSpriteExtra::create(likeBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+    CCMenuItemSpriteExtra* likeExtra = CCMenuItemSpriteExtra::create(likeBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     sideMenu->addChild(likeExtra);
     
     CCSprite* starBtn = CCSprite::createWithSpriteFrameName("GJ_starBtn_001.png");
-    CCMenuItemSpriteExtra* starExtra = CCMenuItemSpriteExtra::create(starBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+    CCMenuItemSpriteExtra* starExtra = CCMenuItemSpriteExtra::create(starBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     sideMenu->addChild(starExtra);
     
     deleteExtra->setPosition(sideMenu->convertToNodeSpace(CCPoint(pDirector->getScreenRight() - 35.0f, pDirector->getScreenTop() - 30.0f)));
@@ -195,7 +195,7 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     CCMenu* lvlInfoMenu = CCMenu::create();
     
     CCSprite* lvlInfoBtn = CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png");
-    CCMenuItemSpriteExtra* lvlInfoExtra = CCMenuItemSpriteExtra::create(lvlInfoBtn, NULL, this, menu_selector(LevelInfoLayer::init));
+	CCMenuItemSpriteExtra* lvlInfoExtra = CCMenuItemSpriteExtra::create(lvlInfoBtn, NULL, this, menu_selector(LevelInfoLayer::onBack));
     lvlInfoMenu->addChild(lvlInfoExtra);
     this->addChild(lvlInfoMenu);
     lvlInfoExtra->setPosition(sideArtL->getPosition());

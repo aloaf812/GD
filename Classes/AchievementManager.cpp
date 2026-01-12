@@ -28,9 +28,10 @@ bool AchievementManager::init()
 {
 	m_reportedAchDict = CCDictionary::create();
     m_reportedAchDict->retain();
-    // todo: add CCContentManager
-    CCContentManager* pContentManager = CCContentManager::sharedManager();
-    m_achDict = pContentManager->addDict("AchievementsDesc.plist", true);
+    // todo: add CCContentManager and fix this fr
+    // CCContentManager* pContentManager = CCContentManager::sharedManager();
+	// m_achDict = pContentManager->addDict("AchievementsDesc.plist", true);
+	m_achDict = CCDictionary::createWithContentsOfFile("AchievementsDesc.plist");
     m_achDict->retain();
 	return true;
 }
@@ -40,16 +41,20 @@ void AchievementManager::notifyAchievementWithID(char const* achID)
     // houston, we have a problem.
     CCLOG("notifying achievement %s", achID);
 	if (this->m_dontNotifyAch == false) {
-		/*if (m_achDict->objectForKey(achID) != nullptr) {
-			const char* title = m_achDict->valueForKey("title")->getCString();
+		if (m_achDict->objectForKey(achID) != nullptr) {
+			CCDictionary* tempDict =
+				dynamic_cast<CCDictionary*>(
+				m_achDict->objectForKey(achID)
+				);
+			const char* title = tempDict->valueForKey("title")->getCString();
             CCLOG(title);
-			const char* description = m_achDict->valueForKey("achievedDescription")->getCString();
+			const char* description = tempDict->valueForKey("achievedDescription")->getCString();
             CCLOG(description);
-			const char* icon = m_achDict->valueForKey("icon")->getCString();
+			const char* icon = tempDict->valueForKey("icon")->getCString();
             CCLOG(icon);
             AchievementNotifier* pAchNotifier = AchievementNotifier::sharedState();
 			pAchNotifier->notifyAchievement(title, description, icon);
-		}*/
+		}
 	}
 }
 
@@ -84,5 +89,5 @@ bool AchievementManager::areAchievementsEarned(CCArray* achSet)
 
 int AchievementManager::percentForAchievement(char const* achID)
 {
-	return 20;
+	return 100;
 }

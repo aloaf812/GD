@@ -7,6 +7,9 @@ public:
 	AchievementBar();
 	static AchievementBar* create(char const* title, char const* description, char const* icon);
 	virtual bool init(char const* title, char const* description, char const* icon);
+	void show();
+
+	CC_PROPERTY(CCNode*, m_targetScene, TargetScene);
 };
 
 #endif

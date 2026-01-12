@@ -236,7 +236,7 @@ bool MenuLayer::init() {
         gplusButton->setScale(1.0f);
         CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(gplusButton, NULL, this, menu_selector(MenuLayer::onAchievements));
         bottomMenu->addChild(gplusExtra);
-    #else
+	#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) // finally doesn't show game center on windows
         CCSprite* gcButton = CCSprite::createWithSpriteFrameName("GJ_gkBtn_001.png");
         gcButton->setScale(1.0f);
         CCMenuItemSpriteExtra* gcExtra = CCMenuItemSpriteExtra::create(gcButton, NULL, this, menu_selector(MenuLayer::onGameCenter));

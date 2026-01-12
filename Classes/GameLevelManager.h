@@ -2,7 +2,7 @@
 #define _GAME_LEVEL_MANAGER_H
 
 #include "cocos2d.h"
-#include "HttpClient.h"
+#include "cocos-ext.h"
 #include "GJGameLevel.h"
 
 class GameLevelManager : public cocos2d::CCNode {

@@ -144,7 +144,8 @@ void PlayLayer::resetLevel()
 // updates
 void PlayLayer::update(float dt)
 {
-    float step = std::min(2.0f, dt * 60.0f);
+    // ehh i'll decompile it later
+    float step = 2.0f + dt * 60.0f;
     
     updateCamera(step);
     updateProgressbar();

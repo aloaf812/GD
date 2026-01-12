@@ -1,5 +1,4 @@
 #include "GameObject.h"
-#include "GameManager.h"
 //#include <stdlib.h>
 USING_NS_CC;
 

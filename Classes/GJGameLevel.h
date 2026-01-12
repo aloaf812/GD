@@ -5,10 +5,10 @@
 #include <stdio.h>
 
 enum class GJLevelType {
+    Default = 0,
     MainLevel = 1,
-    // i may be wrong with these two
-    OnlineLevel = 2,
-    LocalLevel = 0
+    EditorLevel = 2,
+	SavedLevel = 3
 };
 
 class GJGameLevel : public cocos2d::CCNode {
@@ -18,7 +18,11 @@ public:
     static GJGameLevel* create(cocos2d::CCDictionary* level);
     virtual bool init();
 
-    void encodeWithCoder(DS_Dictionary* dict);
+	// DS_Dictionary is extremely broken on windows phone (and win32 in general)
+	// i would fix this but i'm lazy and tired rn
+	// so this is a solution
+    //void encodeWithCoder(DS_Dictionary* dict);
+	void encodeWithCoder(cocos2d::CCDictionary* dict);
     // le CC_PROPERTY
     CC_PROPERTY(int, m_levelID, LevelID);
     CC_PROPERTY(std::string, m_levelName, LevelName);

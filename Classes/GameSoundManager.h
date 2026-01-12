@@ -12,6 +12,7 @@ public:
     static GameSoundManager* sharedManager() {
         return 0;
     }
+	void playEffect(char const* filename, float param_2, float param_3, float param_4);
 };
 
 #endif

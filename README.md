@@ -12,6 +12,16 @@ You can find instructions on how to build this project as well as contributing t
 - It does not have slopes
 - SimpleAudioEngine is used as the audio engine (instead of FMOD which is used in current versions)
 
+# Platform Support
+Currently the project only supports the following platforms, with more on the way:
+- iOS
+- Android
+- Mac
+- Windows
+- Linux
+
+# Special thanks to [AntiMatter](https://github.com/a-zalt) and [System32](https://github.com/system32149) :)
+
 ## SHA-1 File Hashes
 ### Android
 

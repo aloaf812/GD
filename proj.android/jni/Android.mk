@@ -17,7 +17,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/RT_COCOS/CCSpritePlus.cpp \
                    ../../Classes/RT_COCOS/CCTextInputNode.cpp \
                    ../../Classes/CreatorLayer.cpp \
-                   ../../Classes/EditorUI.cpp \  
+                   ../../Classes/EditorUI.cpp \
                    ../../Classes/EndLevelLayer.cpp \
                    ../../Classes/ExtendedLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \

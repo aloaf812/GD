@@ -1,5 +1,5 @@
 #include "LevelPage.h"
-#include "CCMenuItemSpriteExtra.h"
+#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "cocos-ext.h"
 #include "GameManager.h"
 #include "GameLevelManager.h"
@@ -66,7 +66,7 @@ bool LevelPage::init(GJGameLevel* level)
         
         if (nameLabel->getContentSize().width > 250.0f)
             nameLabel->setScale(250.0f / nameLabel->getContentSize().width);
-        nameLabel->setScale(std::min(nameLabel->getScale(), 1.0f));
+		nameLabel->setScale((std::min)(nameLabel->getScale(), 1.0f));
         
         auto diffStr = CCString::createWithFormat("diffIcon_%02d_btn_001.png", m_level->getDifficulty());
         auto diffSpr = CCSprite::createWithSpriteFrameName(diffStr->getCString());
@@ -167,7 +167,7 @@ void LevelPage::onPlay(cocos2d::CCObject* sender)
 {
     CCLOG("play");
     // GameSoundManager* GSoundM = GameSoundManager::GameSoundManager();
-    // GameSoundManager* GStatsM = GameStatsManager::GameStatsManager();
+    // GameStatsManager* GStatsM = GameStatsManager::GameStatsManager();
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     SAE->stopBackgroundMusic();
     

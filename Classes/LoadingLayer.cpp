@@ -49,7 +49,7 @@ bool LoadingLayer::init() {
 
     // GameSoundManager::GameSoundManager()->setup();
     
-    LocalLevelManager::sharedState()->setup();
+	LocalLevelManager::sharedState()->setup();
 
     CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
     pTextureCache->addImage("GJ_LaunchSheet.png");
@@ -128,11 +128,11 @@ bool LoadingLayer::init() {
     CCSequence* sequence = CCSequence::create(delayTime, callFunc, NULL);
     pActionManager->addAction(sequence, this, false);
 
-    /*
+	/*
     if (false) {
         PlatformToolbox::activateGameCenter();
     }
-    */
+	*/
 
     return true;
 }

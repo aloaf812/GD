@@ -5,7 +5,12 @@
 
 class ObjectToolbox : public cocos2d::CCNode {
 public:
+	static ObjectToolbox* sharedState();
+	virtual bool init();
     static cocos2d::CCDictionary* stringSetupToDict(std::string str);
+
+	cocos2d::CCDictionary* m_objects;
+	cocos2d::CCDictionary* m_keys;
 };
 
 #endif /* defined(__GeometryDash__ObjectToolbox__) */
