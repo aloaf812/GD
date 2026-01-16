@@ -2,6 +2,7 @@
 #define __GJ_GARAGE_LAYER_H__
 
 #include "cocos2d.h"
+#include "SimplePlayer.h"
 
 class GJGarageLayer : public cocos2d::CCLayer
 {
@@ -12,5 +13,6 @@ public:
     void onBack(CCObject* sender);
 protected:
     cocos2d::CCSprite* m_backgroundSprite;
+	SimplePlayer* m_playerObject;
 };
 #endif

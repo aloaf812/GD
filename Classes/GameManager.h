@@ -25,7 +25,7 @@ enum class UnlockType {
 enum class LastGameScene {
     unk0 = 0,
     unk1 = 1,
-    unk2 = 2,
+	EditorLevels = 2,
     unk3 = 3,
     unk4 = 4,
     unk5 = 5,
@@ -81,21 +81,22 @@ public:
     */
     static cocos2d::ccColor3B colorForIdx(int col);
     // clean CC_PROPERTY lines
-    CC_PROPERTY(bool, m_clickedGarage, ClickedGarage);
-    CC_PROPERTY(bool, m_clickedEditor, ClickedEditor);
+	CC_PROPERTY(bool, m_performanceMode, PerformanceMode); // 0x56
+    CC_PROPERTY(bool, m_clickedGarage, ClickedGarage); // 0x59
+    CC_PROPERTY(bool, m_clickedEditor, ClickedEditor); // 0x5a
     // icons
-    CC_PROPERTY(int, m_playerColor, PlayerColor);
-    CC_PROPERTY(int, m_playerColor2, PlayerColor2);
-    CC_PROPERTY(int, m_playerFrame, PlayerFrame);
-    CC_PROPERTY(int, m_playerShip, PlayerShip);
-    CC_PROPERTY(int, m_playerBall, PlayerBall);
-    CC_PROPERTY(int, m_playerBird, PlayerBird);
-    CC_PROPERTY(int, m_playerStreak, PlayerStreak);
-    CC_PROPERTY(IconType, m_playerIconType, PlayerIconType);
+    CC_PROPERTY(int, m_playerColor, PlayerColor); // 0x158
+    CC_PROPERTY(int, m_playerColor2, PlayerColor2); // 0x15c
+    CC_PROPERTY(int, m_playerFrame, PlayerFrame); // 0x148
+    CC_PROPERTY(int, m_playerShip, PlayerShip); // 0x14c
+    CC_PROPERTY(int, m_playerBall, PlayerBall); // 0x150
+    CC_PROPERTY(int, m_playerBird, PlayerBird); // 0x154
+    CC_PROPERTY(int, m_playerStreak, PlayerStreak); // 0x160
+    CC_PROPERTY(IconType, m_playerIconType, PlayerIconType); // 0x164
     // layers
-    CC_PROPERTY(PlayLayer*, m_playLayer, PlayLayer);
-    CC_PROPERTY(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer);
-    CC_PROPERTY(bool, m_mainMenuActive, MainMenuActive);
+    CC_PROPERTY(PlayLayer*, m_playLayer, PlayLayer); // 0x114
+    CC_PROPERTY(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
+    CC_PROPERTY(bool, m_mainMenuActive, MainMenuActive); // 0x11c
     // get functions
     bool getEditMode();
     bool getGameCenterEnabled();
@@ -120,7 +121,6 @@ protected:
     bool m_autoRetry;
     bool m_showProgressBar;
     bool m_commentSortRecent;
-    bool m_performanceMode;
     bool m_enableTutorial;
     bool m_didSyncAchievements;
     bool m_showedPirate;

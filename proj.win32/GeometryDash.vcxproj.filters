@@ -69,9 +69,6 @@
     <ClCompile Include="..\Classes\GameToolbox.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GJBaseGameLayer.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GJDropDownLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -162,6 +159,12 @@
     <ClCompile Include="..\Classes\RT_COCOS\CCTextInputNode.cpp">
       <Filter>Classes\RT_COCOS</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UILayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RT_COCOS\CCBlockLayer.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -222,9 +225,6 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameToolbox.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GJBaseGameLayer.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GJDropDownLayer.h">
@@ -315,6 +315,12 @@
       <Filter>Classes\RT_COCOS</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\RT_COCOS\CCTextInputNode.h">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UILayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RT_COCOS\CCBlockLayer.h">
       <Filter>Classes\RT_COCOS</Filter>
     </ClInclude>
   </ItemGroup>

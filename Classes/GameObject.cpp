@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "ObjectToolbox.h"
 //#include <stdlib.h>
 USING_NS_CC;
 
@@ -125,6 +126,17 @@ GameObject* GameObject::create(const char* frame)
     }
     
     return gGameObject;
+}
+
+GameObject* GameObject::createFromString(std::string objString)
+{
+	CCDictionary* objDict = ObjectToolbox::stringSetupToDict(objString);
+	if (!objDict) {
+		CCLOG("this can serve no purpose anymore, goodbye");
+		return nullptr;
+	}
+	CCLOG("success but at what cost");
+	return nullptr;
 }
 /*
 void GameObject::disableObject() {

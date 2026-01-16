@@ -2,11 +2,12 @@
 #define __GeometryDash__PauseLayer__
 
 #include "cocos2d.h"
+#include "RT_COCOS\CCBlockLayer.h"
 
-class PauseLayer : public cocos2d::CCLayer {
+class PauseLayer : public CCBlockLayer {
 public:
     static PauseLayer* create();
-    // virtual bool init();
+    virtual void customSetup();
     void onAutoCheckpoints(cocos2d::CCObject* sender);
     void onAutoRetry(cocos2d::CCObject* sender);
     void onEdit(cocos2d::CCObject* sender);

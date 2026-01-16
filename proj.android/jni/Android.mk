@@ -12,6 +12,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AchievementNotifier.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
+                   ../../Classes/RT_COCOS/CCBlockLayer.cpp \
                    ../../Classes/RT_COCOS/CCContentManager.cpp \
                    ../../Classes/RT_COCOS/CCMenuItemSpriteExtra.cpp \
                    ../../Classes/RT_COCOS/CCSpritePlus.cpp \
@@ -28,7 +29,6 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameStatsManager.cpp \
                    ../../Classes/GameSoundManager.cpp \
                    ../../Classes/GameToolbox.cpp \
-                   ../../Classes/GJBaseGameLayer.cpp \
                    ../../Classes/GJDropDownLayer.cpp \
                    ../../Classes/GJGameLevel.cpp \
                    ../../Classes/GJGarageLayer.cpp \
@@ -54,7 +54,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Slider.cpp \
                    ../../Classes/SimplePlayer.cpp \
                    ../../Classes/SongInfoLayer.cpp \
-                   ../../Classes/TextArea.cpp
+                   ../../Classes/TextArea.cpp \
+                   ../../Classes/UILayer.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

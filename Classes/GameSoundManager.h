@@ -9,10 +9,10 @@ class GameSoundManager : public cocos2d::CCNode {
 public:
     bool init();
     void setup();
-    static GameSoundManager* sharedManager() {
-        return 0;
-    }
-	void playEffect(char const* filename, float param_2, float param_3, float param_4);
+	static GameSoundManager* sharedManager();
+	void playEffect(char const* filename, float pitch, float pan, float gain);
+	
+	CC_PROPERTY(float, m_bgVol, BGVol);
 };
 
 #endif

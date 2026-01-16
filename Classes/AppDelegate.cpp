@@ -117,3 +117,7 @@ void AppDelegate::loadingIsFinished()
     // :wilted_rose:
     return;
 }
+
+bool AppDelegate::getPaused() { return m_paused; }
+
+void AppDelegate::setPaused(bool var) { m_paused = var; }

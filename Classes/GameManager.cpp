@@ -21,6 +21,7 @@ GameManager::GameManager()
     this->m_musicEnabled = false;
     this->m_fxEnabled = false;
     this->m_hasRatedGame = false;
+	this->m_performanceMode = false;
     this->m_clickedFacebook = false;
     this->m_clickedTwitter = false;
     // this->m_lastScene = 0;
@@ -221,7 +222,7 @@ char const* GameManager::getGTexture(int gID)
 */
 
 void GameManager::fadeInMusic(char const *fileName){
-    // GameSoundManager* GSM = GameSoundManager::sharedState();
+    // shhh: GameSoundManager* GSM = GameSoundManager::sharedManager();
     if (true)
     {
         // todo: implement actual fading
@@ -412,6 +413,12 @@ void GameManager::firstLoad()
     this->m_recordGameplay = false;
     this->m_playerScoreValid = false;
 }
+
+// i need to fix the ordering of this
+
+bool GameManager::getPerformanceMode() { return m_performanceMode; }
+void GameManager::setPerformanceMode(bool var) { m_performanceMode = var; }
+
 
 // get functions
 bool GameManager::getClickedGarage()

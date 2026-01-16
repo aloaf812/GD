@@ -3,7 +3,6 @@
 #include "AppDelegate.h"
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
-#include "SimplePlayer.h"
 #include "GameManager.h"
 #include "GameStatsManager.h"
 USING_NS_CC;
@@ -52,7 +51,7 @@ bool GJGarageLayer::init()
     CCSize winSize = pDirector->getWinSize();
     
     GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setMainMenuActive(false);
+    pGameManager->setMainMenuActive(true);
     pGameManager->setLastScene(LastGameScene::unk0);
     
     this->setKeypadEnabled(true);
@@ -119,10 +118,10 @@ bool GJGarageLayer::init()
     editBarBG->setPosition(CCPoint(pDirector->getScreenLeft(), pDirector->getScreenBottom()));
     this->addChild(editBarBG, 1);*/
 
-    SimplePlayer* player = SimplePlayer::create(4);
-    player->setAnchorPoint(CCPoint(0.0f, 0.0f));
-    player->setPosition(CCPoint(pDirector->getScreenRight() - 1.0f, pDirector->getScreenTop() - 1.0f));
-    this->addChild(player, 1);
+	m_playerObject = SimplePlayer::create(4);
+	m_playerObject->setAnchorPoint(CCPoint(0.0f, 0.0f));
+	m_playerObject->setPosition(CCPoint(pDirector->getScreenRight() - 1.0f, pDirector->getScreenTop() - 1.0f));
+	this->addChild(m_playerObject, 1);
     
     return true;
 }

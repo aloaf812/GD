@@ -45,3 +45,8 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
     
     return true;
 }
+
+void PlayerObject::releaseButton(PlayerButton button)
+{
+	// idk
+}

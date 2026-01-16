@@ -3,6 +3,7 @@
 #include "cocos-ext.h"
 #include "GameManager.h"
 #include "GameLevelManager.h"
+#include "GameSoundManager.h"
 #include "SimpleAudioEngine.h"
 using namespace CocosDenshion;
 USING_NS_CC;
@@ -166,11 +167,13 @@ void LevelPage::onFacebook(cocos2d::CCObject* sender)
 void LevelPage::onPlay(cocos2d::CCObject* sender)
 {
     CCLOG("play");
-    // GameSoundManager* GSoundM = GameSoundManager::GameSoundManager();
     // GameStatsManager* GStatsM = GameStatsManager::GameStatsManager();
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     SAE->stopBackgroundMusic();
     
+	GameSoundManager* GSoundM = GameSoundManager::sharedManager();
+	GSoundM->playEffect("playSound_01.ogg", 1.0f, 0.0f, 0.3f);
+
     GameManager* pGameManager = GameManager::sharedState();
     pGameManager->setLastScene(LastGameScene::LevelSelect);
     

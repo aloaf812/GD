@@ -148,7 +148,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\GameSoundManager.cpp" />
     <ClCompile Include="..\Classes\GameStatsManager.cpp" />
     <ClCompile Include="..\Classes\GameToolbox.cpp" />
-    <ClCompile Include="..\Classes\GJBaseGameLayer.cpp" />
     <ClCompile Include="..\Classes\GJDropDownLayer.cpp" />
     <ClCompile Include="..\Classes\GJGameLevel.cpp" />
     <ClCompile Include="..\Classes\GJGarageLayer.cpp" />
@@ -171,6 +170,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\PlatformToolbox.cpp" />
     <ClCompile Include="..\Classes\PlayerObject.cpp" />
     <ClCompile Include="..\Classes\PlayLayer.cpp" />
+    <ClCompile Include="..\Classes\RT_COCOS\CCBlockLayer.cpp" />
     <ClCompile Include="..\Classes\RT_COCOS\CCContentManager.cpp" />
     <ClCompile Include="..\Classes\RT_COCOS\CCMenuItemSpriteExtra.cpp" />
     <ClCompile Include="..\Classes\RT_COCOS\CCSpritePlus.cpp" />
@@ -179,6 +179,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\Slider.cpp" />
     <ClCompile Include="..\Classes\SongInfoLayer.cpp" />
     <ClCompile Include="..\Classes\TextArea.cpp" />
+    <ClCompile Include="..\Classes\UILayer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +202,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\GameSoundManager.h" />
     <ClInclude Include="..\Classes\GameStatsManager.h" />
     <ClInclude Include="..\Classes\GameToolbox.h" />
-    <ClInclude Include="..\Classes\GJBaseGameLayer.h" />
     <ClInclude Include="..\Classes\GJDropDownLayer.h" />
     <ClInclude Include="..\Classes\GJGameLevel.h" />
     <ClInclude Include="..\Classes\GJGarageLayer.h" />
@@ -224,6 +224,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\PlatformToolbox.h" />
     <ClInclude Include="..\Classes\PlayerObject.h" />
     <ClInclude Include="..\Classes\PlayLayer.h" />
+    <ClInclude Include="..\Classes\RT_COCOS\CCBlockLayer.h" />
     <ClInclude Include="..\Classes\RT_COCOS\CCContentManager.h" />
     <ClInclude Include="..\Classes\RT_COCOS\CCMenuItemSpriteExtra.h" />
     <ClInclude Include="..\Classes\RT_COCOS\CCSpritePlus.h" />
@@ -232,6 +233,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\Slider.h" />
     <ClInclude Include="..\Classes\SongInfoLayer.h" />
     <ClInclude Include="..\Classes\TextArea.h" />
+    <ClInclude Include="..\Classes\UILayer.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 
 #include "cocos2d.h"
 #include "RT_COCOS/CCSpritePlus.h"
+#include <stdio.h>
 
 enum GameObjectType : int32_t {
     None = 0,
@@ -27,7 +28,7 @@ enum GameObjectType : int32_t {
 class GameObject : public CCSpritePlus {
 public:
     // GameObject();
-    
+	static GameObject* createFromString(std::string objString);
     static GameObject* create(const char* spriteName);
     bool init(const char* spriteName);
     

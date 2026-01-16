@@ -42,7 +42,7 @@ void AchievementNotifier::showNextAchievement()
 	if (!m_achArray->count()) {
 		return;
 	}
-	GameSoundManager::sharedManager()->playEffect("achievement_01.ogg", 1.0f, 1.0f, 1.0f);
+	GameSoundManager::sharedManager()->playEffect("achievement_01.ogg", 1.0f, 0.0f, 1.0f);
 	// what??: DAT_004c6600 = (GameSoundManager *)((int)DAT_004c6600 + 1);
 	m_currentAch = (AchievementBar*)m_achArray->objectAtIndex(0);
 	m_currentAch->show();

@@ -39,6 +39,8 @@ public:
     void checkSound();
     virtual void trySaveGame();
     float bgScale();
+	CC_PROPERTY(bool, m_paused, Paused); // 0x8
+
     cocos2d::CCScene* mMenuScene;
     
     static AppDelegate* get()

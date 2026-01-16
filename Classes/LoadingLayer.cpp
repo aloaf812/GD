@@ -45,9 +45,9 @@ bool LoadingLayer::init() {
     gettimeofday(&tv, NULL);
     srand(tv.tv_sec * tv.tv_usec);
     
-    GameManager* pGameManager = GameManager::sharedState();
+    GameSoundManager::sharedManager()->setup();
 
-    // GameSoundManager::GameSoundManager()->setup();
+    GameManager* pGameManager = GameManager::sharedState();
     
 	LocalLevelManager::sharedState()->setup();
 

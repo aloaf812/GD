@@ -4,6 +4,11 @@
 #include "cocos2d.h"
 #include "GameObject.h"
 
+// i dont get this one :/
+enum class PlayerButton {
+	Jump = 1
+};
+
 enum class GhostType {
 	Disabled = 0,
 	Enabled = 1,
@@ -14,6 +19,9 @@ public:
     static PlayerObject* create(int player, int ship, cocos2d::CCLayer* layer);
     //virtual void update(float dt);
     bool init(int player, int ship, cocos2d::CCLayer* layer);
+
+	// this was changed to a bool in modern gd
+	void releaseButton(PlayerButton button);
 protected:
 	cocos2d::CCLayer* m_layer;
 

@@ -58,8 +58,39 @@ bool ObjectToolbox::init()
 	CREATE_OBJ("rod_02_001.png", 16); // Medium Rod
 	CREATE_OBJ("rod_03_001.png", 17); // Short Rod
 
-	// triggers
+	// triggers (editor only)
 	CREATE_OBJ("edit_eeNoneBtn_001.png", 22); // No Enter Effect
+	CREATE_OBJ("edit_eeFBBtn_001.png", 23); // Fade Bottom Enter Effect
+	CREATE_OBJ("edit_eeFTBtn_001.png", 24); // Fade Top Enter Effect
+	CREATE_OBJ("edit_eeFLBtn_001.png", 25); // Fade Left Enter Effect
+	CREATE_OBJ("edit_eeFRBtn_001.png", 26); // Fade Right Enter Effect
+	CREATE_OBJ("edit_eeSUBtn_001.png", 27); // Small to Big Enter Effect
+	CREATE_OBJ("edit_eeSDBtn_001.png", 28); // Big to Small Enter Effect
+	CREATE_OBJ("edit_eTintBGBtn_001.png", 29); // BG Color Trigger (not in list)
+	CREATE_OBJ("edit_eTintGBtn_001.png", 30); // Ground Color Trigger (not in list)
+	CREATE_OBJ("edit_eTintLBtn_001.png", 104); // Line Color Trigger (not in list)
+	CREATE_OBJ("edit_eTintObjBtn_001.png", 105); // Object Color Trigger (not in list)
+	CREATE_OBJ("edit_eStartPosBtn_001.png", 31); // Start Position
+	CREATE_OBJ("edit_eLevelEndBtn_001.png", 34); // 1.0 Level End Trigger
+	CREATE_OBJ("edit_eBGEOn_001.png", 42); // BG Effect On Trigger (not in list)
+	CREATE_OBJ("edit_eBGEOff_001.png", 43); // BG Effect Off Trigger (not in list)
+	CREATE_OBJ("edit_eGhostEBtn_001.png", 32); // Enable Ghost Trail
+	CREATE_OBJ("edit_eGhostDBtn_001.png", 33); // Disable Ghost Trail
+
+	// pad (just one)
+	CREATE_OBJ("bump_01_001.png", 35); // Yellow Jump Pad
+
+	// orb (also just one)
+	CREATE_OBJ("ring_01_001.png", 36); // Yellow Jump Orb
+
+	// plank (still one)
+	CREATE_OBJ("plank_01_001.png", 40); // Black Gradient Single Slab
+
+	// chain (when does this end)
+	CREATE_OBJ("chain_01_001.png", 41); // Tall Chain
+
+	// clouds
+	CREATE_OBJ("d_cloud_01_001.png", 48); // Large Fading Cloud
 #pragma endregion Objects
 	return true;
 }

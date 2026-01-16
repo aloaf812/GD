@@ -64,13 +64,13 @@ GJGameLevel::GJGameLevel()
     this->m_lastBuildTab = 0;
     this->m_lastEditorZoom = 0;
     this->m_lastBuildPage = 0;
-    this->m_levelType = GJLevelType::LocalLevel;
+    this->m_levelType = GJLevelType::Default;
     this->m_M_ID = 0;
 }
 
 bool GJGameLevel::init()
 {
-    m_levelType = GJLevelType::LocalLevel;
+    m_levelType = GJLevelType::Default;
     m_attempts = 0;
     m_jumps = 0;
     m_coins = 0;
