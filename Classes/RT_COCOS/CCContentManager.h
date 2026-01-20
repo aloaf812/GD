@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 
 class CCContentManager : public cocos2d::CCObject {
-    cocos2d::CCDictionary* m_pDicts = nullptr;
+    cocos2d::CCDictionary* m_pDicts;
 public:
     static CCContentManager* sharedManager();
     CCContentManager();

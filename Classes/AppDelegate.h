@@ -39,8 +39,11 @@ public:
     void checkSound();
     virtual void trySaveGame();
     float bgScale();
-	CC_PROPERTY(bool, m_paused, Paused); // 0x8
-
+	CC_SYNTHESIZE(bool, m_paused, Paused); // 0x8
+	CC_SYNTHESIZE_READONLY(bool, m_loadingFinished, LoadingFinished); // 0x10
+	CC_SYNTHESIZE_READONLY(bool, m_managersLoaded, ManagersLoaded); // 0x11
+	CC_SYNTHESIZE_READONLY(bool, m_isIOS, IsIOS); // 0x12
+	CC_SYNTHESIZE(cocos2d::CCNode*, m_scenePointer, ScenePointer); // 0x13
     cocos2d::CCScene* mMenuScene;
     
     static AppDelegate* get()

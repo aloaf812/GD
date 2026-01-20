@@ -49,10 +49,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/OptionsLayer.cpp \
                    ../../Classes/PauseLayer.cpp \
                    ../../Classes/PlatformToolbox.cpp \
+                   ../../Classes/PlayerObject.cpp \
                    ../../Classes/PlayLayer.cpp \
                    ../../Classes/SimplePlayer.cpp \
                    ../../Classes/Slider.cpp \
-                   ../../Classes/SimplePlayer.cpp \
                    ../../Classes/SongInfoLayer.cpp \
                    ../../Classes/TextArea.cpp \
                    ../../Classes/UILayer.cpp

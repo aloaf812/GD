@@ -2,7 +2,7 @@
 #define __GeometryDash__PauseLayer__
 
 #include "cocos2d.h"
-#include "RT_COCOS\CCBlockLayer.h"
+#include "RT_COCOS/CCBlockLayer.h"
 
 class PauseLayer : public CCBlockLayer {
 public:

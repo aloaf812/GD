@@ -36,7 +36,7 @@ public:
     // virtual void setScaleX(float scaleX);
     // virtual void setScaleY(float scaleY);
     // virtual void setScale(float scale);
-    virtual void setPosition(cocos2d::CCPoint position);
+	virtual void setPosition(cocos2d::CCPoint const &position);
     // virtual void setVisible(bool visible);
     // virtual void setRotation(float rotation);
     // virtual void setOpacity(unsigned char opacity);

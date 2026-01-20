@@ -23,7 +23,6 @@ SimplePlayer* SimplePlayer::create(int iconID)
 // basically "borrowed" from WylieMaster: https://github.com/Wyliemaster/GD-Decompiled/blob/main/GD/code/src/SimplePlayer.cpp#L31
 bool SimplePlayer::init(int iconID)
 {
-	CCLOG("creating icon %i", iconID);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     int id = std::min(iconID, 38) <= 0 ? 1 : std::min(iconID, 38);
 #else
@@ -35,26 +34,23 @@ bool SimplePlayer::init(int iconID)
     
 	if (!CCSprite::init())
 		return false;
-
-    // setTextureRect(g_UnkRect);
     
 	m_firstLayer = CCSprite::createWithSpriteFrameName(layer1.c_str());
+	this->addChild(m_firstLayer, 1);
 	m_secondLayer = CCSprite::createWithSpriteFrameName(layer2.c_str());
-    
 	m_firstLayer->addChild(m_secondLayer, -1);
-	m_secondLayer->setPosition(CCPoint(0.0f, 0.0f));
-	//m_secondLayer->setPosition(m_firstLayer->convertToNodeSpace(g_obUnknownGlobal));
+	m_secondLayer->setPosition(m_firstLayer->getContentSize() / 2);
     
-    /*CCSprite* m_pPlayerSpriteBirdDome = cocos2d::CCSprite::createWithSpriteFrameName(layer2.c_str());
+	/*CCSprite* m_pPlayerSpriteBirdDome = cocos2d::CCSprite::createWithSpriteFrameName(layer2.c_str());
     m_pPlayerSpriteLayer1->addChild(m_pPlayerSpriteBirdDome, -2);
     // m_pPlayerSpriteBirdDome->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));
-    */
-	m_outlineLayer = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
-	m_firstLayer->addChild(m_outlineLayer, -3);
-    // m_outlineLayer->setPosition(m_firstLayer->convertToNodeSpace(g_obUnknownGlobal));
-	m_outlineLayer->setVisible(false);
     
-    /*m_pPlayerSpriteDetail = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
+	//m_outlineLayer = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
+	//m_firstLayer->addChild(m_outlineLayer, -3);
+    // m_outlineLayer->setPosition(m_firstLayer->convertToNodeSpace(g_obUnknownGlobal));
+	//m_outlineLayer->setVisible(false);
+    
+    m_pPlayerSpriteDetail = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
     m_firstLayer->addChild(m_pPlayerSpriteDetail, 1);
     // m_pPlayerSpriteDetail->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));*/
     return true;

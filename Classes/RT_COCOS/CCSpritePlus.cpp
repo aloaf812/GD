@@ -106,7 +106,7 @@ void CCSpritePlus::setFlipY(bool value){
 
 
 void CCSpritePlus::setPosition(cocos2d::CCPoint const &pos){
-    cocos2d::CCSprite::setPosition(pos);
+    CCSprite::setPosition(pos);
     /*if (m_hasFollower) {
         for (unsigned int i = 0;  i < m_followers->count(); i++){
             reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setPosition(pos);

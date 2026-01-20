@@ -37,3 +37,10 @@ void UILayer::onPause(CCObject* sender)
 {
 	PLAY_LAYER->pauseGame();
 }
+
+
+bool UILayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+	PLAY_LAYER->getPlayer()->pushButton(PlayerButton::Jump);
+	return true;
+}

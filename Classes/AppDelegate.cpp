@@ -26,22 +26,28 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
     pDirector->setOpenGLView(pEGLView);
-
+	pDirector->setProjection(kCCDirectorProjection2D);
     const CCSize windowSize = pEGLView->getFrameSize();
     pDirector->setupScreenScale(contentSize, windowSize);
     
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-
     pDirector->setDepthTest(false);
-    // check performance with this: pDirector->setDisplayStats(true);
-    // AdToolbox::setupAds();
 
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 		CCFileUtils::sharedFileUtils()->addSearchPath("Resources");
 	#endif
+	
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-    // run
+	#else
+		this->m_isIOS = false;
+	#endif
+
+    // check performance with this: pDirector->setDisplayStats(true);
+	// AdToolbox::setupAds();
+    
+	// run
     CCScene *pScene = LoadingLayer::node();
     pDirector->runWithScene(pScene);
 
@@ -117,7 +123,3 @@ void AppDelegate::loadingIsFinished()
     // :wilted_rose:
     return;
 }
-
-bool AppDelegate::getPaused() { return m_paused; }
-
-void AppDelegate::setPaused(bool var) { m_paused = var; }

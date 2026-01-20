@@ -81,37 +81,32 @@ public:
     */
     static cocos2d::ccColor3B colorForIdx(int col);
     // clean CC_PROPERTY lines
-	CC_PROPERTY(bool, m_performanceMode, PerformanceMode); // 0x56
-    CC_PROPERTY(bool, m_clickedGarage, ClickedGarage); // 0x59
-    CC_PROPERTY(bool, m_clickedEditor, ClickedEditor); // 0x5a
+	CC_SYNTHESIZE(bool, m_performanceMode, PerformanceMode); // 0x16e
+	CC_SYNTHESIZE(bool, m_clickedGarage, ClickedGarage); // 0x171
+	CC_SYNTHESIZE(bool, m_clickedEditor, ClickedEditor); // 0x172
     // icons
-    CC_PROPERTY(int, m_playerColor, PlayerColor); // 0x158
-    CC_PROPERTY(int, m_playerColor2, PlayerColor2); // 0x15c
-    CC_PROPERTY(int, m_playerFrame, PlayerFrame); // 0x148
-    CC_PROPERTY(int, m_playerShip, PlayerShip); // 0x14c
-    CC_PROPERTY(int, m_playerBall, PlayerBall); // 0x150
-    CC_PROPERTY(int, m_playerBird, PlayerBird); // 0x154
-    CC_PROPERTY(int, m_playerStreak, PlayerStreak); // 0x160
-    CC_PROPERTY(IconType, m_playerIconType, PlayerIconType); // 0x164
+	CC_SYNTHESIZE(int, m_playerColor, PlayerColor); // 0x158
+	CC_SYNTHESIZE(int, m_playerColor2, PlayerColor2); // 0x15c
+	CC_SYNTHESIZE(int, m_playerFrame, PlayerFrame); // 0x148
+	CC_SYNTHESIZE(int, m_playerShip, PlayerShip); // 0x14c
+    CC_SYNTHESIZE(int, m_playerBall, PlayerBall); // 0x150
+	CC_SYNTHESIZE(int, m_playerBird, PlayerBird); // 0x154
+	CC_SYNTHESIZE(int, m_playerStreak, PlayerStreak); // 0x160
+	CC_SYNTHESIZE(IconType, m_playerIconType, PlayerIconType); // 0x164
     // layers
-    CC_PROPERTY(PlayLayer*, m_playLayer, PlayLayer); // 0x114
-    CC_PROPERTY(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
-    CC_PROPERTY(bool, m_mainMenuActive, MainMenuActive); // 0x11c
-    // get functions
-    bool getEditMode();
-    bool getGameCenterEnabled();
-    // set functions
-    void setFirstSetup(bool firstSetup);
-    void setLastScene(LastGameScene scene);
-    void setEditMode(bool edit);
-    void setWasHigh(bool wasHigh);
+	CC_SYNTHESIZE(PlayLayer*, m_playLayer, PlayLayer); // 0x114
+	CC_SYNTHESIZE(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
+	CC_SYNTHESIZE(bool, m_mainMenuActive, MainMenuActive); // 0x11c
+	CC_SYNTHESIZE(bool, m_gameCenterEnabled, GameCenterEnabled); // 0x124
+	CC_SYNTHESIZE(bool, m_editMode, EditMode); // 0x13b
+	CC_SYNTHESIZE(bool, m_wasHigh, WasHigh); // 0x131
+	CC_SYNTHESIZE(bool, m_firstSetup, FirstSetup); // 0x125
+	CC_SYNTHESIZE(LastGameScene, m_lastScene, LastScene); // 0x13c
 protected:
     // made before i started with the variables
     bool m_clickedName;
     // dictionaries
     cocos2d::CCDictionary* m_valueKeeper;
-    bool m_gameCenterEnabled;
-    bool m_firstSetup;
     bool m_showedFirstTutorial;
     bool m_musicEnabled;
     bool m_fxEnabled;
@@ -132,7 +127,6 @@ protected:
     int m_lastLevelID;
     int m_totalAttempts;
     int m_playerUserID;
-    LastGameScene m_lastScene;
     // unknown values
     bool offset_0x5;
     bool offset_0xf;
@@ -146,9 +140,7 @@ protected:
     bool m_recordGameplay;
     bool m_playerScoreValid;
     std::string m_playerName;
-    std::string m_playerUDID;
-    bool m_editMode;
-    bool m_wasHigh;
+    std::string m_playerUDID; // 0x128
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

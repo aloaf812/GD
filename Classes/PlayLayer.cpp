@@ -86,8 +86,17 @@ bool PlayLayer::init(GJGameLevel* level)
     // GameEffectsManager TODO
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    
-	m_endTriggered = false;
+	
+	this->m_startPos = ccp(0.0f, 105.0f);
+
+	this->m_attempts = 0;
+	//this->field373_0x220 = 0;
+	//this->field374_0x224 = 0;
+	this->m_jumps = 0;
+	this->m_endTriggered = false;
+	this->m_isResetting = true;
+	//this->field325_0x1c0 = 0.0;
+	//this->m_clkTimer = 0.0;
 
     GameManager* pGameManager = GameManager::sharedState();
     pGameManager->setEditMode(false);
@@ -95,6 +104,8 @@ bool PlayLayer::init(GJGameLevel* level)
     pGameManager->setWasHigh(false);
     
     m_level = level;
+	level->retain();
+
     m_gameLayer = CCLayer::create();
 	addChild(m_gameLayer);
 
@@ -109,7 +120,7 @@ bool PlayLayer::init(GJGameLevel* level)
 
     m_player = PlayerObject::create(pGameManager->getPlayerFrame(),
                                                 pGameManager->getPlayerShip(),
-                                                nullptr);
+												nullptr);
     this->addChild(m_player);
 
 	this->createObjectsFromSetup(m_level->getLevelString());
@@ -157,48 +168,6 @@ bool PlayLayer::init(GJGameLevel* level)
     return true;
 }
 
-UILayer* PlayLayer::getUILayer() { return m_uiLayer; }
-
-PlayerObject* PlayLayer::getPlayer() { return m_player; }
-
-GJGameLevel* PlayLayer::getLevel() { return m_level; }
-
-CCPoint PlayLayer::getCameraPos() { return m_cameraPos; }
-
-bool PlayLayer::getIsResetting() { return m_isResetting; }
-
-void PlayLayer::setIsResetting(bool var) { m_isResetting = var; }
-
-CCSpriteBatchNode* PlayLayer::getBatchNode() { return m_batchNode; }
-
-CCSpriteBatchNode* PlayLayer::getBatchNodeBottom() { return m_batchNodeBottom; }
-
-CCSpriteBatchNode* PlayLayer::getBatchNodeAdd() { return m_batchNodeAdd; }
-
-CCLayer* PlayLayer::getGameLayer() { return m_gameLayer; }
-
-bool PlayLayer::getCleanReset() { return m_cleanReset; }
-
-int PlayLayer::getAttempts() { return m_attempts; }
-
-int PlayLayer::getJumps() { return m_jumps; }
-
-bool PlayLayer::getDidJump() { return m_didJump; }
-
-bool PlayLayer::getShowingEndLayer() { return m_showingEndLayer; }
-
-void PlayLayer::setShowingEndLayer(bool var) { m_showingEndLayer = var; }
-
-bool PlayLayer::getEndTriggered() { return m_endTriggered; }
-
-void PlayLayer::setEndTriggered(bool var) { m_endTriggered = var; }
-
-bool PlayLayer::getResetQueued() { return m_resetQueued; }
-
-void PlayLayer::setResetQueued(bool var) { m_resetQueued = var; }
-
-bool PlayLayer::getDidAwardStars() { return m_didAwardStars; }
-
 void PlayLayer::resetLevel()
 {
 	//i genuinely don't know these first 2 maybe i'll figure them out later
@@ -240,16 +209,40 @@ void PlayLayer::resetLevel()
 	this->field337_0x1d8 = 1.0;*/
 	this->stopActionByTag(14);
 
+	this->m_cameraPortal = nullptr;
+	//m_audioEffectsLayer->resetAudioVars();
+	m_player->resetObject();
+	//this->animateOutFlyGround(true);
+	//this->animateOutRollGround(true);
+
+	m_realPlayerPos = m_player->getPosition();
+	//this->updateCamera();
 	// this->updateVisibility();
     updateAttempts();
 	m_isResetting = false;
+}
+
+void PlayLayer::fullReset()
+{
+	this->m_clkTimer = 0.0;
+	/*this->field373_0x220 = 0;
+	this->field374_0x224 = 0;
+	this->field270_0x120 = true;*/
+	this->m_cleanReset = true;
+	this->m_attempts = 0;
+	this->m_jumps = 0;
+
+	if (!this->m_practiceMode)
+		this->resetLevel();
+	/*else
+		this->togglePracticeMode(false);*/
 }
 
 void PlayLayer::startGame()
 {
     scheduleUpdate();
 	m_cleanReset = true;
-	//SimpleAudioEngine::sharedEngine()->playBackgroundMusic(LevelTools::getAudioFileName(m_level->getAudioTrack()));
+	m_player->setVisible(true);
 	this->resetLevel();
 }
 
@@ -272,9 +265,23 @@ void PlayLayer::pauseGame()
 // updates
 void PlayLayer::update(float dt)
 {
-    float step = 2.0f + dt * 60.0f;
-    
-    updateCamera(step);
+	float step = dt * 60.0f;
+
+	if (!m_player->getIsLocked())
+		m_player->setPosition(m_realPlayerPos);
+
+	m_player->setTouchedRing(nullptr);
+
+	if (!m_player->getIsLocked()) {
+		m_realPlayerPos = m_player->getPosition();
+		//if ((this->m_flipValue != 0.0) && (this->m_flipValue != 1.0))
+	}
+
+	m_player->update(step / 4);
+
+	CCLOG("%f", m_realPlayerPos.x);
+
+    // updateCamera();
     updateProgressbar();
     updateEffectPositions();
 }
@@ -286,35 +293,7 @@ void PlayLayer::updateAttempts()
 
 void PlayLayer::updateCamera(float dt)
 {
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    float screenHeight = winSize.height;
-    CCPoint camPos = m_cameraPos;
-    CCPoint playerPos = m_player->getPosition();
-    
-    float targetY = camPos.y;
-    
-    if (playerPos.y > camPos.y + 120.0f) {
-        targetY = playerPos.y - 120.0f;
-    }
-    
-    if (playerPos.y < camPos.y + 90.0f) {
-        targetY = playerPos.y - 90.0f;
-    }
-    
-    camPos.y += (targetY - camPos.y) / (10.0f / dt);
-    
-    float maxY = 1740.0f - screenHeight;
-    if (camPos.y < 0.0f) camPos.y = 0.0f;
-    else if (camPos.y > maxY) camPos.y = 1740.0f;
-    
-    camPos.x = playerPos.x;
-    
-    m_cameraPos = camPos;
-    
-    CCCamera* camera = m_gameLayer->getCamera();
-    camera->setCenterXYZ(camPos.x, camPos.y, 0.0f);
-    camera->setEyeXYZ(camPos.x, camPos.y, camera->getZEye());
-    
+
 }
 
 void PlayLayer::updateProgressbar()

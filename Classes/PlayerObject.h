@@ -6,6 +6,7 @@
 
 // i dont get this one :/
 enum class PlayerButton {
+	None = 0,
 	Jump = 1
 };
 
@@ -16,14 +17,66 @@ enum class GhostType {
 
 class PlayerObject : public GameObject {
 public:
+	PlayerObject();
     static PlayerObject* create(int player, int ship, cocos2d::CCLayer* layer);
     //virtual void update(float dt);
     bool init(int player, int ship, cocos2d::CCLayer* layer);
 
 	// this was changed to a bool in modern gd
 	void releaseButton(PlayerButton button);
+
+	void lockPlayer();
+
+	bool isFlying();
+
+	void logValues();
+
+	void update(float dt);
+	void updateJump(float dt);
+
+	void deactivateParticle();
+
+	virtual void resetObject();
+
+	void pushButton(PlayerButton button);
+
+	// void setVisible(bool visible);
+
+	// todo: fix addresses
+	CC_SYNTHESIZE_READONLY(bool, m_isLocked, IsLocked); // 0x3a6
+	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_lastGroundPos, LastGroundPos); // 0x2
+	CC_SYNTHESIZE_READONLY(bool, m_hasJumped, HasJumped); // 0x12
+	CC_SYNTHESIZE(GameObject*, m_touchedRing, TouchedRing); // 0xa
+	CC_SYNTHESIZE(GameObject*, m_portalObject, PortalObject); // 0xe
+
+	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
+	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381
+	CC_SYNTHESIZE_READONLY(bool, m_rollMode, RollMode); // 0x382
+
+	CC_SYNTHESIZE_READONLY(bool, m_gravityFlipped, GravityFlipped); // 0x383
+	CC_SYNTHESIZE_READONLY(bool, m_isDead, IsDead); // 0x384
+	CC_SYNTHESIZE_READONLY(float, m_playerScale, PlayerScale); // 0x388
+	CC_SYNTHESIZE_READONLY(float, m_timeMod, TimeMod); // 0x38c
+	CC_SYNTHESIZE(cocos2d::CCPoint, m_lastPos, LastP) // 0x390
+	CC_SYNTHESIZE(cocos2d::CCPoint, m_portalPos, PortalP); // 0x398
+	CC_SYNTHESIZE(bool, m_onGround, OnGround); // 0x3a4
+	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5
+	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
+
 protected:
-	cocos2d::CCLayer* m_layer;
+	double m_speed; // 0x2f0
+	double m_yStart; // 0x2f8
+	double m_gravity; // 0x300
+
+	double field736_0x328; // 0x328 possibly yvelocity
+
+	bool m_pGroundActive; // 0x314
+
+	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
+
+	// particles
+	cocos2d::CCParticleSystemQuad* m_pGround; // 0x354
+	cocos2d::CCParticleSystemQuad* m_pShipGround; // 0x360
 
 	// all of the sprites
 	cocos2d::CCSprite* m_iconSprite;

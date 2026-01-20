@@ -274,7 +274,7 @@ void GameObject::setGlowColor(cocos2d::ccColor3B color) {
     }
 }*/
 
-void GameObject::setPosition(cocos2d::CCPoint position) {
+void GameObject::setPosition(cocos2d::CCPoint const &position) {
     this->unk_0x218 = true;
     CCSpritePlus::setPosition(position);
     if (this->m_particleSystem) {

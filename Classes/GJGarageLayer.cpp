@@ -118,12 +118,20 @@ bool GJGarageLayer::init()
     editBarBG->setPosition(CCPoint(pDirector->getScreenLeft(), pDirector->getScreenBottom()));
     this->addChild(editBarBG, 1);*/
 
-	m_playerObject = SimplePlayer::create(4);
+	m_playerObject = SimplePlayer::create(pGameManager->getPlayerFrame());
 	m_playerObject->setAnchorPoint(CCPoint(0.0f, 0.0f));
-	m_playerObject->setPosition(CCPoint(pDirector->getScreenRight() - 1.0f, pDirector->getScreenTop() - 1.0f));
 	this->addChild(m_playerObject, 1);
-    
+	m_playerObject->setScale(1.6f);
+	m_playerObject->setPosition(floorLine->getPosition() + ccp(0.0f, 30.0f));
+	this->updatePlayerColors();
+
     return true;
+}
+
+void GJGarageLayer::updatePlayerColors()
+{
+	GameManager* pGameManager = GameManager::sharedState();
+	m_playerObject->setColor(pGameManager->colorForIdx(pGameManager->getPlayerColor()));
 }
 
 void GJGarageLayer::onBack(CCObject* sender)
