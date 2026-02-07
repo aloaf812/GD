@@ -44,7 +44,6 @@ public:
 	CC_SYNTHESIZE_READONLY(bool, m_managersLoaded, ManagersLoaded); // 0x11
 	CC_SYNTHESIZE_READONLY(bool, m_isIOS, IsIOS); // 0x12
 	CC_SYNTHESIZE(cocos2d::CCNode*, m_scenePointer, ScenePointer); // 0x13
-    cocos2d::CCScene* mMenuScene;
     
     static AppDelegate* get()
     {

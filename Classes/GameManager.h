@@ -72,6 +72,7 @@ public:
     void rateGame();
     void toggleFX();
     void toggleMusic();
+	void resetMusic();
     int colorForPos(int color);
     std::string colorKey(int param_1, bool param_2);
     virtual void dataLoaded(DS_Dictionary* param_1);
@@ -82,9 +83,12 @@ public:
     static cocos2d::ccColor3B colorForIdx(int col);
     // clean CC_PROPERTY lines
 	CC_SYNTHESIZE(bool, m_performanceMode, PerformanceMode); // 0x16e
+	CC_SYNTHESIZE(bool, m_showedPirate, ShowedPirate); // 0x170
 	CC_SYNTHESIZE(bool, m_clickedGarage, ClickedGarage); // 0x171
 	CC_SYNTHESIZE(bool, m_clickedEditor, ClickedEditor); // 0x172
+	CC_SYNTHESIZE(bool, m_showedEditorGuide, ShowedEditorGuide); // 0x175
     // icons
+	CC_SYNTHESIZE_READONLY(int, m_loadedBGIdx, LoadedBGIdx);
 	CC_SYNTHESIZE(int, m_playerColor, PlayerColor); // 0x158
 	CC_SYNTHESIZE(int, m_playerColor2, PlayerColor2); // 0x15c
 	CC_SYNTHESIZE(int, m_playerFrame, PlayerFrame); // 0x148
@@ -118,11 +122,8 @@ protected:
     bool m_commentSortRecent;
     bool m_enableTutorial;
     bool m_didSyncAchievements;
-    bool m_showedPirate;
     bool m_hasRatedGame;
     bool m_clickedPractice;
-    bool m_showedEditorGuide;
-    int m_loadedBgID;
     int m_loadedGroundID;
     int m_lastLevelID;
     int m_totalAttempts;

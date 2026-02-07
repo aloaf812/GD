@@ -2,20 +2,6 @@
 #include "GameManager.h"
 USING_NS_CC;
 
-UILayer* UILayer::create()
-{
-	auto pRet = new UILayer;
-
-	if (pRet && pRet->init())
-	{
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return nullptr;
-}
-
 bool UILayer::init()
 {
 	if (!CCLayerColor::initWithColor(ccc4(0, 0, 0, 0)))

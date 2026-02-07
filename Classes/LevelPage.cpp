@@ -159,9 +159,9 @@ bool LevelPage::init(GJGameLevel* level)
     return true;
 }
 
-void LevelPage::onFacebook(cocos2d::CCObject* sender)
+void LevelPage::onInfo(cocos2d::CCObject* sender)
 {
-    
+    // implement
 }
 
 void LevelPage::onPlay(cocos2d::CCObject* sender)

@@ -8,7 +8,7 @@
 class MenuLayer: public cocos2d::CCLayer {
 public:
     static cocos2d::CCScene* scene();
-    static MenuLayer* node();
+	NODE_FUNC(MenuLayer);
     virtual bool init();
     void onPlay(cocos2d::CCObject* sender);
     void onGarage(cocos2d::CCObject* sender);

@@ -24,7 +24,7 @@ CCScene* MenuLayer::scene(){
     // 'layer' is an autorelease object
     // create() should be renamed to node()
     AppDelegate* pApp = AppDelegate::get();
-    pApp->mMenuScene = scene;
+    pApp->setScenePointer(scene);
     
     // 'layer' is an autorelease object
     MenuLayer* layer = MenuLayer::node();
@@ -33,22 +33,6 @@ CCScene* MenuLayer::scene(){
     scene->addChild(layer);
     // return the scene
     return scene;
-}
-
-MenuLayer* MenuLayer::node()
-{
-    MenuLayer* pRet = new MenuLayer();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = NULL;
-        return NULL;
-    }
 }
 
 

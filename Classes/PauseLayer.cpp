@@ -6,20 +6,6 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-PauseLayer* PauseLayer::create()
-{
-	auto pRet = new PauseLayer;
-
-	if (pRet && pRet->CCBlockLayer::init())
-	{
-		pRet->autorelease();
-		return pRet;
-	}
-
-	CC_SAFE_DELETE(pRet);
-	return nullptr;
-}
-
 void PauseLayer::customSetup()
 {
 	CCDirector* pDirector = CCDirector::sharedDirector();

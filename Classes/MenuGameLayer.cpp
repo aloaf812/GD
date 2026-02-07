@@ -6,7 +6,7 @@
 USING_NS_CC;
 
 MenuGameLayer::MenuGameLayer() {
-    // not implemented yet (needs GameObject): PlayerObject* m_playerObject = nullptr;
+    PlayerObject* m_playerObject = nullptr;
     m_backgroundSprite = nullptr;
     m_groundSprite = nullptr;
     m_backgroundSpeed = 0.0f;
@@ -14,16 +14,6 @@ MenuGameLayer::MenuGameLayer() {
     m_groundOffset = 0.0f;
     m_bgWidth = 0.0f;
     m_groundWidth = 0.0f;
-}
-    
-MenuGameLayer* MenuGameLayer::create() {
-    auto ret = new MenuGameLayer();
-    if (ret->init()) {
-        ret->autorelease();
-        return ret;
-    }
-    delete ret;
-    return nullptr;
 }
 
 bool MenuGameLayer::init()
@@ -38,7 +28,7 @@ bool MenuGameLayer::init()
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSize winSize = pDirector->getWinSize();
 
-    m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(1));
+    m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(pGameManager->getLoadedBGIdx()));
     m_backgroundSprite->setAnchorPoint({0, 0});
     m_backgroundSprite->setScale(pDirector->getScreenScaleFactorMax());
     m_backgroundSprite->setColor({ 0, 102, 255 });
@@ -101,6 +91,10 @@ bool MenuGameLayer::init()
     m_groundLayer->addChild(lineSprite, 3);
     lineSprite->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 90.0f));
     
+	/*m_playerObject = PlayerObject::create(1, 1, this);
+	m_playerObject->setPosition(ccp(0.0f, 105.0f));
+	this->addChild(m_playerObject);*/
+
     scheduleUpdate();
     // PlayerObject hasn't been implemented yet
     // schedule(schedule_selector(MenuGameLayer::tryJump), 0.5f);

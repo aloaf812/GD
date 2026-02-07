@@ -9,7 +9,7 @@ public:
 	virtual bool init(char const* title, char const* description, char const* icon);
 	void show();
 
-	CC_PROPERTY(CCNode*, m_targetScene, TargetScene);
+	CC_SYNTHESIZE(CCNode*, m_targetScene, TargetScene); // 0xf0
 };
 
 #endif

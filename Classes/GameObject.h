@@ -28,7 +28,7 @@ enum GameObjectType : int32_t {
 class GameObject : public CCSpritePlus {
 public:
     // GameObject();
-	static GameObject* createFromString(std::string objString);
+	static GameObject* objectFromString(std::string objString);
     static GameObject* create(const char* spriteName);
     bool init(const char* spriteName);
     
@@ -41,18 +41,18 @@ public:
     // virtual void setRotation(float rotation);
     // virtual void setOpacity(unsigned char opacity);
     
-    /*void disableObject();
+    // void disableObject();
     const char* getBallFrame(int idx);
-    void addColorSprite();
+    /*void addColorSprite();
     void activateObject();
     void powerOffObject();
     void powerOnObject();
     void removeGlow();
-    void triggerActivated();
+    void triggerActivated();*/
     
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);
-    virtual void resetObject();
+    /*virtual void resetObject();
     virtual void deactivateObject();
     virtual cocos2d::CCRect getObjectRect();
     virtual cocos2d::CCRect getObjectRect(float scaleModX, float scaleModY);
@@ -85,21 +85,21 @@ public:
     cocos2d::CCRect unk_0x208;
     bool unk_0x218;
     // CC_PROPERTY_READONLY(bool, m_hasColor, HasColor); // 0x219
-    cocos2d::CCSprite* m_colorSprite; // 0x21c
+	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_colorSprite, ColorSprite); // 0x21c
     /*CC_PROPERTY(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220
     CC_PROPERTY(float, m_radius, Radius); // 0x224
-    CC_PROPERTY_READONLY(bool, m_isRotated, IsRotated); // 0x228
-    CC_PROPERTY(float, m_scaleModX, ScaleModX); // 0x22c
-    CC_PROPERTY(float, m_scaleModY, ScaleModY); // 0x230
+    CC_PROPERTY_READONLY(bool, m_isRotated, IsRotated); // 0x228*/
+    CC_SYNTHESIZE(float, m_scaleModX, ScaleModX); // 0x22c
+    /*CC_PROPERTY(float, m_scaleModY, ScaleModY); // 0x230
     CC_PROPERTY(int, m_ID, M_ID); // 0x234
     CC_PROPERTY(GameObjectType, m_objectType, ObjectType); // 0x238
-    CC_PROPERTY(int, m_sectionIdx, SectionIdx); // 0x23c
-    CC_PROPERTY_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
-    CC_PROPERTY(bool, m_touchTriggered, TouchTriggered); // 0x241
+    CC_PROPERTY(int, m_sectionIdx, SectionIdx); // 0x23c*/
+    CC_SYNTHESIZE_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
+    /*CC_PROPERTY(bool, m_touchTriggered, TouchTriggered); // 0x241
     cocos2d::CCPoint m_realPosition; // 0x244*/
-    CC_PROPERTY_READONLY(std::string, m_frame, Frame); // 0x24c
-    /*CC_PROPERTY(bool, m_blendAdditive, BlendAdditive); // 0x250
-    CC_PROPERTY_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251
+    CC_SYNTHESIZE_READONLY(std::string, m_frame, Frame); // 0x24c
+    CC_SYNTHESIZE_READONLY(bool, m_blendAdditive, BlendAdditive); // 0x250
+    /*CC_PROPERTY_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251
     CC_PROPERTY_READONLY(bool, m_usePlayerColor2, UsePlayerColor2); // 0x252
     CC_PROPERTY(bool, m_isDisabled, IsDisabled); // 0x253
     CC_PROPERTY(bool, m_useAudioScale, UseAudioScale); // 0x254
@@ -107,34 +107,34 @@ public:
     CC_PROPERTY(float, m_startRotation, StartRotation); // 0x258
     CC_PROPERTY(float, m_startScaleX, StartScaleX); // 0x25c
     CC_PROPERTY(float, m_startScaleY, StartScaleY); // 0x260
-    CC_PROPERTY(bool, m_shouldHide, ShouldHide); // 0x264
-    CC_PROPERTY(float, m_spawnXPos, SpawnXPos); // 0x268
-    CC_PROPERTY_READONLY(bool, m_isInvisible, IsInvisible); // 0x26c
-    CC_PROPERTY(float, m_enterAngle, EnterAngle); // 0x270
-    CC_PROPERTY(int, m_enterEffect, EnterEffect); // 0x274
-    CC_PROPERTY(cocos2d::ccColor3B, m_tintColor, TintColor); // 0x278
+    CC_PROPERTY(bool, m_shouldHide, ShouldHide); // 0x264*/
+    CC_SYNTHESIZE_READONLY(float, m_spawnXPos, SpawnXPos); // 0x268
+    /*CC_PROPERTY_READONLY(bool, m_isInvisible, IsInvisible); // 0x26c*/
+    CC_SYNTHESIZE(float, m_enterAngle, EnterAngle); // 0x270
+    CC_SYNTHESIZE(int, m_enterEffect, EnterEffect); // 0x274
+    /*CC_PROPERTY(cocos2d::ccColor3B, m_tintColor, TintColor); // 0x278
     CC_PROPERTY(float, m_tintDuration, TintDuration); // 0x27c
-    CC_PROPERTY(bool, m_tintGround, TintGround); // 0x280
-    CC_PROPERTY(int, m_objectKey, ObjectKey); // 0x284
-    CC_PROPERTY(bool, m_dontTransform, DontTransform); // 0x288
+    CC_PROPERTY(bool, m_tintGround, TintGround); // 0x280*/
+    CC_SYNTHESIZE(int, m_objectKey, ObjectKey); // 0x284
+    /*CC_PROPERTY(bool, m_dontTransform, DontTransform); // 0x288
     CC_PROPERTY(bool, m_dontFade, DontFade); // 0x289
     CC_PROPERTY(bool, m_dontFadeTinted, DontFadeTinted); // 0x28a
     CC_PROPERTY(bool, m_isTintObject, IsTintObject); // 0x28b
-    bool m_triggerActivated; // 0x28c
-    CC_PROPERTY(bool, m_stateVar, StateVar); // 0x28d
-    CC_PROPERTY(int, m_objectZ, ObjectZ); // 0x290
-    CC_PROPERTY(cocos2d::CCNode*, m_objectParent, ObjectParent); // 0x294
-    CC_PROPERTY_READONLY(bool, m_customAudioScale, CustomAudioScale); // 0x298
+    bool m_triggerActivated; // 0x28c*/
+    CC_SYNTHESIZE(bool, m_stateVar, StateVar); // 0x28d
+    CC_SYNTHESIZE(int, m_objectZ, ObjectZ); // 0x290
+    CC_SYNTHESIZE(cocos2d::CCNode*, m_objectParent, ObjectParent); // 0x294
+    /*CC_PROPERTY_READONLY(bool, m_customAudioScale, CustomAudioScale); // 0x298
     CC_PROPERTY_READONLY(float, m_minAudioScale, MinAudioScale); // 0x29c
     CC_PROPERTY_READONLY(float, m_maxAudioScale, MaxAudioScale); // 0x2a0
     CC_PROPERTY(int, m_uniqueID, UniqueID); // 0x2a4
     CC_PROPERTY_READONLY(bool, m_invisibleMode, InvisibleMode); // 0x2a8
     CC_PROPERTY_READONLY(bool, m_glowUseBGColor, GlowUseBGColor); // 0x2a9
     CC_PROPERTY_READONLY(bool, m_useBGColor, UseBGColor); // 0x2aa
-    CC_PROPERTY_READONLY(bool, m_useSpecialLight, UseSpecialLight); // 0x2ab
-    CC_PROPERTY(float, m_opacityMod, OpacityMod); // 0x2ac
-    CC_PROPERTY(float, m_glowOpacityMod, GlowOpacityMod); // 0x2b0
-    CC_PROPERTY(bool, m_dontShow, DontShow); // 0x2b4
+    CC_PROPERTY_READONLY(bool, m_useSpecialLight, UseSpecialLight); // 0x2ab*/
+    CC_SYNTHESIZE(float, m_opacityMod, OpacityMod); // 0x2ac
+    CC_SYNTHESIZE(float, m_glowOpacityMod, GlowOpacityMod); // 0x2b0
+    /*CC_PROPERTY(bool, m_dontShow, DontShow); // 0x2b4
     CC_PROPERTY(bool, m_editorSelected, EditorSelected); // 0x2b5
     CC_PROPERTY(bool, m_copyPlayerColor1, CopyPlayerColor1); // 0x2b6
     CC_PROPERTY(bool, m_copyPlayerColor2, CopyPlayerColor2); // 0x2b7

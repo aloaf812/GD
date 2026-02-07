@@ -8,7 +8,7 @@ class GJGarageLayer : public cocos2d::CCLayer
 {
 public:
     static cocos2d::CCScene* scene();
-    static GJGarageLayer* node();
+	NODE_FUNC(GJGarageLayer);
     virtual bool init();
 
 	void updatePlayerColors();

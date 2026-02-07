@@ -91,8 +91,25 @@ bool ObjectToolbox::init()
 
 	// clouds
 	CREATE_OBJ("d_cloud_01_001.png", 48); // Large Fading Cloud
+
+
+	CREATE_OBJ("square_c_05_001.png", 73); // Beveled Inner Square
+
+	CREATE_OBJ("secretCoin_01_001.png", 142); // Secret Coin (not in list)
 #pragma endregion Objects
 	return true;
+}
+
+ObjectToolbox* ObjectToolbox::sharedState()
+{
+	static ObjectToolbox* pObjectToolbox = NULL;
+	if (!pObjectToolbox)
+	{
+		pObjectToolbox = new ObjectToolbox();
+		pObjectToolbox->init();
+	}
+
+	return pObjectToolbox;
 }
 
 CCDictionary* ObjectToolbox::stringSetupToDict(std::string str)
@@ -107,9 +124,16 @@ CCDictionary* ObjectToolbox::stringSetupToDict(std::string str)
     while(getline(strStream, currentKey, ',')){
         
         if(i % 2 == 0) keyID = currentKey;
-        else dict->setObject(CCString::create(currentKey.c_str()),keyID);
+		else dict->setObject(CCString::create(currentKey.c_str()), keyID);
         i++;
     }
     
     return dict;
+}
+
+char const* ObjectToolbox::keyToFrame(char const* key)
+{
+	char const* frame = m_keys->valueForKey(atoi(key))->getCString();
+	CCLOG(frame);
+	return frame;
 }

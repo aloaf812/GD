@@ -25,7 +25,7 @@ CCScene* LevelSelectLayer::scene(int page)
     CCScene* scene = CCScene::create();
     
     AppDelegate* pApp = AppDelegate::get();
-    pApp->mMenuScene = scene;
+    pApp->setScenePointer(scene);
     
     // 'layer' is an autorelease object
     LevelSelectLayer* layer = LevelSelectLayer::create(page);

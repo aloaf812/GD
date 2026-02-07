@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "ObjectToolbox.h"
-//#include <stdlib.h>
 USING_NS_CC;
 
 // hi antimatter some of your code was kind of broken so i fixed it up
@@ -90,10 +89,10 @@ USING_NS_CC;
 */
 bool GameObject::init(const char *spriteName) {
     if (!CCSpritePlus::initWithSpriteFrameName(spriteName)) return false;
-    /*this->m_objectZ = 2;
-    this->m_opacityMod = 1;
-    this->m_glowOpacityMod = 1;
-    this->m_enterEffect = 0;*/
+    this->m_objectZ = 2;
+    this->m_opacityMod = 1.0f;
+    this->m_glowOpacityMod = 1.0f;
+    this->m_enterEffect = 0;
     this->m_frame = spriteName;
     //this->m_shouldSpawn = false;
     this->unk_0x1d4 = 0; // this + 0x138
@@ -113,30 +112,55 @@ bool GameObject::init(const char *spriteName) {
     this->unk_0x204 = true;
     this->unk_0x218 = true;
     //this->m_tintObjectsUseBlend = true;
-    return true;
+     return true;
 }
 
 GameObject* GameObject::create(const char* frame)
 {
-    static GameObject* gGameObject = NULL;
-    if (!gGameObject)
-    {
-        gGameObject = new GameObject();
-        gGameObject->init(frame);
-    }
-    
-    return gGameObject;
+	GameObject *pRet = new GameObject();
+	if (pRet && pRet->init(frame))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
 }
 
-GameObject* GameObject::createFromString(std::string objString)
+GameObject* GameObject::objectFromString(std::string objString)
 {
 	CCDictionary* objDict = ObjectToolbox::stringSetupToDict(objString);
-	if (!objDict) {
-		CCLOG("this can serve no purpose anymore, goodbye");
+
+
+
+	char const* key = objDict->valueForKey("1")->getCString();
+	CCLOG(key);
+	int objID = atoi(key);
+	char const* frame = ObjectToolbox::sharedState()->keyToFrame(key);
+
+	if (!objID)
+		return nullptr;
+
+	GameObject* object;
+
+	if (objID == 84 || objID == 36 || objID == 141) {
+		// object = RingObject::create();
+		CCLOG("GAME BREAKING BUG RIGHT HERE");
 		return nullptr;
 	}
-	CCLOG("success but at what cost");
-	return nullptr;
+	else {
+		object = GameObject::create(frame);
+		object->setObjectKey(objID);
+		object->setPosition(ccp(objDict->valueForKey("2")->floatValue(), objDict->valueForKey("3")->floatValue() + 90.0f));
+	}
+
+	// object->setObjectKey(objID);
+
+	return object;
 }
 /*
 void GameObject::disableObject() {
@@ -144,13 +168,13 @@ void GameObject::disableObject() {
     this->m_isDisabled = true;
     this->unk_0x1e8 = false;
     //this->m_opacityMod = 0.2;
-}
+}*/
 
 const char* GameObject::getBallFrame(int idx) {
     return cocos2d::CCString::createWithFormat("rod_ball_%02d_001.png", idx < 3 ? idx : 3)->getCString();
 }
 
-void GameObject::triggerActivated() {
+/*void GameObject::triggerActivated() {
     this->m_triggerActivated = true;
 }
 
@@ -220,29 +244,30 @@ void GameObject::addColorSprite() {
             this->m_colorSprite->setOpacity(100);
         }
     }
-}
+}*/
 
 void GameObject::setFlipX(bool flipX) {
     CCSpritePlus::setFlipX(flipX);
-    if (this->m_glowSprite) {
+
+    /*if (this->m_glowSprite) {
         m_glowSprite->setFlipX(flipX);
     }
     if (this->m_hasColor) {
         m_colorSprite->setFlipX(flipX);
-    }
+    }*/
 }
 
 void GameObject::setFlipY(bool flipY) {
     CCSpritePlus::setFlipY(flipY);
-    if (this->m_glowSprite) {
+    /*if (this->m_glowSprite) {
         m_glowSprite->setFlipY(flipY);
     }
     if (this->m_hasColor) {
         m_colorSprite->setFlipY(flipY);
-    }
+    }*/
 }
 
-void GameObject::setScaleX(float scaleX) {
+/*void GameObject::setScaleX(float scaleX) {
     CCSpritePlus::setScaleX(scaleX);
     if (this->m_glowSprite) {
         this->m_glowSprite->setScaleX(scaleX);
@@ -278,7 +303,7 @@ void GameObject::setPosition(cocos2d::CCPoint const &position) {
     this->unk_0x218 = true;
     CCSpritePlus::setPosition(position);
     if (this->m_particleSystem) {
-        //this->m_particleSystem->setPosition()
+        // this->m_particleSystem->setPosition()
     }
 }
 
@@ -307,5 +332,3 @@ void GameObject::setVisible(bool visible) {
     }
     cocos2d::CCSprite::setVisible(visible);
 }*/
-
-std::string GameObject::getFrame(){ return m_frame; }

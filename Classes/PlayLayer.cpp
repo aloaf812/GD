@@ -4,6 +4,7 @@
 #include "AppDelegate.h"
 #include "LevelTools.h"
 #include "PauseLayer.h"
+#include "ObjectToolbox.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 
@@ -12,6 +13,33 @@ USING_NS_CC;
 // i have made the grave mistake of doing the opposite and continuing to dig myself deeper into this rabbit hole of decompilation.
 
 // i am alone on this barren earth.
+
+static CCArray* splitString(std::string input) // 0x0018c210 (for some reason doesn't have a debug symbol)
+{
+	CCArray* array = CCArray::create();
+
+	size_t start = 0;
+	size_t end = input.find(";");
+
+	while (end != std::string::npos)
+	{
+		std::string token = input.substr(start, end - start);
+		if (!token.empty()) {
+			array->addObject(CCString::create(token.c_str()));
+		}
+		start = end + 1;
+		end = input.find(";", start);
+	}
+
+	if (start < input.size())
+	{
+		std::string token = input.substr(start);
+		if (!token.empty()) {
+			array->addObject(CCString::create(token.c_str()));
+		}
+	}
+	return array;
+}
 
 PlayLayer* PlayLayer::create(GJGameLevel* level)
 {
@@ -68,6 +96,7 @@ CCScene* PlayLayer::scene(GJGameLevel* level)
 {
     CCScene *scene = CCScene::create();
     AppDelegate* pApp = AppDelegate::get();
+	pApp->setScenePointer(scene);
     PlayLayer* layer = PlayLayer::create(level);
     scene->addChild(layer);
     // scene->setObjType(5);
@@ -77,6 +106,45 @@ CCScene* PlayLayer::scene(GJGameLevel* level)
 void PlayLayer::createObjectsFromSetup(std::string setup)
 {
 
+	CCArray* parts = splitString(setup);
+
+	m_levelSettings =
+		LevelSettingsObject::objectFromString(
+		static_cast<CCString*>(parts->objectAtIndex(0))->getCString()
+		);
+	m_levelSettings->retain();
+
+
+	/*m_levelSettings->updateColors(
+		m_player->getGlowColor1(),
+		m_player->getGlowColor2());*/
+
+	m_tintObjectsUseBlend = m_levelSettings->getTintObjectsUseBlend();
+
+
+
+	for (unsigned i = 1; i < parts->count(); ++i)
+	{
+		const char* objStr =
+			static_cast<CCString*>(parts->objectAtIndex(i))->getCString();
+
+		GameObject* obj = GameObject::objectFromString(objStr);
+		
+		if (obj)
+		{
+			// obj->setVisible(false);
+
+			//if (!obj->getBlendAdditive())
+
+
+			//obj->setObjectParent(m_batchNode);
+			
+			m_batchNode->addChild(obj);
+			//this->addToSection(obj);
+
+		}
+
+	}
 }
 
 bool PlayLayer::init(GJGameLevel* level)
@@ -87,6 +155,9 @@ bool PlayLayer::init(GJGameLevel* level)
     
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	
+	this->m_playbackMode = false;
+	this->m_localLevel = level->getLevelType() == GJLevelType::LocalLevel;
+
 	this->m_startPos = ccp(0.0f, 105.0f);
 
 	this->m_attempts = 0;
@@ -96,7 +167,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->m_endTriggered = false;
 	this->m_isResetting = true;
 	//this->field325_0x1c0 = 0.0;
-	//this->m_clkTimer = 0.0;
+	this->m_clkTimer = 0.0;
 
     GameManager* pGameManager = GameManager::sharedState();
     pGameManager->setEditMode(false);
@@ -107,14 +178,25 @@ bool PlayLayer::init(GJGameLevel* level)
 	level->retain();
 
     m_gameLayer = CCLayer::create();
-	addChild(m_gameLayer);
+	this->addChild(m_gameLayer);
 
-	/*m_mainNode = CCNode::create();
-	addChild(m_mainNode);*/
+	m_activeObjects = CCArray::create();
 
-    CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-    m_batchNode = CCSpriteBatchNode::createWithTexture(pTextureCache->addImage("GJ_GameSheet.png"), 29);
+	m_stateObjects = CCArray::create();
+
+	/*m_playerNode = CCNode::create();
+	addChild(m_playerNode);*/
+
+	CCTexture2D* texture = CCTextureCache::sharedTextureCache()->addImage("GJ_GameSheet.png");
+    m_batchNode = CCSpriteBatchNode::createWithTexture(texture, 29);
 	m_gameLayer->addChild(m_batchNode, 1);
+
+	m_batchNodeAdd = CCSpriteBatchNode::createWithTexture(texture, 29);
+	m_batchNodeAdd->setBlendFunc({ GL_SRC_ALPHA, GL_ONE});
+	m_gameLayer->addChild(m_batchNodeAdd, 0);
+
+	m_batchNodeBottom = CCSpriteBatchNode::createWithTexture(texture, 29);
+	m_gameLayer->addChild(m_batchNodeBottom, -1);
 
 	m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
 
@@ -129,16 +211,17 @@ bool PlayLayer::init(GJGameLevel* level)
 		m_levelSettings = LevelSettingsObject::create();
 		m_levelSettings->retain();
 	}
-
-	//m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(m_levelSettings->getBGIdx()));
-	m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(1));
-	m_backgroundSprite->setAnchorPoint({ 0, 0 });
-	m_backgroundSprite->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
-	m_backgroundSprite->setColor({ 0, 102, 255 });
+	
+	
+	//m_background = CCSprite::create(pGameManager->getBGTexture(m_levelSettings->getBGIdx()));
+	m_background = CCSprite::create(pGameManager->getBGTexture(1));
+	m_background->setAnchorPoint({ 0, 0 });
+	m_background->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
+	m_background->setColor({ 0, 102, 255 });
 	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
-	m_backgroundSprite->getTexture()->setTexParameters(&texParams);
-	m_backgroundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_backgroundSprite->getContentSize().height));
-	m_gameLayer->addChild(m_backgroundSprite, -1);
+	m_background->getTexture()->setTexParameters(&texParams);
+	m_background->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_background->getContentSize().height));
+	m_gameLayer->addChild(m_background, -1);
 	// m_bgWidth = winSize.width;
 
     //m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
@@ -148,9 +231,9 @@ bool PlayLayer::init(GJGameLevel* level)
 	m_uiLayer = UILayer::create();
 	this->addChild(m_uiLayer);
 
-    //tintBackground(m_levelSettings->getStartBGColor(), 0.0f);
-    //tintGround(m_levelSettings->getStartGColor(), 0.0f);
-    //tintLine(m_levelSettings->getStartLineColor(), 0.0f);
+    tintBackground(m_levelSettings->getStartBGColor(), 0.0f);
+    tintGround(m_levelSettings->getStartGColor(), 0.0f);
+    tintLine(m_levelSettings->getStartLineColor(), 0.0f);
     
     // i really need to come up with a good name for SAE variables
     SimpleAudioEngine* pAudioEngine = SimpleAudioEngine::sharedEngine();
@@ -163,8 +246,13 @@ bool PlayLayer::init(GJGameLevel* level)
                 CCDelayTime::create(1.0f),
                 CCCallFunc::create(this, callfunc_selector(PlayLayer::startGame)), nullptr));
     
+	this->m_cleanReset = true;
+
+	updateVisibility();
     updateCamera(0.0f);
-    
+    // toggleAudioRain(false);
+	toggleGlitter(false);
+	GameManager::sharedState()->resetMusic();
     return true;
 }
 
@@ -196,15 +284,15 @@ void PlayLayer::resetLevel()
 
 	this->toggleGlitter(false);
 
-	/*this->field313_0x1a8 = false;
+	/*this->m_playerDead = false;
 	this->field314_0x1a9 = this->m_cleanReset;
 	this->clearPickedUpItems();*/
 
 	// field277_0x130->removeAllObjects(); // this is a CCArray
 	// field339_0x1e0->removeAllObjects(); // this is a CCDictionary
 
-	/*this->field392_0x23c = 0.0;
-	this->field336_0x1d4 = 0.0;
+	this->m_flipValue = 0.0;
+	/*this->field336_0x1d4 = 0.0;
 	this->field_0x238 = 0;
 	this->field337_0x1d8 = 1.0;*/
 	this->stopActionByTag(14);
@@ -265,35 +353,89 @@ void PlayLayer::pauseGame()
 // updates
 void PlayLayer::update(float dt)
 {
-	float step = dt * 60.0f;
+	float step = dt * 60.0;
 
 	if (!m_player->getIsLocked())
-		m_player->setPosition(m_realPlayerPos);
+		//m_player->setPosition(m_realPlayerPos);
 
 	m_player->setTouchedRing(nullptr);
 
-	if (!m_player->getIsLocked()) {
+	/*for (int i = 0; i > m_stateObjects->count(); ++i)
+		static_cast<GameObject*>(m_stateObjects->objectAtIndex(i))->setStateVar(false);
+
+	for (int i = 0; i > m_activeObjects->count(); ++i)
+		m_activeObjects->objectAtIndex(i)->update(step);*/
+
+
+	if (m_player->isFlying())
+		m_player->updateShipRotation(step);
+
+
+	// weird
+	bool isUnlocked = m_player->getIsLocked();
+	CCPoint newPlayerPos;
+	if (!isUnlocked) {
 		m_realPlayerPos = m_player->getPosition();
-		//if ((this->m_flipValue != 0.0) && (this->m_flipValue != 1.0))
+		float flipVal = m_flipValue;
+		if ((flipVal != 0.0f) && (flipVal != 1.0f))
+			if (flipVal == -1.0f)
+				flipVal = 1.0f - flipVal;
+		newPlayerPos = m_player->getPosition() + ccp(flipVal * 150.0f, 0.0f);
+		isUnlocked = true;
+	}
+	else {
+		isUnlocked = false;
 	}
 
-	m_player->update(step / 4);
-
-	CCLOG("%f", m_realPlayerPos.x);
-
-    // updateCamera();
-    updateProgressbar();
-    updateEffectPositions();
+	updateCamera(step);
+	updateVisibility();
+	//checkSpawnObjects();
+	m_clkTimer += dt;
+	//m_audioEffectsLayer->audioStep(dt);
+	//updateLevelColors();
+	if (isUnlocked)
+		m_player->setPosition(newPlayerPos);
+	updateProgressbar();
+	updateEffectPositions();
 }
+
 
 void PlayLayer::updateAttempts()
 {
-    
+	// m_attemptLabel->setString(CCString::createWithFormat("Attempt %i", m_attempts)->getCString);
 }
+
 
 void PlayLayer::updateCamera(float dt)
 {
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	float screenHeight = winSize.height;
+	CCPoint camPos = m_cameraPos;	 
+	CCPoint playerPos = m_player->getPosition();
 
+	float targetY = camPos.y;
+
+	if (playerPos.y > camPos.y + 120.0f) {
+		targetY = playerPos.y - 120.0f;
+	}
+
+	if (playerPos.y < camPos.y + 90.0f) {
+		targetY = playerPos.y - 90.0f;
+	}
+
+	camPos.y += (targetY - camPos.y) / (10.0f / dt);
+
+	float maxY = 1740.0f - screenHeight;
+	if (camPos.y < 0.0f) camPos.y = 0.0f;
+	else if (camPos.y > maxY) camPos.y = 1740.0f;
+
+	camPos.x = playerPos.x;
+
+	m_cameraPos = camPos;
+
+	CCCamera* camera = m_gameLayer->getCamera();
+	camera->setCenterXYZ(camPos.x, camPos.y, 0.0f);
+	camera->setEyeXYZ(camPos.x, camPos.y, camera->getZEye());
 }
 
 void PlayLayer::updateProgressbar()
@@ -308,7 +450,7 @@ void PlayLayer::updateEffectPositions()
 
 void PlayLayer::tintBackground(ccColor3B color, float duration)
 {
-    m_backgroundSprite->setColor(color);
+    m_background->setColor(color);
 }
 
 void PlayLayer::tintGround(ccColor3B color, float duration)
@@ -334,6 +476,16 @@ void PlayLayer::toggleGlitter(bool visible)
 }
 
 void PlayLayer::resume()
+{
+
+}
+
+void PlayLayer::updateVisibility()
+{
+
+}
+
+void PlayLayer::addToSection(GameObject* obj)
 {
 
 }

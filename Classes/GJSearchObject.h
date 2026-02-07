@@ -1,19 +1,18 @@
-#ifndef _UI_LAYER_H
-#define _UI_LAYER_H
+#ifndef _GJ_SEARCHOBJECT_H
+#define _GJ_SEARCHOBJECT_H
 
 #include "cocos2d.h"
-#include "RT_COCOS/CCMenuItemSpriteExtra.h"
 
-class UILayer : public cocos2d::CCLayerColor {
+class GJSearchObject : public cocos2d::CCNode {
 public:
-	CREATE_FUNC(UILayer);
+	/*static GJSearchObject* create();
 	bool init();
 
 	virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 
 	void onPause(cocos2d::CCObject* sender);	
 protected:
-	CCMenuItemSpriteExtra* m_pauseBtn;
+	CCMenuItemSpriteExtra* m_pauseBtn;*/
 };
 
 #endif

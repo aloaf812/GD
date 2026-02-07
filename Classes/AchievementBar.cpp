@@ -89,7 +89,3 @@ void AchievementBar::show()
 	CCNode* scene = CCDirector::sharedDirector()->getRunningScene();
 	scene->addChild(this);
 }
-
-CCNode* AchievementBar::getTargetScene() { return m_targetScene; }
-
-void AchievementBar::setTargetScene(CCNode* var) { m_targetScene = var; }

@@ -11,12 +11,12 @@ class MenuGameLayer : public cocos2d::CCLayer {
     float m_groundWidth;
     cocos2d::CCSprite* m_groundSprite;
     cocos2d::CCLayer* m_groundLayer;
-    PlayerObject* m_playerObject;
-    cocos2d::CCSprite* m_backgroundSprite;
+    PlayerObject* m_playerObject; // 0x114
+    cocos2d::CCSprite* m_backgroundSprite; // 0x118
     float m_backgroundSpeed;
 public:
-    MenuGameLayer();
-    static MenuGameLayer* create();
+	MenuGameLayer();
+	CREATE_FUNC(MenuGameLayer);
     bool init();
     void update(float delta);
 };

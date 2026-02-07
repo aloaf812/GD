@@ -7,23 +7,20 @@ LevelSettingsObject::LevelSettingsObject()
     m_BGIdx = 0;
 }
 
-LevelSettingsObject* LevelSettingsObject::create()
-{
-    LevelSettingsObject* ret = new LevelSettingsObject();
-    if (ret) {
-        if (ret->init()) {
-            ret->autorelease();
-            return ret;
-        }
-        
-        delete ret;
-    }
-    
-    return NULL;
-}
-
 bool LevelSettingsObject::init()
 {
+	m_startGColor = ccc3(0, 102, 255);
+	m_startBGColor = ccc3(40, 125, 255);
+	m_startLineColor = ccc3(255, 255, 255);
+	m_startObjColor = ccc3(255, 255, 255);
+	m_startTintObjColor = ccc3(255, 255, 255);
+	this->m_audioTrack = 0;
+	this->m_startMiniMode = false;
+	this->m_startMode = 0;
+	this->m_startSpeed = 0;
+	this->m_BGIdx = 0;
+	this->m_GIdx = 0;
+	this->m_tintObjectsUseBlend = true;
     return true;
 }
 
@@ -69,47 +66,3 @@ LevelSettingsObject* LevelSettingsObject::objectFromString(std::string str) {
     
     return obj;
 }
-
-ccColor3B LevelSettingsObject::getStartBGColor() { return m_startBGColor; }
-
-void LevelSettingsObject::setStartBGColor(ccColor3B var) { m_startBGColor = var; }
-
-
-ccColor3B LevelSettingsObject::getStartGColor() { return m_startGColor; }
-
-void LevelSettingsObject::setStartGColor(ccColor3B var) { m_startGColor = var; }
-
-
-ccColor3B LevelSettingsObject::getStartLineColor() { return m_startLineColor; }
-
-void LevelSettingsObject::setStartLineColor(ccColor3B var) { m_startLineColor = var; }
-
-
-int LevelSettingsObject::getAudioTrack() { return m_audioTrack; }
-
-void LevelSettingsObject::setAudioTrack(int var) { m_audioTrack = var; }
-
-
-int LevelSettingsObject::getStartMode() { return m_startMode; }
-
-void LevelSettingsObject::setStartMode(int var) { m_startMode = var; }
-
-
-bool LevelSettingsObject::getStartMiniMode() { return m_startMiniMode; }
-
-void LevelSettingsObject::setStartMiniMode(bool var) { m_startMiniMode = var; }
-
-
-int LevelSettingsObject::getStartSpeed() { return m_startSpeed; }
-
-void LevelSettingsObject::setStartSpeed(int var) { m_startSpeed = var; }
-
-
-int LevelSettingsObject::getBGIdx() { return m_BGIdx; }
-
-void LevelSettingsObject::setBGIdx(int var) { m_BGIdx = var; }
-
-
-int LevelSettingsObject::getGIdx() { return m_GIdx; }
-
-void LevelSettingsObject::setGIdx(int var) { m_GIdx = var; }

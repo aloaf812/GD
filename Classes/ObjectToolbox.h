@@ -9,6 +9,8 @@ public:
 	virtual bool init();
     static cocos2d::CCDictionary* stringSetupToDict(std::string str);
 
+	char const* keyToFrame(char const* key);
+
 	cocos2d::CCDictionary* m_objects;
 	cocos2d::CCDictionary* m_keys;
 };

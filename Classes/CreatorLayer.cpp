@@ -2,6 +2,7 @@
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
 #include "GameLevelManager.h"
+#include "LevelEditorLayer.h"
 
 #include "CreatorLayer.h"
 USING_NS_CC;
@@ -17,7 +18,7 @@ CCScene* CreatorLayer::scene()
     CCScene* scene = CCScene::create();
     
     AppDelegate* pApp = AppDelegate::get();
-    pApp->mMenuScene = scene;
+    pApp->setScenePointer(scene);
     
     // 'layer' is an autorelease object
     CreatorLayer* layer = CreatorLayer::create();
@@ -51,6 +52,14 @@ void CreatorLayer::onBack(CCObject* sender)
     CCScene* scene = MenuLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
     pDirector->replaceScene(fade);
+}
+
+void CreatorLayer::onMyLevels(CCObject* sender)
+{
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCScene* scene = LevelEditorLayer::scene(GameLevelManager::sharedState()->getMainLevel(7));
+	CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
+	pDirector->replaceScene(fade);
 }
 
 void CreatorLayer::onSearch(CCObject* sender)
@@ -122,7 +131,7 @@ bool CreatorLayer::init()
     
     
     CCSprite* createBtn = CCSprite::createWithSpriteFrameName("GJ_createBtn_001.png");
-    CCMenuItemSpriteExtra* createExtra = CCMenuItemSpriteExtra::create(createBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+	CCMenuItemSpriteExtra* createExtra = CCMenuItemSpriteExtra::create(createBtn, NULL, this, menu_selector(CreatorLayer::onMyLevels));
     creatorMenu->addChild(createExtra);
     this->addChild(creatorMenu);
     creatorMenu->setPosition(CCPoint(winSize.width * 0.5f, (winSize.height * 0.5f) + 10.0f));

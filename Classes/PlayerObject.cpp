@@ -37,10 +37,10 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
     else shipIdx = ship;
     if (ship <=0) shipIdx = 1;
     
-    std::string frameFile = CCString::createWithFormat("player_%02d_001.png", playerIdx)->getCString();
-    std::string frameFile2 = CCString::createWithFormat("player_%02d_2_001.png", playerIdx)->getCString();
+    char const* frameFile = CCString::createWithFormat("player_%02d_001.png", playerIdx)->getCString();
+    char const* frameFile2 = CCString::createWithFormat("player_%02d_2_001.png", playerIdx)->getCString();
     
-	if (!GameObject::init(frameFile.c_str())) return false;
+	if (!GameObject::init(frameFile)) return false;
 	
 	m_ghostType = GhostType::Disabled;
 	m_timeMod = 0.9f;
@@ -50,9 +50,12 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	else
 		m_gameLayer = layer;
 
-	m_iconSprite = CCSprite::createWithSpriteFrameName(frameFile.c_str());
+
+	this->m_isPlayLayer = layer == nullptr;
+
+	m_iconSprite = CCSprite::createWithSpriteFrameName(frameFile);
 	this->addChild(m_iconSprite, 1);
-	m_iconSpriteSecondary = CCSprite::createWithSpriteFrameName(frameFile2.c_str());
+	m_iconSpriteSecondary = CCSprite::createWithSpriteFrameName(frameFile2);
 	m_iconSprite->addChild(m_iconSpriteSecondary);
 	m_iconSpriteSecondary->setPosition(m_iconSprite->getContentSize() / 2);
 
@@ -67,9 +70,20 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	//this->field758_0x344 = 0;
 
 	this->m_pGround = CCParticleSystemQuad::create("dragEffect.plist");
-
+	m_pGround->setPositionType(tCCPositionType::kCCPositionTypeFree);
+	m_gameLayer->addChild(m_pGround, -1);
 	m_pGround->stopSystem();
 	this->m_pGroundActive = false;
+
+
+	field695_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
+	// field695_0x2e4->setTextureRect
+	field695_0x2e4->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
+
+	if (!m_isPlayLayer) 
+		m_gameLayer->addChild(field695_0x2e4);
+	else
+		PLAY_LAYER->getBatchNodeAdd()->addChild(field695_0x2e4, 20);
 
     return true;
 }
@@ -110,14 +124,19 @@ void PlayerObject::update(float dt)
 		if (!this->m_isLocked)
 		{
 			float x = dt * 5.77f * m_timeMod;
-			this->setPosition({ this->getPosition() + ccp(x, 0.0f) });
+			this->setPosition({ this->getPosition() + ccp(x, 0.0f)});
+			//CCLOG("%f", this->getPosition().x);
 		}
 
 		if (this->isFlying())
 		{
 			if (m_flyMode)
 			{
-				// add functionality
+				if (m_pShipActive)
+				{ // m_pShipLift->stopSystem(); 
+				}
+				else { // m_pShipLift->resumeSystem(); 
+				}
 			}
 
 			//if (!m_onGround)
@@ -165,6 +184,34 @@ void PlayerObject::resetObject()
 }
 
 void PlayerObject::pushButton(PlayerButton button)
+{
+
+}
+
+void PlayerObject::playerDestroyed()
+{
+	/*if (this->field720_0x318 != 0.0) {
+		PLAY_LAYER->removeLastCheckpoint();
+		this->field720_0x318 = 0.0;
+	}*/
+
+	this->m_isDead = true;
+	// this->stopRotation();
+	this->deactivateParticle();
+	// this->touchedObject(this);
+}
+
+void PlayerObject::setPosition(CCPoint const &position) {
+	GameObject::setPosition(position);
+	field695_0x2e4->setPosition(position);
+
+
+	m_pGround->setPosition(position);
+	//CCLOG("x: %f, y: %f", m_pGround->getPosition().x, m_pGround->getPosition().y);
+
+}
+
+void PlayerObject::updateShipRotation(float dt)
 {
 
 }

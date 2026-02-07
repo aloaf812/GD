@@ -25,7 +25,7 @@ bool LocalLevelManager::init()
     // this is really just a desperate attempt to get this to work
     // while it does work, it isn't really the greatest option
     m_mainLevels = CCDictionary::createWithContentsOfFile("LevelData.plist");
-    CCString* levelString = (CCString*)m_mainLevels->objectForKey("1");
+    CCString* levelString = (CCString*)m_mainLevels->objectForKey("7");
     m_temp = levelString->getCString();
     return true;
 }

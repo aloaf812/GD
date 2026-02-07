@@ -20,7 +20,8 @@ public:
     bool init(GJGameLevel* level);
     void onQuit();
 	void resume();
-    
+
+	void addToSection(GameObject* obj);
     void createObjectsFromSetup(std::string setup);
     
 	virtual void onExit();
@@ -47,22 +48,29 @@ public:
     void updateCamera(float dt);
     void updateProgressbar();
     void updateEffectPositions();
+	void updateVisibility();
     
-    LevelSettingsObject* m_levelSettings;
+    LevelSettingsObject* m_levelSettings; // 0x124
+	// EndPortalObject* m_endObject; // 0x128
     
-    cocos2d::CCSprite* m_backgroundSprite;
+    cocos2d::CCSprite* m_background;
     GJGroundLayer* m_ground;
 
     //void registerStateObject(GameObject* object);
 	
-	
+	cocos2d::CCArray* m_sections; // 0x164
+	cocos2d::CCArray* m_activeObjects; // 0x16c
+	cocos2d::CCArray* m_stateObjects; // 0x17c
 	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180
 	// AudioEffectsLayer* m_audioEffectsLayer // 0x18c
-	bool field313_0x1a8; // 0x1a8 (unknown functionality)
+	bool m_playerDead; // 0x1a8
 	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
-	// field373_0x220 // 0x220
-    // field374_0x224 // 0x224
-    /*CC_PROPERTY(bool, m_playbackMode, PlaybackMode); // 0x229*/
+	bool m_showingHint; // 0x1d0
+	bool m_localLevel; // 0x210
+	// field373_0x220; // 0x220
+    // field374_0x224; // 0x224
+	// bool field522_0x228; // 0x228
+    CC_SYNTHESIZE(bool, m_playbackMode, PlaybackMode); // 0x229
 	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_realPlayerPos, RealPlayerPos); // 0x22c
 	CC_SYNTHESIZE_READONLY(GameObject*, m_cameraPortal, CameraPortal); // 0x234
     /*CC_PROPERTY_READONLY(bool, m_isFlipped, IsFlipped); // 0x238*/
@@ -100,6 +108,7 @@ public:
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeObjColorAction, ActiveObjColorAction); // 0x2a4
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeTintObjColorAction, ActiveTintObjColorAction); // 0x2a8
     CC_PROPERTY(bool, m_shouldRestartAfterStopped, ShouldRestartAfterStopped); // 0x2ac*/
+	CC_SYNTHESIZE(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2ad
 };
 
 #endif

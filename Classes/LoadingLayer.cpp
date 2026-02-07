@@ -11,13 +11,13 @@
 #include <stdio.h>
 USING_NS_CC;
 
-CCScene* LoadingLayer::node()
+CCScene* LoadingLayer::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    LoadingLayer *layer = LoadingLayer::create();
+    LoadingLayer *layer = LoadingLayer::node();
     
     // add layer as a child to scene
     // the only line in this function that isn't accurate

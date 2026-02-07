@@ -15,8 +15,14 @@ public:
     void updatePages();
     void quickUpdate();
     void moveToPage(int page);
-    CC_PROPERTY_READONLY(int, m_currentScreen, CurrentScreen);
     virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+
+	// vars
+	CC_SYNTHESIZE(float, m_marginOffset, MarginOffset); // 0x4
+    CC_SYNTHESIZE_READONLY(int, m_currentScreen, CurrentScreen); // 0x1c
+	CC_SYNTHESIZE(cocos2d::CCRect, m_scrollArea, ScrollArea); // 0x148
+	CC_SYNTHESIZE(float, m_touchSpeedMid, TouchSpeedMid); // 0x160
+	//CC_SYNTHESIZE_READONLY(BoomScrollLayerDelegate*, m_delegate, Delegate); // 0x164
 protected:
     ExtendedLayer* m_extendedLayer;
     BoomScrollLayerDelegate* m_bslDelegate;

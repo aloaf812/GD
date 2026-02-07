@@ -14,7 +14,7 @@ CCScene* GJGarageLayer::scene()
     CCScene* scene = CCScene::create();
     AppDelegate* pApp = AppDelegate::get();
     
-    pApp->mMenuScene = scene;
+    pApp->setScenePointer(scene);
     
     // 'layer' is an autorelease object
     GJGarageLayer* layer = GJGarageLayer::node();
@@ -24,22 +24,6 @@ CCScene* GJGarageLayer::scene()
     
     // return the scene
     return scene;
-}
-
-GJGarageLayer* GJGarageLayer::node()
-{
-    GJGarageLayer* pRet = new GJGarageLayer();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = NULL;
-        return NULL;
-    }
 }
 
 bool GJGarageLayer::init()

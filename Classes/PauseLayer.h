@@ -6,7 +6,7 @@
 
 class PauseLayer : public CCBlockLayer {
 public:
-    static PauseLayer* create();
+	CREATE_FUNC(PauseLayer);
     virtual void customSetup();
     void onAutoCheckpoints(cocos2d::CCObject* sender);
     void onAutoRetry(cocos2d::CCObject* sender);

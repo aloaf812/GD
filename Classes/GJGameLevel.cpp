@@ -173,77 +173,9 @@ void GJGameLevel::encodeWithCoder(CCDictionary* dict)
     dict->setBoolForKey("k15", this->m_isUploaded);*/
 }
 
-// get functions
-std::string GJGameLevel::getLevelName()
-{
-     return m_levelName;
-}
-
-std::string GJGameLevel::getLevelDesc()
-{
-    return m_levelDesc;
-}
-
-std::string GJGameLevel::getLevelString()
-{
-    return m_levelString;
-}
-
-int GJGameLevel::getLevelID()
-{
-    return m_levelID;
-}
-
-int GJGameLevel::getAudioTrack() { return m_audioTrack; }
-
-int GJGameLevel::getDifficulty() { return m_difficulty; }
-
-int GJGameLevel::getNormalPercent() { return m_normalPercent; }
-
-int GJGameLevel::getDownloads()
-{
-    return m_downloads;
-}
-
-int GJGameLevel::getStars()
-{
-    return m_stars;
-}
-
-int GJGameLevel::getCoins()
-{
-    return m_coins;
-}
-
-// set functions
-void GJGameLevel::setLevelID(int ID)
-{
-    this->m_levelID = ID;
-}
-
-void GJGameLevel::setLevelName(std::string name)
-{
-    m_levelName = name;
-}
-
-void GJGameLevel::setLevelDesc(std::string desc)
-{
-    this->m_levelDesc = desc;
-}
-
-void GJGameLevel::setLevelString(std::string string)
-{
-    this->m_levelString = string;
-}
-
 void GJGameLevel::setLevelVersion(int version)
 {
     this->m_levelVersion = version;
-}
-
-void GJGameLevel::setUserID(int userID)
-{
-    this->m_userID = userID;
 }
 
 void GJGameLevel::setRatings(int ratings)
@@ -256,19 +188,9 @@ void GJGameLevel::setRatingsSum(int ratingsSum)
     this->m_ratingsSum = ratingsSum;
 }
 
-void GJGameLevel::setDownloads(int downloads)
-{
-    this->m_downloads = downloads;
-}
-
 void GJGameLevel::setCompletes(int completes)
 {
     this->m_completes = completes;
-}
-
-void GJGameLevel::setAudioTrack(int audioTrack)
-{
-    this->m_audioTrack = audioTrack;
 }
 
 void GJGameLevel::setGameVersion(int gameVersion)
@@ -284,34 +206,4 @@ void GJGameLevel::setLikes(int likes)
 void GJGameLevel::setDemon(bool demon)
 {
     this->m_demon = demon;
-}
-
-void GJGameLevel::setAutoLevel(bool autoLevel)
-{
-    this->m_autoLevel = autoLevel;
-}
-
-void GJGameLevel::setDifficulty(int difficulty)
-{
-    m_difficulty = difficulty;
-}
-
-void GJGameLevel::setStars(int stars)
-{
-    this->m_stars = stars;
-}
-
-void GJGameLevel::setLevelType(GJLevelType levelType)
-{
-    this->m_levelType = levelType;
-}
-
-void GJGameLevel::setCoins(int coins)
-{
-    this->m_coins = coins;
-}
-
-void GJGameLevel::setNormalPercent(int var)
-{
-    m_normalPercent = var;
 }

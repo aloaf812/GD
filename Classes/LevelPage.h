@@ -10,7 +10,7 @@ class LevelPage : public cocos2d::CCLayer {
 public:
     static LevelPage* create(GJGameLevel* level);
     bool init(GJGameLevel* level);
-    void onFacebook(cocos2d::CCObject* sender);
+    void onInfo(cocos2d::CCObject* sender);
     void onPlay(cocos2d::CCObject* sender);
 };
 

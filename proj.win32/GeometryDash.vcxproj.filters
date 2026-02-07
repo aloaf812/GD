@@ -165,6 +165,9 @@
     <ClCompile Include="..\Classes\RT_COCOS\CCBlockLayer.cpp">
       <Filter>Classes\RT_COCOS</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LevelEditorLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\RT_COCOS\CCBlockLayer.h">
       <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LevelEditorLayer.h">
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

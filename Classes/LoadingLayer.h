@@ -14,7 +14,7 @@ class LoadingLayer : public cocos2d::CCLayer
 {
 public:
     LoadingLayer();
-    static cocos2d::CCScene* node();
+    static cocos2d::CCScene* scene();
     /**
     @brief Randomly picks a loading message to be shown while the game is loading
     @returns A randomly picked loading message
@@ -34,8 +34,7 @@ public:
     @param progress The percentage the bar will be filled to.
      */
     void updateProgress(int progress);
-    CREATE_FUNC(LoadingLayer);
-
+    NODE_FUNC(LoadingLayer);
 private:
     cocos2d::CCLabelBMFont* m_caption;
     TextArea* m_textArea;

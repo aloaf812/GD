@@ -119,11 +119,6 @@ bool BoomScrollLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *p
     return true;
 }
 
-int BoomScrollLayer::getCurrentScreen()
-{
-    return m_currentScreen;
-}
-
 void BoomScrollLayer::quickUpdate()
 {
     

@@ -52,7 +52,7 @@ GameManager::GameManager()
     this->m_showedLowDetailDialog = false;
     // this->m_gameRateDelegate = 0;
     this->m_lastLevelID = 0;
-    this->m_loadedBgID = 0;
+    this->m_loadedBGIdx = 0;
     this->m_loadedGroundID = 0;
     this->m_totalAttempts = 0;
     this->m_enableTutorial = false;
@@ -140,17 +140,26 @@ void GameManager::dataLoaded(DS_Dictionary* dict)
 
 }
 
-void GameManager::loadBackground(int param_1)
+void GameManager::loadBackground(int backID)
 {
-    int bgID = param_1;
-    if (3 < param_1) {
+	int bgID = backID;
+	if (3 < backID) {
         bgID = 4;
     }
-    if (param_1 < 1) {
+	if (backID < 1) {
         bgID = 1;
     }
-    if (bgID != m_loadedBgID) {
-        
+    if (bgID != m_loadedBGIdx) {
+		CCString* bgStr;
+		CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
+		if (this->m_loadedBGIdx != 0)
+		{
+			bgStr = CCString::createWithFormat("groundSquare_%02d_001.png", bgID);
+			// pTextureCache->removeTextureForKey(bgStr->getCString);
+		}
+		bgStr = CCString::createWithFormat("groundSquare_%02d_001.png", bgID);
+		pTextureCache->addImage(bgStr->getCString());
+		this->m_loadedGroundID = bgID;
     }
 }
 
@@ -414,4 +423,9 @@ void GameManager::firstLoad()
     this->m_showedLowDetailDialog = false;
     this->m_recordGameplay = false;
     this->m_playerScoreValid = false;
+}
+
+void GameManager::resetMusic()
+{
+
 }
