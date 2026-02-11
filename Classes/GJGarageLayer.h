@@ -11,6 +11,8 @@ public:
 	NODE_FUNC(GJGarageLayer);
     virtual bool init();
 
+	void setupIconSelect();
+
 	void updatePlayerColors();
     void onBack(CCObject* sender);
 protected:

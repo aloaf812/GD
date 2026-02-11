@@ -153,7 +153,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\GJGarageLayer.cpp" />
     <ClCompile Include="..\Classes\GJGroundLayer.cpp" />
     <ClCompile Include="..\Classes\GJListLayer.cpp" />
+    <ClCompile Include="..\Classes\GJSearchObject.cpp" />
     <ClCompile Include="..\Classes\GManager.cpp" />
+    <ClCompile Include="..\Classes\LevelBrowserLayer.cpp" />
     <ClCompile Include="..\Classes\LevelEditorLayer.cpp" />
     <ClCompile Include="..\Classes\LevelInfoLayer.cpp" />
     <ClCompile Include="..\Classes\LevelPage.cpp" />
@@ -208,7 +210,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\GJGarageLayer.h" />
     <ClInclude Include="..\Classes\GJGroundLayer.h" />
     <ClInclude Include="..\Classes\GJListLayer.h" />
+    <ClInclude Include="..\Classes\GJSearchObject.h" />
     <ClInclude Include="..\Classes\GManager.h" />
+    <ClInclude Include="..\Classes\LevelBrowserLayer.h" />
     <ClInclude Include="..\Classes\LevelEditorLayer.h" />
     <ClInclude Include="..\Classes\LevelInfoLayer.h" />
     <ClInclude Include="..\Classes\LevelPage.h" />

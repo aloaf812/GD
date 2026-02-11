@@ -192,18 +192,3 @@ void GJGameLevel::setCompletes(int completes)
 {
     this->m_completes = completes;
 }
-
-void GJGameLevel::setGameVersion(int gameVersion)
-{
-    this->m_gameVersion = gameVersion;
-}
-
-void GJGameLevel::setLikes(int likes)
-{
-    this->m_likes = likes;
-}
-
-void GJGameLevel::setDemon(bool demon)
-{
-    this->m_demon = demon;
-}

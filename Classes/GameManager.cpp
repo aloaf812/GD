@@ -6,9 +6,7 @@
 #include "GameToolbox.h"
 #include "PlatformToolbox.h"
 #include <stdio.h>
-// 186 FUNCTIONS WHAT THE friendly BRO
 
-// 65 variables aren't that insane for a class that manages save files
 USING_NS_CC;
 using namespace CocosDenshion;
 

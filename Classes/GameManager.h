@@ -81,7 +81,7 @@ public:
     @returns an RGB color in ccColor3B form corresponding to the player color #.
     */
     static cocos2d::ccColor3B colorForIdx(int col);
-    // clean CC_PROPERTY lines
+
 	CC_SYNTHESIZE(bool, m_performanceMode, PerformanceMode); // 0x16e
 	CC_SYNTHESIZE(bool, m_showedPirate, ShowedPirate); // 0x170
 	CC_SYNTHESIZE(bool, m_clickedGarage, ClickedGarage); // 0x171
@@ -106,9 +106,14 @@ public:
 	CC_SYNTHESIZE(bool, m_wasHigh, WasHigh); // 0x131
 	CC_SYNTHESIZE(bool, m_firstSetup, FirstSetup); // 0x125
 	CC_SYNTHESIZE(LastGameScene, m_lastScene, LastScene); // 0x13c
+
+	CC_SYNTHESIZE(bool, m_clickedName, ClickedName);
+	CC_SYNTHESIZE(int, m_playerUserID, PlayerUserID);
+	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts);
+
+	CC_SYNTHESIZE(std::string, m_playerUDID, PlayerUDID); // 0x128
+	CC_SYNTHESIZE(std::string, m_playerName, PlayerName);
 protected:
-    // made before i started with the variables
-    bool m_clickedName;
     // dictionaries
     cocos2d::CCDictionary* m_valueKeeper;
     bool m_showedFirstTutorial;
@@ -126,8 +131,6 @@ protected:
     bool m_clickedPractice;
     int m_loadedGroundID;
     int m_lastLevelID;
-    int m_totalAttempts;
-    int m_playerUserID;
     // unknown values
     bool offset_0x5;
     bool offset_0xf;
@@ -140,8 +143,6 @@ protected:
     bool m_showedLowDetailDialog;
     bool m_recordGameplay;
     bool m_playerScoreValid;
-    std::string m_playerName;
-    std::string m_playerUDID; // 0x128
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

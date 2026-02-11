@@ -1,6 +1,6 @@
 #include "AdToolbox.h"
 USING_NS_CC;
 
-void setupAds(){
+void AdToolbox::setupAds(){
     return;
 }

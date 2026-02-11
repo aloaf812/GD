@@ -8,7 +8,7 @@ class CreatorLayer : public cocos2d::CCLayer
 public:
     CreatorLayer();
     static cocos2d::CCScene* scene();
-    static CreatorLayer* create();
+	CREATE_FUNC(CreatorLayer);
     bool init();
     void onBack(cocos2d::CCObject* sender);
 	void onSearch(cocos2d::CCObject* sender);

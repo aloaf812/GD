@@ -18,6 +18,8 @@ public:
     // void storeUserNames(std::string usernameString);
     static cocos2d::CCDictionary* responseToDict(std::string response, bool p0);
     GJGameLevel* getMainLevel(int mainLevel);
+
+	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_localLevels, LocalLevels); // 0x45
 };
 
 #endif

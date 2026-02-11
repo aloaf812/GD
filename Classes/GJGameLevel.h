@@ -48,9 +48,11 @@ public:
     void setRatings(int ratings);
     void setRatingsSum(int ratingsSum);
     void setCompletes(int completes);
-    void setGameVersion(int gameVersion);
-    void setLikes(int likes);
-    void setDemon(bool demon);
+    
+	CC_SYNTHESIZE(int, m_gameVersion, GameVersion);
+	CC_SYNTHESIZE(int, m_likes, Likes);
+	CC_SYNTHESIZE(bool, m_demon, Demon);
+	
 protected:
     int m_ratings;
     int m_ratingsSum;
@@ -59,15 +61,12 @@ protected:
     bool m_isVerified;
     bool m_isUploaded;
     int m_levelVersion;
-    int m_gameVersion;
     int m_attempts;
     int m_jumps;
     int m_practicePercent;
-    int m_likes;
     int m_dislikes;
     int m_levelLength;
     int m_featured;
-    bool m_demon;
     int m_levelSize;
     int m_failedPasswordAttempts;
     int m_starRatings;

@@ -12,6 +12,8 @@ public:
     virtual bool init();
     void setup();
     std::string getMainLevelString(int level);
+
+	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_localLevels, LocalLevels); // 0x3d
 protected:
     cocos2d::CCDictionary* m_mainLevels;
     std::string m_temp;

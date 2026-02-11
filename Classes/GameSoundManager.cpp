@@ -33,7 +33,3 @@ void GameSoundManager::playEffect(char const* filename, float pitch, float pan, 
 	// according to the humble antimatter before 1.7 these unknown params were set to 1.0, 0.0, and 1.0 respectively
 	return;
 }
-
-float GameSoundManager::getBGVol() { return m_bgVol; }
-
-void GameSoundManager::setBGVol(float var) { m_bgVol = var; }

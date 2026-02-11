@@ -168,6 +168,12 @@
     <ClCompile Include="..\Classes\LevelEditorLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LevelBrowserLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GJSearchObject.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -327,6 +333,12 @@
       <Filter>Classes\RT_COCOS</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LevelEditorLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LevelBrowserLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GJSearchObject.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

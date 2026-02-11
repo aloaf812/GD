@@ -30,22 +30,6 @@ CCScene* CreatorLayer::scene()
     return scene;
 }
 
-CreatorLayer* CreatorLayer::create()
-{
-    CreatorLayer* pRet = new CreatorLayer();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = NULL;
-        return NULL;
-    }
-}
-
 void CreatorLayer::onBack(CCObject* sender)
 {
     CCDirector* pDirector = CCDirector::sharedDirector();
@@ -56,10 +40,13 @@ void CreatorLayer::onBack(CCObject* sender)
 
 void CreatorLayer::onMyLevels(CCObject* sender)
 {
+	
 	CCDirector* pDirector = CCDirector::sharedDirector();
 	CCScene* scene = LevelEditorLayer::scene(GameLevelManager::sharedState()->getMainLevel(7));
+	// CCScene* scene = LevelEditorLayer::scene(GJSearchObject::create(SearchType::MyLevels));
 	CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
 	pDirector->replaceScene(fade);
+
 }
 
 void CreatorLayer::onSearch(CCObject* sender)

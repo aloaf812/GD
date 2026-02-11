@@ -12,7 +12,7 @@ public:
 	static GameSoundManager* sharedManager();
 	void playEffect(char const* filename, float pitch, float pan, float gain);
 	
-	CC_PROPERTY(float, m_bgVol, BGVol);
+	CC_SYNTHESIZE(float, m_bgVol, BGVol);
 };
 
 #endif

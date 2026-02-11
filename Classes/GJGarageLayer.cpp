@@ -1,12 +1,13 @@
 #include "GJGarageLayer.h"
 
+#include "cocos-ext.h"
 #include "AppDelegate.h"
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "MenuLayer.h"
 #include "GameManager.h"
 #include "GameStatsManager.h"
 USING_NS_CC;
-
+USING_NS_CC_EXT;
 
 CCScene* GJGarageLayer::scene()
 {
@@ -109,7 +110,16 @@ bool GJGarageLayer::init()
 	m_playerObject->setPosition(floorLine->getPosition() + ccp(0.0f, 30.0f));
 	this->updatePlayerColors();
 
+	setupIconSelect();
+
     return true;
+}
+
+void GJGarageLayer::setupIconSelect()
+{
+	CCScale9Sprite* base = CCScale9Sprite::create("square02_001.png", CCRect(0, 0, 80, 80));
+	base->setContentSize({ 340, 95 });
+	this->addChild(base, 1);
 }
 
 void GJGarageLayer::updatePlayerColors()
