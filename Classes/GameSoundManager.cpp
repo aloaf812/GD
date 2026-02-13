@@ -33,3 +33,9 @@ void GameSoundManager::playEffect(char const* filename, float pitch, float pan, 
 	// according to the humble antimatter before 1.7 these unknown params were set to 1.0, 0.0, and 1.0 respectively
 	return;
 }
+
+void GameSoundManager::setBGMusicVolume(float volume)
+{
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(volume);
+	this->m_bgVol = volume;
+}

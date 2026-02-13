@@ -306,13 +306,12 @@ void GameManager::toggleFX()
 
 void GameManager::toggleMusic()
 {
-    // GameSoundManager not yet implemented
-    // GameSoundManager* GSM = GameSoundManager::sharedManager();
+	GameSoundManager* GSM = GameSoundManager::sharedManager();
     float volume;
     
     if (!(m_musicEnabled ^ 1)) { volume = 1.0f; }
     else { volume = 0.0f; }
-    // GSM->setBGMusicVolume(volume);
+    GSM->setBGMusicVolume(volume);
 }
 
 std::string GameManager::colorKey(int param_1, bool param_2)
@@ -399,9 +398,8 @@ void GameManager::firstLoad()
     // this->m_playerIconType = IconType::Cube;
     this->m_musicEnabled = true;
     this->m_fxEnabled = true;
-    /* pGVar2 = GameSoundManager::GameSoundManager(pGVar2);
-     GameSoundManager::setBGMusicVolume(pGVar2,extraout_s0);
-     this_00 = (SimpleAudioEngine *)CocosDenshion::SimpleAudioEngine::sharedEngine();
+    GameSoundManager::sharedManager()->setBGMusicVolume(100.0f);
+    /*this_00 = (SimpleAudioEngine *)CocosDenshion::SimpleAudioEngine::sharedEngine();
      CocosDenshion::SimpleAudioEngine::setEffectsVolume(this_00,extraout_s0_00);
      this_01 = (GameLevelManager *)GameLevelManager::sharedState();
      pGVar3 = (GameStatsManager *)GameLevelManager::firstSetup(this_01);

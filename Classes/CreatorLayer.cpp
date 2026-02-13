@@ -3,6 +3,7 @@
 #include "MenuLayer.h"
 #include "GameLevelManager.h"
 #include "LevelEditorLayer.h"
+#include "GJSearchObject.h"
 
 #include "CreatorLayer.h"
 USING_NS_CC;

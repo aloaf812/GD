@@ -17,6 +17,7 @@ public:
     void setupCreateMenu();
 	CCMenuItemSpriteExtra* getModeBtn(char const* sprite, int tag);
 	void toggleMode(cocos2d::CCObject* sender);
+	void resetUI();
 
 	CC_SYNTHESIZE(EditMode, m_editMode, EditMode); // 0x190
 
