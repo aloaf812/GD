@@ -10,6 +10,10 @@ public:
 	static cocos2d::CCScene* scene(GJGameLevel* level);
 	static LevelEditorLayer* create(GJGameLevel* level);
 	bool init(GJGameLevel* level);
+	void createBackground();
+
+	//CC_SYNTHESIZE_READONLY(DrawGridLayer*, m_gridLayer, GridLayer);
+	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_gameLayer, GameLayer);
 
 	CC_SYNTHESIZE_READONLY(GJGameLevel*, m_level, Level); // 0x130
 	CC_SYNTHESIZE(int, m_objectCount, ObjectCount); // 0x124

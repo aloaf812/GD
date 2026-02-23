@@ -31,7 +31,9 @@ public:
 	void pauseGame();
     void resetLevel();
 	void fullReset();
-    
+
+	void checkCollisions(float dt);
+
     // tints
     void tintBackground(cocos2d::ccColor3B color, float duration);
     void tintColorObjects(cocos2d::ccColor3B color, float duration);
@@ -41,6 +43,7 @@ public:
 
 	// toggles
 	virtual void toggleGlitter(bool visible);
+	virtual void togglePracticeMode(bool practice);
     
     // updates
     void update(float dt);
@@ -49,15 +52,30 @@ public:
     void updateProgressbar();
     void updateEffectPositions();
 	void updateVisibility();
+
+	// animates
+	void animateInRollGround(bool);
+	void animateOutRollGround(bool insant);
+	void animateOutRollGroundFinished();
     
     LevelSettingsObject* m_levelSettings; // 0x124
 	// EndPortalObject* m_endObject; // 0x128
+	cocos2d::CCArray* m_checkpoints; // 0x12c
+    cocos2d::CCSprite* m_background; // 0x13c
     
-    cocos2d::CCSprite* m_background;
-    GJGroundLayer* m_ground;
+	GJGroundLayer* m_ground; // 0x150
+	GJGroundLayer* m_ground2; // 0x198
+	GJGroundLayer* m_ground3; // 0x19c
+	bool m_rollGroundActive; // 0x161
 
     //void registerStateObject(GameObject* object);
 	
+	cocos2d::CCNode* field_0x1e4;
+	cocos2d::CCSprite* field_0x1ec;
+	cocos2d::CCSprite* field_0x1f4;
+	cocos2d::CCSprite* field_0x1e8;
+	cocos2d::CCSprite* field_0x1f0;
+
 	cocos2d::CCArray* m_sections; // 0x164
 	cocos2d::CCArray* m_activeObjects; // 0x16c
 	cocos2d::CCArray* m_stateObjects; // 0x17c
@@ -88,7 +106,7 @@ public:
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSpriteBatchNode*, m_batchNodeBottom, BatchNodeBottom); // 0x260
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSpriteBatchNode*, m_batchNodeAdd, BatchNodeAdd); // 0x264
 	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x268
-    //CC_PROPERTY_READONLY(cocos2d::CCArray*, m_bigActionContainer, BigActionContainer); // 0x26c
+    CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_bigActionContainer, BigActionContainer); // 0x26c
 	CC_SYNTHESIZE_READONLY(bool, m_cleanReset, CleanReset); // 0x270
     CC_SYNTHESIZE(cocos2d::CCPoint, m_startPos, StartPos) // 0x274
     // 0x278*/

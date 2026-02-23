@@ -59,7 +59,7 @@ PlayLayer* PlayLayer::create(GJGameLevel* level)
 
 PlayLayer::PlayLayer()
 {
-    
+	m_practiceMode = false;
 }
 
 void PlayLayer::onQuit()
@@ -69,9 +69,7 @@ void PlayLayer::onQuit()
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     SAE->stopBackgroundMusic();
     GameManager* pGameManager = GameManager::sharedState();
-    PlayLayer* playLayer = pGameManager->getPlayLayer();
-    // (**(code **)(*playLayer + 0x238))();
-    // pGameManager->returnToLastScene(m_level);
+	// pGameManager->returnToLastScene(PLAY_LAYER->getLevel());
     pGameManager->fadeInMusic("menuLoop.mp3");
     return;
     
@@ -151,108 +149,183 @@ bool PlayLayer::init(GJGameLevel* level)
 {
     if (!CCLayer::init())
         return false;
-    // GameEffectsManager TODO
-    
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	
-	this->m_playbackMode = false;
-	this->m_localLevel = level->getLevelType() == GJLevelType::LocalLevel;
+	GameManager* pGameManager = GameManager::sharedState();
 
-	this->m_startPos = ccp(0.0f, 105.0f);
+	// add missing code
 
-	this->m_attempts = 0;
-	//this->field373_0x220 = 0;
-	//this->field374_0x224 = 0;
-	this->m_jumps = 0;
-	this->m_endTriggered = false;
-	this->m_isResetting = true;
-	//this->field325_0x1c0 = 0.0;
-	this->m_clkTimer = 0.0;
+	m_startPos = ccp(0.0f, 105.0f);
 
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setEditMode(false);
-    pGameManager->setPlayLayer(this);
-    pGameManager->setWasHigh(false);
-    
-    m_level = level;
+	// missing code
+
+	pGameManager->setEditMode(false);
+	pGameManager->setPlayLayer(this);
+	pGameManager->setWasHigh(false);
+
+#pragma region Variables
+	m_level = level;
 	level->retain();
 
-    m_gameLayer = CCLayer::create();
-	this->addChild(m_gameLayer);
+	/*this->field_0x1dc = CCDictionary::create();
+	field_0x1dc->retain();
 
-	m_activeObjects = CCArray::create();
+	this->field_0x1e0 = CCDictionary::create();
+	field_0x1e0->retain();*/
 
-	m_stateObjects = CCArray::create();
+	this->m_gameLayer = CCLayer::create();
+	this->addChild(m_gameLayer, 1);
 
-	/*m_playerNode = CCNode::create();
-	addChild(m_playerNode);*/
+	/*this->field_0x184 = CCDictionary::create();
+	field_0x184->retain();
 
-	CCTexture2D* texture = CCTextureCache::sharedTextureCache()->addImage("GJ_GameSheet.png");
-    m_batchNode = CCSpriteBatchNode::createWithTexture(texture, 29);
+	this->field_0x12c = CCArray::create();
+	field_0x12c->retain();
+
+	this->field_0x130 = CCArray::create();
+	field_0x130->retain();
+
+	this->field_0x134 = CCArray::create();
+	field_0x134->retain();
+
+	this->field_0x188 = CCArray::create()
+	field_0x188->retain();
+
+	this->field_0x168 = CCArray::create();
+	field_0x168->retain();*/
+
+	this->m_activeObjects = CCArray::create();
+	m_activeObjects->retain();
+
+	/*this->field_0x178 = CCArray::create();
+	field_0x178->retain();
+
+	this->field_0x170 = CCArray::create();
+	field_0x170->retain();*/
+
+	this->m_stateObjects = CCArray::create();
+	m_stateObjects->retain();
+
+	this->m_bigActionContainer = CCArray::create();
+	m_bigActionContainer->retain();
+
+	this->field_0x1e4 = CCNode::create();
+	this->addChild(field_0x1e4);
+	field_0x1e4->setVisible(false);
+
+	this->field_0x1ec = CCSprite::create();
+	this->addChild(field_0x1ec);
+	field_0x1ec->setVisible(false);
+
+	this->field_0x1f4 = CCSprite::create();
+	this->addChild(field_0x1f4);
+	field_0x1f4->setVisible(false);
+
+	this->field_0x1e8 = CCSprite::create();
+	this->addChild(field_0x1e8);
+	field_0x1e8->setVisible(false);
+
+	this->field_0x1f0 = CCSprite::create();
+	this->addChild(field_0x1f0);
+	field_0x1f0->setVisible(false);
+#pragma endregion
+
+	CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
+	CCTexture2D* texture = pTextureCache->addImage("GJ_GameSheet.png");
+	this->m_batchNode = CCSpriteBatchNode::createWithTexture(texture, 29);
 	m_gameLayer->addChild(m_batchNode, 1);
 
-	m_batchNodeAdd = CCSpriteBatchNode::createWithTexture(texture, 29);
-	m_batchNodeAdd->setBlendFunc({ GL_SRC_ALPHA, GL_ONE});
-	m_gameLayer->addChild(m_batchNodeAdd, 0);
+	// quite some more missing code
 
-	m_batchNodeBottom = CCSpriteBatchNode::createWithTexture(texture, 29);
-	m_gameLayer->addChild(m_batchNodeBottom, -1);
+	
+	this->m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
+	m_glitter->setPositionType(tCCPositionType::kCCPositionTypeFree);
+	m_gameLayer->addChild(m_glitter, 0);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	float scaleFactorW = pDirector->getScreenScaleFactorW();
+	float scaleFactorH = pDirector->getScreenScaleFactorH();
+	CCPoint glitterPos = CCPoint((scaleFactorW * 480.0) / 1.8, (scaleFactorH * 320.0) * 0.5);
+	m_glitter->setPosVar(glitterPos);
+	m_glitter->stopSystem();
 
-	m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
+#pragma region Player
 
-    m_player = PlayerObject::create(pGameManager->getPlayerFrame(),
-                                                pGameManager->getPlayerShip(),
-												nullptr);
-    this->addChild(m_player);
+	int pFrame = pGameManager->getPlayerFrame();
+	int pShip = pGameManager->getPlayerShip();
+	this->m_player = PlayerObject::create(pFrame, pShip, nullptr);
 
-	this->createObjectsFromSetup(m_level->getLevelString());
+	int pColor = pGameManager->getPlayerColor();
+	ccColor3B primaryColor = pGameManager->colorForIdx(pColor);
+	m_player->setColor(primaryColor);
+
+	int pColor2 = pGameManager->getPlayerColor2();
+	ccColor3B secondColor = pGameManager->colorForIdx(pColor2);
+	m_player->setSecondColor(secondColor);
+	m_player->updateGlowColor();
+
+	m_batchNode->addChild(m_player, 10);
+
+#pragma endregion
+
+	this->m_sections = CCArray::create();
+	m_sections->retain();
+
+	std::string levelString = m_level->getLevelString();
+	this->createObjectsFromSetup(levelString);
 
 	if (!m_levelSettings) {
-		m_levelSettings = LevelSettingsObject::create();
+		this->m_levelSettings = LevelSettingsObject::create();
 		m_levelSettings->retain();
 	}
-	
-	
-	//m_background = CCSprite::create(pGameManager->getBGTexture(m_levelSettings->getBGIdx()));
-	m_background = CCSprite::create(pGameManager->getBGTexture(1));
-	m_background->setAnchorPoint({ 0, 0 });
-	m_background->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
-	m_background->setColor({ 0, 102, 255 });
+
+	pGameManager = GameManager::sharedState();
+	char const* bgSpriteFile = pGameManager->getBGTexture(m_levelSettings->getBGIdx());
+	this->m_background = CCSprite::create(bgSpriteFile);
 	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 	m_background->getTexture()->setTexParameters(&texParams);
-	m_background->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_background->getContentSize().height));
-	m_gameLayer->addChild(m_background, -1);
-	// m_bgWidth = winSize.width;
+	this->addChild(this->m_background, -1);
 
-    //m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
-	m_ground = GJGroundLayer::create(1);
-	m_gameLayer->addChild(m_ground);
-    
-	m_uiLayer = UILayer::create();
-	this->addChild(m_uiLayer);
+	m_background->setAnchorPoint(ccp(0.0f, 0.0f));
+	m_background->setScale(pDirector->getScreenScaleFactorMax());
+	m_background->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
+	m_background->setColor(ccc3(40, 255, 125));
+	// some weird math goes on in the midde of this...
+	// m_background->setTextureRect(m_background->getUserData());
+	
+	this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
+	this->addChild(m_ground, 4);
+	this->m_ground2 = GJGroundLayer::create(m_levelSettings->getGIdx());
+	this->addChild(m_ground2, 4);
+	this->m_ground3 = GJGroundLayer::create(m_levelSettings->getGIdx());
+	this->addChild(m_ground3, 4);
+	this->m_ground3->setScaleY(1.0f);
 
-    tintBackground(m_levelSettings->getStartBGColor(), 0.0f);
-    tintGround(m_levelSettings->getStartGColor(), 0.0f);
-    tintLine(m_levelSettings->getStartLineColor(), 0.0f);
-    
-    // i really need to come up with a good name for SAE variables
-    SimpleAudioEngine* pAudioEngine = SimpleAudioEngine::sharedEngine();
-	pAudioEngine->stopBackgroundMusic();
-    
-    m_attemptLabel = CCLabelBMFont::create("Attempt 1", "bigFont.fnt");
-    m_gameLayer->addChild(m_attemptLabel, 3);
+	// missing code
 
-    runAction(CCSequence::create(
-                CCDelayTime::create(1.0f),
-                CCCallFunc::create(this, callfunc_selector(PlayLayer::startGame)), nullptr));
-    
-	this->m_cleanReset = true;
+	this->m_uiLayer = UILayer::create();
+	this->addChild(m_uiLayer, 10);
 
-	updateVisibility();
-    updateCamera(0.0f);
-    // toggleAudioRain(false);
-	toggleGlitter(false);
-	GameManager::sharedState()->resetMusic();
+	// add other missing code
+
+	m_player->setPosition(m_startPos);
+
+	SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+	SAE->stopBackgroundMusic(false);
+	int audioTrack = m_level->getAudioTrack();
+	char const* audioFile = LevelTools::getAudioFileName(audioTrack);
+	SAE->preloadBackgroundMusic(audioFile);
+	// std::string audioStr = LevelTools::getAudioString(audioTrack);
+	// this->m_audioEffectsLayer = AudioEffectsLayer::create(audioStr);
+	// field_0x13c->addChild(m_audioEffectsLayer, 1);
+	// m_audioEffectsLayer->setVisible(false);
+
+	// finish up missing code
+
+	runAction(CCSequence::create(
+		CCDelayTime::create(1.0f),
+		CCCallFunc::create(this, callfunc_selector(PlayLayer::startGame)), nullptr));
+
+	// LAST PART OF MISSING CODE
+
     return true;
 }
 
@@ -271,7 +344,7 @@ void PlayLayer::resetLevel()
 	/*FUN_003b1bb8(&this->field_0x214,&DAT_00401f12);
 	*(undefined4 *)&this->field_0x20c = 0;*/
 
-	// UILayer::enableMenu();
+	m_uiLayer->enableMenu();
 
 	// this->stopCameraShake();
 	// this->field279_0x138 = 1;
@@ -312,6 +385,7 @@ void PlayLayer::resetLevel()
 
 void PlayLayer::fullReset()
 {
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	this->m_clkTimer = 0.0;
 	/*this->field373_0x220 = 0;
 	this->field374_0x224 = 0;
@@ -324,6 +398,8 @@ void PlayLayer::fullReset()
 		this->resetLevel();
 	/*else
 		this->togglePracticeMode(false);*/
+	CCPoint newPostion = ccp(this->getAnchorPointInPoints().x + winSize.width * 0.5f, (this->getAnchorPointInPoints().y + winSize.height) + 125.0f);
+	m_attemptLabel->setPosition(newPostion);
 }
 
 void PlayLayer::startGame()
@@ -358,14 +434,15 @@ void PlayLayer::update(float dt)
 	if (!m_player->getIsLocked())
 		//m_player->setPosition(m_realPlayerPos);
 
-	m_player->setTouchedRing(nullptr);
+		m_player->setTouchedRing(nullptr);
 
 	/*for (int i = 0; i > m_stateObjects->count(); ++i)
-		static_cast<GameObject*>(m_stateObjects->objectAtIndex(i))->setStateVar(false);
+	static_cast<GameObject*>(m_stateObjects->objectAtIndex(i))->setStateVar(false);
 
 	for (int i = 0; i > m_activeObjects->count(); ++i)
-		m_activeObjects->objectAtIndex(i)->update(step);*/
-
+	m_activeObjects->objectAtIndex(i)->update(step);*/
+	m_player->update(step);
+	this->checkCollisions(step / 4);
 
 	if (m_player->isFlying())
 		m_player->updateShipRotation(step);
@@ -410,7 +487,7 @@ void PlayLayer::updateCamera(float dt)
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	float screenHeight = winSize.height;
-	CCPoint camPos = m_cameraPos;	 
+	CCPoint camPos = m_cameraPos;
 	CCPoint playerPos = m_player->getPosition();
 
 	float targetY = camPos.y;
@@ -429,7 +506,7 @@ void PlayLayer::updateCamera(float dt)
 	if (camPos.y < 0.0f) camPos.y = 0.0f;
 	else if (camPos.y > maxY) camPos.y = 1740.0f;
 
-	camPos.x = playerPos.x;
+	camPos.x = playerPos.x - 125.0f;
 
 	m_cameraPos = camPos;
 
@@ -475,9 +552,54 @@ void PlayLayer::toggleGlitter(bool visible)
 		m_glitter->stopSystem();
 }
 
+void PlayLayer::togglePracticeMode(bool practice)
+{
+	if (this->m_practiceMode == practice) {
+		return;
+	}
+	this->m_practiceMode = practice;
+	//m_uiLayer->toggleCheckpointsMenu(practice);
+	if (practice) {
+		SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+		SAE->pauseBackgroundMusic();
+		SAE->playBackgroundMusic("StayInsideMe.mp3", true);
+		return;
+	}
+	//while (int idx = m_checkpoints->count(), idx != 0) {
+		// removeLastCheckpoint();
+	//}
+	this->m_cleanReset = true;
+	resetLevel();
+}
+
 void PlayLayer::resume()
 {
+	AppDelegate* pApp = AppDelegate::get();
+	GameManager* pGameManager = GameManager::sharedState();
+	SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
 
+	if (!pApp->getPaused()) {
+		return;
+	}
+
+	pApp->setPaused(false);
+	this->onEnter();
+	SAE->resumeAllEffects();
+	if (((pGameManager->getRecordGameplay() != false) && (!m_practiceMode)) && (!m_testMode)) {
+		//this->tryStartRecord();
+	}
+	if (!m_practiceMode) {
+		if (m_player->getPosition().x <= 0.0f) {
+			return;
+		}
+		if (!SAE->isBackgroundMusicPlaying()) {
+			char const* audioFile = LevelTools::getAudioFileName(m_level->getAudioTrack());
+			SAE->playBackgroundMusic(audioFile, false);
+		}
+		//SAE->setBackgroundMusicTime(timeForXPos(m_player->getPosition().x, false));
+	}
+	SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+	return;
 }
 
 void PlayLayer::updateVisibility()
@@ -486,6 +608,48 @@ void PlayLayer::updateVisibility()
 }
 
 void PlayLayer::addToSection(GameObject* obj)
+{
+
+}
+
+void PlayLayer::animateOutRollGround(bool instant)
+{
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
+	this->m_rollGroundActive = false;
+	float groundYPos = m_ground2->getGroundSprite()->getPosition().y;
+	CCPoint ground2Pos = ccp(0.0f, (pDirector->getScreenBottom() - 2.0f) - groundYPos);
+	CCPoint ground3Pos = ccp(0.0f, (pDirector->getScreenTop() + 2.0f) - (winSize.height - groundYPos));
+	m_ground2->deactivateGround();
+	m_ground3->deactivateGround();
+	if (!instant) {
+		CCMoveTo* moveAction = CCMoveTo::create(0.4f, ground2Pos);
+		CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 1.5f);
+
+		CCMoveTo* moveAction2 = CCMoveTo::create(0.4f, ground3Pos);
+		CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 1.5f);
+
+		CCSequence* doneSequence = CCSequence::create(CCDelayTime::create(0.6f), CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutRollGroundFinished)), nullptr);
+		m_ground2->runAction(easeMove);
+		m_ground3->runAction(easeMove2);
+		m_ground3->runAction(doneSequence);
+		m_ground2->fadeOutGround(0.4f);
+		m_ground3->fadeOutGround(0.4f);
+	}
+	else {
+		this->animateOutRollGroundFinished();
+		m_ground2->setPosition(ground2Pos);
+		m_ground3->setPosition(ground3Pos);
+	}
+}
+
+void PlayLayer::animateOutRollGroundFinished()
+{
+	m_ground2->setVisible(false);
+	m_ground3->setVisible(false);
+}
+
+void PlayLayer::checkCollisions(float dt)
 {
 
 }

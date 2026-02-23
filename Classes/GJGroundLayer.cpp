@@ -116,22 +116,12 @@ void GJGroundLayer::draw()
 
 }
 
-CCSprite* GJGroundLayer::getGroundSprite() const
+void GJGroundLayer::deactivateGround()
 {
-	return this->m_groundSprite;
-}
-
-CCSprite* GJGroundLayer::getLine() const
-{
-	return this->m_line;
-}
-
-float GJGroundLayer::getGroundWidth() const
-{
-	return this->m_groundWidth;
-}
-
-bool GJGroundLayer::getIsActive() const
-{
-	return this->m_isActive;
+	this->stopAllActions();
+	CCArray* children = getChildren();
+	for (int i = 0, count = children->count(); i < count; ++i) {
+		dynamic_cast<CCNode*>(children->objectAtIndex(i))->stopActionByTag(999);
+	}
+	m_isActive = false;
 }

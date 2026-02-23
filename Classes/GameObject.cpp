@@ -138,7 +138,6 @@ GameObject* GameObject::objectFromString(std::string objString)
 
 
 	char const* key = objDict->valueForKey("1")->getCString();
-	CCLOG(key);
 	int objID = atoi(key);
 	char const* frame = ObjectToolbox::sharedState()->keyToFrame(key);
 
@@ -149,7 +148,6 @@ GameObject* GameObject::objectFromString(std::string objString)
 
 	if (objID == 84 || objID == 36 || objID == 141) {
 		// object = RingObject::create();
-		CCLOG("GAME BREAKING BUG RIGHT HERE");
 		return nullptr;
 	}
 	else {

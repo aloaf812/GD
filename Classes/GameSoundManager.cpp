@@ -16,6 +16,7 @@ GameSoundManager* GameSoundManager::sharedManager()
 }
 
 bool GameSoundManager::init() {
+	this->m_state = 0;
     return true;
 }
 
@@ -38,4 +39,14 @@ void GameSoundManager::setBGMusicVolume(float volume)
 {
 	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(volume);
 	this->m_bgVol = volume;
+}
+
+void GameSoundManager::asynchronousSetup()
+{
+	// this->preload();
+	SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+	SAE->setEffectsVolume(1.0f);
+	SAE->setBackgroundMusicVolume(1.0f);
+	this->setBGMusicVolume(1.0f);
+	this->m_state = 4;
 }

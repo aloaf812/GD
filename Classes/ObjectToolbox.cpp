@@ -34,15 +34,15 @@ bool ObjectToolbox::init()
 	CREATE_OBJ("spike_03_001.png", 103); // Small Black Gradient Spike
 
 	// portals
-	CREATE_OBJ("portal_01_front_001.png", 10); // blue gravity portal
-	CREATE_OBJ("portal_02_front_001.png", 11); // yellow gravity portal
-	CREATE_OBJ("portal_03_front_001.png", 12); // cube portal
-	CREATE_OBJ("portal_04_front_001.png", 13); // ship portal
-	CREATE_OBJ("portal_05_front_001.png", 45); // orange mirror portal
-	CREATE_OBJ("portal_06_front_001.png", 46); // blue mirror portal
-	CREATE_OBJ("portal_07_front_001.png", 47); // ball portal
-	CREATE_OBJ("portal_08_front_001.png", 99); // green size portal
-	CREATE_OBJ("portal_09_front_001.png", 101); // pink size portal
+	CREATE_OBJ("portal_01_front_001.png", 10); // Blue Gravity Portal
+	CREATE_OBJ("portal_02_front_001.png", 11); // Yellow Gravity Portal
+	CREATE_OBJ("portal_03_front_001.png", 12); // Cube Portal
+	CREATE_OBJ("portal_04_front_001.png", 13); // Ship Portal
+	CREATE_OBJ("portal_05_front_001.png", 45); // Orange Mirror Portal
+	CREATE_OBJ("portal_06_front_001.png", 46); // Blue Mirror Portal
+	CREATE_OBJ("portal_07_front_001.png", 47); // Ball Portal
+	CREATE_OBJ("portal_08_front_001.png", 99); // Green Size Portal
+	CREATE_OBJ("portal_09_front_001.png", 101); // Pink Size Portal
 
 	// ground/pit spikes
 	CREATE_OBJ("pit_01_001.png", 9); // Non-Colorable Spike Black Pit Hazard
@@ -92,10 +92,31 @@ bool ObjectToolbox::init()
 	// clouds
 	CREATE_OBJ("d_cloud_01_001.png", 48); // Large Fading Cloud
 
+	// other objects i'm too lazy to properly organize
+	CREATE_OBJ("d_ball_05_001.png", 54); // Pulsing Star
+
+	CREATE_OBJ("square_b_01_001.png", 62); // Wavy Black Slab
+	
+	CREATE_OBJ("square_b_04_001.png", 65); // Wavy Black Slab Right Edge
+
+	CREATE_OBJ("gravbump_01_001.png", 67); // Blue Gravity Pad
+
+	CREATE_OBJ("square_b_06_001.png", 68); // Wavy Black Single Slab
 
 	CREATE_OBJ("square_c_05_001.png", 73); // Beveled Inner Square
 
+	CREATE_OBJ("d_chain_02_001.png", 110); // Small Chain
+
+	CREATE_OBJ("square_f_02_001.png", 117); // Brick Top Square
+	CREATE_OBJ("square_f_03_001.png", 118); // Brick Outer Corner Square
+
+	CREATE_OBJ("bump_03_001.png", 140); // Pink Jump Pad
+
 	CREATE_OBJ("secretCoin_01_001.png", 142); // Secret Coin (not in list)
+
+	CREATE_OBJ("d_spikewheel_01_001.png", 154); // Large Spike Wheel
+
+	CREATE_OBJ("d_link_02_001.png", 238); // Corner Square Pipe
 #pragma endregion Objects
 	return true;
 }
@@ -134,6 +155,6 @@ CCDictionary* ObjectToolbox::stringSetupToDict(std::string str)
 char const* ObjectToolbox::keyToFrame(char const* key)
 {
 	char const* frame = m_keys->valueForKey(atoi(key))->getCString();
-	CCLOG(frame);
+	//CCLOG(frame);
 	return frame;
 }

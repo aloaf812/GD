@@ -9,7 +9,6 @@ bool CCBlockLayer::init() {
 		this->setKeypadEnabled(true);
 		return false;
 	}
-	CCLOG("init CCBlockLayer");
 	return true;
 }
 

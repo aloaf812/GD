@@ -110,6 +110,7 @@ public:
 	CC_SYNTHESIZE(bool, m_clickedName, ClickedName);
 	CC_SYNTHESIZE(int, m_playerUserID, PlayerUserID);
 	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts);
+	CC_SYNTHESIZE(bool, m_recordGameplay, RecordGameplay); // 0x16b
 
 	CC_SYNTHESIZE(std::string, m_playerUDID, PlayerUDID); // 0x128
 	CC_SYNTHESIZE(std::string, m_playerName, PlayerName);
@@ -141,7 +142,6 @@ protected:
     bool m_showedRateDiffDialog;
     bool m_showedRateStarDialog;
     bool m_showedLowDetailDialog;
-    bool m_recordGameplay;
     bool m_playerScoreValid;
 };
 

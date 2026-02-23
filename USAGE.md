@@ -14,7 +14,7 @@ js gimme some time i'll add it soon
 - [ProjectReversio](https://github.com/ProjectReversio/GeometryDash) (2.113 + lite versions)
 - [WylieMaster](https://github.com/WylieMaster/GD-Decompiled) (2.113)
 - [CallocGD](https://github.com/callocgd/gd-2.205-decompiled) (2.205) [fork of wylie's decomp]
-- [OpenGD] (https://github.com/open-gd/opengd) (2.2) [uses Axmol as its engine]
+- [OpenGD](https://github.com/open-gd/opengd) (2.2) [uses Axmol as its engine]
 ## Disassemblers
 
 ### Setup
@@ -48,7 +48,7 @@ i might make a script to do all of this without having to follow a guide
 
 ### 1. Set up `projects` folder
 
-Once you have extracted the `cocos2d-x-2.2.3.zip` folder, create a folder named `projects` in the root cocos2d-x direcory (the once that contains `cocos2d`, `CocosDenshion` and all that good stuff)
+Once you have extracted the `cocos2d-x-2.2.3.zip` folder, create a folder named `projects` in the root cocos2d-x direcory (the one that contains `cocos2d`, `CocosDenshion` and all that good stuff)
 
 ### 2. Get the source code to your newly created `projects` folder
  You will need Git to do this step, which you can get [here](https://git-scm.com/downloads).

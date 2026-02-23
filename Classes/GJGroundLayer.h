@@ -14,20 +14,16 @@ public:
     void fadeInFinished();
     void fadeOutGround(float duration);
 
-    // get functions
-    cocos2d::CCSprite* getGroundSprite() const;
-    cocos2d::CCSprite* getLine() const;
-    float getGroundWidth() const;    
-    bool getIsActive() const;
+	void deactivateGround();
 
     // variables
-    bool m_isActive;
-    float m_groundWidth;
+	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_groundSprite, GroundSprite); // 0x10c
+	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_line, Line);
+	CC_SYNTHESIZE_READONLY(bool, m_isActive, IsActive);
+	CC_SYNTHESIZE_READONLY(float, m_groundWidth, GroundWidth);
     float m_repeatWidth;
     int m_repeatCount;
     cocos2d::CCArray* m_tiles;
-    cocos2d::CCSprite* m_groundSprite;
-    cocos2d::CCSprite* m_line;
 };
 
 #endif

@@ -102,6 +102,7 @@ bool LevelSelectLayer::init(int page)
     csLayer->addChild(csLabel);
     pages->addObject(csLayer);
     
+	// the third param is for looping
     bool showDots = pages->count() > 3;
     BoomScrollLayer* scrollLayer = BoomScrollLayer::create(pages, 0, showDots);
     m_scrollLayer = scrollLayer;
@@ -224,6 +225,7 @@ void LevelSelectLayer::onInfo(CCObject* sender)
 
 }
 
+// these aren't exactly correct since they use the sender to get BSL
 void LevelSelectLayer::onPrev(CCObject* sender)
 {
     m_scrollLayer->quickUpdate();

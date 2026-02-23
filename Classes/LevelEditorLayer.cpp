@@ -44,7 +44,13 @@ bool LevelEditorLayer::init(GJGameLevel* level)
 	GameManager::sharedState()->resetMusic();
 	this->m_level = level;
 
-
+	m_gameLayer = CCLayer::create();
+	this->addChild(m_gameLayer, 1);
 	this->addChild(EditorUI::create(this), 100);
 
+}
+
+void LevelEditorLayer::createBackground()
+{
+	// todo: implement
 }

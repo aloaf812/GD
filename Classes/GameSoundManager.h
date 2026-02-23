@@ -12,8 +12,11 @@ public:
 	static GameSoundManager* sharedManager();
 	void playEffect(char const* filename, float pitch, float pan, float gain);
 	void setBGMusicVolume(float volume);
+	void asynchronousSetup();
+	void preload();
 	
-	CC_SYNTHESIZE(float, m_bgVol, BGVol);
+	CC_SYNTHESIZE(float, m_bgVol, BGVol); // 0x3f
+	CC_SYNTHESIZE_READONLY(int, m_state, State); // 0x3e
 };
 
 #endif

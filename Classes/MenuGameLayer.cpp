@@ -91,22 +91,43 @@ bool MenuGameLayer::init()
     m_groundLayer->addChild(lineSprite, 3);
     lineSprite->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 90.0f));
     
-	/*m_playerObject = PlayerObject::create(1, 1, this);
+#pragma region Player
+	/*int cube = ceilf((rand() * 4.6566e-10) * 37.0);
+	int ship = ceilf((rand() * 4.6566e-10) * 13.0);*/
+
+	int cube = rand() % 37;
+	int ship = rand() % 13;
+
+	int tmpStreak = pGameManager->getPlayerStreak();
+	pGameManager->setPlayerStreak(1);
+	this->m_playerObject = PlayerObject::create((cube + 1), (ship + 1), this);
+	this->addChild(m_playerObject, 0);
+
 	m_playerObject->setPosition(ccp(0.0f, 105.0f));
-	this->addChild(m_playerObject);*/
+
+	ccColor3B firstColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
+	m_playerObject->setColor(firstColor);
+	ccColor3B secondColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
+	m_playerObject->setSecondColor(secondColor);
+	pGameManager->setPlayerStreak(tmpStreak);
+#pragma endregion
 
     scheduleUpdate();
-    // PlayerObject hasn't been implemented yet
-    // schedule(schedule_selector(MenuGameLayer::tryJump), 0.5f);
+    // this->schedule(schedule_selector(MenuGameLayer::tryJump), 0.25f);
     
     return true;
 }
 
 void MenuGameLayer::update(float delta)
 {
-    // HOW
     float step = delta * 60.0f;
+
+	m_playerObject->setLastP(m_playerObject->getPosition());
+	m_playerObject->update(step);
     
+	if (m_playerObject->getFlyMode())
+		m_playerObject->updateShipRotation(step);
+
     float bgSpeed = 5.77f * 0.1f;
     float groundSpeed = 5.77f * 0.9f;
     

@@ -53,11 +53,13 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 
 	this->m_isPlayLayer = layer == nullptr;
 
+#pragma region Icon Frames
 	m_iconSprite = CCSprite::createWithSpriteFrameName(frameFile);
 	this->addChild(m_iconSprite, 1);
 	m_iconSpriteSecondary = CCSprite::createWithSpriteFrameName(frameFile2);
 	m_iconSprite->addChild(m_iconSpriteSecondary);
 	m_iconSpriteSecondary->setPosition(m_iconSprite->getContentSize() / 2);
+#pragma endregion
 
 	this->m_isJumping = false;
 	this->field736_0x328 = 0; // possibly yvelocity
@@ -66,24 +68,25 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	this->m_onGround = false;
 	this->m_isDead = false;
 	this->m_playerScale = 1.0;
-	// this->updateTimeMod(fVar17);
+	this->updateTimeMod(0.9f);
 	//this->field758_0x344 = 0;
 
+#pragma region Ground Particles
 	this->m_pGround = CCParticleSystemQuad::create("dragEffect.plist");
 	m_pGround->setPositionType(tCCPositionType::kCCPositionTypeFree);
 	m_gameLayer->addChild(m_pGround, -1);
 	m_pGround->stopSystem();
 	this->m_pGroundActive = false;
+#pragma endregion Ground Particles
 
-
-	field695_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
+	/*field695_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
 	// field695_0x2e4->setTextureRect
 	field695_0x2e4->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
 
 	if (!m_isPlayLayer) 
 		m_gameLayer->addChild(field695_0x2e4);
 	else
-		PLAY_LAYER->getBatchNodeAdd()->addChild(field695_0x2e4, 20);
+		PLAY_LAYER->getBatchNodeAdd()->addChild(field695_0x2e4, 20);*/
 
     return true;
 }
@@ -121,11 +124,12 @@ void PlayerObject::update(float dt)
 	if (!this->m_isDead)
 	{
 		m_lastUpdatePos = this->getPosition();
-		if (!this->m_isLocked)
+		if (!this->m_isJumping)
 		{
-			float x = dt * 5.77f * m_timeMod;
-			this->setPosition({ this->getPosition() + ccp(x, 0.0f)});
-			//CCLOG("%f", this->getPosition().x);
+			this->updateJump(dt * 0.9f);
+			float addXPos = dt * m_speed * m_timeMod;
+			float addYPos = dt * 0.9f * field736_0x328;
+			this->setPosition(this->getPosition() + ccp(addXPos, addYPos));
 		}
 
 		if (this->isFlying())
@@ -201,17 +205,52 @@ void PlayerObject::playerDestroyed()
 	// this->touchedObject(this);
 }
 
+void PlayerObject::setColor(cocos2d::ccColor3B color)
+{
+	CCSprite::setColor(color);
+	m_iconSprite->setColor(color);
+	//m_vehicleSprite->setColor(color);
+}
+
+void PlayerObject::setSecondColor(cocos2d::ccColor3B color)
+{
+	m_iconSpriteSecondary->setColor(color);
+	//m_vehicleSpriteSecondary->setColor(color);
+}
+
 void PlayerObject::setPosition(CCPoint const &position) {
 	GameObject::setPosition(position);
-	field695_0x2e4->setPosition(position);
+	//field695_0x2e4->setPosition(position);
 
 
 	m_pGround->setPosition(position);
-	//CCLOG("x: %f, y: %f", m_pGround->getPosition().x, m_pGround->getPosition().y);
-
 }
 
 void PlayerObject::updateShipRotation(float dt)
 {
 
+}
+
+void PlayerObject::updateGlowColor()
+{
+
+}
+
+void PlayerObject::updateJump(float dt)
+{
+
+}
+
+void PlayerObject::updateTimeMod(float timeMod)
+{
+	// add other code
+	this->m_timeMod = timeMod;
+	if (timeMod == 0.9) {
+		//this->m_yStart = 0x20000000;
+		//this->field704_0x2fc = 0x40265c2d;
+		//this->m_gravity = 0;
+		//this->field706_0x304 = 0x3feea991;
+	}
+	this->m_speed = 5.77;
+	// add other code
 }

@@ -166,7 +166,6 @@ void LevelPage::onInfo(cocos2d::CCObject* sender)
 
 void LevelPage::onPlay(cocos2d::CCObject* sender)
 {
-    CCLOG("play");
     // GameStatsManager* GStatsM = GameStatsManager::GameStatsManager();
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     SAE->stopBackgroundMusic();

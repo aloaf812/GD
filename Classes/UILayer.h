@@ -10,6 +10,10 @@ public:
 	bool init();
 
 	virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+	virtual void keyBackClicked();
+
+	void enableMenu();
+	void disableMenu();
 
 	void onPause(cocos2d::CCObject* sender);	
 protected:

@@ -43,7 +43,7 @@ void CreatorLayer::onMyLevels(CCObject* sender)
 {
 	
 	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCScene* scene = LevelEditorLayer::scene(GameLevelManager::sharedState()->getMainLevel(7));
+	CCScene* scene = LevelEditorLayer::scene(GameLevelManager::sharedState()->getMainLevel(2));
 	// CCScene* scene = LevelEditorLayer::scene(GJSearchObject::create(SearchType::MyLevels));
 	CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
 	pDirector->replaceScene(fade);

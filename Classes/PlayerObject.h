@@ -19,7 +19,6 @@ class PlayerObject : public GameObject {
 public:
 	PlayerObject();
     static PlayerObject* create(int player, int ship, cocos2d::CCLayer* layer);
-    //virtual void update(float dt);
     bool init(int player, int ship, cocos2d::CCLayer* layer);
 
 	
@@ -38,11 +37,15 @@ public:
 	void update(float dt);
 	void updateJump(float dt);
 	void updateShipRotation(float dt);
+	void updateGlowColor();
+	void updateTimeMod(float timeMod);
 
 	void deactivateParticle();
 
 	virtual void resetObject();
 
+	void setColor(cocos2d::ccColor3B color);
+	void setSecondColor(cocos2d::ccColor3B color);
 	// void setVisible(bool visible);
 	virtual void setPosition(cocos2d::CCPoint const &position);
 
@@ -64,7 +67,7 @@ public:
 	CC_SYNTHESIZE(cocos2d::CCPoint, m_lastPos, LastP) // 0x390
 	CC_SYNTHESIZE(cocos2d::CCPoint, m_portalPos, PortalP); // 0x398
 	CC_SYNTHESIZE(bool, m_onGround, OnGround); // 0x3a4
-	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5
+	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5	
 	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
 
 protected:
