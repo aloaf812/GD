@@ -32,7 +32,7 @@ bool AchievementBar::init(char const* title, char const* description, char const
 	CCSize winSize = pDirector->getWinSize();
 
 	CCScale9Sprite* box = CCScale9Sprite::create("GJ_square01.png", CCRect(0, 0, 80, 80));
-	box->setPosition({ winSize.width / 2, pDirector->getScreenTop() - 50 });
+	box->setPosition(ccp(winSize.width / 2, pDirector->getScreenTop() - 50));
 	box->setContentSize({ 300, 70 });
 	this->addChild(box);
 

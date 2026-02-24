@@ -62,7 +62,7 @@ bool LevelPage::init(GJGameLevel* level)
         
         auto nameLabel = CCLabelBMFont::create(m_level->getLevelName().c_str(), "bigFont.fnt");
         nameLabel->setAnchorPoint({0, 0.5f});
-        nameLabel->setPosition({65, 47.5f});
+        nameLabel->setPosition(ccp(65, 47.5f));
         button->addChild(nameLabel);
         
         if (nameLabel->getContentSize().width > 250.0f)
@@ -78,7 +78,7 @@ bool LevelPage::init(GJGameLevel* level)
         if (m_level->getStars() > 0) {
             auto starIcon = CCSprite::createWithSpriteFrameName("GJ_starsIcon_001.png");
             starIcon->setScale(0.6f);
-            starIcon->setPosition({325, 82});
+            starIcon->setPosition(ccp(325, 82));
             button->addChild(starIcon);
             
             auto starText = CCString::createWithFormat("%i", m_level->getStars());

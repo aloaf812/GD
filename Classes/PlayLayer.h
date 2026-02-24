@@ -36,16 +36,19 @@ public:
 
     // tints
     void tintBackground(cocos2d::ccColor3B color, float duration);
-    void tintColorObjects(cocos2d::ccColor3B color, float duration);
     void tintGround(cocos2d::ccColor3B color, float duration);
     void tintLine(cocos2d::ccColor3B color, float duration);
     void tintObjects(cocos2d::ccColor3B color, float duration);
+    void tintColorObjects(cocos2d::ccColor3B color, float duration);
 
 	// toggles
 	virtual void toggleGlitter(bool visible);
 	virtual void togglePracticeMode(bool practice);
+	virtual void toggleProgressbar();
     
-    // updates
+    //void registerStateObject(GameObject* object);
+    
+	// updates
     void update(float dt);
     void updateAttempts();
     void updateCamera(float dt);
@@ -54,10 +57,15 @@ public:
 	void updateVisibility();
 
 	// animates
+	void animateInFlyGround(bool);
+	void animateOutFlyGround(bool insant);
+	void animateOutFlyGroundFinished();
+
 	void animateInRollGround(bool);
 	void animateOutRollGround(bool insant);
 	void animateOutRollGroundFinished();
     
+	bool field279_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
 	// EndPortalObject* m_endObject; // 0x128
 	cocos2d::CCArray* m_checkpoints; // 0x12c
@@ -68,13 +76,18 @@ public:
 	GJGroundLayer* m_ground3; // 0x19c
 	bool m_rollGroundActive; // 0x161
 
-    //void registerStateObject(GameObject* object);
+	bool field383_0x1a9; // 0x1a9
 	
 	cocos2d::CCNode* field_0x1e4;
 	cocos2d::CCSprite* field_0x1ec;
 	cocos2d::CCSprite* field_0x1f4;
 	cocos2d::CCSprite* field_0x1e8;
 	cocos2d::CCSprite* field_0x1f0;
+
+	cocos2d::CCSprite* m_progressBar; // 0x1f8
+	cocos2d::CCSprite* m_progressFill; // 0x1fc
+	float field449_0x200;
+	float field453_0x204;
 
 	cocos2d::CCArray* m_sections; // 0x164
 	cocos2d::CCArray* m_activeObjects; // 0x16c

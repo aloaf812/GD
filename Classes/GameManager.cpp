@@ -232,7 +232,7 @@ char const* GameManager::getGTexture(int gID)
 
 void GameManager::fadeInMusic(char const *fileName){
     // shhh: GameSoundManager* GSM = GameSoundManager::sharedManager();
-    if (true)
+    if (false)
     {
         // todo: implement actual fading
         SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
@@ -344,25 +344,25 @@ int GameManager::colorForPos(int color)
 ccColor3B GameManager::colorForIdx(int col)
 {
     switch (col) {
-        case 0: return ccColor3B{125, 255, 0};
-        case 1: return ccColor3B{0, 255, 0};
-        case 2: return ccColor3B{0, 255, 125};
-        case 3: return ccColor3B{0, 255, 255};
-        case 4: return ccColor3B{125, 255, 0};
-        case 5: return ccColor3B{0, 0, 255};
-        case 6: return ccColor3B{125, 0, 255};
-        case 7: return ccColor3B{125, 255, 0};
-        case 8: return ccColor3B{125, 225, 0};
-        case 9: return ccColor3B{125, 255, 0};
-        case 10: return ccColor3B{125, 225, 0};
-        case 11: return ccColor3B{255, 0, 0};
-        case 12: return ccColor3B{125, 225, 0};
-        case 13: return ccColor3B{125, 225, 0};
-        case 14: return ccColor3B{125, 225, 0};
-        case 15: return ccColor3B{125, 225, 0};
-        case 17: return ccColor3B{125, 225, 0};
-        case 18: return ccColor3B{125, 225, 0};
-        default: return ccColor3B{255, 225, 255};
+        case 0: return ccc3(125, 255, 0);
+        case 1: return ccc3(0, 255, 0);
+        case 2: return ccc3(0, 255, 125);
+        case 3: return ccc3(0, 255, 255);
+        case 4: return ccc3(125, 255, 0);
+        case 5: return ccc3(0, 0, 255);
+        case 6: return ccc3(125, 0, 255);
+        case 7: return ccc3(125, 255, 0);
+        case 8: return ccc3(125, 225, 0);
+        case 9: return ccc3(125, 255, 0);
+        case 10: return ccc3(125, 225, 0);
+        case 11: return ccc3(255, 0, 0);
+        case 12: return ccc3(125, 225, 0);
+        case 13: return ccc3(125, 225, 0);
+        case 14: return ccc3(125, 225, 0);
+        case 15: return ccc3(125, 225, 0);
+        case 17: return ccc3(125, 225, 0);
+        case 18: return ccc3(125, 225, 0);
+        default: return ccc3(255, 225, 255);
     }
 }
 

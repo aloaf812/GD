@@ -94,7 +94,7 @@ bool GJGarageLayer::init()
     int coins = GSM->getStat("8");
     CCLabelBMFont* coinsLabel = CCLabelBMFont::create(CCString::createWithFormat("%i", coins)->getCString(), "bigFont.fnt");
     coinsLabel->setAnchorPoint({1.0f, 0.5f});
-    coinsLabel->setPosition({coinIcon->getPosition() + ccp(-18.0f, 0.0f)});
+    coinsLabel->setPosition(coinIcon->getPosition() + ccp(-18.0f, 0.0f));
     coinsLabel->setScale(0.5f);
     this->addChild(coinsLabel);
     

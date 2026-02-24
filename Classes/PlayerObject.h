@@ -53,8 +53,8 @@ public:
 	CC_SYNTHESIZE_READONLY(bool, m_isLocked, IsLocked); // 0x3a6
 	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_lastGroundPos, LastGroundPos); // 0x3a8
 	CC_SYNTHESIZE_READONLY(bool, m_hasJumped, HasJumped); // 0x3b8
-	CC_SYNTHESIZE(GameObject*, m_touchedRing, TouchedRing); // 0xec
-	CC_SYNTHESIZE(GameObject*, m_portalObject, PortalObject); // 0xed
+	CC_SYNTHESIZE(GameObject*, m_touchedRing, TouchedRing); // 0x3b0
+	CC_SYNTHESIZE(GameObject*, m_portalObject, PortalObject); // 0x3b4
 
 	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
 	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381
@@ -69,6 +69,7 @@ public:
 	CC_SYNTHESIZE(bool, m_onGround, OnGround); // 0x3a4
 	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5	
 	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
+	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor1, GlowColor1); // 0x3b8
 
 protected:
 	double m_speed; // 0x2f0

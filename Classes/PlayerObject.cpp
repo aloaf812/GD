@@ -58,7 +58,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	this->addChild(m_iconSprite, 1);
 	m_iconSpriteSecondary = CCSprite::createWithSpriteFrameName(frameFile2);
 	m_iconSprite->addChild(m_iconSpriteSecondary);
-	m_iconSpriteSecondary->setPosition(m_iconSprite->getContentSize() / 2);
+	m_iconSpriteSecondary->setPosition(m_iconSprite->convertToNodeSpace(m_iconSprite->getPosition()));
 #pragma endregion
 
 	this->m_isJumping = false;
@@ -189,7 +189,7 @@ void PlayerObject::resetObject()
 
 void PlayerObject::pushButton(PlayerButton button)
 {
-
+	// implement
 }
 
 void PlayerObject::playerDestroyed()

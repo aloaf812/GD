@@ -111,6 +111,7 @@ public:
 	CC_SYNTHESIZE(int, m_playerUserID, PlayerUserID);
 	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts);
 	CC_SYNTHESIZE(bool, m_recordGameplay, RecordGameplay); // 0x16b
+	CC_SYNTHESIZE_READONLY(bool, m_showProgressBar, ShowProgressBar) // 0x16d
 
 	CC_SYNTHESIZE(std::string, m_playerUDID, PlayerUDID); // 0x128
 	CC_SYNTHESIZE(std::string, m_playerName, PlayerName);
@@ -124,7 +125,6 @@ protected:
     bool m_showSongMarkers;
     bool m_showBPMMarkers;
     bool m_autoRetry;
-    bool m_showProgressBar;
     bool m_commentSortRecent;
     bool m_enableTutorial;
     bool m_didSyncAchievements;

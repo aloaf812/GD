@@ -98,7 +98,7 @@ bool LevelSelectLayer::init(int page)
     // coming soon!
     CCLayer* csLayer = CCLayer::create();
     CCLabelBMFont* csLabel = CCLabelBMFont::create("Coming Soon!", "bigFont.fnt");
-    csLabel->setPosition({winSize.width / 2, winSize.height / 2 + 50});
+    csLabel->setPosition(ccp(winSize.width / 2, winSize.height / 2 + 50));
     csLayer->addChild(csLabel);
     pages->addObject(csLayer);
     
@@ -160,8 +160,8 @@ bool LevelSelectLayer::init(int page)
     groundSprite->getTexture()->setTexParameters(&texParams);
     groundLayer->addChild(groundSprite, -2);
     groundSprite->setAnchorPoint({0, 1});
-   	groundSprite->setColor({ 0, 102, 255 });
-    groundSprite->setPosition({0.0f, 60.0f});
+   	groundSprite->setColor(ccc3(0, 102, 255));
+    groundSprite->setPosition(ccp(0.0f, 60.0f));
     
     float groundWidth = groundSprite->getTextureRect().size.width;
     float scaleFactor = getScaleX();
@@ -176,7 +176,7 @@ bool LevelSelectLayer::init(int page)
         CCSprite* tile = CCSprite::create(pGameManager->getGTexture(1));
         tile->setAnchorPoint({0, 1});
         tile->setColor({ 0, 102, 255 });
-        tile->setPosition({m_groundWidth * i, 60.0f});
+        tile->setPosition(ccp(m_groundWidth * i, 60.0f));
         groundLayer->addChild(tile);
         m_tiles->addObject(tile);
     }

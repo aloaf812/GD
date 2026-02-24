@@ -151,6 +151,8 @@ bool PlayLayer::init(GJGameLevel* level)
         return false;
 	
 	GameManager* pGameManager = GameManager::sharedState();
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
 
 	// add missing code
 
@@ -240,7 +242,6 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
 	m_glitter->setPositionType(tCCPositionType::kCCPositionTypeFree);
 	m_gameLayer->addChild(m_glitter, 0);
-	CCDirector* pDirector = CCDirector::sharedDirector();
 	float scaleFactorW = pDirector->getScreenScaleFactorW();
 	float scaleFactorH = pDirector->getScreenScaleFactorH();
 	CCPoint glitterPos = CCPoint((scaleFactorW * 480.0) / 1.8, (scaleFactorH * 320.0) * 0.5);
@@ -318,14 +319,61 @@ bool PlayLayer::init(GJGameLevel* level)
 	// field_0x13c->addChild(m_audioEffectsLayer, 1);
 	// m_audioEffectsLayer->setVisible(false);
 
-	// finish up missing code
+	this->m_attemptLabel = CCLabelBMFont::create("Attempt 1", "bigFont.fnt");
+	m_gameLayer->addChild(m_attemptLabel, 3);
 
 	runAction(CCSequence::create(
 		CCDelayTime::create(1.0f),
 		CCCallFunc::create(this, callfunc_selector(PlayLayer::startGame)), nullptr));
 
-	// LAST PART OF MISSING CODE
+	m_cleanReset = true;
+	field383_0x1a9 = true;
+	this->updateCamera(0.0f);
+	m_attemptLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 125.0f));
+	
+	this->m_progressBar = CCSprite::create("slidergroove2.png");
+	this->addChild(m_progressBar, 10);
+	this->m_progressFill = CCSprite::create("sliderBar2.png");
+	this->field453_0x204 = 8.0f;
+	// this->field449_0x200 = m_progressBar->getUserObject() - 4.0f;
+	ccTexParams texParams2 = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+	m_progressFill->getTexture()->setTexParameters(&texParams2);
+	m_progressFill->setColor(m_player->getGlowColor1());
+	m_progressBar->addChild(m_progressFill, -1);
 
+	m_progressFill->setPosition(ccp(0.0f, 0.0f));
+	m_progressFill->setPosition(ccp(2.0f, 4.0f));
+	m_progressBar->setPosition(ccp(winSize.width * 0.5, winSize.height - 8.0));
+
+	this->updateProgressbar();
+	this->toggleProgressbar();
+	m_player->setVisible(this->m_testMode != false);
+
+	this->tintBackground(m_levelSettings->getStartBGColor(), 0.0f);
+	this->tintGround(m_levelSettings->getStartGColor(), 0.0f);
+	this->tintLine(m_levelSettings->getStartLineColor(), 0.0f);
+	this->tintObjects(m_levelSettings->getStartObjColor(), 0.0f);
+	this->tintColorObjects(m_levelSettings->getStartTintObjColor(), 0.0f);
+
+	// this->updateLevelColors();
+	//this->animateOutFlyGround(true);
+	this->animateOutRollGround(true);
+
+	//m_player->togglePlayerScale(m_levelSettings->getStartMiniMode());
+	int startMode = m_levelSettings->getStartMode();
+	if (startMode == 2) {
+		//this->switchToRollMode(nullptr, true);
+	}
+	else if (startMode == 3) {
+		//this->switchToFlyMode(nullptr, true, true);
+	}
+
+	this->field279_0x120 = true;
+	this->updateVisibility();
+	this->updateCamera(0.0f);
+	//this->toggleAudioRain(false);
+	this->toggleGlitter(false);
+	pGameManager->resetMusic();
     return true;
 }
 
@@ -540,6 +588,16 @@ void PlayLayer::tintLine(ccColor3B color, float duration)
     m_ground->getLine()->setColor(color);
 }
 
+void PlayLayer::tintObjects(ccColor3B color, float duration)
+{
+
+}
+
+void PlayLayer::tintColorObjects(ccColor3B color, float duration)
+{
+
+}
+
 // toggles
 void PlayLayer::toggleGlitter(bool visible)
 {
@@ -570,6 +628,11 @@ void PlayLayer::togglePracticeMode(bool practice)
 	//}
 	this->m_cleanReset = true;
 	resetLevel();
+}
+
+void PlayLayer::toggleProgressbar()
+{
+	m_progressBar->setVisible(GameManager::sharedState()->getShowProgressBar());
 }
 
 void PlayLayer::resume()

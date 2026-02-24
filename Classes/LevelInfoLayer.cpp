@@ -81,7 +81,7 @@ bool LevelInfoLayer::init(GJGameLevel* level)
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
     m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
     m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    m_backgroundSprite->setColor({0, 102, 255});
+    m_backgroundSprite->setColor(ccc3(0, 102, 255));
     
     CCSprite* sideArtL = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtL->setAnchorPoint(CCPoint(0.0f, 0.0f));

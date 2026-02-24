@@ -61,15 +61,15 @@ bool GJGroundLayer::init(int gID)
     for (int i = 1; i < m_repeatCount; ++i) {
         CCSprite* tile = CCSprite::create(pGameManager->getGTexture(gID));
         tile->setAnchorPoint({0, 1});
-        tile->setColor({ 0, 102, 255 });
-        tile->setPosition({m_groundWidth * i, 90.0f});
+        tile->setColor(ccc3(0, 102, 255));
+        tile->setPosition(ccp(m_groundWidth * i, 90.0f));
         this->addChild(tile);
         m_tiles->addObject(tile);
     }
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
-    leftShadow->setAnchorPoint({0.0f, 1.0f});
-    leftShadow->setPosition({pDirector->getScreenLeft() - 1.0f, 90.0f});
+    leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
+    leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, 90.0f));
     this->addChild(leftShadow, 3);
     leftShadow->setOpacity(100);
     leftShadow->setColor({150, 150, 150});
@@ -77,8 +77,8 @@ bool GJGroundLayer::init(int gID)
     leftShadow->setTag(0);
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
-    rightShadow->setAnchorPoint({1.0f, 1.0f});
-    rightShadow->setPosition({pDirector->getScreenRight() + 1.0f, 90.0f});
+    rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
+    rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, 90.0f));
     rightShadow->setFlipX(true);
     this->addChild(rightShadow, 3);
     rightShadow->setOpacity(100);

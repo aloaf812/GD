@@ -29,9 +29,9 @@ bool MenuGameLayer::init()
     CCSize winSize = pDirector->getWinSize();
 
     m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(pGameManager->getLoadedBGIdx()));
-    m_backgroundSprite->setAnchorPoint({0, 0});
+    m_backgroundSprite->setAnchorPoint(ccp(0, 0));
     m_backgroundSprite->setScale(pDirector->getScreenScaleFactorMax());
-    m_backgroundSprite->setColor({ 0, 102, 255 });
+    m_backgroundSprite->setColor(ccc3(0, 102, 255));
     ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
     m_backgroundSprite->getTexture()->setTexParameters(&texParams);
     m_backgroundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_backgroundSprite->getContentSize().height));
@@ -61,8 +61,8 @@ bool MenuGameLayer::init()
     for (int i = 1; i < m_repeatCount; ++i) {
         CCSprite* tile = CCSprite::create(pGameManager->getGTexture(1));
         tile->setAnchorPoint({0, 1});
-        tile->setColor({ 0, 102, 255 });
-        tile->setPosition({m_groundWidth * i, 90.0f});
+        tile->setColor(ccc3(0, 102, 255));
+        tile->setPosition(ccp(m_groundWidth * i, 90.0f));
         m_groundLayer->addChild(tile);
         m_tiles->addObject(tile);
     }
@@ -72,7 +72,7 @@ bool MenuGameLayer::init()
     leftShadow->setPosition({pDirector->getScreenLeft() - 1.0f, 90.0f});
     m_groundLayer->addChild(leftShadow, 3);
     leftShadow->setOpacity(100);
-    leftShadow->setColor({150, 150, 150});
+    leftShadow->setColor(ccc3(150, 150, 150));
     leftShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     leftShadow->setTag(0);
     
@@ -82,7 +82,7 @@ bool MenuGameLayer::init()
     rightShadow->setFlipX(true);
     m_groundLayer->addChild(rightShadow, 3);
     rightShadow->setOpacity(100);
-    rightShadow->setColor({150, 150, 150});
+    rightShadow->setColor(ccc3(150, 150, 150));
     rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     rightShadow->setTag(0);
     
