@@ -292,12 +292,22 @@ bool PlayLayer::init(GJGameLevel* level)
 	// some weird math goes on in the midde of this...
 	// m_background->setTextureRect(m_background->getUserData());
 	
-	this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
+	/*this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
 	this->addChild(m_ground, 4);
 	this->m_ground2 = GJGroundLayer::create(m_levelSettings->getGIdx());
 	this->addChild(m_ground2, 4);
 	this->m_ground3 = GJGroundLayer::create(m_levelSettings->getGIdx());
 	this->addChild(m_ground3, 4);
+	this->m_ground3->setScaleY(1.0f);*/
+
+
+	// temporary fix
+	this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_gameLayer->addChild(m_ground, 4);
+	this->m_ground2 = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_gameLayer->addChild(m_ground2, 4);
+	this->m_ground3 = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_gameLayer->addChild(m_ground3, 4);
 	this->m_ground3->setScaleY(1.0f);
 
 	// missing code
@@ -715,4 +725,12 @@ void PlayLayer::animateOutRollGroundFinished()
 void PlayLayer::checkCollisions(float dt)
 {
 
+}
+
+bool PlayLayer::isFlipping()
+{
+	if (m_flipValue == 0.0) {
+		return false;
+	}
+	return m_flipValue != 1.0;
 }

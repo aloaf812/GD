@@ -69,6 +69,11 @@ bool UILayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	return true;
 }
 
+void UILayer::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+	PLAY_LAYER->getPlayer()->releaseButton(PlayerButton::Jump);
+}
+
 void UILayer::registerWithTouchDispatcher()
 {
 	// uses field_0xe8 but idk how it's defined

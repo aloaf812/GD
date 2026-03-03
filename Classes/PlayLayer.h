@@ -34,6 +34,8 @@ public:
 
 	void checkCollisions(float dt);
 
+	bool isFlipping();
+
     // tints
     void tintBackground(cocos2d::ccColor3B color, float duration);
     void tintGround(cocos2d::ccColor3B color, float duration);

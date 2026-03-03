@@ -105,9 +105,11 @@ bool MenuGameLayer::init()
 
 	m_playerObject->setPosition(ccp(0.0f, 105.0f));
 
-	ccColor3B firstColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
+	// ccColor3B firstColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
+	ccColor3B firstColor = pGameManager->colorForIdx(rand() % 18);
 	m_playerObject->setColor(firstColor);
-	ccColor3B secondColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
+	// ccColor3B secondColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
+	ccColor3B secondColor = pGameManager->colorForIdx(rand() % 18);
 	m_playerObject->setSecondColor(secondColor);
 	pGameManager->setPlayerStreak(tmpStreak);
 #pragma endregion

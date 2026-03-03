@@ -20,7 +20,8 @@ enum GameObjectType : int32_t {
     BlueOrb = 12,
     MirrorPortal = 13,
     CounterMirrorPortal = 14,
-    BallPortal = 15
+    BallPortal = 15,
+    SecretCoin = 23
 };
 /**
  @brief  Represents an object in a level
@@ -44,11 +45,13 @@ public:
     // void disableObject();
     const char* getBallFrame(int idx);
     /*void addColorSprite();
-    void activateObject();
+    void activateObject();*/
     void powerOffObject();
     void powerOnObject();
-    void removeGlow();
+    /*void removeGlow();
     void triggerActivated();*/
+
+	void updateState();
     
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);

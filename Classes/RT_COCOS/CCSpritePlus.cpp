@@ -127,19 +127,19 @@ void CCSpritePlus::setRotation(float fRotation){
 
 void CCSpritePlus::setRotationX(float fRotationX){ 
     cocos2d::CCSprite::setRotationX(fRotationX); 
-    if (m_hasFollower){ 
+    /*if (m_hasFollower){ 
         for (unsigned int i = 0; i < m_followers->count(); i++){ 
             reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotationX(fRotationX); 
         } 
-    } 
+    }*/ 
 }
 
 void CCSpritePlus::setRotationY(float fRoationY){ 
     cocos2d::CCSprite::setRotationY(fRoationY); 
-    if (m_hasFollower){ 
+    /*if (m_hasFollower){ 
         for (unsigned int i = 0; i < m_followers->count(); i++){ reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotationY(fRoationY); 
         }
-    } 
+    }*/ 
 }
 
 void CCSpritePlus::setScale(float fScale){ 

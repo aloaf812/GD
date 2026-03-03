@@ -346,21 +346,22 @@ ccColor3B GameManager::colorForIdx(int col)
     switch (col) {
         case 0: return ccc3(125, 255, 0);
         case 1: return ccc3(0, 255, 0);
-        case 2: return ccc3(0, 255, 125);
+        case 2: return ccc3(0, 255, 128);
         case 3: return ccc3(0, 255, 255);
-        case 4: return ccc3(125, 255, 0);
-        case 5: return ccc3(0, 0, 255);
-        case 6: return ccc3(125, 0, 255);
-        case 7: return ccc3(125, 255, 0);
-        case 8: return ccc3(125, 225, 0);
-        case 9: return ccc3(125, 255, 0);
-        case 10: return ccc3(125, 225, 0);
+        case 4: return ccc3(0, 200, 255);
+        case 5: return ccc3(0, 125, 255);
+        case 6: return ccc3(0, 0, 255);
+        case 7: return ccc3(125, 0, 255);
+        case 8: return ccc3(185, 0, 255);
+        case 9: return ccc3(255, 0, 255);
+        case 10: return ccc3(255, 0, 125);
         case 11: return ccc3(255, 0, 0);
-        case 12: return ccc3(125, 225, 0);
-        case 13: return ccc3(125, 225, 0);
-        case 14: return ccc3(125, 225, 0);
-        case 15: return ccc3(125, 225, 0);
-        case 17: return ccc3(125, 225, 0);
+        case 12: return ccc3(255, 125, 125);
+        case 13: return ccc3(255, 125, 0);
+        case 14: return ccc3(255, 185, 0);
+		case 15: return ccc3(255, 255, 0);
+		case 16: return ccc3(240, 211, 247);
+        case 17: return ccc3(255, 255, 255);
         case 18: return ccc3(125, 225, 0);
         default: return ccc3(255, 225, 255);
     }

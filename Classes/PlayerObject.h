@@ -34,6 +34,10 @@ public:
 
 	void playerDestroyed();
 
+	// particles
+	void playBurstEffect();
+	void stopBurstEffect();
+
 	void update(float dt);
 	void updateJump(float dt);
 	void updateShipRotation(float dt);
@@ -44,10 +48,17 @@ public:
 
 	virtual void resetObject();
 
+	bool levelFlipping();
+
 	void setColor(cocos2d::ccColor3B color);
 	void setSecondColor(cocos2d::ccColor3B color);
 	// void setVisible(bool visible);
 	virtual void setPosition(cocos2d::CCPoint const &position);
+
+	float flipMod();
+
+	void runRotateAction();
+	void runNormalRotation();
 
 	// todo: fix addresses
 	CC_SYNTHESIZE_READONLY(bool, m_isLocked, IsLocked); // 0x3a6
@@ -102,7 +113,10 @@ protected:
 
 	cocos2d::CCSprite* field695_0x2e4; // 0x2e4
 
-	GhostType m_ghostType;
+	GhostType m_ghostType; // 0x2c0
+
+	bool field772_0x30d; // 0x30d
+	bool field773_0x30e; // 0x30e
 };
 
 #endif /* defined(__GeometryDash__PlayerObject__) */

@@ -181,7 +181,7 @@ void GameObject::removeGlow() {
     this->m_glowSprite->release();
     this->m_glowSprite->removeMeAndCleanup();
     this->m_glowSprite = nullptr;
-}
+}*/
 
 void GameObject::powerOffObject() {
     if (this->m_poweredOn)
@@ -192,7 +192,8 @@ void GameObject::powerOnObject() {
     if (!this->m_poweredOn)
         this->m_poweredOn = true;
 }
-void GameObject::activateObject() {
+
+/*void GameObject::activateObject() {
     this->m_shouldHide = false;
     if (this->m_isActive || this->m_isSleeping) return;
     
@@ -330,3 +331,10 @@ void GameObject::setVisible(bool visible) {
     }
     cocos2d::CCSprite::setVisible(visible);
 }*/
+
+void GameObject::updateState()
+{
+	if (!m_stateVar) {
+		this->powerOffObject();
+	}
+}

@@ -11,6 +11,7 @@ public:
 
 	virtual void registerWithTouchDispatcher();
 	virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+	virtual void ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
 	virtual void keyBackClicked();
 
 	void enableMenu();
