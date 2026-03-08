@@ -110,14 +110,6 @@ void AppDelegate::trySaveGame(){
     return;
 }
 
-float AppDelegate::bgScale()
-{
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    float scaleFactor = pDirector->getScreenScaleFactorMax();
-    
-    return scaleFactor;
-}
-
 void AppDelegate::loadingIsFinished()
 {
     // :wilted_rose:

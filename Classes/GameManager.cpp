@@ -83,7 +83,6 @@ void GameManager::applicationWillEnterForeground()
         GameManager* pGameManager = sharedState();
         pGameManager->reportAchievementWithID("geometry.ach.rate", 100, false);
     }
-    CCLOG("clicked FB: %i", m_clickedFacebook);
     if (this->m_clickedFacebook != false) {
         GameManager* pGameManager = sharedState();
         pGameManager->reportAchievementWithID("geometry.ach.facebook", 100, false);

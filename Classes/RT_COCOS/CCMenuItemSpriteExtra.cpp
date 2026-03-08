@@ -5,8 +5,8 @@ USING_NS_CC;
 
 CCMenuItemSpriteExtra::CCMenuItemSpriteExtra()
 {
-    mScale = 0.0f;
-    mSelectedScale = 1.0f;
+	m_originalScale = 0.0f;
+	m_scaleVar = 0.0f;
     mUseAnimation = false;
     mDarken = false;
     mUnknownSFXValue = 1.0f;
@@ -46,7 +46,7 @@ bool CCMenuItemSpriteExtra::init(cocos2d::CCNode* normalSprite, cocos2d::CCNode*
     if (!CCMenuItemSprite::initWithNormalSprite(normalSprite, selectedSprite, NULL, target, selector))
         return false;
 
-    this->mScale = 1.0f;
+    this->m_originalScale = 1.0f;
     normalSprite->setAnchorPoint(CCPoint(0.5f, 0.5f));
 
     CCSize size = normalSprite->getContentSize();
@@ -56,7 +56,7 @@ bool CCMenuItemSpriteExtra::init(cocos2d::CCNode* normalSprite, cocos2d::CCNode*
 
     //this->mDarken = true;
     this->mUseAnimation = true;
-    this->mSelectedScale = 1.26f;
+	this->m_scaleVar = 1.26f;
 
     return true;
 }
@@ -68,7 +68,7 @@ void CCMenuItemSpriteExtra::activate()
 
     this->stopAllActions();
     if (this->mAnimationType == MENU_ANIM_TYPE_SCALE)
-        this->setScale(mScale);
+		this->setScale(m_originalScale);
 
     if (!this->mSelectSound.empty())
     {
@@ -119,7 +119,7 @@ void CCMenuItemSpriteExtra::selected()
             case MENU_ANIM_TYPE_SCALE:
             {
                 this->stopActionByTag(0);
-                CCScaleTo* scaleTo = CCScaleTo::create(mSelectDuration, mScale * mSelectedScale);
+				CCScaleTo* scaleTo = CCScaleTo::create(mSelectDuration, m_originalScale * m_scaleVar);
                 CCEaseBounceOut* ease = CCEaseBounceOut::create(scaleTo);
                 ease->setTag(0);
                 this->runAction(ease);
@@ -159,7 +159,7 @@ void CCMenuItemSpriteExtra::unselected()
             case MENU_ANIM_TYPE_SCALE:
             {
                 this->stopActionByTag(0);
-                CCScaleTo* scaleTo = CCScaleTo::create(mUnselectDuration, mScale);
+				CCScaleTo* scaleTo = CCScaleTo::create(mUnselectDuration, m_originalScale);
                 CCEaseBounceOut* ease = CCEaseBounceOut::create(scaleTo);
                 ease->setTag(0);
                 this->runAction(ease);

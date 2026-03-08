@@ -60,12 +60,30 @@ public:
 	void runRotateAction();
 	void runNormalRotation();
 
-	// todo: fix addresses
+
+	GhostType m_ghostType; // 0x2c0
+	// GhostTrailEffect* m_ghostTrail; // 0x2c4
+	
+	cocos2d::CCSprite* m_iconSprite; // 0x2c8
+	cocos2d::CCSprite* m_iconSpriteSecondary; // 0x2cc
+	cocos2d::CCSprite* m_iconGlow; // 0x2d0
+	cocos2d::CCSprite* m_vehicleSprite; // 0x2d4
+	cocos2d::CCSprite* m_vehicleSpriteSecondary; // 0x2d8
+	cocos2d::CCSprite* m_vehicleSpriteThird; // 0x2dc
+	cocos2d::CCSprite* m_vehicleGlow; // 0x2e0
+	cocos2d::CCSprite* field695_0x2e4; // 0x2e4
+	cocos2d::CCMotionStreak* m_playerStreak; // 0x2e8
+
+	double m_speed; // 0x2f0
+	double m_yStart; // 0x2f8
+	double m_gravity; // 0x300
+
 	CC_SYNTHESIZE_READONLY(bool, m_isLocked, IsLocked); // 0x3a6
 	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_lastGroundPos, LastGroundPos); // 0x3a8
-	CC_SYNTHESIZE_READONLY(bool, m_hasJumped, HasJumped); // 0x3b8
 	CC_SYNTHESIZE(GameObject*, m_touchedRing, TouchedRing); // 0x3b0
 	CC_SYNTHESIZE(GameObject*, m_portalObject, PortalObject); // 0x3b4
+	CC_SYNTHESIZE_READONLY(bool, m_hasJumped, HasJumped); // 0x3b8
+	CC_SYNTHESIZE_READONLY(bool, m_hasRingJumped, HasRingJumped); // 0x3b9
 
 	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
 	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381
@@ -82,17 +100,17 @@ public:
 	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
 	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor1, GlowColor1); // 0x3b8
 
-protected:
-	double m_speed; // 0x2f0
-	double m_yStart; // 0x2f8
-	double m_gravity; // 0x300
 
-	double field736_0x328; // 0x328 possibly yvelocity
+	bool field772_0x30d; // 0x30d
+	bool field773_0x30e; // 0x30e
 
 	bool m_isPlayLayer; // 0x311
 
 	bool m_pGroundActive; // 0x314
 	bool m_pShipActive; // 0x315
+
+	double field736_0x328; // 0x328 possibly yvelocity
+
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 
@@ -100,23 +118,6 @@ protected:
 	cocos2d::CCParticleSystemQuad* m_pGround; // 0x354
 	cocos2d::CCParticleSystemQuad* m_pShipGround; // 0x360
 	cocos2d::CCParticleSystemQuad* m_pBurstEffect; // 0x364
-
-	// all of the sprites
-	cocos2d::CCSprite* m_iconSprite; // 0x2c8
-	cocos2d::CCSprite* m_iconSpriteSecondary; // 0x2cc
-
-	cocos2d::CCSprite* m_vehicleSprite; // 0x2d4
-	cocos2d::CCSprite* m_vehicleSpriteSecondary; // 0x2d8
-
-	cocos2d::CCSprite* m_iconGlow; // 0x2d0
-	cocos2d::CCSprite* m_vehicleGlow; // 0x2e0
-
-	cocos2d::CCSprite* field695_0x2e4; // 0x2e4
-
-	GhostType m_ghostType; // 0x2c0
-
-	bool field772_0x30d; // 0x30d
-	bool field773_0x30e; // 0x30e
 };
 
 #endif /* defined(__GeometryDash__PlayerObject__) */

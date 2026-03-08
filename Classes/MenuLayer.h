@@ -22,6 +22,7 @@ public:
     void onTrailer(cocos2d::CCObject* sender);
     void onGooglePlayGames(cocos2d::CCObject* sender);
     void onGameCenter(cocos2d::CCObject* sender);
+	void onFullVersion(cocos2d::CCObject* sender);
     void showGCQuestion();
     void willClose();
     /**

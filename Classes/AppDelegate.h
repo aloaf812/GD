@@ -38,7 +38,6 @@ public:
     void pauseGame();
     void checkSound();
     virtual void trySaveGame();
-    float bgScale();
 	CC_SYNTHESIZE(bool, m_paused, Paused); // 0x8
 	CC_SYNTHESIZE_READONLY(bool, m_loadingFinished, LoadingFinished); // 0x10
 	CC_SYNTHESIZE_READONLY(bool, m_managersLoaded, ManagersLoaded); // 0x11

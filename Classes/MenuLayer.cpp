@@ -136,6 +136,12 @@ void MenuLayer::onGameCenter(CCObject* sender)
     PlatformToolbox::showAchievements();
 }
 
+void MenuLayer::onFullVersion(CCObject* sender)
+{
+	PlatformToolbox::logEvent("gjl_full");
+	// PromoInterstitial::create()->show();
+}
+
 void MenuLayer::showGCQuestion()
 {
 

@@ -22,17 +22,22 @@ public:
     void useAnimationType(MenuAnimationType type);
     void setSizeMult(float size);
 
-    void setSelectedScale(float scale) { mSelectedScale = scale; }
-
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init(cocos2d::CCNode* normalSprite, cocos2d::CCNode* selectedSprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler selector);
 
     static CCMenuItemSpriteExtra* create(cocos2d::CCNode* normalSprite, cocos2d::CCNode* selectedSprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler selector);
 
+
+	CC_SYNTHESIZE(float, m_scaleVar, ScaleVar); // 0x114
+	CC_SYNTHESIZE(float, m_originalScale, OriginalScale); // 0x118
+	CC_SYNTHESIZE(bool, m_shouldAnimate, ShouldAnimate); // 0x11c
+	CC_SYNTHESIZE(bool, m_darkenClick, DarkenClick); // 0x11d
+	CC_SYNTHESIZE(float, m_volume, Volume); // 0x120
+	CC_SYNTHESIZE(std::string, m_clickSound, ClickSound); // 0x124
+
 protected:
     MenuAnimationType mAnimationType;
     cocos2d::CCPoint mOffsetPosition;
-    float mScale;
     std::string mSelectSound;
     std::string mHoverSound;
     float mUnknownSFXValue;
@@ -42,7 +47,6 @@ protected:
     cocos2d::CCPoint mOffsetPositionSelected;
     bool mUseAnimation;
     bool mDarken;
-    float mSelectedScale;
 };
 
 #endif // __CCMENUITEMSPRITEEXTRA_H__

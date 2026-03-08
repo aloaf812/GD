@@ -15,6 +15,9 @@ public:
 
 	void updatePlayerColors();
     void onBack(CCObject* sender);
+
+	CC_SYNTHESIZE(cocos2d::CCSprite*, m_rateSprite, RateSprite); // 0x150
+
 protected:
     cocos2d::CCSprite* m_backgroundSprite;
 	SimplePlayer* m_playerObject;
