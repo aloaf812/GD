@@ -8,13 +8,8 @@
 class FLAlertLayer : public cocos2d::CCLayerColor {
 public:
     FLAlertLayer();
-    // create methods
-    static FLAlertLayer* create(FLAlertLayerProtocol* delegate, const char *title, const std::string &desc,const char *btn1,const char *btn2, float width,bool scroll,float height,float textScale);
     
-    static FLAlertLayer* create(char const* title, const std::string& desc, char const* btn);
-    static FLAlertLayer* create(FLAlertLayerProtocol* delegate, const char* title, const std::string& desc, const char* btn1, const char* btn2, float width);
-    
-	bool FLAlertLayer::init(FLAlertLayerProtocol* protocol, char const* title, std::string caption, char const* button1, char const* button2, float unk1);
+	bool init(FLAlertLayerProtocol* protocol, char const* title, std::string caption, char const* button1, char const* button2, float unk1);
     
     virtual void show();
     virtual bool ccTouchBegan(cocos2d::CCTouch * touch, cocos2d::CCEvent * event);
