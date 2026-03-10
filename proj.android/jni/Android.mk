@@ -11,6 +11,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AchievementManager.cpp \
                    ../../Classes/AchievementNotifier.cpp \
                    ../../Classes/AppDelegate.cpp \
+                   ../../Classes/BoomListView.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
                    ../../Classes/RT_COCOS/CCBlockLayer.cpp \
                    ../../Classes/RT_COCOS/CCContentManager.cpp \
@@ -34,6 +35,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GJGarageLayer.cpp \
                    ../../Classes/GJGroundLayer.cpp \
                    ../../Classes/GJListLayer.cpp \
+                   ../../Classes/GJMoreGamesLayer.cpp \
+                   ../../Classes/GJSearchObject.cpp \
                    ../../Classes/GManager.cpp \
                    ../../Classes/LevelEditorLayer.cpp \
                    ../../Classes/LevelInfoLayer.cpp \

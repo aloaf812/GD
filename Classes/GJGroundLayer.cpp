@@ -40,12 +40,14 @@ bool GJGroundLayer::init(int gID)
 
    	m_groundSprite = CCSprite::create(pGameManager->getGTexture(gID));
     
-    ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+    ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
     m_groundSprite->getTexture()->setTexParameters(&texParams);
     
     this->addChild(m_groundSprite, 2);
-    m_groundSprite->setAnchorPoint({0, 1});
-   	m_groundSprite->setColor({ 0, 102, 255 });
+	m_groundSprite->setAnchorPoint(ccp(0.0f, 1.0f));
+	m_groundSprite->setColor(ccc3(0, 102, 255));
+	ccBlendFunc gBlendFunc = { GL_ONE, GL_ZERO };
+	m_groundSprite->setBlendFunc(gBlendFunc);
     m_groundSprite->setPosition({0.0f, 90.0f});
     
     float groundWidth = m_groundSprite->getTextureRect().size.width;
@@ -57,15 +59,6 @@ bool GJGroundLayer::init(int gID)
     
     m_tiles = CCArray::create();
     m_tiles->retain();
-    
-    for (int i = 1; i < m_repeatCount; ++i) {
-        CCSprite* tile = CCSprite::create(pGameManager->getGTexture(gID));
-        tile->setAnchorPoint({0, 1});
-        tile->setColor(ccc3(0, 102, 255));
-        tile->setPosition(ccp(m_groundWidth * i, 90.0f));
-        this->addChild(tile);
-        m_tiles->addObject(tile);
-    }
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));

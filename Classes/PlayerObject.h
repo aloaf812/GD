@@ -109,7 +109,7 @@ public:
 	bool m_pGroundActive; // 0x314
 	bool m_pShipActive; // 0x315
 
-	double field736_0x328; // 0x328 possibly yvelocity
+	double m_yVelolcity; // 0x328
 
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c

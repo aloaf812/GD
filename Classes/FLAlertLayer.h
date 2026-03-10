@@ -14,19 +14,22 @@ public:
     static FLAlertLayer* create(char const* title, const std::string& desc, char const* btn);
     static FLAlertLayer* create(FLAlertLayerProtocol* delegate, const char* title, const std::string& desc, const char* btn1, const char* btn2, float width);
     
-    //bool FLAlertLayer::init(FLAlertLayerProtocol* target, char const* title, std::string caption, char const* button1, char const* button2, float width, bool border, float height);
+	bool FLAlertLayer::init(FLAlertLayerProtocol* protocol, char const* title, std::string caption, char const* button1, char const* button2, float unk1);
     
     virtual void show();
     virtual bool ccTouchBegan(cocos2d::CCTouch * touch, cocos2d::CCEvent * event);
     virtual void ccTouchMoved(cocos2d::CCTouch *touch,cocos2d::CCEvent *event);
     virtual void ccTouchEnded(cocos2d::CCTouch *touch,cocos2d::CCEvent *event);
     void incrementForcePrio();
+
+	CC_SYNTHESIZE(FLAlertLayerProtocol*, m_pParent, PParent); // 0x194
+	CC_SYNTHESIZE(cocos2d::CCNode*, m_targetScene, TargetScene); // 0x198
+	CC_SYNTHESIZE(bool, m_reverseKeyBack, ReverseKeyBack); // 0x19c
+	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_internalLayer, InternalLayer); // 0x1a0
+
 protected:
     cocos2d::CCMenu* m_buttonMenu;
     int m_ZOrder;
-    FLAlertLayerProtocol* m_alertProtocol; // m_pParent
-    cocos2d::CCNode* m_scene; // m_targetScene
-    bool m_reverseKeyBack;
     cocos2d::CCLayer* m_mainLayer; // m_internalLayer
     int m_scrollAction;
     bool m_containsBorder;

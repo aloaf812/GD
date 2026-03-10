@@ -8,7 +8,7 @@ GJDropDownLayer::GJDropDownLayer() {
     this->m_buttonMenu = NULL;
     this->m_listLayer = NULL;
     this->m_controllerEnabled = false;
-    this->m_mainLayer = NULL;
+    this->m_internalLayer = NULL;
     this->m_hidden = false;
     this->m_delegate = NULL;
 }
@@ -27,7 +27,7 @@ void GJDropDownLayer::enableUI() {
 
 void GJDropDownLayer::draw() {
     if (this->getOpacity())
-        this->draw();
+        CCLayerColor::draw();
 }
 
 void GJDropDownLayer::enterLayer() {
@@ -35,7 +35,7 @@ void GJDropDownLayer::enterLayer() {
     this->showLayer(false);
 }
 
-void GJDropDownLayer::exitLayer(CCObject* obj) {
+void GJDropDownLayer::exitLayer(CCObject* sender) {
     this->setKeypadEnabled(false);
     
     // auto director = CCDirector::sharedDirector();
@@ -51,18 +51,17 @@ void GJDropDownLayer::hideLayer(bool instantHide) {
             this->m_delegate->dropDownLayerWillClose(this);
     }
     
-    this->m_mainLayer->stopAllActions();
+    this->m_internalLayer->stopAllActions();
     
     if (instantHide) {
-        this->m_mainLayer->setPosition(this->m_startPosition);
+        this->m_internalLayer->setPosition(this->m_startPosition);
         this->setOpacity(0);
         this->layerHidden();
     }
     else {
-        /*CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.);
+        /*CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.0f);
         CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::exitLayer));
-        CCSequence* seq = CCSequence::create(action, callback);
-        this->m_mainLayer->runAction(seq);
+		m_internalLayer->runAction(CCSequence::create(action, callback));
         this->runAction(CCFadeTo::create(0.5, 0));*/
     }
 }
@@ -86,18 +85,18 @@ void GJDropDownLayer::layerVisible() {
 }
 
 void GJDropDownLayer::showLayer(bool instantShow) {
-    this->m_mainLayer->stopAllActions();
+    this->m_internalLayer->stopAllActions();
     this->layerVisible();
     
     if (instantShow) {
-        this->m_mainLayer->setPosition(this->m_endPosition);
+        this->m_internalLayer->setPosition(this->m_endPosition);
         this->setOpacity(125);
         this->enterAnimFinished();
     }
     else {
-        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_endPosition), 2.);
+        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_endPosition), 2.0f);
         CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::enterLayer));
-        this->m_mainLayer->runAction(CCSequence::create(action, callback));
+        m_internalLayer->runAction(CCSequence::create(action, callback, nullptr));
         this->setOpacity(0);
         this->runAction(CCFadeTo::create(0.5, 125));
     }
@@ -124,29 +123,31 @@ bool GJDropDownLayer::init(const char* title) {
 }
 
 bool GJDropDownLayer::init(const char* title, float height) {
-    // what's this?: CCDirector::sharedDirector()->getTouchDispatcher()->incrementForcePrio(2);
-    
-    // i'm not sure why almost all gd decomps don't create struct variables which is the correct way to use ccColor stuff
-    ccColor4B initColor = { 0, 0, 0, 125 };
-    if (!this->initWithColor(initColor))
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCTouchDispatcher* touchDisp = pDirector->getTouchDispatcher();
+
+	touchDisp->setForcePrio(true);
+	touchDisp->setTargetPrio(-504); // i really dont know if this number is right lol
+
+	if (!this->initWithColor(ccc4(0, 0, 0, 125)))
         return false;
     
     this->setTouchEnabled(true);
     this->setKeypadEnabled(true);
     // don't need this yet: this->setKeyboardEnabled(true);
     
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	CCSize winSize = pDirector->getWinSize();
     
-    this->m_mainLayer = CCLayer::create();
-    this->addChild(this->m_mainLayer);
+    this->m_internalLayer = CCLayer::create();
+    this->addChild(this->m_internalLayer);
     
     this->m_endPosition = ccp(0, 0);
     this->m_startPosition = ccp(0, winSize.height);
     
-    this->m_mainLayer->setPosition(this->m_startPosition);
+    m_internalLayer->setPosition(this->m_startPosition);
     ccColor4B listColor = { 0, 0, 0, 180 };
     this->m_listLayer = GJListLayer::create(NULL, title, listColor, 356.0, height); // it shows -76 in decomp but 0xB4 in asm so i guess its 0xB4 :P
-    this->m_mainLayer->addChild(this->m_listLayer);
+    m_internalLayer->addChild(this->m_listLayer);
     
     this->m_listLayer->setPosition(CCPoint((winSize.width - 356.0f) * 0.5f, (((winSize.height - height) * 0.5f) - 10.0f) + 5.0f));
 
@@ -161,22 +162,21 @@ bool GJDropDownLayer::init(const char* title, float height) {
     
     // todo: make sense
     
-    CCDirector* director = CCDirector::sharedDirector();
     // this->m_buttonMenu->setPosition({ director->getScreenLeft() + 24, director->getScreenTop() - 23 });
-    this->m_buttonMenu->setPosition(CCPoint(director->getScreenLeft() + 24, director->getScreenTop() - 23));
+	this->m_buttonMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 24, pDirector->getScreenTop() - 23));
     
-    this->m_mainLayer->addChild(this->m_buttonMenu, 10);
+    this->m_internalLayer->addChild(this->m_buttonMenu, 10);
     
     CCSprite* chain1 = CCSprite::createWithSpriteFrameName("chain_01_001.png");
-    this->m_mainLayer->addChild(chain1, -1);
+    this->m_internalLayer->addChild(chain1, -1);
     // please fix your structs
-    chain1->setAnchorPoint(CCPoint(0.5, 0.0 ));
+    chain1->setAnchorPoint(CCPoint(0.5, 0.0));
     // chain1->setPosition({ (winSize.width * 0.5) - 156.0, height + this->m_listLayer->getPosition().y + 12.0 });
     chain1->setPosition(CCPoint((winSize.width * 0.5f) - 156.0f, height + this->m_listLayer->getPosition().y + 12.0));
     chain1->setTag(0);
     
     CCSprite* chain2 = CCSprite::createWithSpriteFrameName("chain_01_001.png");
-    this->m_mainLayer->addChild(chain2, -1);
+    this->m_internalLayer->addChild(chain2, -1);
     chain2->setAnchorPoint(CCPoint(0.5, 0.0));
     // chain2->setPosition({ (winSize.width * 0.5) + 156.0, height + this->m_listLayer->getPosition().y + 12.0 });
     chain2->setPosition(CCPoint((winSize.width * 0.5f) + 156.0f, height + this->m_listLayer->getPosition().y + 12.0));
@@ -187,11 +187,6 @@ bool GJDropDownLayer::init(const char* title, float height) {
     this->m_hidden = true;
     
     this->customSetup();
-    
-    // 1.7 had no controller support :)
-    // this just makes my life easier because it's less java/obj-c code to decompile
-    /*if (PlatformToolbox::isControllerConnected() && !this->m_controllerEnabled)
-        GameToolbox::addBackButton(this->m_mainLayer, btn);*/
     
     return true;
 }

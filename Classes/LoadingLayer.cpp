@@ -81,9 +81,9 @@ bool LoadingLayer::init() {
     this->addChild(m_caption);
     m_caption->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 70.0f));
     m_caption->setScale(0.7f);
-    m_caption->setVisible(true);
+    m_caption->setVisible(false);
 
-    m_textArea = TextArea::create(getLoadingString(), 400.0f, 0, {0.5f, 0.5f}, "goldFont.fnt", 0.5f);
+    m_textArea = TextArea::create(getLoadingString(), 440.0f, 0, ccp(0.5f, 0.5f), "goldFont.fnt", 28.0f);
     this->addChild(m_textArea);
     m_textArea->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f - 100.0f));
     m_textArea->setScale(0.7f);

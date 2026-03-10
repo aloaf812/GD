@@ -2,18 +2,21 @@
 #include "TextArea.h"
 USING_NS_CC;
 
-bool TextArea::init(char const* str, float unk1, int unk2, cocos2d::CCPoint position, char const* unk3, float unk4)
+bool TextArea::init(char const* str, float scale, int order, cocos2d::CCPoint align, char const* unk3, float unk4)
 {
     if (!CCSprite::init())
         return false;
     
+	m_order = order;
+	m_scale = scale;
+
     return true;
 }
 
-TextArea* TextArea::create(char const* str, float unk1, int unk2, cocos2d::CCPoint position, char const* unk3, float unk4)
+TextArea* TextArea::create(char const* str, float scale, int order, cocos2d::CCPoint align, char const* unk3, float unk4)
 {
     TextArea* pRet = new TextArea();
-    if (pRet && pRet->init(str, unk1, unk2, position, unk3, unk4))
+	if (pRet && pRet->init(str, scale, order, align, unk3, unk4))
     {
         pRet->autorelease();
         return pRet;

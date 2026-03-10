@@ -76,7 +76,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 #pragma endregion
 
 	this->m_isJumping = false;
-	this->field736_0x328 = 0; // possibly yvelocity
+	this->m_yVelolcity = 0;
 	//this->field737_0x32c = 0;
 	//this->field709_0x30d = false;
 	this->m_onGround = false;
@@ -153,7 +153,7 @@ void PlayerObject::update(float dt)
 		{
 			this->updateJump(dt * 0.9f);
 			float addXPos = dt * m_speed * m_timeMod;
-			float addYPos = dt * 0.9f * field736_0x328;
+			float addYPos = dt * 0.9f * m_yVelolcity;
 			this->setPosition(this->getPosition() + ccp(addXPos, addYPos));
 		}
 
@@ -376,7 +376,7 @@ void PlayerObject::updateJump(float dt)
 			// this->field777_0x312 = false;
 			this->m_isJumping = true;
 			// this->field775_0x310 = true;
-			this->field736_0x328 = m_yStart * flipMod() * fVar7;
+			this->m_yVelolcity = m_yStart * flipMod() * fVar7;
 			//uVar4 = FUN_0019d1c8();
 			//*(undefined4 *)&this->field_0x320 = uVar4;
 			//this->incrementJumps();
@@ -390,51 +390,50 @@ void PlayerObject::updateJump(float dt)
 			this->runRotateAction();
 			return;
 		}
-		/*if (this->m_isJumping != false) {
-		dVar6 = *(double *)&this->field_0x328;
-		iVar3 = flipMod(this);
-		*(double *)&this->field_0x328 =
-		dVar6 - (double)(fVar8 * in_r1 * (float)(longlong)iVar3 * fVar5);
-		iVar3 = playerIsFalling(this);
-		if (iVar3 == 0) {
-		return;
-		}
-		this->m_isJumping = false;
-		this->field774_0x30f = true;
-		goto LAB_0019f658;
+		if (m_isJumping) {
+			/*dVar6 = this->m_yVelolcity;
+			iVar3 = flipMod(this);
+			this->m_yVelolcity = dVar6 - (double)(fVar8 * in_r1 * (float)(longlong)iVar3 * fVar5);
+			iVar3 = playerIsFalling(this);
+			if (iVar3 == 0) {
+				return;
+			}
+			this->m_isJumping = false;
+			this->field726_0x30f = true;
+			goto LAB_0019f658;
 		}
 		iVar3 = playerIsFalling(this);
 		if (iVar3 != 0) {
-		this->field772_0x30d = false;
+			this->field724_0x30d = false;
 		}
-		dVar6 = *(double *)&this->field_0x328;
+		dVar6 = this->m_yVelolcity;
 		iVar3 = flipMod(this);
 		dVar6 = dVar6 - (double)(fVar8 * in_r1 * (float)(longlong)iVar3 * fVar5);
-		*(double *)&this->field_0x328 = dVar6;
+		this->m_yVelolcity = dVar6;
 		if (this->m_gravityFlipped == false) {
-		if ((int)((uint)(dVar6 < -15.0) << 0x1f) < 0) {
-		dVar6 = -15.0;
-		}
+			if ((int)((uint)(dVar6 < -15.0) << 0x1f) < 0) {
+				dVar6 = -15.0;
+			}
 		}
 		else if (15.0 < dVar6) {
-		dVar6 = 15.0;
+			dVar6 = 15.0;
 		}
-		*(double *)&this->field_0x328 = dVar6;
+		this->m_yVelolcity = dVar6;
 		iVar3 = playerIsFalling(this);
 		if (iVar3 == 0) {
-		return;
+			return;
 		}
 		if ((this->m_rollMode == false) &&
-		(iVar2 = (CCAction *)cocos2d::CCNode::getActionByTag((CCNode *)this,0),
-		iVar2 == (CCAction *)0x0)) {
-		runRotateAction(this);
+			(iVar2 = (CCAction *)cocos2d::CCNode::getActionByTag((CCNode *)this, 0),
+			iVar2 == (CCAction *)0x0)) {
+			runRotateAction(this);
 		}
 		if (this->m_gravityFlipped == false) {
-		cVar3 = (int)((uint)(*(double *)&this->field_0x328 < -4.0) << 0x1f) < 0;
+			cVar3 = (int)((uint)(this->m_yVelolcity < -4.0) << 0x1f) < 0;
 		}
 		else {
-		cVar3 = 4.0 < *(double *)&this->field_0x328;
-		}*/
+			cVar3 = 4.0 < this->m_yVelolcity;*/
+		}
 	}
 }
 

@@ -17,7 +17,7 @@ public:
     virtual void disableUI();
     void enableUI();
     void draw();
-    void exitLayer(cocos2d::CCObject* obj);
+    void exitLayer(cocos2d::CCObject* sender);
     virtual void hideLayer(bool instantHide);
     void showLayer(bool instantShow);
     void keyBackClicked();
@@ -31,9 +31,9 @@ public:
     GJDropDownLayer* create(const char* title);
     
     bool ccTouchBegan() { return true; }
-    void ccTouchCancelled() {}
-    void ccTouchEnded() {}
-    void ccTouchMoved() {}
+    // void ccTouchCancelled() {}
+    // void ccTouchEnded() {}
+    // void ccTouchMoved() {}
     
     // these are from geode =)
     cocos2d::CCPoint m_endPosition;
@@ -41,7 +41,9 @@ public:
     cocos2d::CCMenu* m_buttonMenu;
     GJListLayer* m_listLayer;
     bool m_controllerEnabled;
-    cocos2d::CCLayer* m_mainLayer;
+
+	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_internalLayer, InternalLayer); // 0x1a0
+
     bool m_hidden;
     GJDropDownLayerDelegate* m_delegate;
 };

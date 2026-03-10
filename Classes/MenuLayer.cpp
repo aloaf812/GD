@@ -15,6 +15,7 @@
 #include "GameToolbox.h"
 #include "GameLevelManager.h"
 #include "OptionsLayer.h"
+#include "GJMoreGamesLayer.h"
 USING_NS_CC;
 
 CCScene* MenuLayer::scene(){
@@ -38,10 +39,11 @@ CCScene* MenuLayer::scene(){
 
 void MenuLayer::onMoreGames(CCObject* sender)
 {
-    PlatformToolbox::isHD();
-    GameManager* pGameManager = GameManager::sharedState();
     PlatformToolbox::logEvent("MoreGames");
-    pGameManager->reportAchievementWithID("geometry.ach.moreGames", 100, false);
+	GameManager::sharedState()->reportAchievementWithID("geometry.ach.moreGames", 100, false);
+	GJMoreGamesLayer* moreGamesLayer = GJMoreGamesLayer::create();
+	this->addChild(moreGamesLayer, 100);
+	moreGamesLayer->showLayer(false); // wow this is broken
     return;
 }
 
@@ -273,10 +275,10 @@ bool MenuLayer::init() {
     facebookExtra->setPosition(socialsMenu->convertToNodeSpace(CCPoint(pDirector->getScreenLeft() + 30.0f, pDirector->getScreenBottom() + 30.0f + 30.0f)));
     twitterExtra->setPosition(facebookExtra->getPosition() + CCPoint(40.0, 0.0f));
     
-    CCSprite* freeLevelsButton = CCSprite::createWithSpriteFrameName("GJ_moreGamesBtn_001.png");
-    CCMenuItemSpriteExtra* freeLevelsExtra = CCMenuItemSpriteExtra::create(freeLevelsButton, NULL, this, menu_selector(MenuLayer::onMoreGames));
+    CCSprite* moreGamesButton = CCSprite::createWithSpriteFrameName("GJ_moreGamesBtn_001.png");
+	CCMenuItemSpriteExtra* moreGamesExtra = CCMenuItemSpriteExtra::create(moreGamesButton, NULL, this, menu_selector(MenuLayer::onMoreGames));
     
-    CCMenu* extraMenu = CCMenu::create(freeLevelsExtra, NULL);
+    CCMenu* extraMenu = CCMenu::create(moreGamesExtra, NULL);
     this->addChild(extraMenu, 2);
     
     extraMenu->setPosition(CCPoint(pDirector->getScreenRight() - 43.0f, pDirector->getScreenBottom() + 45.0f));
