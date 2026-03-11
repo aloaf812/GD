@@ -4,7 +4,7 @@ USING_NS_CC;
 OptionsLayer* OptionsLayer::create()
 {
     OptionsLayer* pRet = new OptionsLayer();
-    if (pRet && pRet->GJDropDownLayer::init("Options", 100.0f))
+    if (pRet && pRet->init("Options"))
     {
         pRet->autorelease();
         return pRet;

@@ -92,14 +92,14 @@ void GJDropDownLayer::showLayer(bool instantShow) {
         this->m_internalLayer->setPosition(this->m_endPosition);
         this->setOpacity(125);
         this->enterAnimFinished();
-    }
-    else {
-        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_endPosition), 2.0f);
-        CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::enterLayer));
-        m_internalLayer->runAction(CCSequence::create(action, callback, nullptr));
-        this->setOpacity(0);
-        this->runAction(CCFadeTo::create(0.5, 125));
-    }
+		return;
+	}
+	
+    CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_endPosition), 2.0f);
+	CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::enterAnimFinished));
+    m_internalLayer->runAction(CCSequence::create(action, callback, nullptr));
+    this->setOpacity(0);
+    this->runAction(CCFadeTo::create(0.5, 125));
 }
 
 GJDropDownLayer* GJDropDownLayer::create(const char* title, float height) {

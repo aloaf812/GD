@@ -231,7 +231,7 @@ char const* GameManager::getGTexture(int gID)
 
 void GameManager::fadeInMusic(char const *fileName){
     // shhh: GameSoundManager* GSM = GameSoundManager::sharedManager();
-    if (false)
+    if (true)
     {
         // todo: implement actual fading
         SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();

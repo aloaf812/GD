@@ -3,11 +3,9 @@
 
 #include "cocos2d.h"
 #include "GJDropDownLayer.h"
-// #include "FLAlertLayerProtocol.h"
 
 class OptionsLayer : public GJDropDownLayer {
 public:
-    // now i need to figure out how this works
     static OptionsLayer* create();
 };
 

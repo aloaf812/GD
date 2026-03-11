@@ -81,6 +81,8 @@ bool AchievementBar::init(char const* title, char const* description, char const
 
 	titleText->setScale(textScale);
 
+	m_screenOffset = 74.0f;
+
 	return true;
 }
 

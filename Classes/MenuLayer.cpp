@@ -92,7 +92,9 @@ void MenuLayer::onAchievements(CCObject* sender)
 
 void MenuLayer::onOptions(CCObject* sender)
 {
-    OptionsLayer::create()->enterLayer();
+	OptionsLayer* layer = OptionsLayer::create();
+	this->addChild(layer, 100);
+	layer->enterLayer();
 }
 
 void MenuLayer::onStats(CCObject* sender)
