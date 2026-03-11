@@ -22,17 +22,19 @@ enum class UnlockType {
 };
 
 // i'll figure these values out when i can
+// omnimenu has some of these values
 enum class LastGameScene {
-    unk0 = 0,
-    unk1 = 1,
+	unk0 = 0,
+	SearchScene = 1,
 	EditorLevels = 2,
-    unk3 = 3,
-    unk4 = 4,
-    unk5 = 5,
-    unk6 = 6,
-    unk7 = 7,
-    unk8 = 8,
-    LevelSelect = 9
+	unk3 = 3,
+	unk4 = 4,
+	unk5 = 5,
+	CreatorsScores = 6,
+	unk7 = 7,
+	unk8 = 8,
+	LevelSelect = 9,
+	PreviousSearch = 10
 };
 
 class GameManager: public GManager {

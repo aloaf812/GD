@@ -4,6 +4,8 @@
 #include "GameLevelManager.h"
 #include "LevelEditorLayer.h"
 #include "GJSearchObject.h"
+#include "LevelBrowserLayer.h"
+#include "GameManager.h"
 
 #include "CreatorLayer.h"
 USING_NS_CC;
@@ -64,6 +66,17 @@ void CreatorLayer::onLeaderboards(cocos2d::CCObject *sender)
 {
     GameLevelManager* GLM = GameLevelManager::sharedState();
     GLM->getLeaderboardScores("leaderboards_top");
+}
+
+void CreatorLayer::onFeaturedLevels(cocos2d::CCObject *sender)
+{
+	this->setKeypadEnabled(false);
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCScene* scene = LevelBrowserLayer::scene(GJSearchObject::create(SearchType::Featured));
+	CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
+	pDirector->replaceScene(fade);
+	GameManager::sharedState()->setLastScene(LastGameScene::SearchScene);
+
 }
 
 bool CreatorLayer::init()
@@ -136,7 +149,7 @@ bool CreatorLayer::init()
     scoreExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(110.0f, 55.0f));
     
     CCSprite* featuredBtn = CCSprite::createWithSpriteFrameName("GJ_featuredBtn_001.png");
-    CCMenuItemSpriteExtra* featuredExtra = CCMenuItemSpriteExtra::create(featuredBtn, NULL, this, menu_selector(CreatorLayer::onBack));
+    CCMenuItemSpriteExtra* featuredExtra = CCMenuItemSpriteExtra::create(featuredBtn, NULL, this, menu_selector(CreatorLayer::onFeaturedLevels));
     creatorMenu->addChild(featuredExtra);
     featuredExtra->setPosition(m_backgroundSprite->getPosition() + CCPoint(-110.0f, -55.0f));
     

@@ -47,6 +47,10 @@ bool LevelEditorLayer::init(GJGameLevel* level)
 	m_gameLayer = CCLayer::create();
 	this->addChild(m_gameLayer, 1);
 	this->addChild(EditorUI::create(this), 100);
+	
+	// missing code
+
+	this->createBackground();
 
 }
 

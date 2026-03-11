@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "GJGameLevel.h"
+#include "GJSearchObject.h"
 
 class GameLevelManager : public cocos2d::CCNode {
 public:
@@ -19,7 +20,8 @@ public:
     static cocos2d::CCDictionary* responseToDict(std::string response, bool p0);
     GJGameLevel* getMainLevel(int mainLevel);
 
-	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_localLevels, LocalLevels); // 0x45
+	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_localLevels, LocalLevels); // 0x114
+	CC_SYNTHESIZE(SearchType, m_lastSearchType, LastSearchType); // 0x148
 };
 
 #endif

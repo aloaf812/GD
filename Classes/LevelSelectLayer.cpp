@@ -225,7 +225,6 @@ void LevelSelectLayer::onInfo(CCObject* sender)
 
 }
 
-// these aren't exactly correct since they use the sender to get BSL
 void LevelSelectLayer::onPrev(CCObject* sender)
 {
     m_scrollLayer->quickUpdate();

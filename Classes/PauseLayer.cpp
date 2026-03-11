@@ -50,7 +50,7 @@ void PauseLayer::customSetup()
 void PauseLayer::onResume(CCObject* sender)
 {
 	PLAY_LAYER->resume();
-	dynamic_cast<CCNode*>(sender)->removeMeAndCleanup();	
+	CCNode::removeMeAndCleanup();	
 }
 
 void PauseLayer::onQuit(CCObject* sender)
