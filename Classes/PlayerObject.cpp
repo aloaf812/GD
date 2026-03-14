@@ -491,9 +491,9 @@ void PlayerObject::runNormalRotation()
 
 	float rotateValue;
 	if (m_playerScale == 1.0)
-		rotateValue = 0.43333334;
+		rotateValue = 0.43333334f;
 	else
-		rotateValue = 0.33333334;
+		rotateValue = 0.33333334f;
 
 	CCRotateBy* rotateAction = CCRotateBy::create(rotateValue, (180 * flipMod()));
 	// *((_DWORD *)v6 + 8) = 0;

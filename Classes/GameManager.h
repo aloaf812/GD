@@ -51,8 +51,8 @@ public:
     */
     char const* getGTexture(int gID);
     virtual bool init();
-    virtual void applicationDidEnterBackground();
-    virtual void applicationWillEnterForeground();
+    void applicationDidEnterBackground();
+    void applicationWillEnterForeground();
     /**
     @param ach_ID The ID of the achievment of the achievement being reported (e.g. geometry.ach.moreGames)
     @param percentage The completion percentage of the achievement
@@ -77,6 +77,8 @@ public:
 	void resetMusic();
     int colorForPos(int color);
     std::string colorKey(int param_1, bool param_2);
+
+	virtual void setup();
     virtual void dataLoaded(DS_Dictionary* param_1);
     /**
     @param col The number of the player color.
@@ -84,55 +86,64 @@ public:
     */
     static cocos2d::ccColor3B colorForIdx(int col);
 
-	CC_SYNTHESIZE(bool, m_performanceMode, PerformanceMode); // 0x16e
-	CC_SYNTHESIZE(bool, m_showedPirate, ShowedPirate); // 0x170
-	CC_SYNTHESIZE(bool, m_clickedGarage, ClickedGarage); // 0x171
-	CC_SYNTHESIZE(bool, m_clickedEditor, ClickedEditor); // 0x172
-	CC_SYNTHESIZE(bool, m_showedEditorGuide, ShowedEditorGuide); // 0x175
+	CC_SYNTHESIZE(PlayLayer*, m_playLayer, PlayLayer); // 0x114
+	CC_SYNTHESIZE(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
+	CC_SYNTHESIZE(bool, m_mainMenuActive, MainMenuActive); // 0x11c
+	// CC_SYNTHESIZE(PremiumPopup*, m_premiumPopup, PremiumPopup); // 0x120
+	CC_SYNTHESIZE(bool, m_gameCenterEnabled, GameCenterEnabled); // 0x124
+	CC_SYNTHESIZE(bool, m_firstSetup, FirstSetup); // 0x125
+	CC_SYNTHESIZE(bool, m_showedFirstTutorial, ShowedFirstTutorial); // 0x126
+	CC_SYNTHESIZE(std::string, m_playerUDID, PlayerUDID); // 0x128
+	CC_SYNTHESIZE(std::string, m_playerName, PlayerName); // 0x12c
+
+	CC_SYNTHESIZE(int, m_playerUserID, PlayerUserID); // 0x130
+	CC_SYNTHESIZE(bool, m_playerScoreValid, PlayerScoreValid); // 0x134
+	CC_SYNTHESIZE_READONLY(bool, m_musicEnabled, MusicEnabled); // 0x135
+	CC_SYNTHESIZE_READONLY(bool, m_fxEnabled, FxEnabled); // 0x136
+	CC_SYNTHESIZE(bool, m_didRateGame, DidRateGame); // 0x137
+	CC_SYNTHESIZE(bool, m_didLikeFacebook, DidLikeFacebook); // 0x138
+	CC_SYNTHESIZE(bool, m_didFollowTwitter, DidFollowTwitter); // 0x139
+	CC_SYNTHESIZE(bool, m_editMode, EditMode); // 0x13b
+	CC_SYNTHESIZE(bool, m_wasHigh, WasHigh); // 0x13a
+	CC_SYNTHESIZE(LastGameScene, m_lastScene, LastScene); // 0x13c
+	CC_SYNTHESIZE(LastGameScene, m_lastScene2, LastScene2); // 0x140
+	CC_SYNTHESIZE(bool, m_returnToSearch, ReturnToSearch); // 0x144
+
     // icons
-	CC_SYNTHESIZE_READONLY(int, m_loadedBGIdx, LoadedBGIdx);
-	CC_SYNTHESIZE(int, m_playerColor, PlayerColor); // 0x158
-	CC_SYNTHESIZE(int, m_playerColor2, PlayerColor2); // 0x15c
 	CC_SYNTHESIZE(int, m_playerFrame, PlayerFrame); // 0x148
 	CC_SYNTHESIZE(int, m_playerShip, PlayerShip); // 0x14c
     CC_SYNTHESIZE(int, m_playerBall, PlayerBall); // 0x150
 	CC_SYNTHESIZE(int, m_playerBird, PlayerBird); // 0x154
+	CC_SYNTHESIZE(int, m_playerColor, PlayerColor); // 0x158
+	CC_SYNTHESIZE(int, m_playerColor2, PlayerColor2); // 0x15c
 	CC_SYNTHESIZE(int, m_playerStreak, PlayerStreak); // 0x160
 	CC_SYNTHESIZE(IconType, m_playerIconType, PlayerIconType); // 0x164
-    // layers
-	CC_SYNTHESIZE(PlayLayer*, m_playLayer, PlayLayer); // 0x114
-	CC_SYNTHESIZE(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
-	CC_SYNTHESIZE(bool, m_mainMenuActive, MainMenuActive); // 0x11c
-	CC_SYNTHESIZE(bool, m_gameCenterEnabled, GameCenterEnabled); // 0x124
-	CC_SYNTHESIZE(bool, m_editMode, EditMode); // 0x13b
-	CC_SYNTHESIZE(bool, m_wasHigh, WasHigh); // 0x131
-	CC_SYNTHESIZE(bool, m_firstSetup, FirstSetup); // 0x125
-	CC_SYNTHESIZE(LastGameScene, m_lastScene, LastScene); // 0x13c
 
-	CC_SYNTHESIZE(bool, m_clickedName, ClickedName);
-	CC_SYNTHESIZE(int, m_playerUserID, PlayerUserID);
-	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts);
+	// the great boolean wall
+	CC_SYNTHESIZE(bool, m_autoCheckpoints, AutoCheckpoints); // 0x168
+	CC_SYNTHESIZE(bool, m_showSongMarkers, ShowSongMarkers); // 0x169
+	CC_SYNTHESIZE(bool, m_showBPMMarkers, ShowBPMMarkers); // 0x16a
 	CC_SYNTHESIZE(bool, m_recordGameplay, RecordGameplay); // 0x16b
-	CC_SYNTHESIZE_READONLY(bool, m_showProgressBar, ShowProgressBar) // 0x16d
-
-	CC_SYNTHESIZE(std::string, m_playerUDID, PlayerUDID); // 0x128
-	CC_SYNTHESIZE(std::string, m_playerName, PlayerName);
+	CC_SYNTHESIZE(bool, m_autoRetryLevel, AutoRetryLevel); // 0x16c
+	CC_SYNTHESIZE(bool, m_showProgressBar, ShowProgressBar) // 0x16d
+	CC_SYNTHESIZE(bool, m_performanceMode, PerformanceMode); // 0x16e
+	CC_SYNTHESIZE(bool, m_commentSortRecent, CommentSortRecent); // 0x16f
+	CC_SYNTHESIZE(bool, m_showedPirate, ShowedPirate); // 0x170
+	CC_SYNTHESIZE(bool, m_clickedGarage, ClickedGarage); // 0x171
+	CC_SYNTHESIZE(bool, m_clickedEditor, ClickedEditor); // 0x172
+	CC_SYNTHESIZE(bool, m_clickedName, ClickedName); // 0x173
+	CC_SYNTHESIZE(bool, m_clickedPractice, ClickedPractice); // 0x174
+	CC_SYNTHESIZE(bool, m_showedEditorGuide, ShowedEditorGuide); // 0x175
+    
+	CC_SYNTHESIZE_READONLY(int, m_loadedBGIdx, LoadedBGIdx); // 0x188
+	CC_SYNTHESIZE_READONLY(int, m_loadedGIdx, LoadedGIdx); // 0x18c
+	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts); // 0x190
 protected:
     // dictionaries
     cocos2d::CCDictionary* m_valueKeeper;
-    bool m_showedFirstTutorial;
-    bool m_musicEnabled;
-    bool m_fxEnabled;
-    bool m_autoCheckpoints;
-    bool m_showSongMarkers;
-    bool m_showBPMMarkers;
-    bool m_autoRetry;
-    bool m_commentSortRecent;
     bool m_enableTutorial;
     bool m_didSyncAchievements;
     bool m_hasRatedGame;
-    bool m_clickedPractice;
-    int m_loadedGroundID;
     int m_lastLevelID;
     // unknown values
     bool offset_0x5;
@@ -144,7 +155,6 @@ protected:
     bool m_showedRateDiffDialog;
     bool m_showedRateStarDialog;
     bool m_showedLowDetailDialog;
-    bool m_playerScoreValid;
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

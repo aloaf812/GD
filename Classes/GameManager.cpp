@@ -35,7 +35,7 @@ GameManager::GameManager()
     this->m_showSongMarkers = false;
     this->m_showBPMMarkers = false;
     this->m_recordGameplay = false;
-    this->m_autoRetry = false;
+    this->m_autoRetryLevel = false;
     this->m_showProgressBar = false;
     this->m_performanceMode = false;
     this->m_commentSortRecent = false;
@@ -51,7 +51,7 @@ GameManager::GameManager()
     // this->m_gameRateDelegate = 0;
     this->m_lastLevelID = 0;
     this->m_loadedBGIdx = 0;
-    this->m_loadedGroundID = 0;
+    this->m_loadedGIdx = 0;
     this->m_totalAttempts = 0;
     this->m_enableTutorial = false;
     this->m_editMode = false;
@@ -94,6 +94,12 @@ void GameManager::applicationWillEnterForeground()
     }*/
 }
 
+void GameManager::setup()
+{
+	// field182_0xec = 1;
+	// GManager::load();
+}
+
 void GameManager::dataLoaded(DS_Dictionary* dict)
 {   // robtop why
 
@@ -120,7 +126,7 @@ void GameManager::dataLoaded(DS_Dictionary* dict)
     this->m_showSongMarkers = dict->getBoolForKey("showSongMarkers");
     this->m_showBPMMarkers = dict->getBoolForKey("showBPMMarkers");
     this->m_recordGameplay = dict->getBoolForKey("recordGameplay");
-    this->m_autoRetry = dict->getBoolForKey("autoRetryLevel");
+    this->m_autoRetryLevel = dict->getBoolForKey("autoRetryLevel");
     this->m_showProgressBar = dict->getBoolForKey("showProgressBar");
     this->m_commentSortRecent = dict->getBoolForKey("commentSortRecent");
     this->m_performanceMode = dict->getBoolForKey("performanceMode");
@@ -151,12 +157,12 @@ void GameManager::loadBackground(int backID)
 		CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
 		if (this->m_loadedBGIdx != 0)
 		{
-			bgStr = CCString::createWithFormat("groundSquare_%02d_001.png", bgID);
+			bgStr = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
 			// pTextureCache->removeTextureForKey(bgStr->getCString);
 		}
-		bgStr = CCString::createWithFormat("groundSquare_%02d_001.png", bgID);
+		bgStr = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
 		pTextureCache->addImage(bgStr->getCString());
-		this->m_loadedGroundID = bgID;
+		this->m_loadedBGIdx = bgID;
     }
 }
 
@@ -169,18 +175,18 @@ void GameManager::loadGround(int gID)
     if (gID < 1) {
         groundID = 1;
     }
-    if (groundID != this->m_loadedGroundID)
+    if (groundID != this->m_loadedGIdx)
     {
         CCString* groundStr;
         CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-        if (this->m_loadedGroundID != 0)
+        if (this->m_loadedGIdx != 0)
         {
             groundStr = CCString::createWithFormat("groundSquare_%02d_001.png", groundID);
             // MISSING CC FUNCTION: pTextureCache->removeTextureForKey(groundStr->getCString);
         }
         groundStr = CCString::createWithFormat("groundSquare_%02d_001.png", groundID);
         pTextureCache->addImage(groundStr->getCString());
-        this->m_loadedGroundID = groundID;
+        this->m_loadedGIdx = groundID;
     }
 }
 
@@ -398,17 +404,16 @@ void GameManager::firstLoad()
     // this->m_playerIconType = IconType::Cube;
     this->m_musicEnabled = true;
     this->m_fxEnabled = true;
-    GameSoundManager::sharedManager()->setBGMusicVolume(100.0f);
-    /*this_00 = (SimpleAudioEngine *)CocosDenshion::SimpleAudioEngine::sharedEngine();
-     CocosDenshion::SimpleAudioEngine::setEffectsVolume(this_00,extraout_s0_00);
-     this_01 = (GameLevelManager *)GameLevelManager::sharedState();
+    GameSoundManager::sharedManager()->setBGMusicVolume(1.0f);
+    SimpleAudioEngine::sharedEngine()->setEffectsVolume(1.0f);
+    /*this_01 = (GameLevelManager *)GameLevelManager::sharedState();
      pGVar3 = (GameStatsManager *)GameLevelManager::firstSetup(this_01);
      pGVar3 = GameStatsManager::GameStatsManager(pGVar3);
      GameStatsManager::firstSetup(pGVar3);*/
     this->m_autoCheckpoints = true;
     this->m_showSongMarkers = true;
     this->m_showBPMMarkers = false;
-    this->m_autoRetry = true;
+    this->m_autoRetryLevel = true;
     this->m_showProgressBar = false;
     this->m_commentSortRecent = false;
     this->m_performanceMode = false;

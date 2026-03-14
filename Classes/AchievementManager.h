@@ -14,9 +14,9 @@ public:
 	bool areAchievementsEarned(cocos2d::CCArray* achSet);
 	int percentForAchievement(char const* achID);
 
-	bool m_dontNotifyAch;
-	cocos2d::CCDictionary* m_achDict;
-	cocos2d::CCDictionary* m_reportedAchDict;
+	cocos2d::CCDictionary* m_allAchievements; // 0xe8
+	CC_SYNTHESIZE(cocos2d::CCDictionary*, m_reportedAchievements, ReportedAchievements); // 0xf0
+	bool m_dontNotifyAch; // 0xf4
 };
 
 

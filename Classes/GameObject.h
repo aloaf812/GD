@@ -93,8 +93,8 @@ public:
     CC_PROPERTY(float, m_radius, Radius); // 0x224
     CC_PROPERTY_READONLY(bool, m_isRotated, IsRotated); // 0x228*/
     CC_SYNTHESIZE(float, m_scaleModX, ScaleModX); // 0x22c
-    /*CC_PROPERTY(float, m_scaleModY, ScaleModY); // 0x230
-    CC_PROPERTY(int, m_ID, M_ID); // 0x234
+    CC_SYNTHESIZE(float, m_scaleModY, ScaleModY); // 0x230
+    /*CC_PROPERTY(int, m_ID, M_ID); // 0x234
     CC_PROPERTY(GameObjectType, m_objectType, ObjectType); // 0x238
     CC_PROPERTY(int, m_sectionIdx, SectionIdx); // 0x23c*/
     CC_SYNTHESIZE_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
@@ -106,18 +106,18 @@ public:
     CC_PROPERTY_READONLY(bool, m_usePlayerColor2, UsePlayerColor2); // 0x252
     CC_PROPERTY(bool, m_isDisabled, IsDisabled); // 0x253
     CC_PROPERTY(bool, m_useAudioScale, UseAudioScale); // 0x254
-    CC_PROPERTY_READONLY(bool, m_isSleeping, IsSleeping); // 0x255
-    CC_PROPERTY(float, m_startRotation, StartRotation); // 0x258
-    CC_PROPERTY(float, m_startScaleX, StartScaleX); // 0x25c
-    CC_PROPERTY(float, m_startScaleY, StartScaleY); // 0x260
-    CC_PROPERTY(bool, m_shouldHide, ShouldHide); // 0x264*/
+    CC_PROPERTY_READONLY(bool, m_isSleeping, IsSleeping); // 0x255*/
+    CC_SYNTHESIZE(float, m_startRotation, StartRotation); // 0x258
+    CC_SYNTHESIZE(float, m_startScaleX, StartScaleX); // 0x25c
+    CC_SYNTHESIZE(float, m_startScaleY, StartScaleY); // 0x260
+    /*CC_PROPERTY(bool, m_shouldHide, ShouldHide); // 0x264*/
     CC_SYNTHESIZE_READONLY(float, m_spawnXPos, SpawnXPos); // 0x268
     /*CC_PROPERTY_READONLY(bool, m_isInvisible, IsInvisible); // 0x26c*/
     CC_SYNTHESIZE(float, m_enterAngle, EnterAngle); // 0x270
     CC_SYNTHESIZE(int, m_enterEffect, EnterEffect); // 0x274
-    /*CC_PROPERTY(cocos2d::ccColor3B, m_tintColor, TintColor); // 0x278
-    CC_PROPERTY(float, m_tintDuration, TintDuration); // 0x27c
-    CC_PROPERTY(bool, m_tintGround, TintGround); // 0x280*/
+    CC_SYNTHESIZE(cocos2d::ccColor3B, m_tintColor, TintColor); // 0x278
+    CC_SYNTHESIZE(float, m_tintDuration, TintDuration); // 0x27c
+    /*CC_PROPERTY(bool, m_tintGround, TintGround); // 0x280*/
     CC_SYNTHESIZE(int, m_objectKey, ObjectKey); // 0x284
     /*CC_PROPERTY(bool, m_dontTransform, DontTransform); // 0x288
     CC_PROPERTY(bool, m_dontFade, DontFade); // 0x289

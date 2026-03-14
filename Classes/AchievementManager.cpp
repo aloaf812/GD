@@ -6,7 +6,7 @@ USING_NS_CC;
 
 AchievementManager::AchievementManager()
 {
-	this->m_achDict = nullptr;                                                    
+	this->m_allAchievements = nullptr;
     // (this_00->data).offset_0x4 = 0;
     // (this_00->data).offset_0x8 = (CCObject *)0x0;
 	this->m_dontNotifyAch = false;
@@ -26,13 +26,13 @@ AchievementManager* AchievementManager::sharedState()
 
 bool AchievementManager::init()
 {
-	m_reportedAchDict = CCDictionary::create();
-    m_reportedAchDict->retain();
+	m_reportedAchievements = CCDictionary::create();
+	m_reportedAchievements->retain();
     // todo: add CCContentManager and fix this fr
     // CCContentManager* pContentManager = CCContentManager::sharedManager();
 	// m_achDict = pContentManager->addDict("AchievementsDesc.plist", true);
-	m_achDict = CCDictionary::createWithContentsOfFile("AchievementsDesc.plist");
-    m_achDict->retain();
+	m_allAchievements = CCDictionary::createWithContentsOfFile("AchievementsDesc.plist");
+	m_allAchievements->retain();
 	return true;
 }
 
@@ -41,10 +41,10 @@ void AchievementManager::notifyAchievementWithID(char const* achID)
     // houston, we have a problem.
     CCLOG("notifying achievement %s", achID);
 	if (this->m_dontNotifyAch == false) {
-		if (m_achDict->objectForKey(achID) != nullptr) {
+		if (m_allAchievements->objectForKey(achID) != nullptr) {
 			CCDictionary* tempDict =
 				dynamic_cast<CCDictionary*>(
-				m_achDict->objectForKey(achID)
+				m_allAchievements->objectForKey(achID)
 				);
 			const char* title = tempDict->valueForKey("title")->getCString();
             CCLOG(title);

@@ -7,6 +7,7 @@
 class OptionsLayer : public GJDropDownLayer {
 public:
     static OptionsLayer* create();
+	void customSetup();
 };
 
 #endif

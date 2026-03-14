@@ -16,3 +16,8 @@ OptionsLayer* OptionsLayer::create()
         return NULL;
     }
 }
+
+void OptionsLayer::customSetup()
+{
+
+}

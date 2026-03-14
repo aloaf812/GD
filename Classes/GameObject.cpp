@@ -94,18 +94,17 @@ bool GameObject::init(const char *spriteName) {
     this->m_glowOpacityMod = 1.0f;
     this->m_enterEffect = 0;
     this->m_frame = spriteName;
-    //this->m_shouldSpawn = false;
-    this->unk_0x1d4 = 0; // this + 0x138
-    this->unk_0x1d8 = 0; // this + 0x13c
-    // sub_3A2FE8(v9, a2, &v8);
-    /*this->m_scaleModX = 1;
+    this->m_shouldSpawn = false;
+    // this->unk_0x1d4 = 0; // this + 0x138
+    // this->unk_0x1d8 = 0; // this + 0x13c
+    this->m_scaleModX = 1;
     this->m_scaleModY = 1;
     this->m_startScaleX = 1;
     this->m_startScaleY = 1;
     //  this->m_ID = dword_4B6E6C;
-    this->m_startRotation = 0;
+    this->m_startRotation = 0.0f;
     this->m_tintColor = ccc3(255, 255, 255);
-    this->m_tintDuration = 0.5;*/
+    this->m_tintDuration = 0.5f;
     this->setScaleX(1.0f);
     this->setScaleY(1.0f);
     //this->m_isActive = false;

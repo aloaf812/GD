@@ -4,7 +4,6 @@
 #define _PLAY_LAYER_H
 
 #include "cocos2d.h"
-//#include "GJBaseGameLayer.h"
 #include "GJGameLevel.h"
 #include "LevelSettingsObject.h"
 #include "PlayerObject.h"
