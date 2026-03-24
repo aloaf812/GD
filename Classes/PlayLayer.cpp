@@ -727,6 +727,17 @@ void PlayLayer::checkCollisions(float dt)
 
 }
 
+void PlayLayer::recordAction(bool pressed)
+{
+	if (m_localLevel != false) {
+		if (pressed) {
+			field391_0x211 = true;
+			return;
+		}
+		field392_0x212 = true;
+	}
+}
+
 bool PlayLayer::isFlipping()
 {
 	if (m_flipValue == 0.0) {

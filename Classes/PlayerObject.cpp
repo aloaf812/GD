@@ -78,7 +78,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	this->m_isJumping = false;
 	this->m_yVelolcity = 0;
 	//this->field737_0x32c = 0;
-	//this->field709_0x30d = false;
+	this->field772_0x30d = false;
 	this->m_onGround = false;
 	this->m_isDead = false;
 	this->m_playerScale = 1.0;
@@ -112,13 +112,13 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 
 void PlayerObject::releaseButton(PlayerButton button)
 {
-	// THIS IS NOT HOW IT ACTUALLY WORKS
-	// just some "swizzle magic"
-
-	this->field772_0x30d = false;
-	this->field773_0x30e = false;
-
-
+	if (button == PlayerButton::Jump) {
+		if (m_isPlayLayer != false) {
+			PLAY_LAYER->recordAction(false);
+		}
+		this->field773_0x30e = false;
+		this->field729_0x312 = false;
+	}
 }
 
 void PlayerObject::lockPlayer()
@@ -214,10 +214,36 @@ void PlayerObject::resetObject()
 
 void PlayerObject::pushButton(PlayerButton button)
 {
-	// unfinished...
+	if ((m_isLocked == false) && (button == PlayerButton::Jump)) {
+		if (m_isPlayLayer != false) {
+			PLAY_LAYER->recordAction(true);
+		}
 
-	this->field772_0x30d = true;
-	this->field773_0x30e = true;
+		this->field773_0x30e = true;
+		this->field729_0x312 = true;
+		if (m_rollMode == false) {
+			if (m_touchedRing != nullptr) {
+				//this->ringJump();
+				return;
+			}
+			if (isFlying()) {
+				return;
+			}
+
+			if (field773_0x30e == false) {
+				return;
+			}
+		}
+		else if (m_touchedRing != nullptr) {
+			//this->ringJump();
+			return;
+		}
+
+		if (field772_0x30d != false) {
+			this->updateJump(0.0f);
+			return;
+		}
+	}
 }
 
 void PlayerObject::playerDestroyed()
@@ -285,167 +311,75 @@ void PlayerObject::updateJump(float dt)
 {
 	double gravity = this->m_gravity;
 	double gravity2;
-	if ((this->m_rollMode != false) || (isFlying())) {
+	if ((this->m_rollMode != false) || (isFlying()))
 		gravity2 = 0.958199;
-	}
-	else {
+	else
 		gravity2 = gravity;
-	}
-	//fVar7 = 0.8f;
-	float fVar7;
+
+	float pScale;
 	bool isPlayerBig = this->m_playerScale == 1.0;
-	if (isPlayerBig) {
-		fVar7 = 1.0f;
-	}
-	if (!isPlayerBig) {
-		fVar7 = 0.8f;
-	}
-	if (isFlying()) {
-		/*if (this->m_playerScale != 1.0) {
-		fVar7 = 0.85;
-		}
-		if (this->m_flyMode == false) {
-		if ((this->field777_0x312 != false) && (this->field773_0x30e != false)) {
-		this->field777_0x312 = false;
-		fVar5 = 8.0;
-		if (this->m_playerScale == 1.0) {
-		fVar5 = 7.0;
-		}
-		iVar3 = flipMod(this);
-		*(double *)&this->field_0x328 = (double)(fVar5 * (float)(longlong)iVar3 * fVar7);
-		playBurstEffect(this);
-		}
-		iVar3 = playerIsFalling(this);
-		dVar6 = *(double *)&this->field_0x328;
-		fVar5 = 1.2;
-		if (iVar3 != 0) {
-		fVar5 = 0.8;
-		}
-		iVar3 = flipMod(this);
-		fVar5 = fVar8 * in_r1 * (float)(longlong)iVar3 * fVar5 * 0.5;
-		}
-		else {
-		if (this->field773_0x30e == false) {
-		iVar3 = playerIsFalling(this);
-		fVar9 = 0.8;
-		if (iVar3 == 0) {
-		fVar9 = 1.2;
-		}
-		}
-		else {
-		fVar9 = -1.0;
-		}
-		if ((this->field773_0x30e == false) || (iVar3 = playerIsFalling(this), iVar3 == 0)) {
-		fVar5 = 0.4;
-		}
-		else {
-		fVar5 = 0.5;
-		}
-		dVar6 = *(double *)&this->field_0x328;
-		iVar3 = flipMod(this);
-		fVar5 = fVar8 * in_r1 * (float)(longlong)iVar3 * fVar9 * fVar5;
-		}
-		dVar6 = dVar6 - (double)(fVar5 / fVar7);
-		*(double *)&this->field_0x328 = dVar6;
-		if (this->m_gravityFlipped == false) {
-		if ((int)((uint)(dVar6 < (double)(-6.4 / fVar7)) << 0x1f) < 0) {
-		dVar6 = (double)(-6.4 / fVar7);
-		}
-		fVar8 = 8.0;
-		}
-		else {
-		if ((int)((uint)(dVar6 < (double)(-8.0 / fVar7)) << 0x1f) < 0) {
-		dVar6 = (double)(-8.0 / fVar7);
-		}
-		fVar8 = 6.4;
-		}
-		cVar3 = this->field773_0x30e;
-		if ((double)(fVar8 / fVar7) < dVar6) {
-		dVar6 = (double)(fVar8 / fVar7);
-		}
-		*(double *)&this->field_0x328 = dVar6;*/
-	}
-	else {
-		float fVar5 = 0.6f;
+	if (isPlayerBig)
+		pScale = 1.0f;
+	else
+		pScale = 0.8f;
+
+	if (!isFlying())
+	{
+		float fVar5 = 0.6;
 		if (this->m_rollMode == false) {
-			fVar5 = 1.0f;
+			fVar5 = 1.0;
 		}
-		if ((this->field773_0x30e != false) && (this->field772_0x30d != false)) {
-			this->m_onGround = false;
-			// this->field772_0x30d = false;
-			// this->field777_0x312 = false;
+
+		if ((field773_0x30e != false) && (field772_0x30d != false)) {
 			this->m_isJumping = true;
-			// this->field775_0x310 = true;
-			this->m_yVelolcity = m_yStart * flipMod() * fVar7;
-			//uVar4 = FUN_0019d1c8();
-			//*(undefined4 *)&this->field_0x320 = uVar4;
-			//this->incrementJumps();
-			if (m_rollMode != false) {
-				/*flipGravity(this,(bool)(this->m_gravityFlipped ^ 1),true);
-				this->field781_0x316 = false;
-				this->field773_0x30e = false;
-				*(double *)&this->field_0x328 = *(double *)&this->field_0x328 * 0.6000000238418579;
-				return;*/
-			}
-			this->runRotateAction();
-			return;
-		}
-		if (m_isJumping) {
-			/*dVar6 = this->m_yVelolcity;
-			iVar3 = flipMod(this);
-			this->m_yVelolcity = dVar6 - (double)(fVar8 * in_r1 * (float)(longlong)iVar3 * fVar5);
-			iVar3 = playerIsFalling(this);
-			if (iVar3 == 0) {
+			this->m_onGround = false;
+			this->field772_0x30d = false;
+			this->field729_0x312 = false;
+
+			this->m_yVelolcity = m_yStart * flipMod() * pScale;
+			this->incrementJumps();
+			if (this->m_rollMode != false) {
+				/*flipGravity(this, (bool)(this->m_gravityFlipped ^ 1), true);
+				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&this->m_yVelocity + 4)
+					, 0x40000000, 0x3fe33333);
+				*pdVar8 = dVar11;
+				this->field_0x316 = 0;
+				this->field765_0x30e = false;*/
 				return;
 			}
-			this->m_isJumping = false;
-			this->field726_0x30f = true;
-			goto LAB_0019f658;
-		}
-		iVar3 = playerIsFalling(this);
-		if (iVar3 != 0) {
-			this->field724_0x30d = false;
-		}
-		dVar6 = this->m_yVelolcity;
-		iVar3 = flipMod(this);
-		dVar6 = dVar6 - (double)(fVar8 * in_r1 * (float)(longlong)iVar3 * fVar5);
-		this->m_yVelolcity = dVar6;
-		if (this->m_gravityFlipped == false) {
-			if ((int)((uint)(dVar6 < -15.0) << 0x1f) < 0) {
-				dVar6 = -15.0;
-			}
-		}
-		else if (15.0 < dVar6) {
-			dVar6 = 15.0;
-		}
-		this->m_yVelolcity = dVar6;
-		iVar3 = playerIsFalling(this);
-		if (iVar3 == 0) {
+			runRotateAction();
 			return;
 		}
-		if ((this->m_rollMode == false) &&
-			(iVar2 = (CCAction *)cocos2d::CCNode::getActionByTag((CCNode *)this, 0),
-			iVar2 == (CCAction *)0x0)) {
-			runRotateAction(this);
+
+		if (this->m_isJumping != false) {
+			this->m_yVelolcity = m_yVelolcity - gravity2 * dt * flipMod() * fVar5;
+
+			if (playerIsFalling() == false)
+				return;
+
+			this->m_isJumping = false;
+			// this->field_0x30f = 1;
+			this->m_onGround = false;
+			return;
 		}
-		if (this->m_gravityFlipped == false) {
-			cVar3 = (int)((uint)(this->m_yVelolcity < -4.0) << 0x1f) < 0;
-		}
-		else {
-			cVar3 = 4.0 < this->m_yVelolcity;*/
+
+		if (playerIsFalling() != false) {
+			field772_0x30d = false;
 		}
 	}
 }
 
 void PlayerObject::updateTimeMod(float timeMod)
 {
+	/*if ((this->field723_0x30c == false) && (m_timeMod != timeMod)) {
+		PLAY_LAYER->playSpeedParticle(timeMod);
+	}*/
+
 	// add other code
 	this->m_timeMod = timeMod;
 	if (timeMod == 0.9f) {
 		this->m_yStart = 11.18;
-		//this->field704_0x2fc = 0x40265c2d;
 		this->m_gravity = 0.958199;
-		//this->field706_0x304 = 0x3feea991;
 	}
 	this->m_speed = 5.77;
 	// add other code
@@ -467,6 +401,24 @@ float PlayerObject::flipMod()
 	else {
 		return -1.0f;
 	}
+}
+
+void PlayerObject::incrementJumps()
+{
+	if (this->m_isPlayLayer != false) {
+		// PLAY_LAYER->incrementJumps();
+		this->m_hasJumped = true;
+	}
+}
+
+
+bool PlayerObject::playerIsFalling()
+{
+	double targetVel = m_gravity + m_gravity;
+	if (m_gravityFlipped != false) {
+		return targetVel < m_yVelolcity;
+	}
+	return m_yVelolcity < targetVel;
 }
 
 void PlayerObject::runRotateAction()

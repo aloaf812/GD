@@ -33,6 +33,11 @@ public:
 
 	void checkCollisions(float dt);
 
+	/*
+	@param pressed If the button is pressed or not
+	*/
+	void recordAction(bool pressed);
+
 	bool isFlipping();
 
     // tints
@@ -65,6 +70,8 @@ public:
 	void animateInRollGround(bool);
 	void animateOutRollGround(bool insant);
 	void animateOutRollGroundFinished();
+
+	void playSpeedParticle(float timeMod);
     
 	bool field279_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
@@ -73,11 +80,22 @@ public:
     cocos2d::CCSprite* m_background; // 0x13c
     
 	GJGroundLayer* m_ground; // 0x150
-	GJGroundLayer* m_ground2; // 0x198
-	GJGroundLayer* m_ground3; // 0x19c
 	bool m_rollGroundActive; // 0x161
 
+	cocos2d::CCArray* m_sections; // 0x164
+	cocos2d::CCArray* m_activeObjects; // 0x16c
+	cocos2d::CCArray* m_stateObjects; // 0x17c
+	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180
+	// AudioEffectsLayer* m_audioEffectsLayer // 0x18c
+	
+	GJGroundLayer* m_ground2; // 0x198
+	GJGroundLayer* m_ground3; // 0x19c
+
+	bool m_playerDead; // 0x1a8
 	bool field383_0x1a9; // 0x1a9
+	
+	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
+	bool m_showingHint; // 0x1d0
 	
 	cocos2d::CCNode* field_0x1e4;
 	cocos2d::CCSprite* field_0x1ec;
@@ -90,15 +108,9 @@ public:
 	float field449_0x200;
 	float field453_0x204;
 
-	cocos2d::CCArray* m_sections; // 0x164
-	cocos2d::CCArray* m_activeObjects; // 0x16c
-	cocos2d::CCArray* m_stateObjects; // 0x17c
-	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180
-	// AudioEffectsLayer* m_audioEffectsLayer // 0x18c
-	bool m_playerDead; // 0x1a8
-	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
-	bool m_showingHint; // 0x1d0
 	bool m_localLevel; // 0x210
+	bool field391_0x211; // 0x211
+	bool field392_0x212; // 0x212
 	// field373_0x220; // 0x220
     // field374_0x224; // 0x224
 	// bool field522_0x228; // 0x228
@@ -123,7 +135,7 @@ public:
     CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_bigActionContainer, BigActionContainer); // 0x26c
 	CC_SYNTHESIZE_READONLY(bool, m_cleanReset, CleanReset); // 0x270
     CC_SYNTHESIZE(cocos2d::CCPoint, m_startPos, StartPos) // 0x274
-    // 0x278*/
+    // 0x278
 	CC_SYNTHESIZE_READONLY(int, m_attempts, Attempts); // 0x27c
 	CC_SYNTHESIZE_READONLY(int, m_jumps, Jumps); // 0x280
 	CC_SYNTHESIZE_READONLY(bool, m_didJump, DidJump); // 0x284

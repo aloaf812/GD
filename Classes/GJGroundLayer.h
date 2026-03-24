@@ -21,11 +21,6 @@ public:
 	CC_SYNTHESIZE_READONLY(float, m_groundWidth, GroundWidth); // 0x110
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_line, Line); // 0x114
 	CC_SYNTHESIZE_READONLY(bool, m_isActive, IsActive); // 0x118
-
-	// THESE VARIABLES ARE WRONG
-    float m_repeatWidth;
-    int m_repeatCount;
-    cocos2d::CCArray* m_tiles;
 };
 
 #endif

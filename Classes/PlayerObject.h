@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "GameObject.h"
 
-// i dont get this one :/
 enum class PlayerButton {
 	None = 0,
 	Jump = 1
@@ -56,6 +55,8 @@ public:
 	virtual void setPosition(cocos2d::CCPoint const &position);
 
 	float flipMod();
+	void incrementJumps();
+	bool playerIsFalling();
 
 	void runRotateAction();
 	void runNormalRotation();
@@ -78,39 +79,18 @@ public:
 	double m_yStart; // 0x2f8
 	double m_gravity; // 0x300
 
-	CC_SYNTHESIZE_READONLY(bool, m_isLocked, IsLocked); // 0x3a6
-	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_lastGroundPos, LastGroundPos); // 0x3a8
-	CC_SYNTHESIZE(GameObject*, m_touchedRing, TouchedRing); // 0x3b0
-	CC_SYNTHESIZE(GameObject*, m_portalObject, PortalObject); // 0x3b4
-	CC_SYNTHESIZE_READONLY(bool, m_hasJumped, HasJumped); // 0x3b8
-	CC_SYNTHESIZE_READONLY(bool, m_hasRingJumped, HasRingJumped); // 0x3b9
-
-	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
-	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381
-	CC_SYNTHESIZE_READONLY(bool, m_rollMode, RollMode); // 0x382
-
-	CC_SYNTHESIZE_READONLY(bool, m_gravityFlipped, GravityFlipped); // 0x383
-	CC_SYNTHESIZE_READONLY(bool, m_isDead, IsDead); // 0x384
-	CC_SYNTHESIZE_READONLY(float, m_playerScale, PlayerScale); // 0x388
-	CC_SYNTHESIZE_READONLY(float, m_timeMod, TimeMod); // 0x38c
-	CC_SYNTHESIZE(cocos2d::CCPoint, m_lastPos, LastP) // 0x390
-	CC_SYNTHESIZE(cocos2d::CCPoint, m_portalPos, PortalP); // 0x398
-	CC_SYNTHESIZE(bool, m_onGround, OnGround); // 0x3a4
-	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5	
-	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
-	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor1, GlowColor1); // 0x3b8
-
-
 	bool field772_0x30d; // 0x30d
 	bool field773_0x30e; // 0x30e
 
+	bool field727_0x310; // 0x310
 	bool m_isPlayLayer; // 0x311
-
+	bool field729_0x312; // 0x312
+	bool field730_0x313; // 0x313; this one is quite odd since it goes completely unused, maybe there's a chance it's used in an older/newer gd version.
 	bool m_pGroundActive; // 0x314
 	bool m_pShipActive; // 0x315
+	bool field733_0x316; // 0x316
 
 	double m_yVelolcity; // 0x328
-
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 
@@ -118,6 +98,30 @@ public:
 	cocos2d::CCParticleSystemQuad* m_pGround; // 0x354
 	cocos2d::CCParticleSystemQuad* m_pShipGround; // 0x360
 	cocos2d::CCParticleSystemQuad* m_pBurstEffect; // 0x364
+
+	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
+	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381
+	CC_SYNTHESIZE_READONLY(bool, m_rollMode, RollMode); // 0x382
+	CC_SYNTHESIZE_READONLY(bool, m_gravityFlipped, GravityFlipped); // 0x383
+	CC_SYNTHESIZE_READONLY(bool, m_isDead, IsDead); // 0x384
+	CC_SYNTHESIZE_READONLY(float, m_playerScale, PlayerScale); // 0x388
+	CC_SYNTHESIZE_READONLY(float, m_timeMod, TimeMod); // 0x38c
+	CC_SYNTHESIZE(cocos2d::CCPoint, m_lastPos, LastP) // 0x390
+	CC_SYNTHESIZE(cocos2d::CCPoint, m_portalPos, PortalP); // 0x398
+	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
+	CC_SYNTHESIZE(bool, m_onGround, OnGround); // 0x3a4
+	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5	
+
+	CC_SYNTHESIZE_READONLY(bool, m_isLocked, IsLocked); // 0x3a6
+	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_lastGroundPos, LastGroundPos); // 0x3a8
+	CC_SYNTHESIZE(GameObject*, m_touchedRing, TouchedRing); // 0x3b0
+	CC_SYNTHESIZE(GameObject*, m_portalObject, PortalObject); // 0x3b4
+	CC_SYNTHESIZE_READONLY(bool, m_hasJumped, HasJumped); // 0x3b8
+	CC_SYNTHESIZE_READONLY(bool, m_hasRingJumped, HasRingJumped); // 0x3b9
+
+	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor1, GlowColor1); // 0x3ba
+	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor2, GlowColor2); // 0x3bd
+
 };
 
 #endif /* defined(__GeometryDash__PlayerObject__) */

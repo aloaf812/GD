@@ -94,15 +94,15 @@ void EditorUI::resetUI()
 	CCSprite* normalFrame;
 	CCSpriteFrame* frame;
 
-	normalFrame = dynamic_cast<CCSprite*>(m_deleteBtn->getNormalImage());
+	normalFrame = (CCSprite*)m_deleteBtn->getNormalImage();
 	frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("edit_deleteBtn_001.png");
 	normalFrame->setDisplayFrame(frame);
 
-	normalFrame = dynamic_cast<CCSprite*>(m_buildBtn->getNormalImage());
+	normalFrame = (CCSprite*)m_buildBtn->getNormalImage();
 	frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("edit_buildBtn_001.png");
 	normalFrame->setDisplayFrame(frame);
 
-	normalFrame = dynamic_cast<CCSprite*>(m_editBtn->getNormalImage());
+	normalFrame = (CCSprite*)m_editBtn->getNormalImage();
 	frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("edit_editBtn_001.png");
 	normalFrame->setDisplayFrame(frame);
 

@@ -97,7 +97,7 @@ void BoomScrollLayer::updatePages()
     if (!m_pages) return;
     const unsigned int totalPages = m_pages->count();
     for (unsigned int i = 0; i < totalPages; ++i) {
-        auto page = dynamic_cast<CCNode*>(m_pages->objectAtIndex(i));
+		CCNode* page = (CCNode*)m_pages->objectAtIndex(i);
         if (!page) continue;
         
         page->setPosition(CCPointZero);

@@ -9,8 +9,6 @@ GJGroundLayer::GJGroundLayer()
 	this->m_groundSprite = NULL;
 	this->m_line = NULL;
 	this->m_isActive = false;
-    m_tiles = nullptr;
-    m_repeatCount = 0;
 }
 
 GJGroundLayer* GJGroundLayer::create(int gID)
@@ -53,12 +51,6 @@ bool GJGroundLayer::init(int gID)
     float groundWidth = m_groundSprite->getTextureRect().size.width;
     float scaleFactor = getScaleX();
     m_groundWidth = groundWidth * scaleFactor;
-    
-    m_repeatCount = std::ceil(winSize.width / m_groundWidth) + 1.0f;
-    m_repeatWidth = m_groundWidth * m_repeatCount;
-    
-    m_tiles = CCArray::create();
-    m_tiles->retain();
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
