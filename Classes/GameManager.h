@@ -70,8 +70,7 @@ public:
     void syncPlatformAchievements();
     void followTwitter();
     void likeFacebook();
-    void firstLoad();
-    void rateGame();
+	void rateGame();
     void toggleFX();
     void toggleMusic();
 	void resetMusic();
@@ -79,13 +78,17 @@ public:
     std::string colorKey(int param_1, bool param_2);
 
 	virtual void setup();
-    virtual void dataLoaded(DS_Dictionary* param_1);
+	virtual void encodeDataTo(DS_Dictionary* dict);
+	virtual void dataLoaded(DS_Dictionary* dict);
+    virtual void firstLoad();
     /**
     @param col The number of the player color.
     @returns an RGB color in ccColor3B form corresponding to the player color #.
     */
     static cocos2d::ccColor3B colorForIdx(int col);
 
+
+	CC_SYNTHESIZE(bool, m_didSyncAchievements, DidSyncAchievements); // 0x110
 	CC_SYNTHESIZE(PlayLayer*, m_playLayer, PlayLayer); // 0x114
 	CC_SYNTHESIZE(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
 	CC_SYNTHESIZE(bool, m_mainMenuActive, MainMenuActive); // 0x11c
@@ -103,8 +106,8 @@ public:
 	CC_SYNTHESIZE(bool, m_didRateGame, DidRateGame); // 0x137
 	CC_SYNTHESIZE(bool, m_didLikeFacebook, DidLikeFacebook); // 0x138
 	CC_SYNTHESIZE(bool, m_didFollowTwitter, DidFollowTwitter); // 0x139
-	CC_SYNTHESIZE(bool, m_editMode, EditMode); // 0x13b
 	CC_SYNTHESIZE(bool, m_wasHigh, WasHigh); // 0x13a
+	CC_SYNTHESIZE(bool, m_editMode, EditMode); // 0x13b
 	CC_SYNTHESIZE(LastGameScene, m_lastScene, LastScene); // 0x13c
 	CC_SYNTHESIZE(LastGameScene, m_lastScene2, LastScene2); // 0x140
 	CC_SYNTHESIZE(bool, m_returnToSearch, ReturnToSearch); // 0x144
@@ -133,28 +136,27 @@ public:
 	CC_SYNTHESIZE(bool, m_clickedEditor, ClickedEditor); // 0x172
 	CC_SYNTHESIZE(bool, m_clickedName, ClickedName); // 0x173
 	CC_SYNTHESIZE(bool, m_clickedPractice, ClickedPractice); // 0x174
+
 	CC_SYNTHESIZE(bool, m_showedEditorGuide, ShowedEditorGuide); // 0x175
+	CC_SYNTHESIZE(bool, m_showedRateDiffDialog, ShowedRateDiffDialog); // 0x176
+	CC_SYNTHESIZE(bool, m_showedRateStarDialog, ShowedRateStarDialog); // 0x177
+	CC_SYNTHESIZE(bool, m_showedLowDetailDialog, ShowedLowDetailDialog); // 0x178
     
+	CC_SYNTHESIZE(cocos2d::ccColor3B, m_storedColor, StoredColor); // 0x180
+	CC_SYNTHESIZE(int, m_lastLevelID, LastLevelID); // 0x184
 	CC_SYNTHESIZE_READONLY(int, m_loadedBGIdx, LoadedBGIdx); // 0x188
 	CC_SYNTHESIZE_READONLY(int, m_loadedGIdx, LoadedGIdx); // 0x18c
 	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts); // 0x190
+	CC_SYNTHESIZE_READONLY(bool, m_fullUnlocked, FullUnlocked); // 0x194
 protected:
     // dictionaries
     cocos2d::CCDictionary* m_valueKeeper;
     bool m_enableTutorial;
-    bool m_didSyncAchievements;
     bool m_hasRatedGame;
-    int m_lastLevelID;
     // unknown values
     bool offset_0x5;
     bool offset_0xf;
-    // social media
-    bool m_clickedFacebook;
-    bool m_clickedTwitter;
     // i can't figure this out: bool offset_0x6;
-    bool m_showedRateDiffDialog;
-    bool m_showedRateStarDialog;
-    bool m_showedLowDetailDialog;
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

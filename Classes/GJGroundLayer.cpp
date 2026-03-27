@@ -46,11 +46,15 @@ bool GJGroundLayer::init(int gID)
 	m_groundSprite->setColor(ccc3(0, 102, 255));
 	ccBlendFunc gBlendFunc = { GL_ONE, GL_ZERO };
 	m_groundSprite->setBlendFunc(gBlendFunc);
-    m_groundSprite->setPosition({0.0f, 90.0f});
-    
-    float groundWidth = m_groundSprite->getTextureRect().size.width;
-    float scaleFactor = getScaleX();
-    m_groundWidth = groundWidth * scaleFactor;
+    m_groundSprite->setPosition(ccp(0.0f, 90.0f));
+
+	m_line = CCSprite::createWithSpriteFrameName("floorLine_001.png");
+	this->addChild(m_line, 3);
+	m_line->setPosition(ccp(winSize.width * 0.5f, 90.5f));
+	m_line->setAnchorPoint(ccp(0.5f, 1.0f));
+	// m_line->setBlendFunc(0x302, 1);
+	m_line->setTag(1);
+	// m_line->setColor(ccc3(255, 255, 255));
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));

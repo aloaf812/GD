@@ -6,7 +6,8 @@
 #include <algorithm>
 
 class LevelPage : public cocos2d::CCLayer {
-    GJGameLevel* m_level;
+    GJGameLevel* m_level; // 0x110
+	cocos2d::CCMenu* field_0x114; // 0x114
 public:
     static LevelPage* create(GJGameLevel* level);
     bool init(GJGameLevel* level);

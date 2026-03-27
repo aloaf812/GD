@@ -41,13 +41,13 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
     int playerIdx;
     int shipIdx;
     
+    playerIdx = player;
+    if (player <= 0) playerIdx = 1;
     if (player >= 38) playerIdx = 38;
-    else playerIdx = player;
-    if (player <=0) playerIdx = 1;
     
+    shipIdx = ship;
     if (ship >= 14) shipIdx = 14;
-    else shipIdx = ship;
-    if (ship <=0) shipIdx = 1;
+    if (ship <= 0) shipIdx = 1;
     
     char const* frameFile = CCString::createWithFormat("player_%02d_001.png", playerIdx)->getCString();
     char const* frameFile2 = CCString::createWithFormat("player_%02d_2_001.png", playerIdx)->getCString();

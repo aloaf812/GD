@@ -20,8 +20,8 @@ GameManager::GameManager()
     this->m_fxEnabled = false;
     this->m_hasRatedGame = false;
 	this->m_performanceMode = false;
-    this->m_clickedFacebook = false;
-    this->m_clickedTwitter = false;
+	this->m_didLikeFacebook = false;
+	this->m_didFollowTwitter = false;
     // this->m_lastScene = 0;
     this->m_playerFrame = 0;
     this->m_playerShip = 0;
@@ -83,7 +83,7 @@ void GameManager::applicationWillEnterForeground()
         GameManager* pGameManager = sharedState();
         pGameManager->reportAchievementWithID("geometry.ach.rate", 100, false);
     }
-    if (this->m_clickedFacebook != false) {
+	if (this->m_didLikeFacebook != false) {
         GameManager* pGameManager = sharedState();
         pGameManager->reportAchievementWithID("geometry.ach.facebook", 100, false);
     }
@@ -98,6 +98,11 @@ void GameManager::setup()
 {
 	// field182_0xec = 1;
 	// GManager::load();
+}
+
+void GameManager::encodeDataTo(DS_Dictionary* dict)
+{
+	// temporary stub
 }
 
 void GameManager::dataLoaded(DS_Dictionary* dict)
@@ -286,7 +291,7 @@ void GameManager::likeFacebook()
     if (GameToolbox::doWeHaveInternet()) {
         CCApplication* pApplication = CCApplication::sharedApplication();
         pApplication->openURL("https://www.facebook.com/geometrydash");
-        this->m_clickedFacebook = true;
+		this->m_didLikeFacebook = true;
     }
 }
 
@@ -295,7 +300,7 @@ void GameManager::followTwitter()
     if (GameToolbox::doWeHaveInternet()) {
         CCApplication* pApplication = CCApplication::sharedApplication();
         pApplication->openURL("https://twitter.com/robtopgames");
-        this->m_clickedTwitter = true;
+		this->m_didFollowTwitter = true;
     }
 }
 

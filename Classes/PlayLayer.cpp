@@ -608,6 +608,11 @@ void PlayLayer::tintColorObjects(ccColor3B color, float duration)
 
 }
 
+ccColor3B PlayLayer::getLineColor()
+{
+	return m_ground->getLine()->getColor();
+}
+
 // toggles
 void PlayLayer::toggleGlitter(bool visible)
 {
@@ -673,6 +678,11 @@ void PlayLayer::resume()
 	}
 	SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 	return;
+}
+
+void PlayLayer::resumeAndRestart()
+{
+	// TODO
 }
 
 void PlayLayer::updateVisibility()
@@ -744,4 +754,32 @@ bool PlayLayer::isFlipping()
 		return false;
 	}
 	return m_flipValue != 1.0;
+}
+
+void PlayLayer::moveCameraToPos(cocos2d::CCPoint pos)
+{
+	cameraMoveX(pos.y, 1.2f, 1.8f);
+	cameraMoveY(pos.x, 1.2f, 1.8f);
+}
+
+void PlayLayer::cameraMoveX(float value, float duration, float rate)
+{
+	this->stopActionByTag(10);
+	// field_0x1aa = true;
+	CCEaseInOut* ease = CCEaseInOut::create(
+		CCActionTween::create(duration, "cTX", m_cameraPos.x, value),
+		rate);
+	ease->setTag(10);
+	this->runAction(ease);
+}
+
+void PlayLayer::cameraMoveY(float value, float duration, float rate)
+{
+	this->stopActionByTag(11);
+	// field_0x1ab = true;
+	CCEaseInOut* ease = CCEaseInOut::create(
+		CCActionTween::create(duration, "cTY", m_cameraPos.y, value),
+		rate);
+	ease->setTag(11);
+	this->runAction(ease);
 }

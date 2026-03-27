@@ -137,6 +137,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BoomListView.cpp" />
     <ClCompile Include="..\Classes\BoomScrollLayer.cpp" />
+    <ClCompile Include="..\Classes\ColorAction.cpp" />
+    <ClCompile Include="..\Classes\ColoredSection.cpp" />
     <ClCompile Include="..\Classes\CreatorLayer.cpp" />
     <ClCompile Include="..\Classes\EditorUI.cpp" />
     <ClCompile Include="..\Classes\EndLevelLayer.cpp" />
@@ -196,6 +198,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\AppMacros.h" />
     <ClInclude Include="..\Classes\BoomListView.h" />
     <ClInclude Include="..\Classes\BoomScrollLayer.h" />
+    <ClInclude Include="..\Classes\ColorAction.h" />
+    <ClInclude Include="..\Classes\ColoredSection.h" />
     <ClInclude Include="..\Classes\CreatorLayer.h" />
     <ClInclude Include="..\Classes\EditorUI.h" />
     <ClInclude Include="..\Classes\EndLevelLayer.h" />

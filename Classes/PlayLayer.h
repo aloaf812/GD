@@ -17,8 +17,10 @@ public:
     static cocos2d::CCScene* scene(GJGameLevel* level);
     static PlayLayer* create(GJGameLevel* level);
     bool init(GJGameLevel* level);
+
     void onQuit();
 	void resume();
+	void resumeAndRestart();
 
 	void addToSection(GameObject* obj);
     void createObjectsFromSetup(std::string setup);
@@ -47,10 +49,12 @@ public:
     void tintObjects(cocos2d::ccColor3B color, float duration);
     void tintColorObjects(cocos2d::ccColor3B color, float duration);
 
+	cocos2d::ccColor3B getLineColor();
+
 	// toggles
-	virtual void toggleGlitter(bool visible);
-	virtual void togglePracticeMode(bool practice);
-	virtual void toggleProgressbar();
+	void toggleGlitter(bool visible);
+	void togglePracticeMode(bool practice);
+	void toggleProgressbar();
     
     //void registerStateObject(GameObject* object);
     
@@ -61,6 +65,7 @@ public:
     void updateProgressbar();
     void updateEffectPositions();
 	void updateVisibility();
+	void updateLevelColors();
 
 	// animates
 	void animateInFlyGround(bool);
@@ -72,6 +77,10 @@ public:
 	void animateOutRollGroundFinished();
 
 	void playSpeedParticle(float timeMod);
+
+	void moveCameraToPos(cocos2d::CCPoint pos);
+	void cameraMoveX(float value, float duration, float rate);
+	void cameraMoveY(float value, float duration, float rate);
     
 	bool field279_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
@@ -117,9 +126,9 @@ public:
     CC_SYNTHESIZE(bool, m_playbackMode, PlaybackMode); // 0x229
 	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_realPlayerPos, RealPlayerPos); // 0x22c
 	CC_SYNTHESIZE_READONLY(GameObject*, m_cameraPortal, CameraPortal); // 0x234
-    /*CC_PROPERTY_READONLY(bool, m_isFlipped, IsFlipped); // 0x238*/
+    CC_SYNTHESIZE_READONLY(bool, m_isFlipped, IsFlipped); // 0x238
 	CC_SYNTHESIZE_READONLY(float, m_flipValue, FlipValue); // 0x23c
-    /*CC_PROPERTY_READONLY(int, m_GEM, GEM); // 0x240*/
+    CC_SYNTHESIZE_READONLY(int, m_GEM, GEM); // 0x240
 	CC_SYNTHESIZE_READONLY(UILayer*, m_uiLayer, UILayer); // 0x244
     CC_SYNTHESIZE_READONLY(PlayerObject*, m_player, Player); // 0x248
 	CC_SYNTHESIZE_READONLY(GJGameLevel*, m_level, Level); // 0x24c
@@ -133,7 +142,7 @@ public:
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSpriteBatchNode*, m_batchNodeAdd, BatchNodeAdd); // 0x264
 	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x268
     CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_bigActionContainer, BigActionContainer); // 0x26c
-	CC_SYNTHESIZE_READONLY(bool, m_cleanReset, CleanReset); // 0x270
+	CC_SYNTHESIZE(bool, m_cleanReset, CleanReset); // 0x270
     CC_SYNTHESIZE(cocos2d::CCPoint, m_startPos, StartPos) // 0x274
     // 0x278
 	CC_SYNTHESIZE_READONLY(int, m_attempts, Attempts); // 0x27c
@@ -143,7 +152,7 @@ public:
 	CC_SYNTHESIZE(bool, m_showingEndLayer, ShowingEndLayer); // 0x28c
 	CC_SYNTHESIZE(bool, m_endTriggered, EndTriggered); // 0x28d
 	CC_SYNTHESIZE(bool, m_resetQueued, ResetQueued); // 0x28e
-    // CC_PROPERTY(int, m_lastRunPercent, LastRunPercent); // 0x290
+    CC_SYNTHESIZE(int, m_lastRunPercent, LastRunPercent); // 0x290
 	CC_SYNTHESIZE_READONLY(bool, m_didAwardStars, DidAwardStars); // 0x294
     /*CC_PROPERTY_READONLY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x294
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeBGColorAction, ActiveBGColorAction); // 0x298
@@ -152,7 +161,7 @@ public:
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeObjColorAction, ActiveObjColorAction); // 0x2a4
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeTintObjColorAction, ActiveTintObjColorAction); // 0x2a8
     CC_PROPERTY(bool, m_shouldRestartAfterStopped, ShouldRestartAfterStopped); // 0x2ac*/
-	CC_SYNTHESIZE(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2ad
+	CC_SYNTHESIZE_READONLY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2ad
 };
 
 #endif

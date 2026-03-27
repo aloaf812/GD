@@ -60,3 +60,19 @@ void PauseLayer::onQuit(CCObject* sender)
 	PLAY_LAYER->onQuit();
 	GameSoundManager::sharedManager()->playEffect("quitSound_01.ogg", 1.0f, 0.0f, 0.7f);
 }
+
+void PauseLayer::onFX(CCObject* sender)
+{
+	GameManager::sharedState()->toggleFX();
+}
+
+void PauseLayer::onMusic(CCObject* sender)
+{
+	GameManager::sharedState()->toggleMusic();
+}
+
+void PauseLayer::onRestart(CCObject* sender)
+{
+	PLAY_LAYER->resumeAndRestart();
+	CCNode::removeMeAndCleanup();
+}
