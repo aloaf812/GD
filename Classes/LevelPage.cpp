@@ -25,6 +25,7 @@ LevelPage* LevelPage::create(GJGameLevel* level)
     }
 }
 
+// this function is genuinely written so bad it makes ObjectToolbox::init look good
 bool LevelPage::init(GJGameLevel* level)
 {
     if (!CCLayer::init())
@@ -93,45 +94,54 @@ bool LevelPage::init(GJGameLevel* level)
         
     }
     
-    
-    auto createProgBar = [&](int percent, CCPoint center, CCPoint offsetY, bool practice) -> CCSprite* {
-        auto bg = CCSprite::create("GJ_progressBar_001.png");
-        bg->setColor({0, 0, 0});
-        bg->setOpacity(125);
-        bg->setPosition(center + offsetY);
-        this->addChild(bg, 3);
-        
-        auto fill = CCSprite::create("GJ_progressBar_001.png");
-        fill->setScaleX(0.992f);
-        fill->setScaleY(0.86f);
-        float temp = (bg->getContentSize().width - (fill->getContentSize().width * fill->getScaleX() / 2));
-        fill->setPosition({temp, bg->getContentSize().height / 2});
-        fill->setAnchorPoint({0.0f, 0.5f});
-        
-        if (!practice) fill->setColor(ccGREEN);
-        else fill->setColor({0, 255, 255});
-        
-        float fullWidth = fill->getContentSize().width * fill->getScaleX();
-        float actualWidth = fullWidth * (percent / 100.0f);
-        fill->setTextureRect(CCRect(0, 0, actualWidth, fill->getContentSize().height));
-        bg->addChild(fill);
+	CCSprite* normalBar = CCSprite::create("GJ_progressBar_001.png");
+	normalBar->setColor(ccc3(0, 0, 0));
+	normalBar->setOpacity(125);
+	normalBar->setPosition(winSize / 2 + ccp(0.0f, -30.0f));
+	this->addChild(normalBar, 3);
 
-        return bg;
-    };
-    
-    auto normalBar = createProgBar(10, winSize / 2, {0, -30}, false);
-    auto practiceBar = createProgBar(56, winSize / 2, {0, -80}, true);
-    
-    auto createProgText = [&](char const* text, CCNode* target) {
-        auto lbl = CCLabelBMFont::create(text, "bigFont.fnt");
-        lbl->setScale(0.5f);
-        lbl->setPosition(target->getPosition());
-        this->addChild(lbl, 4);
-    
-    };
-    
-    createProgText(CCString::createWithFormat("%i%%", 43)->getCString(), normalBar);
-    createProgText(CCString::createWithFormat("%i%%", 56)->getCString(), practiceBar);
+	auto normalFill = CCSprite::create("GJ_progressBar_001.png");
+	normalFill->setScaleX(0.992f);
+	normalFill->setScaleY(0.86f);
+	normalFill->setPosition(ccp(normalBar->getContentSize().width - (normalFill->getContentSize().width * normalFill->getScaleX() / 2), normalBar->getContentSize().height / 2));
+	normalFill->setAnchorPoint(ccp(0.0f, 0.5f));
+	normalFill->setColor(ccGREEN);
+
+	float fullWidth1 = normalFill->getContentSize().width * normalFill->getScaleX();
+	// tmp percent idk if its right lol
+	float actualWidth1 = fullWidth1 * (46 / 100.0f);
+	normalFill->setTextureRect(CCRect(0, 0, actualWidth1, normalFill->getContentSize().height));
+	normalBar->addChild(normalFill);
+
+	CCSprite* practiceBar = CCSprite::create("GJ_progressBar_001.png");
+	practiceBar->setColor(ccc3(0, 0, 0));
+	practiceBar->setOpacity(125);
+	practiceBar->setPosition(winSize / 2 + ccp(0.0f, -80.0f));
+	this->addChild(practiceBar, 3);
+
+	auto practiceFill = CCSprite::create("GJ_progressBar_001.png");
+	practiceFill->setScaleX(0.992f);
+	practiceFill->setScaleY(0.86f);
+	practiceFill->setPosition(ccp(practiceBar->getContentSize().width - (practiceFill->getContentSize().width * practiceFill->getScaleX() / 2), practiceBar->getContentSize().height / 2));
+	practiceFill->setAnchorPoint(ccp(0.0f, 0.5f));
+	practiceFill->setColor(ccc3(0, 255, 255));
+
+	float fullWidth2 = practiceFill->getContentSize().width * practiceFill->getScaleX();
+	// tmp percent idk if its right lol
+	float actualWidth2 = fullWidth2 * (56 / 100.0f);
+	practiceFill->setTextureRect(CCRect(0, 0, actualWidth2, practiceFill->getContentSize().height));
+	practiceBar->addChild(practiceFill);
+
+
+	CCLabelBMFont* lbl1 = CCLabelBMFont::create(CCString::createWithFormat("%i%%", 43)->getCString(), "bigFont.fnt");
+	lbl1->setScale(0.5f);
+	lbl1->setPosition(normalBar->getPosition());
+	this->addChild(lbl1, 4);
+
+	CCLabelBMFont* lbl2 = CCLabelBMFont::create(CCString::createWithFormat("%i%%", 56)->getCString(), "bigFont.fnt");
+	lbl2->setScale(0.5f);
+	lbl2->setPosition(practiceBar->getPosition());
+	this->addChild(lbl2, 4);
     
     auto normalLabel = CCLabelBMFont::create("Normal Mode", "bigFont.fnt");
     normalLabel->setScale(0.5f);

@@ -9,6 +9,7 @@
 #include "PlayerObject.h"
 #include "GJGroundLayer.h"
 #include "UILayer.h"
+#include "ColorAction.h"
 //#include "GameObject.h"
 
 class PlayLayer : public cocos2d::CCLayer {
@@ -50,6 +51,7 @@ public:
     void tintColorObjects(cocos2d::ccColor3B color, float duration);
 
 	cocos2d::ccColor3B getLineColor();
+	cocos2d::ccColor3B getGColor();
 
 	// toggles
 	void toggleGlitter(bool visible);
@@ -110,7 +112,7 @@ public:
 	cocos2d::CCSprite* field_0x1ec;
 	cocos2d::CCSprite* field_0x1f4;
 	cocos2d::CCSprite* field_0x1e8;
-	cocos2d::CCSprite* field_0x1f0;
+	cocos2d::CCSprite* m_gColorRef; // 0x1f0
 
 	cocos2d::CCSprite* m_progressBar; // 0x1f8
 	cocos2d::CCSprite* m_progressFill; // 0x1fc
@@ -155,9 +157,10 @@ public:
     CC_SYNTHESIZE(int, m_lastRunPercent, LastRunPercent); // 0x290
 	CC_SYNTHESIZE_READONLY(bool, m_didAwardStars, DidAwardStars); // 0x294
     /*CC_PROPERTY_READONLY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x294
-    CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeBGColorAction, ActiveBGColorAction); // 0x298
-    CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeGColorAction, ActiveGColorAction); // 0x29c
-    CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeLineColorAction, ActiveLineColorAction); // 0x2a0
+    CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeBGColorAction, ActiveBGColorAction); // 0x298*/
+    CC_SYNTHESIZE_READONLY(ColorAction*, m_activeGColorAction, ActiveGColorAction); // 0x29c
+	virtual void setActiveGColorAction(ColorAction* action);
+    /*CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeLineColorAction, ActiveLineColorAction); // 0x2a0
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeObjColorAction, ActiveObjColorAction); // 0x2a4
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeTintObjColorAction, ActiveTintObjColorAction); // 0x2a8
     CC_PROPERTY(bool, m_shouldRestartAfterStopped, ShouldRestartAfterStopped); // 0x2ac*/

@@ -61,7 +61,7 @@ bool GJGroundLayer::init(int gID)
     leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, 90.0f));
     this->addChild(leftShadow, 3);
     leftShadow->setOpacity(100);
-    leftShadow->setColor({150, 150, 150});
+    leftShadow->setColor(ccc3(150, 150, 150));
     leftShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     leftShadow->setTag(0);
     

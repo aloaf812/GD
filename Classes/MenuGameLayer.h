@@ -10,6 +10,7 @@ public:
 	CREATE_FUNC(MenuGameLayer);
     bool init();
     void update(float delta);
+	void tryJump();
 
 protected:
 	// these undocumented variables aren't actually in the game's code

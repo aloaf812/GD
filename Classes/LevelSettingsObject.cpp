@@ -31,22 +31,23 @@ LevelSettingsObject* LevelSettingsObject::objectFromString(std::string str) {
     if (!dict)
         return obj;
     
-    auto color = [&](const char* r, const char* g, const char* b) {
-        return ccColor3B{
-            (GLubyte)dict->valueForKey(r)->intValue(),
-            (GLubyte)dict->valueForKey(g)->intValue(),
-            (GLubyte)dict->valueForKey(b)->intValue()
-        };
-    };
-    
     // big credits to https://wyliemaster.github.io/gddocs/#/resources/client/level-components/level-start
-    obj->setStartBGColor(color("kS1", "kS2", "kS3")); // bg color
-    obj->setStartGColor(color("kS4", "kS5", "kS6")); // ground color
+    obj->setStartBGColor(ccc3(
+		dict->valueForKey("kS1")->intValue(), 
+		dict->valueForKey("kS2")->intValue(),
+		dict->valueForKey("kS3")->intValue())); // bg color
+    obj->setStartGColor(ccc3(
+		dict->valueForKey("kS4")->intValue(), 
+		dict->valueForKey("kS5")->intValue(),
+		dict->valueForKey("kS6")->intValue())); // ground color
     
     obj->setAudioTrack(dict->valueForKey("kA1")->intValue()); // audio track
     
     if (dict->objectForKey("kS7")) {
-        obj->setStartLineColor(color("kS7", "kS8", "kS9")); // line color
+        obj->setStartLineColor(ccc3(
+			dict->valueForKey("kS7")->intValue(),
+			dict->valueForKey("kS8")->intValue(), 
+			dict->valueForKey("kS9")->intValue())); // line color
         // this might be setStartObjColor: obj->setColor4(color("kS10", "kS11", "kS12")); // object color
         // same for this but tint: obj->setColor5(color("kS13", "kS14", "kS15")); // obj-2 color
     }

@@ -60,6 +60,7 @@ PlayLayer* PlayLayer::create(GJGameLevel* level)
 PlayLayer::PlayLayer()
 {
 	m_practiceMode = false;
+	m_activeGColorAction = nullptr;
 }
 
 void PlayLayer::onQuit()
@@ -226,9 +227,9 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->addChild(field_0x1e8);
 	field_0x1e8->setVisible(false);
 
-	this->field_0x1f0 = CCSprite::create();
-	this->addChild(field_0x1f0);
-	field_0x1f0->setVisible(false);
+	this->m_gColorRef = CCSprite::create();
+	this->addChild(m_gColorRef);
+	m_gColorRef->setVisible(false);
 #pragma endregion
 
 	CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
@@ -365,7 +366,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->tintObjects(m_levelSettings->getStartObjColor(), 0.0f);
 	this->tintColorObjects(m_levelSettings->getStartTintObjColor(), 0.0f);
 
-	// this->updateLevelColors();
+	this->updateLevelColors();
 	//this->animateOutFlyGround(true);
 	this->animateOutRollGround(true);
 
@@ -527,7 +528,7 @@ void PlayLayer::update(float dt)
 	//checkSpawnObjects();
 	m_clkTimer += dt;
 	//m_audioEffectsLayer->audioStep(dt);
-	//updateLevelColors();
+	updateLevelColors();
 	if (isUnlocked)
 		m_player->setPosition(newPlayerPos);
 	updateProgressbar();
@@ -583,6 +584,15 @@ void PlayLayer::updateEffectPositions()
     
 }
 
+void PlayLayer::updateLevelColors()
+{
+	// todo: finish
+	m_ground->getGroundSprite()->setColor(m_gColorRef->getColor());
+
+}
+
+
+
 void PlayLayer::tintBackground(ccColor3B color, float duration)
 {
     m_background->setColor(color);
@@ -590,7 +600,16 @@ void PlayLayer::tintBackground(ccColor3B color, float duration)
 
 void PlayLayer::tintGround(ccColor3B color, float duration)
 {
-    m_ground->getGroundSprite()->setColor(color);
+	m_gColorRef->stopAllActions();
+	ColorAction* cAction = ColorAction::create(this->getGColor(), color, duration, m_clkTimer);
+	this->setActiveGColorAction(cAction);
+
+	if (duration <= 0.0f)
+		m_gColorRef->setColor(color);
+	else {
+		CCTintTo* tintAction = CCTintTo::create(duration, color.r, color.g, color.b);
+		m_gColorRef->runAction(tintAction);
+	}
 }
 
 void PlayLayer::tintLine(ccColor3B color, float duration)
@@ -612,6 +631,26 @@ ccColor3B PlayLayer::getLineColor()
 {
 	return m_ground->getLine()->getColor();
 }
+
+ccColor3B PlayLayer::getGColor()
+{
+	return m_ground->getGroundSprite()->getColor();
+}
+
+
+void PlayLayer::setActiveGColorAction(ColorAction* action)
+{
+	if (this->m_activeGColorAction != action) {
+		if (action != nullptr)
+			action->retain();
+
+		if (this->m_activeGColorAction != nullptr)
+			m_activeGColorAction->release();
+
+		this->m_activeGColorAction = action;
+	}
+}
+
 
 // toggles
 void PlayLayer::toggleGlitter(bool visible)

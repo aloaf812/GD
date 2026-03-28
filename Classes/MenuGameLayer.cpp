@@ -130,7 +130,7 @@ void MenuGameLayer::update(float delta)
 	if (m_playerObject->getFlyMode())
 		m_playerObject->updateShipRotation(step);
 
-    float bgSpeed = 5.77f * 0.1f;
+    /*float bgSpeed = 5.77f * 0.1f;
     float groundSpeed = 5.77f * 0.9f;
     
     m_bgOffset += step * bgSpeed;
@@ -144,6 +144,6 @@ void MenuGameLayer::update(float delta)
     }
 
     m_backgroundSprite->setTextureRect(CCRectMake(m_bgOffset, 0, m_bgWidth * 2, m_backgroundSprite->getContentSize().height));
-    m_groundSprite->setTextureRect(CCRectMake(m_groundOffset, 0, m_bgWidth * 2, 90.0f));
-    
+    m_groundSprite->setTextureRect(CCRectMake(m_groundOffset, 0, m_bgWidth * 2, 90.0f));*/
+
 }
