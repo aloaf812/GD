@@ -17,7 +17,7 @@ void PauseLayer::customSetup()
 	float bgWidth = (pDirector->getScreenRight() - 20.0f) - pDirector->getScreenLeft();
 	float bgHeight = (pDirector->getScreenTop() - 20.0f) - pDirector->getScreenBottom();
 
-	background->setContentSize({ bgWidth, bgHeight });
+	background->setContentSize(CCSize(bgWidth, bgHeight));
 	background->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
 	background->setColor(ccBLACK);
 	this->addChild(background);

@@ -70,7 +70,7 @@ bool LevelSelectLayer::init(int page)
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
     m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
     m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    m_backgroundSprite->setColor({40, 125, 255});
+    m_backgroundSprite->setColor(ccc3(40, 125, 255));
     
     CCSprite* topBar = CCSprite::createWithSpriteFrameName("GJ_topBar_001.png");
     topBar->setAnchorPoint(CCPoint(0.5f, 1.0f));
@@ -159,7 +159,7 @@ bool LevelSelectLayer::init(int page)
     ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
     groundSprite->getTexture()->setTexParameters(&texParams);
     groundLayer->addChild(groundSprite, -2);
-    groundSprite->setAnchorPoint({0, 1});
+    groundSprite->setAnchorPoint(ccp(0, 1));
    	groundSprite->setColor(ccc3(0, 102, 255));
     groundSprite->setPosition(ccp(0.0f, 60.0f));
     
@@ -174,29 +174,29 @@ bool LevelSelectLayer::init(int page)
     
     for (int i = 1; i < m_repeatCount; ++i) {
         CCSprite* tile = CCSprite::create(pGameManager->getGTexture(1));
-        tile->setAnchorPoint({0, 1});
-        tile->setColor({ 0, 102, 255 });
+        tile->setAnchorPoint(ccp(0, 1));
+        tile->setColor(ccc3(0, 102, 255));
         tile->setPosition(ccp(m_groundWidth * i, 60.0f));
         groundLayer->addChild(tile);
         m_tiles->addObject(tile);
     }
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
-    leftShadow->setAnchorPoint({0.0f, 1.0f});
-    leftShadow->setPosition({pDirector->getScreenLeft() - 1.0f, groundSprite->getPositionY()});
+    leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
+    leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, groundSprite->getPositionY()));
     groundLayer->addChild(leftShadow, -2);
     leftShadow->setOpacity(100);
-    leftShadow->setColor({150, 150, 150});
+    leftShadow->setColor(ccc3(150, 150, 150));
     leftShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     leftShadow->setTag(0);
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
-    rightShadow->setAnchorPoint({1.0f, 1.0f});
-    rightShadow->setPosition({pDirector->getScreenRight() + 1.0f, groundSprite->getPositionY()});
+    rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
+    rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, groundSprite->getPositionY()));
     rightShadow->setFlipX(true);
     groundLayer->addChild(rightShadow, -2);
     rightShadow->setOpacity(100);
-    rightShadow->setColor({150, 150, 150});
+    rightShadow->setColor(ccc3(150, 150, 150));
     rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     rightShadow->setTag(0);
     

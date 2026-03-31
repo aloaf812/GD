@@ -773,7 +773,38 @@ void PlayLayer::animateOutRollGroundFinished()
 
 void PlayLayer::checkCollisions(float dt)
 {
+	float playerScale = m_player->getPlayerScale();
+	if (playerScale != 1.0f)
+		playerScale = 1.0f - playerScale;
 
+	float balancer;
+	if (playerScale == 1.0f)
+		balancer = 0.0f;
+	else
+		balancer = (playerScale * 30.0f) * 0.5f;
+
+	if (m_player->getPosition().y > (105.0f - balancer) || m_player->isFlying()) {
+		if (m_player->getPosition().y > (balancer + 1890.0f)) {
+			// m_player->destroyPlayer();
+			return;
+		}
+	}
+	else {
+		if (m_player->getGravityFlipped()) {
+			if (m_player->isSafeFlip()) {
+				// missing stuff
+				m_player->hitGround(true);
+				return;
+			}
+			// m_player->destroyPlayer();
+			return;
+		}
+
+		if (!m_player->getIsJumping()) {
+			m_player->setPosition(ccp(m_player->getPosition().x, 105.0f - balancer));
+			m_player->hitGround(false);
+		}
+	}
 }
 
 void PlayLayer::recordAction(bool pressed)

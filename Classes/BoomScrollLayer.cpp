@@ -22,7 +22,7 @@ void BoomScrollLayerDelegate::scrollLayerScrollingStarted(BoomScrollLayer* bsl)
 BoomScrollLayer::BoomScrollLayer()
 {
     this->m_bslDelegate = nullptr;
-    m_pageDots = nullptr;
+    m_dotsArray = nullptr;
     m_currentScreen = 0;
 }
 
@@ -58,17 +58,17 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int param1, bool looped)
      
     // robtop: this->setTouchSwallowEnabled(true);
     
-	this->m_minTouchSpeed = 0.3;
+	this->m_minTouchSpeed = 0.3f;
 	this->m_currentScreen = 0;
-	this->m_touchSpeedMid = 0.4;
-	this->m_touchSpeedFast = 0.6;
+	this->m_touchSpeedMid = 0.4f;
+	this->m_touchSpeedFast = 0.6f;
 
 
     m_pages = pages;
     
     CCSpriteBatchNode* dots = CCSpriteBatchNode::create("smallDot.png");
-    m_pageDots = CCArray::create();
-    m_pageDots->retain();
+    m_dotsArray = CCArray::create();
+	m_dotsArray->retain();
     this->addChild(dots, 5);
     
     int totalPages = 13;
@@ -76,7 +76,7 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int param1, bool looped)
     {
         CCSprite* dot = CCSprite::create("smallDot.png");
         dots->addChild(dot);
-        m_pageDots->addObject(dot);
+		m_dotsArray->addObject(dot);
     }
     
     this->updatePages();
@@ -89,7 +89,9 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int param1, bool looped)
 
 void BoomScrollLayer::updateDots(float dt)
 {
-    //if (!m_pageDots) return;
+	if (m_dotsArray != nullptr) {
+		// add the missing logic lol
+	}
 }
 
 void BoomScrollLayer::updatePages()
@@ -130,7 +132,7 @@ void BoomScrollLayer::quickUpdate()
 		this->m_movingToPage = false;
 		m_internalLayer->stopActionByTag(2);
 		m_internalLayer->setPosition(m_targetPos);
-		//moveToPageEnded();
+		moveToPageEnded();
 	}
 }
 
@@ -143,17 +145,29 @@ void BoomScrollLayer::moveToPage(int page)
 
 		CCMoveTo* moveAction = CCMoveTo::create((0.8f * 1.2f), m_targetPos);
 		CCEaseElasticOut* elasticMove = CCEaseElasticOut::create(moveAction, 0.5f);
-		// CCSequence* sequence = CCSequence::create({})
-		m_internalLayer->runAction(elasticMove);
+		CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(BoomScrollLayer::moveToPageEnded));
+		CCSequence* sequence = CCSequence::create(elasticMove, callback, nullptr);
+		m_internalLayer->runAction(sequence);
+		sequence->setTag(2);
 
 		m_currentScreen = page;
 
+		// if (m_looped != false)
+			//repositionPagesLooped();
+
 	}
-    CCLOG("moved to page %i", page);
+}
+
+void BoomScrollLayer::moveToPageEnded()
+{
+	// stuff
+	m_internalLayer->stopActionByTag(2);
+	// more stuff
+	this->updateDots(0.0f);
 }
 
 // https://github.com/geode-sdk/bindings/blob/main/bindings/2.208/inline/BoomScrollLayer.cpp#L21
 CCPoint BoomScrollLayer::positionForPageWithNumber(int page)
 {
-	return { this->getContentSize().width * page, 0.f };
+	return ccp(this->getContentSize().width * page, 0.f);
 }

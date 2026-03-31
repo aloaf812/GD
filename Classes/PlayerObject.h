@@ -44,6 +44,7 @@ public:
 	void updateTimeMod(float timeMod);
 
 	void deactivateParticle();
+	void deactivateStreak();
 
 	virtual void resetObject();
 
@@ -57,9 +58,12 @@ public:
 	float flipMod();
 	void incrementJumps();
 	bool playerIsFalling();
+	bool isSafeFlip();
+	void hitGround(bool notFlipped);
 
 	void runRotateAction();
 	void runNormalRotation();
+	void stopRotation();
 
 
 	GhostType m_ghostType; // 0x2c0
@@ -90,6 +94,7 @@ public:
 	bool m_pShipActive; // 0x315
 	bool field733_0x316; // 0x316
 
+	float field747_0x324; // 0x324
 	double m_yVelolcity; // 0x328
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c

@@ -47,7 +47,7 @@ bool GJGarageLayer::init()
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
     m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
     m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    m_backgroundSprite->setColor({150, 150, 150});
+    m_backgroundSprite->setColor(ccc3(150, 150, 150));
 
     // looks matching enough
     CCSprite* sideArtLeft = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
@@ -81,8 +81,8 @@ bool GJGarageLayer::init()
     GameStatsManager* GSM = GameStatsManager::sharedState();
     int stars = GSM->getStat("6");
     CCLabelBMFont* starsLabel = CCLabelBMFont::create(CCString::createWithFormat("%i", stars)->getCString(), "bigFont.fnt");
-    starsLabel->setAnchorPoint({1.0f, 0.5f});
-    starsLabel->setPosition({starIcon->getPosition() + ccp(-18.0f, 0.0f)});
+    starsLabel->setAnchorPoint(ccp(1.0f, 0.5f));
+    starsLabel->setPosition(starIcon->getPosition() + ccp(-18.0f, 0.0f));
     starsLabel->setScale(0.5f);
     this->addChild(starsLabel);
     
@@ -93,7 +93,7 @@ bool GJGarageLayer::init()
     
     int coins = GSM->getStat("8");
     CCLabelBMFont* coinsLabel = CCLabelBMFont::create(CCString::createWithFormat("%i", coins)->getCString(), "bigFont.fnt");
-    coinsLabel->setAnchorPoint({1.0f, 0.5f});
+    coinsLabel->setAnchorPoint(ccp(1.0f, 0.5f));
     coinsLabel->setPosition(coinIcon->getPosition() + ccp(-18.0f, 0.0f));
     coinsLabel->setScale(0.5f);
     this->addChild(coinsLabel);
@@ -118,7 +118,7 @@ bool GJGarageLayer::init()
 void GJGarageLayer::setupIconSelect()
 {
 	CCScale9Sprite* base = CCScale9Sprite::create("square02_001.png", CCRect(0, 0, 80, 80));
-	base->setContentSize({ 340, 95 });
+	base->setContentSize(CCSize(340, 95));
 	this->addChild(base, 1);
 }
 

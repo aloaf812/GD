@@ -19,6 +19,8 @@ PlayerObject::PlayerObject()
 
 	this->field772_0x30d = false;
 	this->field773_0x30e = false;
+
+	this->field747_0x324 = 0.0f;
 }
 
 PlayerObject* PlayerObject::create(int player, int ship, cocos2d::CCLayer *layer)
@@ -188,6 +190,11 @@ void PlayerObject::deactivateParticle()
 	this->m_pGroundActive = false;
 }
 
+void PlayerObject::deactivateStreak()
+{
+	// m_playerStreak->stopStroke();
+}
+
 void PlayerObject::resetObject()
 {
 	/*this->field708_0x30c = true;
@@ -325,12 +332,12 @@ void PlayerObject::updateJump(float dt)
 
 	if (!isFlying())
 	{
-		float fVar5 = 0.6;
-		if (this->m_rollMode == false) {
-			fVar5 = 1.0;
+		float fVar5 = 0.6f;
+		if (!this->m_rollMode) {
+			fVar5 = 1.0f;
 		}
 
-		if ((field773_0x30e != false) && (field772_0x30d != false)) {
+		if ((field773_0x30e) && (field772_0x30d)) {
 			this->m_isJumping = true;
 			this->m_onGround = false;
 			this->field772_0x30d = false;
@@ -351,22 +358,40 @@ void PlayerObject::updateJump(float dt)
 			return;
 		}
 
-		if (this->m_isJumping != false) {
+		if (this->m_isJumping) {
 			this->m_yVelolcity = m_yVelolcity - gravity2 * dt * flipMod() * fVar5;
 
-			if (playerIsFalling() == false)
+			if (!playerIsFalling())
 				return;
 
 			this->m_isJumping = false;
-			// this->field_0x30f = 1;
+			// this->field_0x30f = true;
 			this->m_onGround = false;
 			return;
 		}
 
-		if (playerIsFalling() != false) {
+		if (playerIsFalling()) {
 			field772_0x30d = false;
 		}
+
+		m_yVelolcity = m_yVelolcity - gravity2 * dt * flipMod() * fVar5;
+
+		if (!this->m_gravityFlipped) {
+			if (m_yVelolcity > 15.0)
+				m_yVelolcity = 15.0;
+			else if (m_yVelolcity < -15.0)
+				m_yVelolcity = -15.0;
+		}
+
+		if (!playerIsFalling())
+			return;
+
+		if ((!m_rollMode) && (!getActionByTag(0)))
+			runRotateAction();
+
 	}
+
+	this->m_onGround = false;
 }
 
 void PlayerObject::updateTimeMod(float timeMod)
@@ -395,12 +420,10 @@ bool PlayerObject::levelFlipping()
 
 float PlayerObject::flipMod()
 {
-	if (this->m_gravityFlipped == false) {
+	if (!this->m_gravityFlipped)
 		return 1.0f;
-	}
-	else {
+	else
 		return -1.0f;
-	}
 }
 
 void PlayerObject::incrementJumps()
@@ -415,24 +438,53 @@ void PlayerObject::incrementJumps()
 bool PlayerObject::playerIsFalling()
 {
 	double targetVel = m_gravity + m_gravity;
-	if (m_gravityFlipped != false) {
+	if (m_gravityFlipped)
 		return targetVel < m_yVelolcity;
-	}
-	return m_yVelolcity < targetVel;
+	else
+		return m_yVelolcity < targetVel;
 }
 
+bool PlayerObject::isSafeFlip()
+{
+	if (field747_0x324 == 0.0f)
+		return false;
+
+	return -15.0 <= m_yVelolcity;
+}
+
+void PlayerObject::hitGround(bool notFlipped)
+{
+	m_yVelolcity = 0;
+	// stuff
+	m_onGround = true;
+	field772_0x30d = true;
+	field733_0x316 = true;
+
+	if ((!m_rollMode) && (getActionByTag(0)))
+		this->stopRotation();
+
+	// more stuff
+	m_lastGroundPos = this->getPosition();
+	if (!isFlying()) {
+		this->deactivateStreak();
+		// this->tryPlaceCheckpoint();
+	}
+	field727_0x310 = false;
+}
+
+// this whole project is spaghetti code and educated guesses lol
 void PlayerObject::runRotateAction()
 {
-	if (this->m_isLocked != false) {
-		return;
+	if (!this->m_isLocked) {
+		this->stopRotation();
+
+		if (m_rollMode) {
+			// this->runBallRotation();
+			return;
+		}
+		else
+			this->runNormalRotation();
 	}
-	// this->stopRotation();
-	if (!m_rollMode) {
-		this->runNormalRotation();
-		return;
-	}
-	// this->runBallRotation();
-	return;
 }
 
 void PlayerObject::runNormalRotation()
@@ -448,7 +500,14 @@ void PlayerObject::runNormalRotation()
 		rotateValue = 0.33333334f;
 
 	CCRotateBy* rotateAction = CCRotateBy::create(rotateValue, (180 * flipMod()));
-	// *((_DWORD *)v6 + 8) = 0;
+	rotateAction->setTag(0);
 	this->runAction(rotateAction);
 	return;
+}
+
+void PlayerObject::stopRotation()
+{
+	this->stopActionByTag(0);
+	this->stopActionByTag(1);
+	// theres more stuff...
 }

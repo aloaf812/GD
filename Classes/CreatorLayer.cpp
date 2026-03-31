@@ -95,7 +95,7 @@ bool CreatorLayer::init()
     m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
     m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
     m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    m_backgroundSprite->setColor({0, 102, 255});
+    m_backgroundSprite->setColor(ccc3(0, 102, 255));
     
     CCSprite* sideArtTL = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtTL->setAnchorPoint(CCPoint(0.0f, 0.0f));

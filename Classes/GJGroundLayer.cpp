@@ -71,7 +71,7 @@ bool GJGroundLayer::init(int gID)
     rightShadow->setFlipX(true);
     this->addChild(rightShadow, 3);
     rightShadow->setOpacity(100);
-    rightShadow->setColor({150, 150, 150});
+    rightShadow->setColor(ccc3(150, 150, 150));
     rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     rightShadow->setTag(0);
     

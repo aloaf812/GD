@@ -15,6 +15,7 @@ public:
     void updatePages();
     void quickUpdate();
     void moveToPage(int page);
+	void moveToPageEnded();
     virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 	cocos2d::CCPoint positionForPageWithNumber(int page);
 
@@ -25,18 +26,18 @@ public:
 	CC_SYNTHESIZE(cocos2d::CCRect, m_scrollArea, ScrollArea); // 0x148
 
 	// touch speeds
-	CC_SYNTHESIZE(float, m_minTouchSpeed, MinTouchSpeed);
+	CC_SYNTHESIZE(float, m_minTouchSpeed, MinTouchSpeed); // 0x158
+	CC_SYNTHESIZE(float, m_touchSpeedFast, TouchSpeedFast); // 0x15c
 	CC_SYNTHESIZE(float, m_touchSpeedMid, TouchSpeedMid); // 0x160
-	CC_SYNTHESIZE(float, m_touchSpeedFast, TouchSpeedFast);
 
 	//CC_SYNTHESIZE_READONLY(BoomScrollLayerDelegate*, m_delegate, Delegate); // 0x164
 	CC_SYNTHESIZE_READONLY(bool, m_movingToPage, MovingToPage); // 0x168
 protected:
     BoomScrollLayerDelegate* m_bslDelegate;
-    cocos2d::CCArray* m_pageDots;
+    cocos2d::CCArray* m_dotsArray; // 0x10c
     cocos2d::CCArray* m_pages;
 	cocos2d::CCPoint m_targetPos; // 0x4f
-	bool m_looped;
+	bool m_looped; // 0x11c
 };
 
 class BoomScrollLayerDelegate {

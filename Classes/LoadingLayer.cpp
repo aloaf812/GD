@@ -66,7 +66,7 @@ bool LoadingLayer::init() {
     
     bgSprite->setPosition(winSize * 0.5f);
 	bgSprite->setScale(pDirector->getScreenScaleFactorMax());
-    bgSprite->setColor({ 0, 102, 255 });
+    bgSprite->setColor(ccc3(0, 102, 255));
 
     CCSprite* gjLogo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     this->addChild(gjLogo);
