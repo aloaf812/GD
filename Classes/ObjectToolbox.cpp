@@ -91,19 +91,40 @@ bool ObjectToolbox::init()
 
 	// clouds
 	CREATE_OBJ("d_cloud_01_001.png", 48); // Large Fading Cloud
+	CREATE_OBJ("d_cloud_02_001.png", 49); // Small Fading Cloud
 
-	// other objects i'm too lazy to properly organize
+
+
+	// pulsing objects
+	CREATE_OBJ("d_ball_01_001.png", 50); // Pulsing Filled Circle
+	CREATE_OBJ("d_ball_02_001.png", 51); // Pulsing Circle
+	CREATE_OBJ("d_ball_04_001.png", 53); // Pulsing Diamond
 	CREATE_OBJ("d_ball_05_001.png", 54); // Pulsing Star
 
+	CREATE_OBJ("d_ball_06_001.png", 60); // Pulsing Music Note
+
+
+	CREATE_OBJ("edit_eeFRHBtn_001.png", 58); // Halve Enter Effect
+	CREATE_OBJ("edit_eeFRHInvBtn_001.png", 59); // Inverse Halve Enter Effect
+	 
+	CREATE_OBJ("pit_04_001.png", 61); // Non-Colorable Wavy Black Pit Hazard
+
+	// wavy black slabs
 	CREATE_OBJ("square_b_01_001.png", 62); // Wavy Black Slab
-	
 	CREATE_OBJ("square_b_04_001.png", 65); // Wavy Black Slab Right Edge
+	CREATE_OBJ("square_b_05_001.png", 66); // Wavy Black Slab Left Edge
+	CREATE_OBJ("square_b_06_001.png", 68); // Wavy Black Single Slab
 
 	CREATE_OBJ("gravbump_01_001.png", 67); // Blue Gravity Pad
 
-	CREATE_OBJ("square_b_06_001.png", 68); // Wavy Black Single Slab
 
+	CREATE_OBJ("square_c_02_001.png", 70); // Beveled Top Square
+	CREATE_OBJ("square_c_03_001.png", 71); // Beveled Outer Corner Square
+	CREATE_OBJ("square_c_04_001.png", 72); // Beveled Inner Corner Square
 	CREATE_OBJ("square_c_05_001.png", 73); // Beveled Inner Square
+	CREATE_OBJ("square_c_06_001.png", 74); // Beveled Top Pillar Square
+	CREATE_OBJ("square_c_07_001.png", 75); // Beveled Pillar Square
+
 
 	CREATE_OBJ("d_chain_02_001.png", 110); // Small Chain
 

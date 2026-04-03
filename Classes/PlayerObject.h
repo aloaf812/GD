@@ -61,6 +61,8 @@ public:
 	bool isSafeFlip();
 	void hitGround(bool notFlipped);
 
+	void collidedWithObject(float dt, GameObject* obj);
+
 	void runRotateAction();
 	void runNormalRotation();
 	void stopRotation();

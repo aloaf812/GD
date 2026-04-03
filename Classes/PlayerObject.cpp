@@ -472,6 +472,11 @@ void PlayerObject::hitGround(bool notFlipped)
 	field727_0x310 = false;
 }
 
+void PlayerObject::collidedWithObject(float dt, GameObject* obj)
+{
+
+}
+
 // this whole project is spaghetti code and educated guesses lol
 void PlayerObject::runRotateAction()
 {
@@ -509,5 +514,14 @@ void PlayerObject::stopRotation()
 {
 	this->stopActionByTag(0);
 	this->stopActionByTag(1);
-	// theres more stuff...
+
+	if ((getRotation() != 0.0f) && (!m_rollMode)) {
+		float rotInterval;
+		if (flipMod() == 1.0f)
+			rotInterval = 90.0f * (roundf(getRotation() / 90.0f));
+		else
+			rotInterval = -90.0f * (roundf(getRotation() / -90.0f));
+
+		this->setRotation(rotInterval);
+	}
 }
