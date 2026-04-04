@@ -42,6 +42,9 @@ public:
 	void recordAction(bool pressed);
 
 	bool isFlipping();
+	void destroyPlayer();
+
+	void showHint();
 
     // tints
     void tintBackground(cocos2d::ccColor3B color, float duration);

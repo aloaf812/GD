@@ -48,24 +48,7 @@ bool MenuGameLayer::init()
     m_groundSprite->setAnchorPoint(ccp(0, 1));
    	m_groundSprite->setColor(ccc3(0, 102, 255));
     m_groundSprite->setPosition(ccp(0.0f, 90.0f));
-    
-    float groundWidth = m_groundSprite->getTextureRect().size.width;
-    float scaleFactor = getScaleX();
-    m_groundWidth = groundWidth * scaleFactor;
-    
-    float m_repeatCount = std::ceil(winSize.width / m_groundWidth) + 1.0f;
-    
-    CCArray* m_tiles = CCArray::create();
-    m_tiles->retain();
-    
-    for (int i = 1; i < m_repeatCount; ++i) {
-        CCSprite* tile = CCSprite::create(pGameManager->getGTexture(1));
-        tile->setAnchorPoint(ccp(0, 1));
-        tile->setColor(ccc3(0, 102, 255));
-        tile->setPosition(ccp(m_groundWidth * i, 90.0f));
-        m_groundLayer->addChild(tile);
-        m_tiles->addObject(tile);
-    }
+	m_groundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_groundSprite->getContentSize().height));
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));

@@ -115,7 +115,7 @@ bool LevelSelectLayer::init(int page)
     downloadExtra->setSizeMult(2.0f);
     
     CCMenu* downloadMenu = CCMenu::create(downloadExtra, NULL);
-    this->addChild(downloadMenu);
+    this->addChild(downloadMenu, 5);
     downloadMenu->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 35.0f));
     
     CCMenu* arrowsMenu = CCMenu::create();
@@ -153,37 +153,20 @@ bool LevelSelectLayer::init(int page)
 
     // ground
     CCLayer* groundLayer = CCLayer::create();
-    this->addChild(groundLayer, -3);
+    this->addChild(groundLayer, 0);
     
-    CCSprite* groundSprite = CCSprite::create(pGameManager->getGTexture(1));
+	m_ground = CCSprite::create(pGameManager->getGTexture(1));
     ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-    groundSprite->getTexture()->setTexParameters(&texParams);
-    groundLayer->addChild(groundSprite, -2);
-    groundSprite->setAnchorPoint(ccp(0, 1));
-   	groundSprite->setColor(ccc3(0, 102, 255));
-    groundSprite->setPosition(ccp(0.0f, 60.0f));
-    
-    float groundWidth = groundSprite->getTextureRect().size.width;
-    float scaleFactor = getScaleX();
-    float m_groundWidth = groundWidth * scaleFactor;
-    
-    float m_repeatCount = std::ceil(winSize.width / m_groundWidth) + 1.0f;
-    
-    CCArray* m_tiles = CCArray::create();
-    m_tiles->retain();
-    
-    for (int i = 1; i < m_repeatCount; ++i) {
-        CCSprite* tile = CCSprite::create(pGameManager->getGTexture(1));
-        tile->setAnchorPoint(ccp(0, 1));
-        tile->setColor(ccc3(0, 102, 255));
-        tile->setPosition(ccp(m_groundWidth * i, 60.0f));
-        groundLayer->addChild(tile);
-        m_tiles->addObject(tile);
-    }
-    
+	m_ground->getTexture()->setTexParameters(&texParams);
+	groundLayer->addChild(m_ground, 2);
+	m_ground->setAnchorPoint(ccp(0, 1));
+	m_ground->setColor(ccc3(0, 102, 255));
+	m_ground->setPosition(ccp(0.0f, 60.0f));
+	m_ground->setTextureRect(CCRectMake(0, 0, winSize.width, m_ground->getContentSize().height));
+	
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
-    leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, groundSprite->getPositionY()));
+	leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, m_ground->getPositionY()));
     groundLayer->addChild(leftShadow, -2);
     leftShadow->setOpacity(100);
     leftShadow->setColor(ccc3(150, 150, 150));
@@ -192,7 +175,7 @@ bool LevelSelectLayer::init(int page)
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
-    rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, groundSprite->getPositionY()));
+    rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, m_ground->getPositionY()));
     rightShadow->setFlipX(true);
     groundLayer->addChild(rightShadow, -2);
     rightShadow->setOpacity(100);
@@ -202,7 +185,7 @@ bool LevelSelectLayer::init(int page)
     
     CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
     groundLayer->addChild(lineSprite, 3);
-    lineSprite->setPosition(CCPoint(winSize.width * 0.5f, groundSprite->getPositionY()));
+	lineSprite->setPosition(CCPoint(winSize.width * 0.5f, m_ground->getPositionY()));
     
     return true;
 }

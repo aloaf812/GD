@@ -1,7 +1,7 @@
 #include "ObjectToolbox.h"
 USING_NS_CC;
 
-// thank you smjs for that reddit post
+// thank you smjs for that reddit post: https://www.reddit.com/r/geometrydash/comments/s80t96/how_50_of_gd_is_duplicate_code/
 #define CREATE_OBJ(filename, index) \
 	key = CCString::createWithFormat("%i", index); \
 	ObjectToolbox::m_objects->setObject(key, filename); \
@@ -175,7 +175,5 @@ CCDictionary* ObjectToolbox::stringSetupToDict(std::string str)
 
 char const* ObjectToolbox::keyToFrame(char const* key)
 {
-	char const* frame = m_keys->valueForKey(atoi(key))->getCString();
-	//CCLOG(frame);
-	return frame;
+	return m_keys->valueForKey(atoi(key))->getCString();
 }

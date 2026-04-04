@@ -785,7 +785,7 @@ void PlayLayer::checkCollisions(float dt)
 
 	if (m_player->getPosition().y > (105.0f - balancer) || m_player->isFlying()) {
 		if (m_player->getPosition().y > (balancer + 1890.0f)) {
-			// m_player->destroyPlayer();
+			this->destroyPlayer();
 			return;
 		}
 	}
@@ -796,7 +796,7 @@ void PlayLayer::checkCollisions(float dt)
 				m_player->hitGround(true);
 				return;
 			}
-			// m_player->destroyPlayer();
+			this->destroyPlayer();
 			return;
 		}
 
@@ -824,6 +824,57 @@ bool PlayLayer::isFlipping()
 		return false;
 	}
 	return m_flipValue != 1.0;
+}
+
+void PlayLayer::destroyPlayer()
+{
+	if (!m_player->getIsLocked() && !m_playerDead) {
+		if (!m_showingHint && (m_level->getLevelID() == 1) && !m_player->getHasJumped() && m_attempts > 1)
+			this->showHint();
+
+		if (!m_showingHint && (m_level->getLevelID() == 3) && !m_player->getHasRingJumped() && m_attempts > 1)
+			this->showHint();
+		
+		// bVar1 = true;
+		m_playerDead = true;
+		m_player->playerDestroyed();
+		
+		// more left to implement
+	}
+}
+
+void PlayLayer::showHint()
+{
+	this->m_showingHint = true;
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
+
+	float delayTime;
+	float scale;
+	char const* string;
+
+	if (m_level->getLevelID() == 1) {
+		delayTime = 3.0f;
+		scale = 0.7f;
+		string = "Tap to jump over the spikes";
+	}
+	else {
+		delayTime = 4.0f;
+		scale = 0.6f;
+		string = "Tap while touching a ring to jump mid air";
+	}
+
+	CCLabelBMFont* hintLabel = CCLabelBMFont::create(string, "bigFont.fnt");
+	hintLabel->setScale(scale);
+	this->addChild(hintLabel, 3);
+	hintLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 60.0f));
+	hintLabel->setOpacity(0);
+
+	hintLabel->runAction(CCSequence::create(
+		CCFadeIn::create(0.5f),
+		CCDelayTime::create(delayTime),
+		CCFadeOut::create(0.5f),
+		CCCallFunc::create(hintLabel, callfunc_selector(CCNode::removeMeAndCleanup))));
 }
 
 void PlayLayer::moveCameraToPos(cocos2d::CCPoint pos)

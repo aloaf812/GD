@@ -46,7 +46,9 @@ bool GJGroundLayer::init(int gID)
 	m_groundSprite->setColor(ccc3(0, 102, 255));
 	ccBlendFunc gBlendFunc = { GL_ONE, GL_ZERO };
 	m_groundSprite->setBlendFunc(gBlendFunc);
+	m_groundSprite->setTextureRect(CCRectMake(0, 0, winSize.width, m_groundSprite->getContentSize().height));
     m_groundSprite->setPosition(ccp(0.0f, 90.0f));
+
 
 	m_line = CCSprite::createWithSpriteFrameName("floorLine_001.png");
 	this->addChild(m_line, 3);

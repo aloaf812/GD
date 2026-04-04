@@ -7,6 +7,13 @@
 using namespace CocosDenshion;
 USING_NS_CC;
 
+
+LevelEditorLayer::LevelEditorLayer()
+{
+	m_bgSprite = nullptr;
+	m_levelSettings = nullptr;
+}
+
 CCScene* LevelEditorLayer::scene(GJGameLevel* level)
 {
 	CCScene *scene = CCScene::create();
@@ -50,11 +57,38 @@ bool LevelEditorLayer::init(GJGameLevel* level)
 	
 	// missing code
 
+	if (!m_levelSettings) {
+		this->m_levelSettings = LevelSettingsObject::create();
+		m_levelSettings->retain();
+	}
+	
+	// m_gridLayer->setBlockTimeMarkers(false);
+	// m_gridLayer->sortSpeedObjects();
+
 	this->createBackground();
 
+	return true;
 }
 
 void LevelEditorLayer::createBackground()
 {
-	// todo: implement
+	if (m_bgSprite != nullptr) {
+		this->removeBackground();
+	}
+	
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
+	CCSprite* bgSprite = CCSprite::create(GameManager::sharedState()->getBGTexture(
+		m_levelSettings->getBGIdx()));
+	bgSprite->setPosition(ccp(winSize.height * 0.5f, winSize.height * 0.5f));
+	this->addChild(bgSprite, -1);
+	bgSprite->setScale(pDirector->getScreenScaleFactorMax());
+}
+
+void LevelEditorLayer::removeBackground()
+{
+	if (m_bgSprite != nullptr) {
+		m_bgSprite->removeFromParent();
+		this->m_bgSprite = nullptr;
+	}
 }

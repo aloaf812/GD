@@ -17,9 +17,9 @@ public:
     void onPrev(CCObject* sender);
     void onNext(CCObject* sender);
 protected:
-    cocos2d::CCSprite* m_backgroundSprite;
+	cocos2d::CCSprite* m_backgroundSprite; // 0x114
+	cocos2d::CCSprite* m_ground; // 0x118
     BoomScrollLayer* m_scrollLayer; // 0x11c
-    //struct colors;
 };
 
 #endif
