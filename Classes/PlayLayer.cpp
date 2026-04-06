@@ -721,7 +721,12 @@ void PlayLayer::resume()
 
 void PlayLayer::resumeAndRestart()
 {
-	// TODO
+	AppDelegate* pApp = AppDelegate::get();
+	if (pApp->getPaused()) {
+		pApp->setPaused(false);
+		this->onEnter();
+		this->resetLevel();
+	}
 }
 
 void PlayLayer::updateVisibility()
