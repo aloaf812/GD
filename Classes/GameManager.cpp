@@ -7,6 +7,10 @@
 #include "PlatformToolbox.h"
 #include <stdio.h>
 
+#include "CreatorLayer.h"
+#include "MyLevelsLayer.h"
+#include "MenuLayer.h"
+
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -434,4 +438,38 @@ void GameManager::firstLoad()
 void GameManager::resetMusic()
 {
 
+}
+
+void GameManager::returnToLastScene(GJGameLevel* level)
+{
+	CCDirector* pDirector = CCDirector::sharedDirector();
+
+	CCScene* targetScene;
+	switch (m_lastScene) {
+	case LastGameScene::SearchScene:
+		targetScene = CreatorLayer::scene();
+		break;
+	case LastGameScene::EditorLevels:
+		// targetScene = MyLevelsLayer::scene();
+		break;
+	case LastGameScene::unk3:
+		// i dont think this is necessary yet
+	default:
+		targetScene = MenuLayer::scene();
+		break;
+	// skip a few
+	case LastGameScene::LevelSelect:
+		int currentLevel = 0;
+		if (level) {
+			currentLevel = 0;
+			if (1 < level->getLevelID()) {
+				currentLevel = level->getLevelID();
+				currentLevel = currentLevel + -1;
+			}
+		}
+		targetScene = LevelSelectLayer::scene(currentLevel);
+	}
+
+	pDirector->replaceScene(CCTransitionFade::create(0.5f, targetScene));
+	sharedState()->fadeInMusic("menuLoop.mp3");
 }

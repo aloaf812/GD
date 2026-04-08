@@ -70,7 +70,7 @@ void PlayLayer::onQuit()
     SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
     SAE->stopBackgroundMusic();
     GameManager* pGameManager = GameManager::sharedState();
-	// pGameManager->returnToLastScene(PLAY_LAYER->getLevel());
+	pGameManager->returnToLastScene(PLAY_LAYER->getLevel());
     pGameManager->fadeInMusic("menuLoop.mp3");
     return;
     
