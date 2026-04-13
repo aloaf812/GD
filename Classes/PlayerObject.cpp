@@ -474,7 +474,8 @@ void PlayerObject::hitGround(bool notFlipped)
 
 void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 {
-
+	// needs a bit more implementation than just this
+	hitGround(true);
 }
 
 // this whole project is spaghetti code and educated guesses lol

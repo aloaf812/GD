@@ -35,6 +35,7 @@ public:
 	void fullReset();
 
 	void checkCollisions(float dt);
+	int sectionForPos(cocos2d::CCPoint point);
 
 	/*
 	@param pressed If the button is pressed or not
@@ -97,6 +98,7 @@ public:
 	bool m_rollGroundActive; // 0x161
 
 	cocos2d::CCArray* m_sections; // 0x164
+	cocos2d::CCArray* field306_0x168; // 0x168
 	cocos2d::CCArray* m_activeObjects; // 0x16c
 	cocos2d::CCArray* m_stateObjects; // 0x17c
 	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180

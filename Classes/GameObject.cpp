@@ -4,8 +4,8 @@ USING_NS_CC;
 
 // hi antimatter some of your code was kind of broken so i fixed it up
 
-/*GameObject::GameObject() {
-    this->unk_0x1b8 = 0;
+GameObject::GameObject() {
+    /*this->unk_0x1b8 = 0;
     this->unk_0x1bc = 0;
     this->unk_0x1c0 = false;
     //  *(_DWORD *)this = &off_486138;
@@ -38,20 +38,20 @@ USING_NS_CC;
     this->m_isRotated = false;
     this->m_scaleModX = 0;
     this->m_scaleModY = 0;
-    this->m_ID = 0;
-    this->m_objectType = GameObjectType::None;
-    this->m_sectionIdx = 0;
+    this->m_ID = 0;*/
+    this->m_type = GameObjectType::None;
+    /*this->m_sectionIdx = 0;
     this->m_shouldSpawn = false;
     this->m_touchTriggered = false;
     // cocos2d::CCPoint::CCPoint((GameObject *)((char *)this + 0x244));
     this->m_blendAdditive = false;
     this->m_frame = "";
     this->m_usePlayerColor = false;
-    this->m_usePlayerColor2 = false;
+    this->m_usePlayerColor2 = false;*/
     this->m_isDisabled = false;
-    this->m_useAudioScale = false;
+    // this->m_useAudioScale = false;
     this->m_isSleeping = false;
-    this->m_startRotation = 0;
+    /*this->m_startRotation = 0;
     this->m_startScaleX = 0;
     this->m_startScaleY = 0;
     this->m_shouldHide = false;
@@ -65,9 +65,9 @@ USING_NS_CC;
     this->m_dontTransform = false;
     this->m_dontFade = false;
     this->m_dontFadeTinted = false;
-    this->m_isTintObject = false;
-    this->m_triggerActivated = false;
-    this->m_stateVar = false;
+    this->m_isTintObject = false;*/
+    this->m_hasBeenActivated = false;
+    /*this->m_stateVar = false;
     this->m_objectZ = 0;
     this->m_objectParent = nullptr;
     this->m_customAudioScale = false;
@@ -84,9 +84,8 @@ USING_NS_CC;
     this->m_editorSelected = false;
     this->m_copyPlayerColor1 = false;
     this->m_copyPlayerColor2 = false;
-    this->m_tintObjectsUseBlend = false;
+    this->m_tintObjectsUseBlend = false;*/
 }
-*/
 bool GameObject::init(const char *spriteName) {
     if (!CCSpritePlus::initWithSpriteFrameName(spriteName)) return false;
     this->m_objectZ = 2;
@@ -111,7 +110,7 @@ bool GameObject::init(const char *spriteName) {
     this->unk_0x204 = true;
     this->unk_0x218 = true;
     //this->m_tintObjectsUseBlend = true;
-     return true;
+    return true;
 }
 
 GameObject* GameObject::create(const char* frame)
@@ -283,15 +282,15 @@ void GameObject::setScaleY(float scaleY) {
     if (this->m_hasColor) {
         m_colorSprite->setScaleY(scaleY);
     }
-}
+}*/
 
 void GameObject::resetObject() {
-    this->m_triggerActivated = false;
+    this->m_hasBeenActivated = false;
     this->m_isSleeping = false;
     this->unk_0x1de = false;
 }
 
-void GameObject::setGlowColor(cocos2d::ccColor3B color) {
+/*void GameObject::setGlowColor(cocos2d::ccColor3B color) {
     if (this->m_glowSprite) {
         this->m_glowSprite->setColor(color);
     }
@@ -336,4 +335,42 @@ void GameObject::updateState()
 	if (!m_stateVar) {
 		this->powerOffObject();
 	}
+}
+
+void GameObject::customSetup()
+{
+	switch (m_objectKey) {
+	case 5:
+	case 73:
+	case 74:
+		// ok skip some of this
+	case 246:
+		m_type = GameObjectType::Decoration;
+		m_objectZ = -2;
+	default:
+		if (m_frame.find("edit_e", 0)) {
+			m_type = GameObjectType::None;
+			break;
+		}
+		m_type = GameObjectType::Decoration;
+		m_shouldSpawn = true;
+		// field_0x1c8 = 1;
+		m_isInvisible = true;
+		// field468_0x1d4 = 30.0f;
+		// field469_0x1d = 60.0f
+		break;
+	// more left
+	case 16:
+		m_type = GameObjectType::Decoration;
+		m_objectZ = -1;
+	}
+
+	//if (m_type - 7 < 2)
+		//m_isDisabled = true;
+}
+
+CCRect GameObject::getObjectRect()
+{
+	// for the most part i do NOT care yet if this works or not
+	return this->getTextureRect();
 }

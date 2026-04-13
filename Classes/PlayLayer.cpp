@@ -138,8 +138,9 @@ void PlayLayer::createObjectsFromSetup(std::string setup)
 
 			//obj->setObjectParent(m_batchNode);
 			
+			obj->customSetup();
+			this->addToSection(obj);
 			m_batchNode->addChild(obj);
-			//this->addToSection(obj);
 
 		}
 
@@ -736,7 +737,15 @@ void PlayLayer::updateVisibility()
 
 void PlayLayer::addToSection(GameObject* obj)
 {
-
+	int targetSection = sectionForPos(obj->getPosition());
+	if (m_sections->count() < targetSection + 1) {
+		while (m_sections->count() < targetSection + 1) {
+			m_sections->addObject(CCArray::create());
+		}
+	}
+	CCArray* section = (CCArray*)m_sections->objectAtIndex(targetSection);
+	section->addObject(obj);
+	obj->setSectionIdx(targetSection);
 }
 
 void PlayLayer::animateOutRollGround(bool instant)
@@ -810,6 +819,64 @@ void PlayLayer::checkCollisions(float dt)
 			m_player->hitGround(false);
 		}
 	}
+
+	// welcome to the worst switch statement i've had to write so far
+	int currentSection = this->sectionForPos(m_player->getPosition());
+	int idx;
+	for (idx = currentSection - 1; idx <= currentSection + 1; idx = idx + 1) {
+		if ((-1 < idx) && (idx < m_sections->count()))
+		{
+			CCArray* this_00 = (CCArray *)m_sections->objectAtIndex(idx);
+			for (int objIdx = 0; objIdx < this_00->count(); objIdx = objIdx + 1
+				) {
+				GameObject* currentObject = (GameObject *)this_00->objectAtIndex(objIdx);
+				if (currentObject->getIsSleeping())
+					return;
+
+				if (currentObject->getType() == GameObjectType::Hazard)
+					field306_0x168->addObject(currentObject);
+
+				if ((currentObject->getIsDisabled()) || (currentObject->getHasBeenActivated()))
+					return;
+
+				/*if (!(m_player->getObjectRect()->intersectsRect(currentObject->getObjectRect())) ||
+					((0.0f < currentObject->getRadius() && (!(objectIntersectsCircle(m_player, currentObject))))
+				return;*/
+
+				switch (currentObject->getType()) {
+				case GameObjectType::InvertGravityPortal:
+					if (!m_player->getGravityFlipped()) {
+						// this->playGravityEffect(true);
+					}
+					m_player->setPortalP(currentObject->getPosition());
+					m_player->setPortalObject(currentObject);
+					// m_player->flipGravity(true, false);
+					break;
+				case GameObjectType::NormalGravityPortal:
+					if (m_player->getGravityFlipped()) {
+						// this->playGravityEffect(false);
+					}
+					m_player->setPortalP(currentObject->getPosition());
+					m_player->setPortalObject(currentObject);
+					// m_player->flipGravity(false, false);
+					break;
+				case GameObjectType::ShipPortal:
+					// this->switchToFlyMode(currentObject, false, false);
+					break;
+					// skip a few (again)
+				default:
+					m_player->collidedWithObject(dt, currentObject);
+					return;
+					// skip some more
+				}
+			}
+		}
+	}
+}
+
+int PlayLayer::sectionForPos(CCPoint point)
+{
+	return floorf(point.x);
 }
 
 void PlayLayer::recordAction(bool pressed)
