@@ -748,6 +748,32 @@ void PlayLayer::addToSection(GameObject* obj)
 	obj->setSectionIdx(targetSection);
 }
 
+void PlayLayer::switchToFlyMode(GameObject* obj, bool param_1, bool param_2)
+{
+	this->exitRollMode();
+
+	if (obj) {
+		m_player->setPortalP(obj->getPosition());
+		m_player->setPortalObject(obj);
+		m_cameraPortal = obj;
+	}
+
+	/*if (param_2)
+		m_player->toggleBirdMode(true);
+	else
+		m_player->toggleFlyMode(true);*/
+
+	this->toggleGlitter(true);
+
+	// incomplete
+}
+
+void PlayLayer::exitRollMode()
+{
+	// m_player->toggleRollMode(false);
+	this->animateOutRollGround(false);
+}
+
 void PlayLayer::animateOutRollGround(bool instant)
 {
 	CCDirector* pDirector = CCDirector::sharedDirector();
@@ -861,7 +887,7 @@ void PlayLayer::checkCollisions(float dt)
 					// m_player->flipGravity(false, false);
 					break;
 				case GameObjectType::ShipPortal:
-					// this->switchToFlyMode(currentObject, false, false);
+					this->switchToFlyMode(currentObject, false, false);
 					break;
 					// skip a few (again)
 				default:

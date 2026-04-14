@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ObjectToolbox.h"
+#include "GameManager.h"
 USING_NS_CC;
 
 // hi antimatter some of your code was kind of broken so i fixed it up
@@ -339,6 +340,8 @@ void GameObject::updateState()
 
 void GameObject::customSetup()
 {
+	GameManager* pGameManager = GameManager::sharedState();
+
 	switch (m_objectKey) {
 	case 5:
 	case 73:
@@ -360,9 +363,25 @@ void GameObject::customSetup()
 		// field469_0x1d = 60.0f
 		break;
 	// more left
-	case 16:
+	case 13:
+		this->m_type = GameObjectType::ShipPortal;
+		this->m_objectZ = 10;
+		if (pGameManager->getEditMode()) break;
+		// this->createAndAddParticle(m_type, "portalEffect04.plist", 3, tCCPositionType::kCCPositionTypeGrouped);
+		break;
+	// skipping
+	case 211:
 		m_type = GameObjectType::Decoration;
-		m_objectZ = -1;
+		m_objectZ = -2;
+		// m_dontFadeTinted = true;
+		// m_dontFade = true;
+		// m_dontShow = true;
+		break;
+	// skipping some
+	case 273:
+		m_type = GameObjectType::Decoration;
+		// m_dontShow = true;
+		m_objectZ = -2;
 	}
 
 	//if (m_type - 7 < 2)

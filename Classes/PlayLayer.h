@@ -73,6 +73,10 @@ public:
 	void updateVisibility();
 	void updateLevelColors();
 
+	void switchToFlyMode(GameObject* obj, bool, bool);
+
+	void exitRollMode();
+
 	// animates
 	void animateInFlyGround(bool);
 	void animateOutFlyGround(bool insant);

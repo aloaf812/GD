@@ -21,6 +21,7 @@ enum GameObjectType : int32_t {
     MirrorPortal = 13,
     CounterMirrorPortal = 14,
     BallPortal = 15,
+	unknown22 = 22,
     SecretCoin = 23
 };
 /**
