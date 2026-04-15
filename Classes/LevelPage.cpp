@@ -107,6 +107,22 @@ bool LevelPage::init(GJGameLevel* level)
 	CCSize nbContSize = normalBar->getContentSize();
 	normalFill->setPosition(ccp((nbContSize.width - nbContSize.width * 0.992f) * 0.5f, nbContSize.height * 0.5f));
 
+
+	CCSprite* practiceBar = CCSprite::create("GJ_progressBar_001.png");
+	practiceBar->setColor(ccBLACK);
+	practiceBar->setOpacity(125);
+	practiceBar->setScale(1.0f);
+	this->addChild(practiceBar, 3);
+	practiceBar->setPosition(normalBar->getPosition() + ccp(0.0f, -50.0f));
+
+	CCSprite* practiceFill = CCSprite::create("GJ_progressBar_001.png");
+	practiceFill->setScaleX(0.992f);
+	practiceFill->setScaleY(0.86f);
+	practiceFill->setColor(ccc3(0, 255, 255));
+	practiceBar->addChild(practiceFill, 1);
+	practiceFill->setAnchorPoint(ccp(0.0f, 0.5f));
+	practiceFill->setPosition(normalFill->getPosition());
+
 	// some missing stuff that i need to add in
 	
 	CCLabelBMFont* normalPct = CCLabelBMFont::create(
@@ -115,9 +131,25 @@ bool LevelPage::init(GJGameLevel* level)
 	this->addChild(normalPct, 4);
 	normalPct->setPosition(normalBar->getPosition());
 	normalPct->setScale(0.5f);
-	
-	// missing the other one too 
 
+	CCLabelBMFont* practicePct = CCLabelBMFont::create(
+		CCString::createWithFormat("%i%%", level->getPracticePercent())->getCString(),
+		"bigFont.fnt");
+	this->addChild(practicePct, 4);
+	practicePct->setPosition(practiceBar->getPosition());
+	practicePct->setScale(0.5f);
+	
+	// missing the other one too
+
+	CCLabelBMFont* normalLabel = CCLabelBMFont::create("Normal Mode", "bigFont.fnt");
+	this->addChild(normalLabel, 4);
+	normalLabel->setPosition(ccp(0.0f, 20.0f) + normalPct->getPosition());
+	normalLabel->setScale(0.5f);
+
+	CCLabelBMFont* practiceLabel = CCLabelBMFont::create("Practice Mode", "bigFont.fnt");
+	this->addChild(practiceLabel, 4);
+	practiceLabel->setPosition(ccp(0.0f, 20.0f) + practicePct->getPosition());
+	practiceLabel->setScale(0.5f);
     
     int coinCount = m_level->getCoins();
     CCPoint basePos(324, 16);
