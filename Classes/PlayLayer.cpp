@@ -170,10 +170,10 @@ bool PlayLayer::init(GJGameLevel* level)
 	m_level = level;
 	level->retain();
 
-	/*this->field_0x1dc = CCDictionary::create();
-	field_0x1dc->retain();
+	this->m_particlesDictionary = CCDictionary::create();
+	m_particlesDictionary->retain();
 
-	this->field_0x1e0 = CCDictionary::create();
+	/*this->field_0x1e0 = CCDictionary::create();
 	field_0x1e0->retain();*/
 
 	this->m_gameLayer = CCLayer::create();
@@ -973,6 +973,32 @@ void PlayLayer::showHint()
 		CCDelayTime::create(delayTime),
 		CCFadeOut::create(0.5f),
 		CCCallFunc::create(hintLabel, callfunc_selector(CCNode::removeMeAndCleanup))));
+}
+
+std::string PlayLayer::getParticleKey(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)
+{
+	return CCString::createWithFormat("%i%s%i%i", objType, file, zOrder, positionType)->getCString();
+}
+
+/*std::string PlayLayer::getParticleKey2(std::string pKey)
+{
+	return CCString::createWithFormat("%s%s", pKey, )->getCString();
+}*/
+
+void PlayLayer::createParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)
+{
+	GameManager* pGameManager = GameManager::sharedState();
+
+	if (!pGameManager->getPerformanceMode()) {
+		std::string particleKey = this->getParticleKey(objType, file, zOrder, positionType);
+		if (!m_particlesDictionary->objectForKey(particleKey)) {
+			// TODO: add better names to these variables
+			CCArray* pCVar3 = CCArray::create();
+			CCArray* pCVar4 = CCArray::create();
+			m_particlesDictionary->setObject(pCVar3, particleKey);
+			// m_particlesDictionary->setObject(pCVar4, this->getParticleKey2(particleKey));
+		}
+	}
 }
 
 void PlayLayer::moveCameraToPos(cocos2d::CCPoint pos)

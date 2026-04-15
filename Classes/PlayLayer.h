@@ -86,6 +86,9 @@ public:
 	void animateOutRollGround(bool insant);
 	void animateOutRollGroundFinished();
 
+	std::string getParticleKey(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);
+	std::string getParticleKey2(std::string pKey);
+	void createParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);
 	void playSpeedParticle(float timeMod);
 
 	void moveCameraToPos(cocos2d::CCPoint pos);
@@ -117,6 +120,8 @@ public:
 	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
 	bool m_showingHint; // 0x1d0
 	
+	cocos2d::CCDictionary* m_particlesDictionary; // 0x1dc
+
 	cocos2d::CCNode* field_0x1e4;
 	cocos2d::CCSprite* field_0x1ec;
 	cocos2d::CCSprite* field_0x1f4;

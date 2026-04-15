@@ -22,17 +22,17 @@ GameObject::GameObject() {
     this->unk_0x1d8 = 0;
     this->m_isActive = false;
     this->m_hasGlow = false;
-    this->unk_0x1de = false;
-    this->m_particleSystem = 0;
-    this->unk_0x1e4 = 0;
-    this->unk_0x1e8 = false;
+    this->unk_0x1de = false;*/
+    this->m_particleSystem = nullptr;
+	this->m_particleString = "";
+    this->m_particleAdded = false;
     // cocos2d::CCPoint::CCPoint((GameObject *)((char *)this + 0x1EC));
     // cocos2d::CCRect::CCRect((GameObject *)((char *)this + 0x1F4));
     this->unk_0x204 = false;
     // cocos2d::CCRect::CCRect((GameObject *)((char *)this + 0x208));
     this->unk_0x218 = false;
     
-    this->m_hasColor = false;
+	/*this->m_hasColor = false;
     this->m_colorSprite = nullptr;
     this->m_ignoreScreenCheck = false;
     this->m_radius = 0;
@@ -367,7 +367,7 @@ void GameObject::customSetup()
 		this->m_type = GameObjectType::ShipPortal;
 		this->m_objectZ = 10;
 		if (pGameManager->getEditMode()) break;
-		// this->createAndAddParticle(m_type, "portalEffect04.plist", 3, tCCPositionType::kCCPositionTypeGrouped);
+		this->createAndAddParticle(m_type, "portalEffect04.plist", 3, tCCPositionType::kCCPositionTypeGrouped);
 		break;
 	// skipping
 	case 211:
@@ -392,4 +392,11 @@ CCRect GameObject::getObjectRect()
 {
 	// for the most part i do NOT care yet if this works or not
 	return this->getTextureRect();
+}
+
+void GameObject::createAndAddParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)
+{
+	PLAY_LAYER->createParticle(objType, file, zOrder, positionType);
+	m_particleString = PLAY_LAYER->getParticleKey(objType, file, zOrder, positionType);
+	m_particleAdded = true;
 }

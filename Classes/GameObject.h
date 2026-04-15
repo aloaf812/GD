@@ -66,6 +66,8 @@ public:
     virtual cocos2d::CCPoint getRealPosition();
     virtual void setStartPos(cocos2d::CCPoint position);
     virtual std::string getSaveString();*/
+
+	void createAndAddParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);
     
     int unk_0x1b8;
     int unk_0x1bc;
@@ -82,8 +84,8 @@ public:
     bool m_hasGlow; // 0x1dd
     bool unk_0x1de;
     cocos2d::CCParticleSystemQuad* m_particleSystem; // 0x1e0
-    std::string* unk_0x1e4;
-    bool unk_0x1e8;
+	std::string m_particleString;
+	bool m_particleAdded;
     cocos2d::CCPoint unk_0x1ec;
     cocos2d::CCRect unk_0x1f4;
     bool unk_0x204;
