@@ -112,7 +112,7 @@ void GJGroundLayer::deactivateGround()
 	this->stopAllActions();
 	CCArray* children = getChildren();
 	for (int i = 0, count = children->count(); i < count; ++i) {
-		dynamic_cast<CCNode*>(children->objectAtIndex(i))->stopActionByTag(999);
+		((CCNode*)children->objectAtIndex(i))->stopActionByTag(999);
 	}
 	m_isActive = false;
 }

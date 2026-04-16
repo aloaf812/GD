@@ -126,6 +126,7 @@ void GJGarageLayer::updatePlayerColors()
 {
 	GameManager* pGameManager = GameManager::sharedState();
 	m_playerObject->setColor(pGameManager->colorForIdx(pGameManager->getPlayerColor()));
+	m_playerObject->setSecondColor(pGameManager->colorForIdx(pGameManager->getPlayerColor2()));
 }
 
 void GJGarageLayer::onBack(CCObject* sender)

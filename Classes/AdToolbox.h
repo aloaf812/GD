@@ -8,7 +8,7 @@
 */
 class AdToolbox {
 public:
-    void setupAds();
+    static void setupAds();
     void showInterstitial();
 };
 

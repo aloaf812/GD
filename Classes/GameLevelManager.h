@@ -21,6 +21,7 @@ public:
     GJGameLevel* getMainLevel(int mainLevel);
 
 	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_localLevels, LocalLevels); // 0x114
+	CC_SYNTHESIZE(bool, m_createdNewLevel, CreatedNewLevel); // 0x124
 	CC_SYNTHESIZE(SearchType, m_lastSearchType, LastSearchType); // 0x148
 };
 

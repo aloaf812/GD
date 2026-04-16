@@ -192,10 +192,10 @@ bool PlayLayer::init(GJGameLevel* level)
 	field_0x134->retain();
 
 	this->field_0x188 = CCArray::create()
-	field_0x188->retain();
+	field_0x188->retain();*/
 
-	this->field_0x168 = CCArray::create();
-	field_0x168->retain();*/
+	this->m_hazardsArray = CCArray::create();
+	m_hazardsArray->retain();
 
 	this->m_activeObjects = CCArray::create();
 	m_activeObjects->retain();
@@ -507,6 +507,9 @@ void PlayLayer::update(float dt)
 	if (m_player->isFlying())
 		m_player->updateShipRotation(step);
 
+	for (int i = 0; 0 < m_stateObjects->count(); i = i + 1) {
+		((GameObject *)m_stateObjects->objectAtIndex(i))->updateState();
+	}
 
 	// weird
 	bool isUnlocked = m_player->getIsLocked();
@@ -690,6 +693,13 @@ void PlayLayer::toggleProgressbar()
 	m_progressBar->setVisible(GameManager::sharedState()->getShowProgressBar());
 }
 
+void PlayLayer::registerStateObject(GameObject* obj)
+{
+	if (m_stateObjects->containsObject(obj)) {
+		m_stateObjects->addObject(obj);
+	}
+}
+
 void PlayLayer::resume()
 {
 	AppDelegate* pApp = AppDelegate::get();
@@ -737,7 +747,7 @@ void PlayLayer::updateVisibility()
 
 void PlayLayer::addToSection(GameObject* obj)
 {
-	int targetSection = sectionForPos(obj->getPosition());
+	unsigned int targetSection = sectionForPos(obj->getPosition());
 	if (m_sections->count() < targetSection + 1) {
 		while (m_sections->count() < targetSection + 1) {
 			m_sections->addObject(CCArray::create());
@@ -766,6 +776,25 @@ void PlayLayer::switchToFlyMode(GameObject* obj, bool param_1, bool param_2)
 	this->toggleGlitter(true);
 
 	// incomplete
+}
+
+void PlayLayer::exitAirMode()
+{
+	this->toggleGlitter(false);
+	// this->animateOutFlyGround(false);
+	m_cameraMovingY = true;
+}
+
+void PlayLayer::exitBirdMode()
+{
+	m_player->toggleBirdMode(false);
+	this->exitAirMode();
+}
+
+void PlayLayer::exitFlyMode()
+{
+	m_player->toggleFlyMode(false);
+	this->exitAirMode();
 }
 
 void PlayLayer::exitRollMode()
@@ -849,18 +878,19 @@ void PlayLayer::checkCollisions(float dt)
 	// welcome to the worst switch statement i've had to write so far
 	int currentSection = this->sectionForPos(m_player->getPosition());
 	int idx;
+	GameObject* currentObject;
 	for (idx = currentSection - 1; idx <= currentSection + 1; idx = idx + 1) {
 		if ((-1 < idx) && (idx < m_sections->count()))
 		{
 			CCArray* this_00 = (CCArray *)m_sections->objectAtIndex(idx);
 			for (int objIdx = 0; objIdx < this_00->count(); objIdx = objIdx + 1
 				) {
-				GameObject* currentObject = (GameObject *)this_00->objectAtIndex(objIdx);
+				currentObject = (GameObject *)this_00->objectAtIndex(objIdx);
 				if (currentObject->getIsSleeping())
 					return;
 
 				if (currentObject->getType() == GameObjectType::Hazard)
-					field306_0x168->addObject(currentObject);
+					m_hazardsArray->addObject(currentObject);
 
 				if ((currentObject->getIsDisabled()) || (currentObject->getHasBeenActivated()))
 					return;
@@ -889,7 +919,13 @@ void PlayLayer::checkCollisions(float dt)
 				case GameObjectType::ShipPortal:
 					this->switchToFlyMode(currentObject, false, false);
 					break;
-					// skip a few (again)
+				case GameObjectType::CubePortal:
+					m_player->setPortalP(currentObject->getPosition());
+					m_player->setPortalObject(currentObject);
+					this->exitFlyMode();
+					this->exitBirdMode();
+					this->exitRollMode();
+					break;
 				default:
 					m_player->collidedWithObject(dt, currentObject);
 					return;
@@ -898,6 +934,22 @@ void PlayLayer::checkCollisions(float dt)
 			}
 		}
 	}
+
+	unsigned int haIdx = 0;
+	while (true) {
+		if (m_hazardsArray->count() <= haIdx) {
+			m_hazardsArray->removeAllObjects();
+			return;
+		}
+
+		currentObject = (GameObject*)m_hazardsArray->objectAtIndex(haIdx);
+		// doesnt work for some reason
+		if ((m_player->getObjectRect().intersectsRect(currentObject->getObjectRect())) && (currentObject->getRadius() <= 0.0f)) // || (objectIntersectsCircle(m_player, currentObject)) && (!m_playbackMode))))
+			break;
+
+		haIdx = haIdx + 1;
+	}
+	this->destroyPlayer();
 }
 
 int PlayLayer::sectionForPos(CCPoint point)
@@ -1021,7 +1073,7 @@ void PlayLayer::cameraMoveX(float value, float duration, float rate)
 void PlayLayer::cameraMoveY(float value, float duration, float rate)
 {
 	this->stopActionByTag(11);
-	// field_0x1ab = true;
+	m_cameraMovingY = true;
 	CCEaseInOut* ease = CCEaseInOut::create(
 		CCActionTween::create(duration, "cTY", m_cameraPos.y, value),
 		rate);

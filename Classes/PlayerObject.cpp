@@ -77,6 +77,13 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	m_iconSpriteSecondary->setPosition(this->convertToNodeSpace(m_iconSprite->getPosition()));
 #pragma endregion
 
+	char const* sFrameFile = CCString::createWithFormat("ship_%02d_001.png", shipIdx)->getCString();
+	char const* sFrameFile2 = CCString::createWithFormat("ship_%02d_2_001.png", shipIdx)->getCString();
+
+	m_vehicleSprite = CCSprite::createWithSpriteFrameName(frameFile);
+	this->addChild(m_vehicleSprite, 2);
+	m_vehicleSprite->setVisible(false);
+
 	this->m_isJumping = false;
 	this->m_yVelolcity = 0;
 	//this->field737_0x32c = 0;
@@ -287,7 +294,7 @@ void PlayerObject::setColor(cocos2d::ccColor3B color)
 {
 	CCSprite::setColor(color);
 	m_iconSprite->setColor(color);
-	//m_vehicleSprite->setColor(color);
+	m_vehicleSprite->setColor(color);
 }
 
 void PlayerObject::setSecondColor(cocos2d::ccColor3B color)
@@ -525,4 +532,56 @@ void PlayerObject::stopRotation()
 
 		this->setRotation(rotInterval);
 	}
+}
+
+void PlayerObject::toggleFlyMode(bool enable)
+{
+	if (m_flyMode != enable) {
+		m_flyMode = enable;
+
+		if (enable) {
+			this->toggleRollMode(false);
+			this->toggleBirdMode(false);
+		}
+
+		this->stopRotation();
+		m_yVelolcity = m_yVelolcity * 0.5;
+		this->setVisible(false);
+		m_onGround = false;
+		field772_0x30d = false;
+		field727_0x310 = false;
+		// this->removePendingCheckpoint();
+
+		// if (!m_flyMode)
+			// this->resetPlayerIcon();
+		}
+	else {
+		// this->updatePlayerShipFrame(GameManager::sharedState()->getPlayerShip());
+		m_iconSprite->setScale(0.55f);
+		m_iconSprite->setPosition(ccp(0.0f, 5.0f));
+
+		m_vehicleSprite->setVisible(true);
+		m_vehicleSprite->setPosition(ccp(0.0f, -5.0f));
+		// this->updatePlayerGlow();
+
+		// m_birdDragParticle->resetSystem();
+		// m_dragParticle2->resetSystem();
+		// m_dragParticle2->stopSystem();
+		
+		// this->field732_0x315 = false;
+		// this->deactivateParticle();
+		// this->spawnPortalCircle(ccc3(255, 0, 255), 50.0f);
+		// this->activateStreak();
+		// this->updatePlayerScale();
+	}
+}
+
+void PlayerObject::toggleRollMode(bool enable)
+{
+
+}
+
+void PlayerObject::toggleBirdMode(bool enable)
+{
+
 }

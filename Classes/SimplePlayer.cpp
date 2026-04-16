@@ -43,16 +43,16 @@ bool SimplePlayer::init(int iconID)
     
 	/*CCSprite* m_pPlayerSpriteBirdDome = cocos2d::CCSprite::createWithSpriteFrameName(layer2.c_str());
     m_pPlayerSpriteLayer1->addChild(m_pPlayerSpriteBirdDome, -2);
-    // m_pPlayerSpriteBirdDome->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));
+    m_pPlayerSpriteBirdDome->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));*/
     
-	//m_outlineLayer = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
-	//m_firstLayer->addChild(m_outlineLayer, -3);
-    // m_outlineLayer->setPosition(m_firstLayer->convertToNodeSpace(g_obUnknownGlobal));
-	//m_outlineLayer->setVisible(false);
+	m_outlineLayer = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
+	m_firstLayer->addChild(m_outlineLayer, -3);
+    m_outlineLayer->setPosition(m_firstLayer->convertToNodeSpace(CCPointZero));
+	m_outlineLayer->setVisible(false);
     
-    m_pPlayerSpriteDetail = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
+    /*m_pPlayerSpriteDetail = cocos2d::CCSprite::createWithSpriteFrameName(layerGlow.c_str());
     m_firstLayer->addChild(m_pPlayerSpriteDetail, 1);
-    // m_pPlayerSpriteDetail->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));*/
+    m_pPlayerSpriteDetail->setPosition(m_pPlayerSpriteLayer1->convertToNodeSpace(g_obUnknownGlobal));*/
     return true;
 }
 
@@ -61,7 +61,19 @@ void SimplePlayer::updatePlayerFrame(int iconID, IconType type)
 
 }
 
+void SimplePlayer::updateColors()
+{
+	// TODO: work on this and fix garage
+}
+
+void SimplePlayer::setColor(ccColor3B const& color)
+{
+	m_firstLayer->setColor(color);
+	updateColors();
+}
+
 void SimplePlayer::setSecondColor(ccColor3B const& color)
 {
-
+	m_secondLayer->setColor(color);
+	updateColors();
 }

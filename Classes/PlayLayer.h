@@ -62,7 +62,7 @@ public:
 	void togglePracticeMode(bool practice);
 	void toggleProgressbar();
     
-    //void registerStateObject(GameObject* object);
+    void registerStateObject(GameObject* obj);
     
 	// updates
     void update(float dt);
@@ -75,6 +75,9 @@ public:
 
 	void switchToFlyMode(GameObject* obj, bool, bool);
 
+	void exitAirMode();
+	void exitBirdMode();
+	void exitFlyMode();
 	void exitRollMode();
 
 	// animates
@@ -105,10 +108,11 @@ public:
 	bool m_rollGroundActive; // 0x161
 
 	cocos2d::CCArray* m_sections; // 0x164
-	cocos2d::CCArray* field306_0x168; // 0x168
+	cocos2d::CCArray* m_hazardsArray; // 0x168
 	cocos2d::CCArray* m_activeObjects; // 0x16c
 	cocos2d::CCArray* m_stateObjects; // 0x17c
 	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180
+	cocos2d::CCArray* m_effectObjects; // 0x188
 	// AudioEffectsLayer* m_audioEffectsLayer // 0x18c
 	
 	GJGroundLayer* m_ground2; // 0x198
@@ -116,6 +120,7 @@ public:
 
 	bool m_playerDead; // 0x1a8
 	bool field383_0x1a9; // 0x1a9
+	bool m_cameraMovingY; // 0x1ab
 	
 	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
 	bool m_showingHint; // 0x1d0

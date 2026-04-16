@@ -43,12 +43,12 @@ cocos2d::CCSprite * CCSpritePlus::getFollower(){
 
 
 bool CCSpritePlus::initWithSpriteFrameName(char const* name){
-    m_eObjType = 13;
+    // m_eObjType = 13;
     return cocos2d::CCSprite::initWithSpriteFrameName(name);
 }
 
 bool CCSpritePlus::initWithTexture(cocos2d::CCTexture2D *texture){
-    m_eObjType = 13;
+    // m_eObjType = 13;
     return cocos2d::CCSprite::initWithTexture(texture);
 }
 
@@ -62,9 +62,9 @@ void CCSpritePlus::removeFollower(CCNode *sprite){
 }
 
 void CCSpritePlus::setFlipX(bool value){
-    unsigned int i;
+    // unsigned int i;
     cocos2d::CCSprite::setFlipX(value);
-    if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
+    /*if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
         for (i= 0; i < m_pParent->getChildrenCount(); i++) {
             (reinterpret_cast<cocos2d::CCSprite*>(m_pParent->getChildren()->objectAtIndex(i)))->setFlipX(value);
         }
@@ -73,14 +73,14 @@ void CCSpritePlus::setFlipX(bool value){
         for (i = 0; i < m_followers->count(); i++) {
             reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setFlipX(value);
         }
-    }
+    }*/
 }
 
 
 void CCSpritePlus::setFlipY(bool value){
-    unsigned int i;
+    // unsigned int i;
     cocos2d::CCSprite::setFlipY(value);
-    if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
+    /*if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
         for (i= 0; i < m_pParent->getChildrenCount(); i++) {
             (reinterpret_cast<cocos2d::CCSprite*>(m_pParent->getChildren()->objectAtIndex(i)))->setFlipY(value);
         }
@@ -89,7 +89,7 @@ void CCSpritePlus::setFlipY(bool value){
         for (i = 0; i < m_followers->count(); i++) {
             reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setFlipY(value);
         }
-    }
+    }*/
 }
 
 
@@ -123,23 +123,6 @@ void CCSpritePlus::setRotation(float fRotation){
             reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotation(fRotation);
         }
     }*/
-}
-
-void CCSpritePlus::setRotationX(float fRotationX){ 
-    cocos2d::CCSprite::setRotationX(fRotationX); 
-    /*if (m_hasFollower){ 
-        for (unsigned int i = 0; i < m_followers->count(); i++){ 
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotationX(fRotationX); 
-        } 
-    }*/ 
-}
-
-void CCSpritePlus::setRotationY(float fRoationY){ 
-    cocos2d::CCSprite::setRotationY(fRoationY); 
-    /*if (m_hasFollower){ 
-        for (unsigned int i = 0; i < m_followers->count(); i++){ reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotationY(fRoationY); 
-        }
-    }*/ 
 }
 
 void CCSpritePlus::setScale(float fScale){ 

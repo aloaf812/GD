@@ -71,3 +71,13 @@ bool LevelBrowserLayer::init(GJSearchObject* searchObject)
 
 	return true;
 }
+
+void LevelBrowserLayer::onNew(CCObject* sender)
+{
+	GameLevelManager* GLM = GameLevelManager::sharedState();
+	// GJGameLevel* newLevel = GLM->createNewLevel();
+	GLM->setCreatedNewLevel(true);
+	/*CCScene* scene = EditLevelLayer::scene(newLevel);
+	CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
+	pDirector->replaceScene(fade);*/
+}

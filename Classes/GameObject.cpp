@@ -34,9 +34,9 @@ GameObject::GameObject() {
     
 	/*this->m_hasColor = false;
     this->m_colorSprite = nullptr;
-    this->m_ignoreScreenCheck = false;
-    this->m_radius = 0;
-    this->m_isRotated = false;
+    this->m_ignoreScreenCheck = false;*/
+    this->m_radius = 0.0f;
+    /*this->m_isRotated = false;
     this->m_scaleModX = 0;
     this->m_scaleModY = 0;
     this->m_ID = 0;*/
@@ -159,13 +159,13 @@ GameObject* GameObject::objectFromString(std::string objString)
 
 	return object;
 }
-/*
+
 void GameObject::disableObject() {
-    this->m_objectType = GameObjectType::UnknownType;
+	this->m_type = GameObjectType::Decoration;
     this->m_isDisabled = true;
-    this->unk_0x1e8 = false;
-    //this->m_opacityMod = 0.2;
-}*/
+	this->m_particleAdded = false;
+    this->m_opacityMod = 0.2f;
+}
 
 const char* GameObject::getBallFrame(int idx) {
     return cocos2d::CCString::createWithFormat("rod_ball_%02d_001.png", idx < 3 ? idx : 3)->getCString();
@@ -192,7 +192,7 @@ void GameObject::powerOnObject() {
         this->m_poweredOn = true;
 }
 
-/*void GameObject::activateObject() {
+void GameObject::activateObject() {
     this->m_shouldHide = false;
     if (this->m_isActive || this->m_isSleeping) return;
     
@@ -222,7 +222,7 @@ void GameObject::powerOnObject() {
     }
 }
 
-void GameObject::addColorSprite() {
+/*void GameObject::addColorSprite() {
     if (
         ((this->m_objectKey >= 207 && this->m_objectKey < 214) ||
          (this->m_objectKey >= 215 && this->m_objectKey < 220) ||
@@ -361,6 +361,21 @@ void GameObject::customSetup()
 		m_isInvisible = true;
 		// field468_0x1d4 = 30.0f;
 		// field469_0x1d = 60.0f
+		break;
+	case 8:
+	case 39:
+	case 103:
+	case 177:
+	case 178:
+	case 179:
+	case 216:
+	case 217:
+	case 218:
+		this->m_type = GameObjectType::Hazard;
+		this->m_scaleModX = 0.2f;
+		this->m_scaleModY = 0.4f;
+		/*if (iVar11 - 0xb1U < 3)
+			this->field_0x2a9 = 1;*/
 		break;
 	// more left
 	case 13:

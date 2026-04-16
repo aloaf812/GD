@@ -67,6 +67,10 @@ public:
 	void runNormalRotation();
 	void stopRotation();
 
+	void toggleFlyMode(bool enable);
+	void toggleRollMode(bool enable);
+	void toggleBirdMode(bool enable);
+
 
 	GhostType m_ghostType; // 0x2c0
 	// GhostTrailEffect* m_ghostTrail; // 0x2c4

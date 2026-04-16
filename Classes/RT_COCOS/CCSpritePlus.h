@@ -8,12 +8,9 @@
 class CCSpritePlus : public cocos2d::CCSprite {
 
 public:
-	cocos2d::CCArray* m_followers;
-	CCSpritePlus* m_followingSprite;
-	bool m_hasFollower;
-	bool m_propagateScaleChanges;
-	bool m_propagateFlipChanges;
-    int m_eObjType;
+	cocos2d::CCArray* m_followers; // 0x1b8
+	CCSpritePlus* m_followingSprite; // 0x1bc
+	bool m_hasFollower; // 0x1c0
 
 	void addFollower(cocos2d::CCNode* sprite);
 	
@@ -33,8 +30,6 @@ public:
     void setFlipY(bool value);
     void setPosition(cocos2d::CCPoint const &pos);
 	void setRotation(float fRotation);
-    void setRotationX(float fRotationX);
-    void setRotationY(float fRotationY);
     void setScale(float fScale);
     void setScaleX(float fScaleX);
     void setScaleY(float fScaleY);

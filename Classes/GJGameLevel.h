@@ -24,6 +24,7 @@ public:
     //void encodeWithCoder(DS_Dictionary* dict);
 	void encodeWithCoder(cocos2d::CCDictionary* dict);
     // le wall of CC_SYNTHESIZE
+	CC_SYNTHESIZE(cocos2d::CCDictionary*, m_lastBuildSave, LastBuildSave); // 0xe8
     CC_SYNTHESIZE(int, m_levelID, LevelID); // 0xec
     CC_SYNTHESIZE(std::string, m_levelName, LevelName); // 0xf0
     CC_SYNTHESIZE(std::string, m_levelDesc, LevelDesc); // 0xf4
@@ -41,6 +42,7 @@ public:
 	CC_SYNTHESIZE(bool, m_isVerified, IsVerified); // 0x129
 	CC_SYNTHESIZE(int, m_levelVersion, LevelVersion); // 0x12c
 	CC_SYNTHESIZE(int, m_gameVersion, GameVersion); // 0x130
+	CC_SYNTHESIZE(int, m_buildVersion, BuildVersion); // 0x134
 	CC_SYNTHESIZE(int, m_attempts, Attempts); // 0x138
 	CC_SYNTHESIZE(int, m_jumps, Jumps); // 0x13c
     CC_SYNTHESIZE(int, m_normalPercent, NormalPercent); // 0x140

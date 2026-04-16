@@ -43,10 +43,10 @@ public:
     // virtual void setRotation(float rotation);
     // virtual void setOpacity(unsigned char opacity);
     
-    // void disableObject();
+    void disableObject();
     const char* getBallFrame(int idx);
-    /*void addColorSprite();
-    void activateObject();*/
+    // void addColorSprite();
+    void activateObject();
     void powerOffObject();
     void powerOnObject();
     /*void removeGlow();
@@ -80,7 +80,7 @@ public:
     bool m_poweredOn; // 0x1d1
     float unk_0x1d4;
     float unk_0x1d8;
-    /// CC_PROPERTY_READONLY(bool, m_isActive, IsActive); // 0x1dc
+	CC_SYNTHESIZE_READONLY(bool, m_isActive, IsActive); // 0x1dc
     bool m_hasGlow; // 0x1dd
     bool unk_0x1de;
     cocos2d::CCParticleSystemQuad* m_particleSystem; // 0x1e0
@@ -91,7 +91,7 @@ public:
     bool unk_0x204;
     cocos2d::CCRect unk_0x208;
     bool unk_0x218;
-    // CC_PROPERTY_READONLY(bool, m_hasColor, HasColor); // 0x219
+	CC_SYNTHESIZE_READONLY(bool, m_hasColor, HasColor); // 0x219
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_colorSprite, ColorSprite); // 0x21c
     /*CC_PROPERTY(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220*/
     CC_SYNTHESIZE(float, m_radius, Radius); // 0x224
@@ -114,7 +114,7 @@ public:
     CC_SYNTHESIZE(float, m_startRotation, StartRotation); // 0x258
     CC_SYNTHESIZE(float, m_startScaleX, StartScaleX); // 0x25c
     CC_SYNTHESIZE(float, m_startScaleY, StartScaleY); // 0x260
-    /*CC_PROPERTY(bool, m_shouldHide, ShouldHide); // 0x264*/
+	CC_SYNTHESIZE(bool, m_shouldHide, ShouldHide); // 0x264
     CC_SYNTHESIZE_READONLY(float, m_spawnXPos, SpawnXPos); // 0x268
 	CC_SYNTHESIZE_READONLY(bool, m_isInvisible, IsInvisible); // 0x26c
     CC_SYNTHESIZE(float, m_enterAngle, EnterAngle); // 0x270
@@ -141,8 +141,8 @@ public:
     CC_PROPERTY_READONLY(bool, m_useSpecialLight, UseSpecialLight); // 0x2ab*/
     CC_SYNTHESIZE(float, m_opacityMod, OpacityMod); // 0x2ac
     CC_SYNTHESIZE(float, m_glowOpacityMod, GlowOpacityMod); // 0x2b0
-    /*CC_PROPERTY(bool, m_dontShow, DontShow); // 0x2b4
-    CC_PROPERTY(bool, m_editorSelected, EditorSelected); // 0x2b5
+	CC_SYNTHESIZE(bool, m_dontShow, DontShow); // 0x2b4
+    /*CC_PROPERTY(bool, m_editorSelected, EditorSelected); // 0x2b5
     CC_PROPERTY(bool, m_copyPlayerColor1, CopyPlayerColor1); // 0x2b6
     CC_PROPERTY(bool, m_copyPlayerColor2, CopyPlayerColor2); // 0x2b7
     CC_PROPERTY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2b8*/

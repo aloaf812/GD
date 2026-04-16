@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	#endif
 
     // check performance with this: pDirector->setDisplayStats(true);
-	// AdToolbox::setupAds();
+	AdToolbox::setupAds();
     
 	// run
     CCScene *pScene = LoadingLayer::scene();
