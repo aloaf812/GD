@@ -7,6 +7,7 @@ LOCAL_MODULE := cocos2dcpp_shared
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
+                   ../../Classes/AdToolbox.cpp \
                    ../../Classes/AchievementBar.cpp \
                    ../../Classes/AchievementManager.cpp \
                    ../../Classes/AchievementNotifier.cpp \

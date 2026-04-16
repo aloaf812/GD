@@ -9,7 +9,8 @@ js gimme some time i'll add it soon
 
 ### - [GD Docs:](https://wyliemaster.github.io/gddocs/) provides useful information on some aspects of the game.
 ### - [Geode Docs:](https://docs.geode-sdk.org/) provides variable names, classes, and return types as well as some other useful infoformation.
-### - [Library of Geometria:](https://a-zalt.github.io/) Provides knowledge on the game's technical quirks and changes between versions
+- [Geode's 1.920 bindings](https://github.com/geode-sdk/bindings/blob/main/bindings/1.920/GeometryDash.bro) are also extremely useful with minimal differences to 1.710, containing discovered variable names, ordering, and types.
+### - [Library of Geometria:](https://a-zalt.github.io/) Provides knowledge on the game's technical quirks and changes between versions.
 ## Previous Decompilation Attempts
 - [ProjectReversio](https://github.com/ProjectReversio/GeometryDash) (2.113 + lite versions)
 - [WylieMaster](https://github.com/WylieMaster/GD-Decompiled) (2.113)
