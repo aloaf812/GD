@@ -405,8 +405,22 @@ void GameObject::customSetup()
 
 CCRect GameObject::getObjectRect()
 {
-	// for the most part i do NOT care yet if this works or not
-	return this->getTextureRect();
+	return getObjectRect2(m_scaleModX, m_scaleModY);
+}
+
+CCRect GameObject::getObjectRect(float scaleModX, float scaleModY)
+{
+	// this function seems a bit complicated, will finish later
+	return CCRectMake(0, 0, scaleModX, scaleModY);
+}
+
+CCRect GameObject::getObjectRect2(float scaleModX, float scaleModY)
+{
+	if (unk_0x218) {
+		unk_0x218 = true;
+		unk_0x208 = getObjectRect(scaleModX, scaleModY);
+	}
+	return unk_0x208;
 }
 
 void GameObject::createAndAddParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)

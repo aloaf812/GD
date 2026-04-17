@@ -453,8 +453,8 @@ bool PlayerObject::playerIsFalling()
 
 bool PlayerObject::isSafeFlip()
 {
-	if (field747_0x324 == 0.0f)
-		return false;
+	// if (field747_0x324 == 0.0f)
+		// return false;
 
 	return -15.0 <= m_yVelolcity;
 }
@@ -481,8 +481,38 @@ void PlayerObject::hitGround(bool notFlipped)
 
 void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 {
-	// needs a bit more implementation than just this
-	hitGround(true);
+	CCRect playerRect = this->getObjectRect();
+	CCRect objRect = obj->getObjectRect();
+
+	// currently used as a placeholder since this is a pretty big function
+	if (true) {
+		// if (this->getObjectRect(0.3f, 0.3f).intersectsRect(obj->getObjectRect())) {
+		if (true) {
+			if ((true) && (isSafeFlip())) {
+				CCPoint moveToPos;
+				if (!m_gravityFlipped) {
+					moveToPos = ccp(getPosition().x, getPosition().y - objRect.getMinY());
+				}
+				else {
+					// moveToPos = ccp(getPosition().x, (float)((ulonglong)uVar11 >> 0x20));
+				}
+				this->setPosition(moveToPos);
+				this->hitGround(true);
+				m_onGround = false;
+			}
+			else {
+				if (obj->getType() == GameObjectType::unknown22) {
+					// obj->destroyObject();
+				}
+				else {
+					if (!PLAY_LAYER->getPlaybackMode()) {
+						PLAY_LAYER->destroyPlayer();
+					}
+				}
+			}
+		}
+	}
+
 }
 
 // this whole project is spaghetti code and educated guesses lol

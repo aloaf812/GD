@@ -7,5 +7,7 @@ class CCBlockLayer : public cocos2d::CCLayerColor {
 public:
 	virtual bool init();
 	virtual void customSetup();
+
+	CC_SYNTHESIZE(bool, m_removeOnExit, RemoveOnExit); // 0x188
 };
 #endif

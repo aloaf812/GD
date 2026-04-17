@@ -60,9 +60,9 @@ public:
     virtual void resetObject();
     // virtual void deactivateObject();
     virtual cocos2d::CCRect getObjectRect();
-	/*virtual cocos2d::CCRect getObjectRect(float scaleModX, float scaleModY);
+	virtual cocos2d::CCRect getObjectRect(float scaleModX, float scaleModY);
     virtual cocos2d::CCRect getObjectRect2(float scaleModX, float scaleModY);
-    virtual cocos2d::CCRect getObjectTextureRect();
+    /*virtual cocos2d::CCRect getObjectTextureRect();
     virtual cocos2d::CCPoint getRealPosition();
     virtual void setStartPos(cocos2d::CCPoint position);
     virtual std::string getSaveString();*/

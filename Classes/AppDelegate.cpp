@@ -57,11 +57,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
     CCDirector* pDirector = CCDirector::sharedDirector();
-    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-    // what?: pDirector->__cxa_pure_virtual)();
+	// what?: pDirector->__cxa_pure_virtual();
     pDirector->pause();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
-    if (false) {
+    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+	SAE->pauseAllEffects();
+	if (m_loadingFinished) {
         SAE->pauseBackgroundMusic();
         PlatformToolbox::onNativePause();
         GameManager::sharedState()->applicationDidEnterBackground();
