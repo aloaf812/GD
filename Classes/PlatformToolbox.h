@@ -22,7 +22,7 @@ public:
     // achievements
     static void showAchievements();
     static void openAppPage();
-    // android only? // void reportLoadingFinished();
+    static void reportLoadingFinished();
 };
 
 #endif /* defined(__GeometryDash__PlatformToolbox__) */

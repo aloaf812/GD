@@ -6,7 +6,7 @@ USING_NS_CC_EXT;
 
 AchievementBar::AchievementBar()
 {
-
+	m_targetScene = nullptr;
 }
 
 AchievementBar* AchievementBar::create(char const* title, char const* description, char const* icon)
@@ -89,5 +89,9 @@ bool AchievementBar::init(char const* title, char const* description, char const
 void AchievementBar::show()
 {
 	CCNode* scene = CCDirector::sharedDirector()->getRunningScene();
-	scene->addChild(this);
+	
+	if (m_targetScene != nullptr)
+		scene = m_targetScene;
+
+	scene->addChild(this, 105);
 }

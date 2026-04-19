@@ -51,7 +51,14 @@ void AchievementNotifier::showNextAchievement()
 
 void AchievementNotifier::achievementDisplayFinished()
 {
+	CCNode::removeMeAndCleanup();
 
+	if (m_currentAch != nullptr) {
+		m_currentAch->release();
+	}
+
+	m_currentAch = nullptr;
+	this->showNextAchievement();
 }
 
 void AchievementNotifier::willSwitchToScene(cocos2d::CCScene* scene)

@@ -56,6 +56,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
+	pauseGame();
+	trySaveGame();
     CCDirector* pDirector = CCDirector::sharedDirector();
 	// what?: pDirector->__cxa_pure_virtual();
     pDirector->pause();
@@ -112,6 +114,6 @@ void AppDelegate::trySaveGame(){
 
 void AppDelegate::loadingIsFinished()
 {
-    // :wilted_rose:
-    return;
+	m_loadingFinished = true;
+	PlatformToolbox::reportLoadingFinished();
 }

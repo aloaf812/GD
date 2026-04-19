@@ -94,3 +94,8 @@ void PlatformToolbox::onNativePause()
         methodInfo.env->callStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
     }*/
 }
+
+void PlatformToolbox::reportLoadingFinished()
+{
+
+}
