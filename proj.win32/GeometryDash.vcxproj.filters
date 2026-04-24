@@ -48,9 +48,6 @@
     <ClCompile Include="..\Classes\FLAlertLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\FLAlertLayerProtocol.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GameLevelManager.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -186,6 +183,9 @@
     <ClCompile Include="..\Classes\ColoredSection.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\TutorialLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -225,9 +225,6 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\FLAlertLayer.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\FLAlertLayerProtocol.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameLevelManager.h">
@@ -363,6 +360,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ColoredSection.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialLayer.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

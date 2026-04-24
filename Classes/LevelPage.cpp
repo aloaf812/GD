@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "GameLevelManager.h"
 #include "GameSoundManager.h"
+#include "FLAlertLayer.h"
 #include "SimpleAudioEngine.h"
 using namespace CocosDenshion;
 USING_NS_CC;
@@ -169,7 +170,8 @@ bool LevelPage::init(GJGameLevel* level)
 
 void LevelPage::onInfo(cocos2d::CCObject* sender)
 {
-    // implement
+    // WIP
+	FLAlertLayer::create(nullptr, "Level Stats", "insert string here", "OK", nullptr, 300.0f)->show();
 }
 
 void LevelPage::onPlay(cocos2d::CCObject* sender)

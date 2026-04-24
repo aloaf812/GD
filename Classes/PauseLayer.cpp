@@ -3,6 +3,8 @@
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "GameSoundManager.h"
 #include "LevelEditorLayer.h"
+#include "TutorialLayer.h"
+
 #include "cocos-ext.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
@@ -133,4 +135,9 @@ void PauseLayer::onRestart(CCObject* sender)
 {
 	PLAY_LAYER->resumeAndRestart();
 	CCNode::removeMeAndCleanup();
+}
+
+void PauseLayer::onHelp(CCObject* sender)
+{
+	TutorialLayer::create()->show();
 }

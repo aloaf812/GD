@@ -144,7 +144,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\EndLevelLayer.cpp" />
     <ClCompile Include="..\Classes\ExtendedLayer.cpp" />
     <ClCompile Include="..\Classes\FLAlertLayer.cpp" />
-    <ClCompile Include="..\Classes\FLAlertLayerProtocol.cpp" />
     <ClCompile Include="..\Classes\GameLevelManager.cpp" />
     <ClCompile Include="..\Classes\GameManager.cpp" />
     <ClCompile Include="..\Classes\GameObject.cpp" />
@@ -186,6 +185,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\Slider.cpp" />
     <ClCompile Include="..\Classes\SongInfoLayer.cpp" />
     <ClCompile Include="..\Classes\TextArea.cpp" />
+    <ClCompile Include="..\Classes\TutorialLayer.cpp" />
     <ClCompile Include="..\Classes\UILayer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -205,7 +205,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\EndLevelLayer.h" />
     <ClInclude Include="..\Classes\ExtendedLayer.h" />
     <ClInclude Include="..\Classes\FLAlertLayer.h" />
-    <ClInclude Include="..\Classes\FLAlertLayerProtocol.h" />
     <ClInclude Include="..\Classes\GameLevelManager.h" />
     <ClInclude Include="..\Classes\GameManager.h" />
     <ClInclude Include="..\Classes\GameObject.h" />
@@ -247,6 +246,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\Slider.h" />
     <ClInclude Include="..\Classes\SongInfoLayer.h" />
     <ClInclude Include="..\Classes\TextArea.h" />
+    <ClInclude Include="..\Classes\TutorialLayer.h" />
     <ClInclude Include="..\Classes\UILayer.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

@@ -26,7 +26,6 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/EndLevelLayer.cpp \
                    ../../Classes/ExtendedLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \
-                   ../../Classes/FLAlertLayerProtocol.cpp \
                    ../../Classes/GameLevelManager.cpp \
                    ../../Classes/GameManager.cpp \
                    ../../Classes/GameObject.cpp \
@@ -63,6 +62,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Slider.cpp \
                    ../../Classes/SongInfoLayer.cpp \
                    ../../Classes/TextArea.cpp \
+                   ../../Classes/TutorialLayer.cpp \
                    ../../Classes/UILayer.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes

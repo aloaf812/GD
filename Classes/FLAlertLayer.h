@@ -2,19 +2,22 @@
 #define _FL_ALERT_LAYER_H_
 
 #include "cocos2d.h"
-#include "FLAlertLayerProtocol.h"
 #include <stdio.h>
+
+class FLAlertLayerProtocol;
 
 class FLAlertLayer : public cocos2d::CCLayerColor {
 public:
-    FLAlertLayer();
+    // FLAlertLayer();
+
+	static FLAlertLayer* create(FLAlertLayerProtocol* protocol, char const* title, char const* caption, char const* button1, char const* button2, float height);
     
-	bool init(FLAlertLayerProtocol* protocol, char const* title, std::string caption, char const* button1, char const* button2, float unk1);
+	bool init(FLAlertLayerProtocol* protocol, char const* title, char const* caption, char const* button1, char const* button2, float height);
     
     virtual void show();
-    virtual bool ccTouchBegan(cocos2d::CCTouch * touch, cocos2d::CCEvent * event);
-    virtual void ccTouchMoved(cocos2d::CCTouch *touch,cocos2d::CCEvent *event);
-    virtual void ccTouchEnded(cocos2d::CCTouch *touch,cocos2d::CCEvent *event);
+    // virtual bool ccTouchBegan(cocos2d::CCTouch * touch, cocos2d::CCEvent *event);
+    // virtual void ccTouchMoved(cocos2d::CCTouch *touch,cocos2d::CCEvent *event);
+    // virtual void ccTouchEnded(cocos2d::CCTouch *touch,cocos2d::CCEvent *event);
     void incrementForcePrio();
 
 	CC_SYNTHESIZE(FLAlertLayerProtocol*, m_pParent, PParent); // 0x194

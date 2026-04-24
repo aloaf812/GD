@@ -1,4 +1,5 @@
 #include "AchievementBar.h"
+#include "AchievementNotifier.h"
 #include "SimplePlayer.h"
 #include "cocos-ext.h"
 USING_NS_CC;
@@ -25,16 +26,20 @@ AchievementBar* AchievementBar::create(char const* title, char const* descriptio
     }
 }
 
+// gonna have to redecompile this entire function again...
 bool AchievementBar::init(char const* title, char const* description, char const* icon)
 {
 	CCLOG("creating achievement bar for %s", title);
 	CCDirector* pDirector = CCDirector::sharedDirector();
 	CCSize winSize = pDirector->getWinSize();
 
+	this->m_layerColor = CCLayerColor::create(ccc4(0, 0, 0, 0));
+	this->addChild(m_layerColor);
+
 	CCScale9Sprite* box = CCScale9Sprite::create("GJ_square01.png", CCRect(0, 0, 80, 80));
 	box->setPosition(ccp(winSize.width / 2, pDirector->getScreenTop() - 50));
 	box->setContentSize(CCSize(300, 70));
-	this->addChild(box);
+	m_layerColor->addChild(box);
 
 	CCSprite* playerSquare = CCSprite::createWithSpriteFrameName("playerSquare_001.png");
 	if (icon)
@@ -45,7 +50,7 @@ bool AchievementBar::init(char const* title, char const* description, char const
 			char const* descString = CCString::createWithFormat("Unlocked new %s!", item)->getCString();
 			SimplePlayer* achIcon = SimplePlayer::create(1);
 			achIcon->updatePlayerFrame(1, IconType::Cube);
-			this->addChild(achIcon);
+			m_layerColor->addChild(achIcon);
 			/*local_11c = 175;
 			local_11b = 175;
 			local_11a = 175;
@@ -94,4 +99,13 @@ void AchievementBar::show()
 		scene = m_targetScene;
 
 	scene->addChild(this, 105);
+
+	// the animation
+	CCMoveBy* moveIn = CCMoveBy::create(1.0f, ccp(0.0f, -m_screenOffset));
+	CCEaseInOut* easeIn = CCEaseInOut::create(moveIn, 2.0f);
+	CCDelayTime* delay = CCDelayTime::create(1.5f);
+	CCMoveBy* moveOut = CCMoveBy::create(1.0f, ccp(0.0f, m_screenOffset));
+	CCEaseInOut* easeOut = CCEaseInOut::create(moveOut, 2.0f);
+	CCCallFunc* callback = CCCallFunc::create(AchievementNotifier::sharedState(), callfunc_selector(AchievementNotifier::achievementDisplayFinished));
+	m_layerColor->runAction(CCSequence::create(easeIn, delay, easeOut, nullptr));
 }
