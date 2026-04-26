@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp" />
+    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.cpp" />
+    <ClCompile Include="..\..\..\Classes\AdToolbox.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\BoomScrollLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\CreatorLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\EditorUI.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\EndLevelLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtendedLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\FLAlertLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\FLAlertLayerProtocol.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GameLevelManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GameManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GameObject.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GameSoundManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GameStatsManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GameToolbox.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GJDropDownLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GJGameLevel.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GJGarageLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GJGroundLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GJListLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GJSearchObject.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\GManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LevelEditorLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LevelInfoLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LevelPage.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LevelSelectLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LevelSettingsObject.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LevelTools.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LoadingLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\LocalLevelManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\MenuGameLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\MenuLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\MyLevelsLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ObjectToolbox.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\OptionsLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\PauseLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\PlatformToolbox.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\PlayerObject.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\PlayLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\SimplePlayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\Slider.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\SongInfoLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\TextArea.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\UILayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\AchievementBar.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\AchievementManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\AchievementNotifier.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\RT_COCOS\CCBlockLayer.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\RT_COCOS\CCContentManager.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\RT_COCOS\CCMenuItemSpriteExtra.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\RT_COCOS\CCSpritePlus.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\RT_COCOS\CCTextInputNode.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\AppMacros.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.h" />
+    <ClInclude Include="..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEventTypes.h" />
+    <ClInclude Include="..\..\..\Classes\AdToolbox.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\BoomScrollLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\CreatorLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\EditorUI.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\EndLevelLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\ExtendedLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\FLAlertLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\FLAlertLayerProtocol.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GameLevelManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GameManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GameObject.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GameSoundManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GameStatsManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GameToolbox.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GJDropDownLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GJGameLevel.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GJGarageLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GJGroundLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GJListLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GJSearchObject.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\GManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LevelEditorLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LevelInfoLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LevelPage.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LevelSelectLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LevelSettingsObject.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LevelTools.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LoadingLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\LocalLevelManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\MenuGameLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\MenuLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\MyLevelsLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\ObjectToolbox.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\OptionsLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\PauseLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\PlatformToolbox.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\PlayerObject.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\PlayLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\SimplePlayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\Slider.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\SongInfoLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\TextArea.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\UILayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\AchievementBar.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\AchievementManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\AchievementNotifier.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\RT_COCOS\CCBlockLayer.h">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\RT_COCOS\CCContentManager.h">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\RT_COCOS\CCMenuItemSpriteExtra.h">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\RT_COCOS\CCSpritePlus.h">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Classes\RT_COCOS\CCTextInputNode.h">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{f9f8df92-c45f-4fb0-b53e-44782c0e0ea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\RT_COCOS">
+      <UniqueIdentifier>{d95b5961-7520-4448-b823-42d7611dacb3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Classes\PlatformToolbox.m">
+      <Filter>Classes</Filter>
+    </None>
+  </ItemGroup>
+</Project>
