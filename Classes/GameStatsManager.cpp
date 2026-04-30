@@ -16,8 +16,8 @@ GameStatsManager* GameStatsManager::sharedState()
 
 bool GameStatsManager::init()
 {
-    m_unkDict1 = CCDictionary::create();
-    m_unkDict1->retain();
+	m_liteAchievementsDict = CCDictionary::create();
+	m_liteAchievementsDict->retain();
     return true;
 }
 
@@ -25,4 +25,20 @@ int GameStatsManager::getStat(const char *stat)
 {
     // this is just a temporary value while i actually decompile this class
     return 21739;
+}
+
+void GameStatsManager::dataLoaded(DS_Dictionary* dict)
+{
+	m_valueDict = dict->getDictForKey("GS_value");
+	m_valueDict->retain();
+
+	m_completedLevels = dict->getDictForKey("GS_completed");
+	m_completedLevels->retain();
+}
+
+
+void GameStatsManager::encodeDataTo(DS_Dictionary* dict)
+{
+	dict->setDictForKey("GS_value", m_valueDict);
+	dict->setDictForKey("GS_completed", m_completedLevels);
 }

@@ -1,4 +1,4 @@
-// Mostly decompiled by ProjectReversio: https://github.com/ProjectReversio/GeometryDash/blob/master/GeometryDash/Classes/LevelSelectLayer.cpp
+// Partially decompiled by ProjectReversio: https://github.com/ProjectReversio/GeometryDash/blob/master/GeometryDash/Classes/LevelSelectLayer.cpp
 #include "LevelSelectLayer.h"
 
 #include "AppDelegate.h"
@@ -10,6 +10,7 @@
 #include "GameLevelManager.h"
 #include "LevelPage.h"
 #include "LevelTools.h"
+#include "SongsLayer.h"
 USING_NS_CC;
 
 LevelSelectLayer::LevelSelectLayer()
@@ -192,7 +193,9 @@ bool LevelSelectLayer::init(int page)
 
 void LevelSelectLayer::onDownload(CCObject* sender)
 {
-    
+	SongsLayer* layer = SongsLayer::create();
+	getParent()->addChild(layer, 100);
+	layer->showLayer(false);
 }
 
 void LevelSelectLayer::onBack(CCObject* sender)

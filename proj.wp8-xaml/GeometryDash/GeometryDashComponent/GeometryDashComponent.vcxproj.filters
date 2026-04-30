@@ -31,9 +31,6 @@
     <ClCompile Include="..\..\..\Classes\FLAlertLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\FLAlertLayerProtocol.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\GameLevelManager.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -200,9 +197,6 @@
     <ClInclude Include="..\..\..\Classes\FLAlertLayer.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Classes\FLAlertLayerProtocol.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Classes\GameLevelManager.h">
       <Filter>Classes</Filter>
     </ClInclude>
@@ -340,10 +334,5 @@
     <Filter Include="Classes\RT_COCOS">
       <UniqueIdentifier>{d95b5961-7520-4448-b823-42d7611dacb3}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Classes\PlatformToolbox.m">
-      <Filter>Classes</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -4,8 +4,8 @@
 USING_NS_CC;
 
 // hi there, 
-// this and PlayLayer are both incredibly incomplete and i do not recommend using them as a reference for physics just yet
-// give it like a week or 2 and the physics will be ready trust
+// this and PlayLayer are halfway there, with just hitboxes and other gamemodes being the main issues.
+// hopefully they'll be done next month
 
 PlayerObject::PlayerObject()
 {

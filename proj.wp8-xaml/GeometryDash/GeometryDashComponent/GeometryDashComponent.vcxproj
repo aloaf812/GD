@@ -168,7 +168,6 @@
     <ClInclude Include="..\..\..\Classes\EndLevelLayer.h" />
     <ClInclude Include="..\..\..\Classes\ExtendedLayer.h" />
     <ClInclude Include="..\..\..\Classes\FLAlertLayer.h" />
-    <ClInclude Include="..\..\..\Classes\FLAlertLayerProtocol.h" />
     <ClInclude Include="..\..\..\Classes\GameLevelManager.h" />
     <ClInclude Include="..\..\..\Classes\GameManager.h" />
     <ClInclude Include="..\..\..\Classes\GameObject.h" />
@@ -233,7 +232,6 @@
     <ClCompile Include="..\..\..\Classes\EndLevelLayer.cpp" />
     <ClCompile Include="..\..\..\Classes\ExtendedLayer.cpp" />
     <ClCompile Include="..\..\..\Classes\FLAlertLayer.cpp" />
-    <ClCompile Include="..\..\..\Classes\FLAlertLayerProtocol.cpp" />
     <ClCompile Include="..\..\..\Classes\GameLevelManager.cpp" />
     <ClCompile Include="..\..\..\Classes\GameManager.cpp" />
     <ClCompile Include="..\..\..\Classes\GameObject.cpp" />
@@ -300,9 +298,6 @@
     <ProjectReference Include="..\..\..\..\..\external\chipmunk\proj.wp8\chipmunk.vcxproj">
       <Project>{3ad76ea1-d698-40d2-b04d-d9ab8171f40b}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Classes\PlatformToolbox.m" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

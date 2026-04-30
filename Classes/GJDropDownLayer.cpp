@@ -59,8 +59,8 @@ void GJDropDownLayer::hideLayer(bool instantHide) {
         this->layerHidden();
     }
     else {
-        /*CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.0f);
-        CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::exitLayer));
+        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.0f);
+        /*CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::exitLayer));
 		m_internalLayer->runAction(CCSequence::create(action, callback));
         this->runAction(CCFadeTo::create(0.5, 0));*/
     }
@@ -156,13 +156,10 @@ bool GJDropDownLayer::init(const char* title, float height) {
     backBtn->setSizeMult(1.6f);
     
     this->m_buttonMenu = CCMenu::create(backBtn, NULL);
-    // this->m_buttonMenu->setPosition(CCPoint((winSize.width * 0.5) + 178.0, (winSize.height * 0.5) - (height * 0.5));
-    // also fixed
     this->m_buttonMenu->setPosition(CCPoint((winSize.width * 0.5f) + 178.0f, (winSize.height * 0.5f) - (height * 0.5f)));
     
     // todo: make sense
     
-    // this->m_buttonMenu->setPosition({ director->getScreenLeft() + 24, director->getScreenTop() - 23 });
 	this->m_buttonMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 24, pDirector->getScreenTop() - 23));
     
     this->m_internalLayer->addChild(this->m_buttonMenu, 10);
@@ -171,14 +168,12 @@ bool GJDropDownLayer::init(const char* title, float height) {
     this->m_internalLayer->addChild(chain1, -1);
     // please fix your structs
     chain1->setAnchorPoint(CCPoint(0.5, 0.0));
-    // chain1->setPosition({ (winSize.width * 0.5) - 156.0, height + this->m_listLayer->getPosition().y + 12.0 });
     chain1->setPosition(CCPoint((winSize.width * 0.5f) - 156.0f, height + this->m_listLayer->getPosition().y + 12.0));
     chain1->setTag(0);
     
     CCSprite* chain2 = CCSprite::createWithSpriteFrameName("chain_01_001.png");
     this->m_internalLayer->addChild(chain2, -1);
     chain2->setAnchorPoint(CCPoint(0.5, 0.0));
-    // chain2->setPosition({ (winSize.width * 0.5) + 156.0, height + this->m_listLayer->getPosition().y + 12.0 });
     chain2->setPosition(CCPoint((winSize.width * 0.5f) + 156.0f, height + this->m_listLayer->getPosition().y + 12.0));
     chain2->setTag(1);
     

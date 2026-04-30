@@ -43,6 +43,7 @@ public:
     bool m_controllerEnabled;
 
 	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_internalLayer, InternalLayer); // 0x1a0
+	CC_SYNTHESIZE(bool, m_removeOnExit, RemoveOnExit); // 0x1a4
 
     bool m_hidden;
     GJDropDownLayerDelegate* m_delegate;
