@@ -13,17 +13,18 @@ GJGroundLayer::GJGroundLayer()
 
 GJGroundLayer* GJGroundLayer::create(int gID)
 {
-    GJGroundLayer* ret = new GJGroundLayer();
-    if (ret) {
-        if (ret->init(gID)) {
-            ret->autorelease();
-            return ret;
-        }
-
-        delete ret;
-    }
-
-    return NULL;
+	GJGroundLayer *pRet = new GJGroundLayer();
+	if (pRet && pRet->init(gID))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
 }
 
 bool GJGroundLayer::init(int gID)

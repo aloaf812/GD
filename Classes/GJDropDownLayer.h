@@ -14,19 +14,19 @@ public:
     
     bool init(const char* title, float height);
     bool init(const char* title);
-    virtual void disableUI();
     void enableUI();
     void draw();
-    void exitLayer(cocos2d::CCObject* sender);
+    virtual void customSetup() {}
+    virtual void enterLayer();
+    virtual void exitLayer(cocos2d::CCObject* sender);
+    virtual void showLayer(bool instantShow);
     virtual void hideLayer(bool instantHide);
-    void showLayer(bool instantShow);
+    virtual void disableUI();
     void keyBackClicked();
     void layerHidden();
     void registerWithTouchDispatcher();
-    void enterLayer();
     void layerVisible();
     void enterAnimFinished() {}
-    void customSetup() {}
     GJDropDownLayer* create(const char* title, float height);
     GJDropDownLayer* create(const char* title);
     

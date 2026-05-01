@@ -128,11 +128,8 @@ bool LoadingLayer::init() {
     CCSequence* sequence = CCSequence::create(delayTime, callFunc, NULL);
     pActionManager->addAction(sequence, this, false);
 
-	/*
-    if (false) {
+	if (pGameManager->getGameCenterEnabled())
         PlatformToolbox::activateGameCenter();
-    }
-	*/
 
     return true;
 }

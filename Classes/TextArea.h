@@ -10,11 +10,19 @@ public:
     bool init(char const*, float scale, int order, cocos2d::CCPoint align, char const*, float);
     static TextArea* create(char const*, float scale, int order, cocos2d::CCPoint align, char const*, float);
 
+	void finishFade() { m_fadeInFinished = true; }
+
 	// MultilineBitmapFont* m_label; // 0x1b8
 	float m_scale; // 0x1bc
 
 	CC_SYNTHESIZE(int, m_order, Order); // 0x1c8
 	CC_SYNTHESIZE(float, m_lineSpace, LineSpace); // 0x1cc
+	CC_SYNTHESIZE(bool, m_fadeInFinished, FadeInFinished); // 0x1dc
+	CC_SYNTHESIZE(cocos2d::CCPoint, m_align, Align); // 0x1d4
+	CC_SYNTHESIZE_READONLY(float, m_textHeight, TextHeight); // 0x1e0
+	CC_SYNTHESIZE_READONLY(float, m_textWidth, TextWidth); // 0x1e8
+	CC_SYNTHESIZE_READONLY(float, m_sizeWidth, SizeWidth); // 0x1e8
+	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_textPosition, TextPosition); // 0x1ec
 };
 
 #endif /* defined(__GeometryDash__TextArea__) */

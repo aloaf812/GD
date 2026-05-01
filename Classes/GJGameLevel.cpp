@@ -69,6 +69,9 @@ GJGameLevel::GJGameLevel()
 
 bool GJGameLevel::init()
 {
+    m_levelName = "";
+    m_levelDesc = "";
+    m_levelString = "";
     m_levelType = GJLevelType::Default;
     m_attempts = 0;
     m_jumps = 0;
@@ -78,9 +81,9 @@ bool GJGameLevel::init()
     m_levelSize = 0;
     m_dontSave = false;
     m_isHidden = false;
+    m_M_ID = 0;
     m_levelVersion = 1;
-    CCDictionary* levelDict = CCDictionary::create();
-    levelDict->retain();
+    this->setLastBuildSave(CCDictionary::create());
     return true;
 }
 

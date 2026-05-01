@@ -94,7 +94,7 @@ void MenuLayer::onOptions(CCObject* sender)
 {
 	OptionsLayer* layer = OptionsLayer::create();
 	this->addChild(layer, 100);
-	layer->enterLayer();
+	layer->showLayer(false);
 }
 
 void MenuLayer::onStats(CCObject* sender)
@@ -287,4 +287,9 @@ bool MenuLayer::init() {
 
     pGameManager->setFirstSetup(false);
     return true;
+}
+
+void MenuLayer::endGame()
+{
+	CCDirector::sharedDirector()->end();
 }

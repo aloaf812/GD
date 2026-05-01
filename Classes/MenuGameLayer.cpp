@@ -5,15 +5,12 @@
 #include <cmath>
 USING_NS_CC;
 
-MenuGameLayer::MenuGameLayer() {
-    PlayerObject* m_playerObject = nullptr;
-    m_backgroundSprite = nullptr;
-    m_groundSprite = nullptr;
-    m_backgroundSpeed = 0.0f;
-    m_bgOffset = 0.0f;
-    m_groundOffset = 0.0f;
-    m_bgWidth = 0.0f;
-    m_groundWidth = 0.0f;
+MenuGameLayer::MenuGameLayer() 
+{
+	PlayerObject* m_playerObject = nullptr;
+	m_backgroundSprite = nullptr;
+	m_groundSprite = nullptr;
+	m_backgroundSpeed = 0.0f;
 }
 
 bool MenuGameLayer::init()
@@ -36,7 +33,6 @@ bool MenuGameLayer::init()
     m_backgroundSprite->getTexture()->setTexParameters(&texParams);
     m_backgroundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_backgroundSprite->getContentSize().height));
     this->addChild(m_backgroundSprite, -1);
-    m_bgWidth = winSize.width;
     
     // ground
     m_groundLayer = CCLayer::create();

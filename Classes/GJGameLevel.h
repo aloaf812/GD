@@ -59,6 +59,7 @@ public:
 	CC_SYNTHESIZE(int, m_requiredCoins, RequiredCoins); // 0x18c
 	CC_SYNTHESIZE(bool, m_isUnlocked, IsUnlocked); // 0x190
 	CC_SYNTHESIZE(GJLevelType, m_levelType, LevelType); // 0x1a8
+	CC_SYNTHESIZE(int, m_M_ID, M_ID); // 0x1ac
     
 
 };

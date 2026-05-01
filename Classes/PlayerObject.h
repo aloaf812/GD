@@ -89,6 +89,7 @@ public:
 	double m_yStart; // 0x2f8
 	double m_gravity; // 0x300
 
+	bool field771_0x30c; // 0x30c
 	bool field772_0x30d; // 0x30d
 	bool field773_0x30e; // 0x30e
 

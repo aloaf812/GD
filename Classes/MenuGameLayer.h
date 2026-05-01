@@ -3,7 +3,9 @@
 
 #include "PlayerObject.h"
 #include "cocos2d.h"
-
+/**
+@brief The background layer of the main menu with the scrolling BG/ground and the jumping icons
+*/
 class MenuGameLayer : public cocos2d::CCLayer {
 public:
 	MenuGameLayer();
@@ -13,12 +15,6 @@ public:
 	void tryJump();
 
 protected:
-	// these undocumented variables aren't actually in the game's code
-	// the math that these variables are used in is also wrong and both issues will be fixed soon
-	float m_bgOffset;
-	float m_groundOffset;
-	float m_bgWidth;
-	float m_groundWidth;
 	PlayerObject* m_playerObject; // 0x114
     cocos2d::CCSprite* m_backgroundSprite; // 0x118
     cocos2d::CCSprite* m_groundSprite; // 0x11c

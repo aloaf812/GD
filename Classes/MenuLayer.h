@@ -2,9 +2,7 @@
 #define __GeometryDash__MenuLayer__
 
 #include "cocos2d.h"
-/**
-@brief The background layer of the main menu with the scrolling BG/ground and the jumping icons
-*/
+
 class MenuLayer: public cocos2d::CCLayer {
 public:
     static cocos2d::CCScene* scene();
@@ -29,6 +27,7 @@ public:
      @brief Runs when the "More Games" button is pressed in the main menu
      */
     void onMoreGames(cocos2d::CCObject* sender);
+	void endGame();
 };
 
 #endif

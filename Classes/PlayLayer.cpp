@@ -368,7 +368,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->tintColorObjects(m_levelSettings->getStartTintObjColor(), 0.0f);
 
 	this->updateLevelColors();
-	//this->animateOutFlyGround(true);
+	this->animateOutFlyGround(true);
 	this->animateOutRollGround(true);
 
 	//m_player->togglePlayerScale(m_levelSettings->getStartMiniMode());
@@ -433,8 +433,8 @@ void PlayLayer::resetLevel()
 	this->m_cameraPortal = nullptr;
 	//m_audioEffectsLayer->resetAudioVars();
 	m_player->resetObject();
-	//this->animateOutFlyGround(true);
-	//this->animateOutRollGround(true);
+	this->animateOutFlyGround(true);
+	this->animateOutRollGround(true);
 
 	m_realPlayerPos = m_player->getPosition();
 	//this->updateCamera();
@@ -781,7 +781,7 @@ void PlayLayer::switchToFlyMode(GameObject* obj, bool param_1, bool param_2)
 void PlayLayer::exitAirMode()
 {
 	this->toggleGlitter(false);
-	// this->animateOutFlyGround(false);
+	this->animateOutFlyGround(false);
 	m_cameraMovingY = true;
 }
 
@@ -801,6 +801,11 @@ void PlayLayer::exitRollMode()
 {
 	// m_player->toggleRollMode(false);
 	this->animateOutRollGround(false);
+}
+
+void PlayLayer::animateOutFlyGround(bool instant)
+{	
+	// todo
 }
 
 void PlayLayer::animateOutRollGround(bool instant)
@@ -1051,6 +1056,11 @@ void PlayLayer::createParticle(int objType, char const* file, int zOrder, cocos2
 			// m_particlesDictionary->setObject(pCVar4, this->getParticleKey2(particleKey));
 		}
 	}
+}
+
+void PlayLayer::playSpeedParticle(float timeMod)
+{
+	// todo
 }
 
 void PlayLayer::moveCameraToPos(cocos2d::CCPoint pos)
