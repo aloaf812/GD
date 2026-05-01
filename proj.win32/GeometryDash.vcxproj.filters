@@ -183,6 +183,12 @@
     <ClCompile Include="..\Classes\ColoredSection.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\EndPortalObject.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MultilineBitmapFont.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\TutorialLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
@@ -366,6 +372,12 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ColoredSection.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EndPortalObject.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MultilineBitmapFont.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\TutorialLayer.h">

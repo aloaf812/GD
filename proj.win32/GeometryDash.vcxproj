@@ -142,6 +142,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\CreatorLayer.cpp" />
     <ClCompile Include="..\Classes\EditorUI.cpp" />
     <ClCompile Include="..\Classes\EndLevelLayer.cpp" />
+    <ClCompile Include="..\Classes\EndPortalObject.cpp" />
     <ClCompile Include="..\Classes\ExtendedLayer.cpp" />
     <ClCompile Include="..\Classes\FLAlertLayer.cpp" />
     <ClCompile Include="..\Classes\GameLevelManager.cpp" />
@@ -169,6 +170,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\LocalLevelManager.cpp" />
     <ClCompile Include="..\Classes\MenuGameLayer.cpp" />
     <ClCompile Include="..\Classes\MenuLayer.cpp" />
+    <ClCompile Include="..\Classes\MultilineBitmapFont.cpp" />
     <ClCompile Include="..\Classes\MyLevelsLayer.cpp" />
     <ClCompile Include="..\Classes\ObjectToolbox.cpp" />
     <ClCompile Include="..\Classes\OptionsLayer.cpp" />
@@ -205,6 +207,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\CreatorLayer.h" />
     <ClInclude Include="..\Classes\EditorUI.h" />
     <ClInclude Include="..\Classes\EndLevelLayer.h" />
+    <ClInclude Include="..\Classes\EndPortalObject.h" />
     <ClInclude Include="..\Classes\ExtendedLayer.h" />
     <ClInclude Include="..\Classes\FLAlertLayer.h" />
     <ClInclude Include="..\Classes\GameLevelManager.h" />
@@ -232,6 +235,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\LocalLevelManager.h" />
     <ClInclude Include="..\Classes\MenuGameLayer.h" />
     <ClInclude Include="..\Classes\MenuLayer.h" />
+    <ClInclude Include="..\Classes\MultilineBitmapFont.h" />
     <ClInclude Include="..\Classes\MyLevelsLayer.h" />
     <ClInclude Include="..\Classes\ObjectToolbox.h" />
     <ClInclude Include="..\Classes\OptionsLayer.h" />

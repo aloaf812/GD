@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/CreatorLayer.cpp \
                    ../../Classes/EditorUI.cpp \
                    ../../Classes/EndLevelLayer.cpp \
+                   ../../Classes/EndPortalObject.cpp \
                    ../../Classes/ExtendedLayer.cpp \
                    ../../Classes/FLAlertLayer.cpp \
                    ../../Classes/GameLevelManager.cpp \
@@ -51,6 +52,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/LocalLevelManager.cpp \
                    ../../Classes/MenuGameLayer.cpp \
                    ../../Classes/MenuLayer.cpp \
+                   ../../Classes/MultilineBitmapFont.cpp \
                    ../../Classes/MyLevelsLayer.cpp \
                    ../../Classes/ObjectToolbox.cpp \
                    ../../Classes/OptionsLayer.cpp \
@@ -61,6 +63,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/SimplePlayer.cpp \
                    ../../Classes/Slider.cpp \
                    ../../Classes/SongInfoLayer.cpp \
+                   ../../Classes/SongObject.cpp \
+                   ../../Classes/SongsLayer.cpp \
                    ../../Classes/TextArea.cpp \
                    ../../Classes/TutorialLayer.cpp \
                    ../../Classes/UILayer.cpp
