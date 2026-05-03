@@ -28,6 +28,7 @@ public:
      */
     void onMoreGames(cocos2d::CCObject* sender);
 	void endGame();
+	void syncPlatformAchievements(float dt);
 };
 
 #endif

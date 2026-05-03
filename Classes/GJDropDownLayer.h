@@ -14,19 +14,19 @@ public:
     
     bool init(const char* title, float height);
     bool init(const char* title);
-    void enableUI();
     void draw();
     virtual void customSetup() {}
     virtual void enterLayer();
     virtual void exitLayer(cocos2d::CCObject* sender);
     virtual void showLayer(bool instantShow);
     virtual void hideLayer(bool instantHide);
+    virtual void layerVisible();
+    virtual void layerHidden();
+    virtual void enterAnimFinished() {}
     virtual void disableUI();
+    virtual void enableUI();
     void keyBackClicked();
-    void layerHidden();
     void registerWithTouchDispatcher();
-    void layerVisible();
-    void enterAnimFinished() {}
     GJDropDownLayer* create(const char* title, float height);
     GJDropDownLayer* create(const char* title);
     
@@ -38,9 +38,8 @@ public:
     // these are from geode =)
     cocos2d::CCPoint m_endPosition;
     cocos2d::CCPoint m_startPosition;
-    cocos2d::CCMenu* m_buttonMenu;
-    GJListLayer* m_listLayer;
-    bool m_controllerEnabled;
+    cocos2d::CCMenu* m_buttonMenu; // 0x198
+    GJListLayer* m_listLayer; // 0x19c
 
 	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_internalLayer, InternalLayer); // 0x1a0
 	CC_SYNTHESIZE(bool, m_removeOnExit, RemoveOnExit); // 0x1a4

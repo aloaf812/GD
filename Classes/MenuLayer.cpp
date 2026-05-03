@@ -293,3 +293,8 @@ void MenuLayer::endGame()
 {
 	CCDirector::sharedDirector()->end();
 }
+
+void MenuLayer::syncPlatformAchievements(float dt) {
+	CCNode::unschedule(schedule_selector(MenuLayer::syncPlatformAchievements));
+	GameManager::sharedState()->syncPlatformAchievements();
+}

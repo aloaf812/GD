@@ -7,7 +7,6 @@ GJDropDownLayer::GJDropDownLayer() {
     this->m_startPosition = ccp(0, 0);
     this->m_buttonMenu = NULL;
     this->m_listLayer = NULL;
-    this->m_controllerEnabled = false;
     this->m_internalLayer = NULL;
     this->m_hidden = false;
     this->m_delegate = NULL;
@@ -38,31 +37,26 @@ void GJDropDownLayer::enterLayer() {
 void GJDropDownLayer::exitLayer(CCObject* sender) {
     this->setKeypadEnabled(false);
     
-    // auto director = CCDirector::sharedDirector();
-    // director->getTouchDispatcher()->m_bForcePrio = false;
+	CCDirector* director = CCDirector::sharedDirector();
+    director->getTouchDispatcher()->setForcePrio(false);
     
     this->disableUI();
     this->hideLayer(false);
 }
 
-void GJDropDownLayer::hideLayer(bool instantHide) {
-    if (this->m_hidden) {
-        if (this->m_delegate)
-            this->m_delegate->dropDownLayerWillClose(this);
-    }
-    
+void GJDropDownLayer::hideLayer(bool instantHide) { 
     this->m_internalLayer->stopAllActions();
     
     if (instantHide) {
-        this->m_internalLayer->setPosition(this->m_startPosition);
+		m_internalLayer->setPosition(m_startPosition);
         this->setOpacity(0);
         this->layerHidden();
     }
     else {
         CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.0f);
-        /*CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::exitLayer));
-		m_internalLayer->runAction(CCSequence::create(action, callback));
-        this->runAction(CCFadeTo::create(0.5, 0));*/
+		CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::layerHidden));
+		m_internalLayer->runAction(CCSequence::create(action, callback, NULL));
+        this->runAction(CCFadeTo::create(0.5, 0));
     }
 }
 
@@ -85,7 +79,7 @@ void GJDropDownLayer::layerVisible() {
 }
 
 void GJDropDownLayer::showLayer(bool instantShow) {
-    this->m_internalLayer->stopAllActions();
+    m_internalLayer->stopAllActions();
     this->layerVisible();
     
     if (instantShow) {
@@ -150,6 +144,7 @@ bool GJDropDownLayer::init(const char* title, float height) {
     m_internalLayer->addChild(this->m_listLayer);
     
     this->m_listLayer->setPosition(CCPoint((winSize.width - 356.0f) * 0.5f, (((winSize.height - height) * 0.5f) - 10.0f) + 5.0f));
+	float height2 = height + m_listLayer->getPosition().y + 12.0;
 
     CCSprite* backBtnSprite = CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
     CCMenuItemSpriteExtra* backBtn = CCMenuItemSpriteExtra::create(backBtnSprite, NULL, this, menu_selector(GJDropDownLayer::exitLayer));
@@ -158,28 +153,25 @@ bool GJDropDownLayer::init(const char* title, float height) {
     this->m_buttonMenu = CCMenu::create(backBtn, NULL);
     this->m_buttonMenu->setPosition(CCPoint((winSize.width * 0.5f) + 178.0f, (winSize.height * 0.5f) - (height * 0.5f)));
     
-    // todo: make sense
-    
 	this->m_buttonMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 24, pDirector->getScreenTop() - 23));
     
-    this->m_internalLayer->addChild(this->m_buttonMenu, 10);
+    m_internalLayer->addChild(m_buttonMenu, 10);
     
     CCSprite* chain1 = CCSprite::createWithSpriteFrameName("chain_01_001.png");
     this->m_internalLayer->addChild(chain1, -1);
-    // please fix your structs
     chain1->setAnchorPoint(CCPoint(0.5, 0.0));
-    chain1->setPosition(CCPoint((winSize.width * 0.5f) - 156.0f, height + this->m_listLayer->getPosition().y + 12.0));
+	chain1->setPosition(CCPoint((winSize.width * 0.5f) - 156.0f, height2));
     chain1->setTag(0);
     
     CCSprite* chain2 = CCSprite::createWithSpriteFrameName("chain_01_001.png");
     this->m_internalLayer->addChild(chain2, -1);
     chain2->setAnchorPoint(CCPoint(0.5, 0.0));
-    chain2->setPosition(CCPoint((winSize.width * 0.5f) + 156.0f, height + this->m_listLayer->getPosition().y + 12.0));
+	chain2->setPosition(CCPoint((winSize.width * 0.5f) + 156.0f, height2));
     chain2->setTag(1);
     
-    this->m_hidden = false;
+	m_removeOnExit = false;
     this->hideLayer(true);
-    this->m_hidden = true;
+	m_removeOnExit = true;
     
     this->customSetup();
     

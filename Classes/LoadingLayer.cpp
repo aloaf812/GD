@@ -28,27 +28,25 @@ CCScene* LoadingLayer::scene()
 }
 
 LoadingLayer::LoadingLayer() {
-    m_progressBarSize = CCSize(0.0f, 0.0f);
     m_loadStep = 0;
     m_caption = NULL;
     m_textArea = NULL;
     m_sliderBar = NULL;
+	m_sliderGrooveXPos = 0.0f;
+	m_sliderGrooveHeight = 0.0f;
 }
 
 bool LoadingLayer::init() {
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
-    
-    timeval tv;
-    gettimeofday(&tv, NULL);
-    srand(tv.tv_sec * tv.tv_usec);
-    
-    GameSoundManager::sharedManager()->setup();
 
-    GameManager* pGameManager = GameManager::sharedState();
+    if (!CCLayer::init())
+        return false;
     
+	srand(time(0));
+    
+    GameManager* pGameManager = GameManager::sharedState();
+
+    GameSoundManager::sharedManager()->setup();
+	pGameManager->setup();
 	LocalLevelManager::sharedState()->setup();
 
     CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
@@ -60,11 +58,10 @@ bool LoadingLayer::init() {
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSize winSize = pDirector->getWinSize();
 
-    const char* bgTextureName = pGameManager->getBGTexture(1);
-    CCSprite* bgSprite = CCSprite::create(bgTextureName);
+	CCSprite* bgSprite = CCSprite::create(pGameManager->getBGTexture(1));
     this->addChild(bgSprite);
     
-    bgSprite->setPosition(winSize * 0.5f);
+    bgSprite->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
 	bgSprite->setScale(pDirector->getScreenScaleFactorMax());
     bgSprite->setColor(ccc3(0, 102, 255));
 
@@ -108,7 +105,8 @@ bool LoadingLayer::init() {
     this->addChild(sliderGroove, 3);
     
     m_sliderBar = CCSprite::create("sliderBar.png");
-    m_progressBarSize = CCSize(sliderGroove->getTextureRect().size.width - 4.0f, 8.0f);
+	m_sliderGrooveHeight = 8.0f;
+	m_sliderGrooveXPos = sliderGroove->getTextureRect().size.width - 4.0f;
     
     CCTexture2D* tex = m_sliderBar->getTexture();
     ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
@@ -192,7 +190,7 @@ void LoadingLayer::loadAssets() {
         }
     }
     m_loadStep++;
-    updateProgress(m_loadStep * 25	);
+    updateProgress(m_loadStep * 25);
     CCActionManager* pActionManager = pDirector->getActionManager();
     CCDelayTime* delayTime = CCDelayTime::create(0.01f);
     CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(LoadingLayer::loadAssets));
@@ -202,11 +200,11 @@ void LoadingLayer::loadAssets() {
 
 void LoadingLayer::updateProgress(int progress)
 {
-    float width = m_progressBarSize.width;
-    if (width > (width * static_cast<float>(progress) / 100.0f))
-        width = width * static_cast<float>(progress) / 100.0f;
+	float width = m_sliderGrooveXPos;
+    if (width > (width * progress / 100.0f))
+		width = width * progress / 100.0f;
 
-    m_sliderBar->setTextureRect(CCRect(0.0f, 0.0f, width, m_progressBarSize.height));
+	m_sliderBar->setTextureRect(CCRect(0.0f, 0.0f, width, m_sliderGrooveHeight));
 }
 
 void LoadingLayer::loadingFinished() {
@@ -216,17 +214,16 @@ void LoadingLayer::loadingFinished() {
 }
 
 const char* LoadingLayer::getLoadingString() {
-    
-    int stringNum = (rand() % 10);
-    switch(stringNum) {
-    case 1: return "Listen to the music to help time your jumps"; break;
-    case 2: return "Back for more are ya?"; break;
+
+	switch (rand() % 10) {
+    case 1: return "Listen to the music to help time your jumps";
+    case 2: return "Back for more are ya?";
     case 3: return "Use practice mode to learn the layout of a level";
     case 4: return "Build your own levels using the level editor";
     case 5: return "Go online to play other players levels!";
-    case 6: return "If at first you don't succeed, try, try again...";
+	case 6: return "If at first you don\'t succeed, try, try again...";
     case 7: return "Can you beat them all?";
-    case 8: return "Customize your character's icon and color!";
+	case 8: return "Customize your character\'s icon and color!";
     case 9: return "You can download all songs from the level select page!";
     default: return "Unlock new icons and colors by completing achievements!";    
     }

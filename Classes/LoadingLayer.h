@@ -36,11 +36,12 @@ public:
     void updateProgress(int progress);
     NODE_FUNC(LoadingLayer);
 private:
+    int m_loadStep; // 0x110
     cocos2d::CCLabelBMFont* m_caption; // 0x114
     TextArea* m_textArea; // 0x118
-    cocos2d::CCSprite* m_sliderBar;
-    cocos2d::CCSize m_progressBarSize;
-    int m_loadStep;
+    cocos2d::CCSprite* m_sliderBar; // 0x11c
+	float m_sliderGrooveXPos; // 0x120
+	float m_sliderGrooveHeight; // 0x124
 };
 
 #endif
