@@ -10,6 +10,7 @@
 #include "GJGroundLayer.h"
 #include "UILayer.h"
 #include "ColorAction.h"
+#include "EndPortalObject.h"
 //#include "GameObject.h"
 
 class PlayLayer : public cocos2d::CCLayer {
@@ -100,11 +101,14 @@ public:
     
 	bool field279_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
-	// EndPortalObject* m_endObject; // 0x128
+	EndPortalObject* m_endObject; // 0x128
 	cocos2d::CCArray* m_checkpoints; // 0x12c
     cocos2d::CCSprite* m_background; // 0x13c
     
+	cocos2d::CCSprite* field290_0x140; // 0x140
+
 	GJGroundLayer* m_ground; // 0x150
+	bool m_flyGroundActive; // 0x160
 	bool m_rollGroundActive; // 0x161
 
 	cocos2d::CCArray* m_sections; // 0x164

@@ -43,6 +43,8 @@ public:
 	void updateGlowColor();
 	void updateTimeMod(float timeMod);
 
+	void updatePlayerGlow();
+
 	void deactivateParticle();
 	void deactivateStreak();
 
@@ -65,6 +67,7 @@ public:
 
 	void runRotateAction();
 	void runNormalRotation();
+	void runBallRotation();
 	void stopRotation();
 
 	void toggleFlyMode(bool enable);
@@ -102,7 +105,7 @@ public:
 	bool field733_0x316; // 0x316
 
 	float field747_0x324; // 0x324
-	double m_yVelolcity; // 0x328
+	double m_yVelocity; // 0x328
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 

@@ -20,9 +20,7 @@ public:
 	cocos2d::CCPoint positionForPageWithNumber(int page);
 
 	// vars
-	CC_SYNTHESIZE(float, m_marginOffset, MarginOffset); // 0x4
-    CC_SYNTHESIZE_READONLY(int, m_currentScreen, CurrentScreen); // 0x1c
-	CC_SYNTHESIZE_READONLY(ExtendedLayer*, m_internalLayer, InternalLayer); // 0x51
+	CC_SYNTHESIZE_READONLY(ExtendedLayer*, m_internalLayer, InternalLayer); // 0x144
 	CC_SYNTHESIZE(cocos2d::CCRect, m_scrollArea, ScrollArea); // 0x148
 
 	// touch speeds
@@ -30,12 +28,17 @@ public:
 	CC_SYNTHESIZE(float, m_touchSpeedFast, TouchSpeedFast); // 0x15c
 	CC_SYNTHESIZE(float, m_touchSpeedMid, TouchSpeedMid); // 0x160
 
-	//CC_SYNTHESIZE_READONLY(BoomScrollLayerDelegate*, m_delegate, Delegate); // 0x164
+	CC_SYNTHESIZE(BoomScrollLayerDelegate*, m_delegate, Delegate); // 0x164
 	CC_SYNTHESIZE_READONLY(bool, m_movingToPage, MovingToPage); // 0x168
+
+	CC_SYNTHESIZE(float, m_marginOffset, MarginOffset); // 0x174
+
+    CC_SYNTHESIZE_READONLY(int, m_currentScreen, CurrentScreen); // 0x18c
+	CC_SYNTHESIZE(float, m_pagesWidthOffset, PagesWidthOffset); // 0x190
+	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_pages, pages); // 0x194
 protected:
     BoomScrollLayerDelegate* m_bslDelegate;
     cocos2d::CCArray* m_dotsArray; // 0x10c
-    cocos2d::CCArray* m_pages;
 	cocos2d::CCPoint m_targetPos; // 0x4f
 	bool m_looped; // 0x11c
 };

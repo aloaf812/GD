@@ -93,12 +93,12 @@ public:
     bool unk_0x218;
 	CC_SYNTHESIZE_READONLY(bool, m_hasColor, HasColor); // 0x219
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_colorSprite, ColorSprite); // 0x21c
-    /*CC_PROPERTY(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220*/
+	CC_SYNTHESIZE(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220
     CC_SYNTHESIZE(float, m_radius, Radius); // 0x224
     // CC_PROPERTY_READONLY(bool, m_isRotated, IsRotated); // 0x228
     CC_SYNTHESIZE(float, m_scaleModX, ScaleModX); // 0x22c
     CC_SYNTHESIZE(float, m_scaleModY, ScaleModY); // 0x230
-    /*CC_PROPERTY(int, m_ID, M_ID); // 0x234*/
+	CC_SYNTHESIZE(int, m_ID, M_ID); // 0x234
     CC_SYNTHESIZE(GameObjectType, m_type, Type); // 0x238
 	CC_SYNTHESIZE(int, m_sectionIdx, SectionIdx); // 0x23c
     CC_SYNTHESIZE_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
@@ -106,8 +106,8 @@ public:
     cocos2d::CCPoint m_realPosition; // 0x244*/
     CC_SYNTHESIZE_READONLY(std::string, m_frame, Frame); // 0x24c
     CC_SYNTHESIZE_READONLY(bool, m_blendAdditive, BlendAdditive); // 0x250
-    /*CC_PROPERTY_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251
-    CC_PROPERTY_READONLY(bool, m_usePlayerColor2, UsePlayerColor2); // 0x252*/
+	CC_SYNTHESIZE_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251
+	CC_SYNTHESIZE_READONLY(bool, m_usePlayerColor2, UsePlayerColor2); // 0x252
 	CC_SYNTHESIZE(bool, m_isDisabled, IsDisabled); // 0x253
     // CC_PROPERTY(bool, m_useAudioScale, UseAudioScale); // 0x254
     CC_SYNTHESIZE_READONLY(bool, m_isSleeping, IsSleeping); // 0x255
@@ -120,8 +120,8 @@ public:
     CC_SYNTHESIZE(float, m_enterAngle, EnterAngle); // 0x270
     CC_SYNTHESIZE(int, m_enterEffect, EnterEffect); // 0x274
     CC_SYNTHESIZE(cocos2d::ccColor3B, m_tintColor, TintColor); // 0x278
-    CC_SYNTHESIZE(float, m_tintDuration, TintDuration); // 0x27c
-    /*CC_PROPERTY(bool, m_tintGround, TintGround); // 0x280*/
+	CC_SYNTHESIZE(float, m_tintDuration, TintDuration); // 0x27c
+	CC_SYNTHESIZE(bool, m_tintGround, TintGround); // 0x280
     CC_SYNTHESIZE(int, m_objectKey, ObjectKey); // 0x284
     /*CC_PROPERTY(bool, m_dontTransform, DontTransform); // 0x288
     CC_PROPERTY(bool, m_dontFade, DontFade); // 0x289
@@ -142,10 +142,10 @@ public:
     CC_SYNTHESIZE(float, m_opacityMod, OpacityMod); // 0x2ac
     CC_SYNTHESIZE(float, m_glowOpacityMod, GlowOpacityMod); // 0x2b0
 	CC_SYNTHESIZE(bool, m_dontShow, DontShow); // 0x2b4
-    /*CC_PROPERTY(bool, m_editorSelected, EditorSelected); // 0x2b5
-    CC_PROPERTY(bool, m_copyPlayerColor1, CopyPlayerColor1); // 0x2b6
-    CC_PROPERTY(bool, m_copyPlayerColor2, CopyPlayerColor2); // 0x2b7
-    CC_PROPERTY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2b8*/
+    CC_SYNTHESIZE(bool, m_editorSelected, EditorSelected); // 0x2b5
+    CC_SYNTHESIZE(bool, m_copyPlayerColor1, CopyPlayerColor1); // 0x2b6
+    CC_SYNTHESIZE(bool, m_copyPlayerColor2, CopyPlayerColor2); // 0x2b7
+    CC_SYNTHESIZE(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2b8
 };
 
 #endif

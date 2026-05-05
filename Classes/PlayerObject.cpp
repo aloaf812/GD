@@ -85,7 +85,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	m_vehicleSprite->setVisible(false);
 
 	this->m_isJumping = false;
-	this->m_yVelolcity = 0;
+	this->m_yVelocity = 0;
 	//this->field737_0x32c = 0;
 	this->field772_0x30d = false;
 	this->m_onGround = false;
@@ -162,7 +162,7 @@ void PlayerObject::update(float dt)
 		{
 			this->updateJump(dt * 0.9f);
 			float addXPos = dt * m_speed * m_timeMod;
-			float addYPos = dt * 0.9f * m_yVelolcity;
+			float addYPos = dt * 0.9f * m_yVelocity;
 			this->setPosition(this->getPosition() + ccp(addXPos, addYPos));
 		}
 
@@ -350,7 +350,7 @@ void PlayerObject::updateJump(float dt)
 			this->field772_0x30d = false;
 			this->field729_0x312 = false;
 
-			this->m_yVelolcity = m_yStart * flipMod() * pScale;
+			this->m_yVelocity = m_yStart * flipMod() * pScale;
 			this->incrementJumps();
 			if (this->m_rollMode != false) {
 				/*flipGravity(this, (bool)(this->m_gravityFlipped ^ 1), true);
@@ -366,7 +366,7 @@ void PlayerObject::updateJump(float dt)
 		}
 
 		if (this->m_isJumping) {
-			this->m_yVelolcity = m_yVelolcity - gravity2 * dt * flipMod() * fVar5;
+			this->m_yVelocity = m_yVelocity - gravity2 * dt * flipMod() * fVar5;
 
 			if (!playerIsFalling())
 				return;
@@ -381,13 +381,13 @@ void PlayerObject::updateJump(float dt)
 			field772_0x30d = false;
 		}
 
-		m_yVelolcity = m_yVelolcity - gravity2 * dt * flipMod() * fVar5;
+		m_yVelocity = m_yVelocity - gravity2 * dt * flipMod() * fVar5;
 
 		if (!this->m_gravityFlipped) {
-			if (m_yVelolcity > 15.0)
-				m_yVelolcity = 15.0;
-			else if (m_yVelolcity < -15.0)
-				m_yVelolcity = -15.0;
+			if (m_yVelocity > 15.0)
+				m_yVelocity = 15.0;
+			else if (m_yVelocity < -15.0)
+				m_yVelocity = -15.0;
 		}
 
 		if (!playerIsFalling())
@@ -433,6 +433,11 @@ void PlayerObject::updateTimeMod(float timeMod)
 		this->runRotateAction();
 }
 
+void PlayerObject::updatePlayerGlow()
+{
+
+}
+
 bool PlayerObject::levelFlipping()
 {
 	if (m_isPlayLayer) {
@@ -462,9 +467,9 @@ bool PlayerObject::playerIsFalling()
 {
 	double targetVel = m_gravity + m_gravity;
 	if (m_gravityFlipped)
-		return targetVel < m_yVelolcity;
-	else
-		return m_yVelolcity < targetVel;
+		return targetVel < m_yVelocity;
+
+	return m_yVelocity < targetVel;
 }
 
 bool PlayerObject::isSafeFlip()
@@ -472,12 +477,12 @@ bool PlayerObject::isSafeFlip()
 	// if (field747_0x324 == 0.0f)
 		// return false;
 
-	return -15.0 <= m_yVelolcity;
+	return -15.0 <= m_yVelocity;
 }
 
 void PlayerObject::hitGround(bool notFlipped)
 {
-	m_yVelolcity = 0;
+	m_yVelocity = 0;
 	// stuff
 	m_onGround = true;
 	field772_0x30d = true;
@@ -534,16 +539,17 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 // this whole project is spaghetti code and educated guesses lol
 void PlayerObject::runRotateAction()
 {
-	if (!this->m_isLocked) {
-		this->stopRotation();
+	if (m_isLocked)
+		return;
 
-		if (m_rollMode) {
-			// this->runBallRotation();
-			return;
-		}
-		else
-			this->runNormalRotation();
+	this->stopRotation();
+
+	if (!m_rollMode) {
+		this->runNormalRotation();
+		return;
 	}
+
+	this->runBallRotation();
 }
 
 void PlayerObject::runNormalRotation()
@@ -562,6 +568,11 @@ void PlayerObject::runNormalRotation()
 	rotateAction->setTag(0);
 	this->runAction(rotateAction);
 	return;
+}
+
+void PlayerObject::runBallRotation()
+{
+	// todo
 }
 
 void PlayerObject::stopRotation()
@@ -591,7 +602,7 @@ void PlayerObject::toggleFlyMode(bool enable)
 		}
 
 		this->stopRotation();
-		m_yVelolcity = m_yVelolcity * 0.5;
+		m_yVelocity = m_yVelocity * 0.5;
 		this->setVisible(false);
 		m_onGround = false;
 		field772_0x30d = false;
@@ -608,14 +619,14 @@ void PlayerObject::toggleFlyMode(bool enable)
 
 		m_vehicleSprite->setVisible(true);
 		m_vehicleSprite->setPosition(ccp(0.0f, -5.0f));
-		// this->updatePlayerGlow();
+		this->updatePlayerGlow();
 
 		// m_birdDragParticle->resetSystem();
 		// m_dragParticle2->resetSystem();
 		// m_dragParticle2->stopSystem();
 		
 		// this->field732_0x315 = false;
-		// this->deactivateParticle();
+		this->deactivateParticle();
 		// this->spawnPortalCircle(ccc3(255, 0, 255), 50.0f);
 		// this->activateStreak();
 		// this->updatePlayerScale();
