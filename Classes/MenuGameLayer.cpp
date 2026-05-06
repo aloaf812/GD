@@ -7,10 +7,25 @@ USING_NS_CC;
 
 MenuGameLayer::MenuGameLayer() 
 {
-	PlayerObject* m_playerObject = nullptr;
+	m_playerObject = nullptr;
 	m_backgroundSprite = nullptr;
 	m_groundSprite = nullptr;
+	m_groundLayer = nullptr;
+	m_groundSpeed = 0.0f;
 	m_backgroundSpeed = 0.0f;
+}
+
+MenuGameLayer* MenuGameLayer::create()
+{
+	MenuGameLayer *pRet = new MenuGameLayer();
+	if (pRet && pRet->init())
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+
+	CC_SAFE_DELETE(pRet);
+	return NULL;
 }
 
 bool MenuGameLayer::init()

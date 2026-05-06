@@ -5,7 +5,7 @@ GJListLayer* GJListLayer::create(BoomListView* listView, const char* title, ccCo
 {
     GJListLayer* pRet = new GJListLayer();
     
-	if (pRet && pRet->init(listView, title, color, width, height)) {
+	if (pRet->init(listView, title, color, width, height)) {
         pRet->autorelease();
         return pRet;
     }

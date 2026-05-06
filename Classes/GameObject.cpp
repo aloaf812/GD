@@ -6,7 +6,7 @@ USING_NS_CC;
 // hi antimatter some of your code was kind of broken so i fixed it up
 
 GameObject::GameObject() {
-    /*this->unk_0x1b8 = 0;
+    this->unk_0x1b8 = 0;
     this->unk_0x1bc = 0;
     this->unk_0x1c0 = false;
     //  *(_DWORD *)this = &off_486138;
@@ -22,7 +22,7 @@ GameObject::GameObject() {
     this->unk_0x1d8 = 0;
     this->m_isActive = false;
     this->m_hasGlow = false;
-    this->unk_0x1de = false;*/
+    this->unk_0x1de = false;
     this->m_particleSystem = nullptr;
 	this->m_particleString = "";
     this->m_particleAdded = false;
@@ -31,28 +31,27 @@ GameObject::GameObject() {
     this->unk_0x204 = false;
     // cocos2d::CCRect::CCRect((GameObject *)((char *)this + 0x208));
     this->unk_0x218 = false;
-    
-	/*this->m_hasColor = false;
+	this->m_hasColor = false;
     this->m_colorSprite = nullptr;
-    this->m_ignoreScreenCheck = false;*/
+    this->m_ignoreScreenCheck = false;
     this->m_radius = 0.0f;
-    /*this->m_isRotated = false;
+	this->m_isRotated = false;
     this->m_scaleModX = 0;
     this->m_scaleModY = 0;
-    this->m_ID = 0;*/
+    this->m_ID = 0;
     this->m_type = GameObjectType::None;
-    /*this->m_sectionIdx = 0;
+    this->m_sectionIdx = 0;
     this->m_shouldSpawn = false;
     this->m_touchTriggered = false;
     // cocos2d::CCPoint::CCPoint((GameObject *)((char *)this + 0x244));
     this->m_blendAdditive = false;
     this->m_frame = "";
     this->m_usePlayerColor = false;
-    this->m_usePlayerColor2 = false;*/
+    this->m_usePlayerColor2 = false;
     this->m_isDisabled = false;
-    // this->m_useAudioScale = false;
+    this->m_useAudioScale = false;
     this->m_isSleeping = false;
-    /*this->m_startRotation = 0;
+    this->m_startRotation = 0;
     this->m_startScaleX = 0;
     this->m_startScaleY = 0;
     this->m_shouldHide = false;
@@ -66,9 +65,9 @@ GameObject::GameObject() {
     this->m_dontTransform = false;
     this->m_dontFade = false;
     this->m_dontFadeTinted = false;
-    this->m_isTintObject = false;*/
+    this->m_isTintObject = false;
     this->m_hasBeenActivated = false;
-    /*this->m_stateVar = false;
+    this->m_stateVar = false;
     this->m_objectZ = 0;
     this->m_objectParent = nullptr;
     this->m_customAudioScale = false;
@@ -85,7 +84,7 @@ GameObject::GameObject() {
     this->m_editorSelected = false;
     this->m_copyPlayerColor1 = false;
     this->m_copyPlayerColor2 = false;
-    this->m_tintObjectsUseBlend = false;*/
+    this->m_tintObjectsUseBlend = false;
 }
 bool GameObject::init(const char *spriteName) {
     if (!CCSpritePlus::initWithSpriteFrameName(spriteName)) return false;
@@ -107,10 +106,10 @@ bool GameObject::init(const char *spriteName) {
     this->m_tintDuration = 0.5f;
     this->setScaleX(1.0f);
     this->setScaleY(1.0f);
-    //this->m_isActive = false;
+    this->m_isActive = false;
     this->unk_0x204 = true;
     this->unk_0x218 = true;
-    //this->m_tintObjectsUseBlend = true;
+    this->m_tintObjectsUseBlend = true;
     return true;
 }
 
@@ -122,12 +121,9 @@ GameObject* GameObject::create(const char* frame)
 		pRet->autorelease();
 		return pRet;
 	}
-	else
-	{
-		delete pRet;
-		pRet = NULL;
-		return NULL;
-	}
+
+	CC_SAFE_DELETE(pRet);
+	return NULL;
 }
 
 GameObject* GameObject::objectFromString(std::string objString)
@@ -155,7 +151,7 @@ GameObject* GameObject::objectFromString(std::string objString)
 		object->setPosition(ccp(objDict->valueForKey("2")->floatValue(), objDict->valueForKey("3")->floatValue() + 90.0f));
 	}
 
-	// object->setObjectKey(objID);
+	object->setObjectKey(objID);
 
 	return object;
 }
@@ -207,11 +203,11 @@ void GameObject::activateObject() {
         this->m_objectParent->addChild(this, this->m_objectZ);
     
     if (this->m_hasGlow)
-        //PLAY_LAYER->getBatchNodeAdd()->addChild(this->m_glowSprite);
+        PLAY_LAYER->getBatchNodeAdd()->addChild(this->m_glowSprite);
     
     if (this->m_hasColor) {
         if (PLAY_LAYER->getTintObjectsUseBlend()) {
-            //PLAY_LAYER->getBatchNodeAdd()->addChild(this->m_glowSprite);
+            PLAY_LAYER->getBatchNodeAdd()->addChild(this->m_glowSprite);
         } else {
             PLAY_LAYER->getBatchNode()->addChild(this->m_glowSprite);
         }
