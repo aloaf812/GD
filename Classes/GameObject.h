@@ -58,6 +58,7 @@ public:
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);
     virtual void resetObject();
+	virtual void triggerObject();
     // virtual void deactivateObject();
     virtual cocos2d::CCRect getObjectRect();
 	virtual cocos2d::CCRect getObjectRect(float scaleModX, float scaleModY);

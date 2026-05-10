@@ -8,7 +8,7 @@
 */
 class MenuGameLayer : public cocos2d::CCLayer {
 public:
-	inline MenuGameLayer();
+	MenuGameLayer();
 	static MenuGameLayer* create();
     bool init();
     void update(float delta);

@@ -142,3 +142,26 @@ void MenuGameLayer::update(float delta)
     m_groundSprite->setTextureRect(CCRectMake(m_groundOffset, 0, m_bgWidth * 2, 90.0f));*/
 
 }
+
+void MenuGameLayer::tryJump()
+{
+	// unfinishedddddd
+
+	CCDirector* pDirector = CCDirector::sharedDirector();
+
+	if (!m_playerObject->getFlyMode()) {
+		if (m_playerObject->getRollMode()) {
+		
+		}
+
+		if (!m_playerObject->getBirdMode())
+		{
+
+		}
+
+
+
+	}
+	
+	m_playerObject->pushButton(PlayerButton::Jump);
+}

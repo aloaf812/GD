@@ -425,3 +425,8 @@ void GameObject::createAndAddParticle(int objType, char const* file, int zOrder,
 	m_particleString = PLAY_LAYER->getParticleKey(objType, file, zOrder, positionType);
 	m_particleAdded = true;
 }
+
+void GameObject::triggerObject()
+{
+	// todo
+}
