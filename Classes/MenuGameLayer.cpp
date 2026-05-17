@@ -117,30 +117,44 @@ bool MenuGameLayer::init()
 
 void MenuGameLayer::update(float delta)
 {
-    float step = delta * 60.0f;
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
+
+	float step = delta * 60.0f;
+
 
 	m_playerObject->setLastP(m_playerObject->getPosition());
 	m_playerObject->update(step);
-    
+
 	if (m_playerObject->getFlyMode())
 		m_playerObject->updateShipRotation(step);
 
-    /*float bgSpeed = 5.77f * 0.1f;
-    float groundSpeed = 5.77f * 0.9f;
-    
-    m_bgOffset += step * bgSpeed;
-    m_groundOffset += step * groundSpeed;
-    
-    if (m_bgOffset > m_bgWidth){
-        m_bgOffset -= m_bgWidth;
-        }
-    if (m_groundOffset > m_groundWidth){
-        m_groundOffset -= m_groundWidth;
-    }
+	if (winSize.width + 100 < m_playerObject->getPosition().x) {
+		m_playerObject->deactivateStreak();
+	}
 
-    m_backgroundSprite->setTextureRect(CCRectMake(m_bgOffset, 0, m_bgWidth * 2, m_backgroundSprite->getContentSize().height));
-    m_groundSprite->setTextureRect(CCRectMake(m_groundOffset, 0, m_bgWidth * 2, 90.0f));*/
 
+	// unfinished chunk here
+
+
+	// i redid my math what do you guys think
+
+	m_backgroundPosition = m_backgroundPosition + ccp(step * 5.77 * 0.9, 0.0f);
+	CCPoint newBGPos = m_backgroundPosition * 0.1;
+	int i;
+
+	for (i = newBGPos.x; i < -m_backgroundSpeed; i = i + m_backgroundSpeed)
+		newBGPos.x += m_backgroundSpeed;
+
+	m_backgroundSprite->setPosition(newBGPos);
+
+	CCPoint newGPos = ccp(m_backgroundPosition.x,
+		pDirector->getScreenBottom() + 90.0);
+
+	for (i = newGPos.x; i < -m_groundSpeed; i = i + m_groundSpeed)
+		newGPos.x += m_groundSpeed;
+
+	m_groundSprite->setPosition(newGPos);
 }
 
 void MenuGameLayer::tryJump()

@@ -167,25 +167,25 @@ const char* GameObject::getBallFrame(int idx) {
     return cocos2d::CCString::createWithFormat("rod_ball_%02d_001.png", idx < 3 ? idx : 3)->getCString();
 }
 
-/*void GameObject::triggerActivated() {
-    this->m_triggerActivated = true;
+void GameObject::triggerActivated() {
+    this->m_hasBeenActivated = true;
 }
 
-void GameObject::removeGlow() {
+/*void GameObject::removeGlow() {
     if (!this->m_glowSprite) return;
     this->m_glowSprite->release();
     this->m_glowSprite->removeMeAndCleanup();
     this->m_glowSprite = nullptr;
 }*/
 
-void GameObject::powerOffObject() {
-    if (this->m_poweredOn)
-        this->m_poweredOn = false;
-}
 void GameObject::powerOnObject() {
     this->m_stateVar = true;
     if (!this->m_poweredOn)
         this->m_poweredOn = true;
+}
+void GameObject::powerOffObject() {
+    if (this->m_poweredOn)
+        this->m_poweredOn = false;
 }
 
 void GameObject::activateObject() {
@@ -429,4 +429,37 @@ void GameObject::createAndAddParticle(int objType, char const* file, int zOrder,
 void GameObject::triggerObject()
 {
 	// todo
+}
+
+void GameObject::deactivateObject()
+{
+	// todo
+}
+
+CCRect GameObject::getObjectTextureRect()
+{
+	// todo
+	return CCRect();
+}
+
+CCPoint GameObject::getRealPosition()
+{
+	return m_realPosition;
+}
+
+void GameObject::setStartPos(CCPoint position)
+{
+	m_realPosition = position;
+	this->setPosition(position);
+}
+
+std::string GameObject::getSaveString()
+{
+	// this is like a pretty big function and i don't know if it's worth decompiling yet
+	return "";
+}
+
+void GameObject::calculateSpawnXPos()
+{
+	m_spawnXPos = m_realPosition.x;
 }

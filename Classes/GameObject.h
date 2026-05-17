@@ -46,11 +46,7 @@ public:
     void disableObject();
     const char* getBallFrame(int idx);
     // void addColorSprite();
-    void activateObject();
-    void powerOffObject();
-    void powerOnObject();
-    /*void removeGlow();
-    void triggerActivated();*/
+    /*void removeGlow();*/
 
 	void updateState();
 	void customSetup();
@@ -59,14 +55,19 @@ public:
     virtual void setFlipY(bool flipY);
     virtual void resetObject();
 	virtual void triggerObject();
-    // virtual void deactivateObject();
+	virtual void activateObject();
+    virtual void deactivateObject();
     virtual cocos2d::CCRect getObjectRect();
 	virtual cocos2d::CCRect getObjectRect(float scaleModX, float scaleModY);
     virtual cocos2d::CCRect getObjectRect2(float scaleModX, float scaleModY);
-    /*virtual cocos2d::CCRect getObjectTextureRect();
+    virtual cocos2d::CCRect getObjectTextureRect();
     virtual cocos2d::CCPoint getRealPosition();
     virtual void setStartPos(cocos2d::CCPoint position);
-    virtual std::string getSaveString();*/
+    virtual std::string getSaveString(); // unimplemented
+	virtual void calculateSpawnXPos();
+    virtual void triggerActivated();
+	virtual void powerOnObject();
+	virtual void powerOffObject();
 
 	void createAndAddParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);
     
@@ -95,7 +96,7 @@ public:
 	CC_SYNTHESIZE_READONLY(bool, m_hasColor, HasColor); // 0x219
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_colorSprite, ColorSprite); // 0x21c
 	CC_SYNTHESIZE(bool, m_ignoreScreenCheck, IgnoreScreenCheck); // 0x220
-    CC_SYNTHESIZE(float, m_radius, Radius); // 0x224
+    CC_SYNTHESIZE_READONLY(float, m_radius, Radius); // 0x224
 	CC_SYNTHESIZE_READONLY(bool, m_isRotated, IsRotated); // 0x228
     CC_SYNTHESIZE(float, m_scaleModX, ScaleModX); // 0x22c
     CC_SYNTHESIZE(float, m_scaleModY, ScaleModY); // 0x230
@@ -104,7 +105,8 @@ public:
 	CC_SYNTHESIZE(int, m_sectionIdx, SectionIdx); // 0x23c
     CC_SYNTHESIZE_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
 	CC_SYNTHESIZE(bool, m_touchTriggered, TouchTriggered); // 0x241
-    cocos2d::CCPoint m_realPosition; // 0x244
+	// this is a bit strange theres this function getStartPos and getRealPosition and they both return this variable which is 0x244
+    CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_realPosition, StartPos); // 0x244
     CC_SYNTHESIZE_READONLY(std::string, m_frame, Frame); // 0x24c
     CC_SYNTHESIZE_READONLY(bool, m_blendAdditive, BlendAdditive); // 0x250
 	CC_SYNTHESIZE_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251

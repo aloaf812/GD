@@ -42,11 +42,12 @@ bool LoadingLayer::init() {
         return false;
     
 	srand(time(0));
-    
-    GameManager* pGameManager = GameManager::sharedState();
 
     GameSoundManager::sharedManager()->setup();
+
+    GameManager* pGameManager = GameManager::sharedState();
 	pGameManager->setup();
+	
 	LocalLevelManager::sharedState()->setup();
 
     CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
