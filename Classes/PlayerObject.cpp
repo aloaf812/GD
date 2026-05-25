@@ -95,26 +95,42 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	//this->field758_0x344 = 0;
 
 #pragma region Particles
-	this->m_pGround = CCParticleSystemQuad::create("dragEffect.plist");
-	m_pGround->setPositionType(tCCPositionType::kCCPositionTypeFree);
-	m_gameLayer->addChild(m_pGround, -1);
-	m_pGround->stopSystem();
+	this->m_dragParticle = CCParticleSystemQuad::create("dragEffect.plist");
+	m_dragParticle->setPositionType(tCCPositionType::kCCPositionTypeFree);
+	m_gameLayer->addChild(m_dragParticle, -1);
+	m_dragParticle->stopSystem();
 	this->m_pGroundActive = false;
 
-	this->m_pBurstEffect = CCParticleSystemQuad::create("burstEffect.plist");
-	m_pBurstEffect->setPositionType(tCCPositionType::kCCPositionTypeFree);
-	m_gameLayer->addChild(m_pBurstEffect, -1);
-	m_pBurstEffect->stopSystem();
+	this->m_burstParticle = CCParticleSystemQuad::create("burstEffect.plist");
+	m_burstParticle->setPositionType(tCCPositionType::kCCPositionTypeFree);
+	m_gameLayer->addChild(m_burstParticle, -1);
+	m_burstParticle->stopSystem();
+
+	// more code here just a massive chunk
+
+	this->m_landParticle = CCParticleSystemQuad::create("landEffect.plist");;
+	m_landParticle->setPositionType(tCCPositionType::kCCPositionTypeGrouped);
+	m_gameLayer->addChild(m_landParticle, 1);
+	m_landParticle->stopSystem();
+	/*fVar17 = (float)(**(code **)(*(int *)this->m_landParticle + 0x1e8))();
+	this->field793_0x374 = fVar17;
+	iVar3 = (**(code **)(*(int *)this->m_landParticle + 0x1f8))();
+	*(undefined4 *)&this->field_0x378 = *(undefined4 *)(iVar3 + 4);*/
+
+	this->m_landParticle2 = CCParticleSystemQuad::create("landEffect.plist");
+	m_landParticle2->setPositionType(tCCPositionType::kCCPositionTypeGrouped);
+	m_gameLayer->addChild(m_landParticle2, 1);
+	m_landParticle2->stopSystem();
 #pragma endregion Particles
 
-	/*field695_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
+	field695_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
 	// field695_0x2e4->setTextureRect
 	field695_0x2e4->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
 
 	if (!m_isPlayLayer) 
 		m_gameLayer->addChild(field695_0x2e4);
 	else
-		PLAY_LAYER->getBatchNodeAdd()->addChild(field695_0x2e4, 20);*/
+		PLAY_LAYER->getBatchNodeAdd()->addChild(field695_0x2e4, 20);
 
     return true;
 }
@@ -181,7 +197,7 @@ void PlayerObject::update(float dt)
 		}
 		else {
 			if (this->m_pGroundActive == false)
-				m_pGround->resumeSystem();
+				m_dragParticle->resumeSystem();
 
 			this->m_pGroundActive = true;
 			this->stopActionByTag(2);
@@ -192,7 +208,7 @@ void PlayerObject::update(float dt)
 void PlayerObject::deactivateParticle()
 {
 	if (this->m_pGroundActive != false)
-		m_pGround->stopSystem();
+		m_dragParticle->stopSystem();
 
 	this->m_pGroundActive = false;
 }
@@ -204,9 +220,9 @@ void PlayerObject::deactivateStreak()
 
 void PlayerObject::resetObject()
 {
-	/*this->field708_0x30c = true;
+	this->field771_0x30c = true;
 	this->deactivateStreak();
-	this->removePendingCheckpoint();
+	/* this->removePendingCheckpoint();
 	*(undefined4 *)&this->field_0x318 = 0;
 	cocos2d::CCPoint::operator=(&this[1].m_lastGroundPos,(CCPoint *)&DAT_004c6e48);
 	iVar5 = *(int *)this;*/
@@ -215,15 +231,22 @@ void PlayerObject::resetObject()
 	// *(undefined4 *)&this->field_0x340 = 0;
 	// this->field_0x310 = 0;
 	this->setPosition(PLAY_LAYER->getStartPos());
-	/*this->flipGravity(false, false);
-	this->toggleFlyMode(false);
-	this->toggleRollMode(false);
-	this->toggleBirdMode(false);
-	this->togglePlayerScale(false);*/
-	this->setRotation(0.0f);
-	this->m_isDead = false;
-	this->stopActionByTag(3);
-	this->setOpacity(255);
+	// this->flipGravity(false, false);
+	toggleFlyMode(false);
+	toggleRollMode(false);
+	toggleBirdMode(false);
+	// togglePlayerScale(false);
+	setRotation(0.0f);
+	setVisible(false);
+	m_isDead = false;
+	stopActionByTag(3);
+	setOpacity(255);
+
+	// resetStreak();
+	// levelFlipFinished();
+	touchedObject(nullptr);
+
+	field771_0x30c = false;
 }
 
 void PlayerObject::pushButton(PlayerButton button)
@@ -268,26 +291,34 @@ void PlayerObject::playerDestroyed()
 	}*/
 
 	this->m_isDead = true;
-	// this->stopRotation();
+	this->stopRotation();
 	this->deactivateParticle();
-	// this->touchedObject(this);
+	this->touchedObject(nullptr);
+
+	// m_birdDragParticle->stopSystem();
+	// m_dragParticle2->stopSystem();
+	// m_shipDragParticle->stopSystem();
+
+	toggleGhostEffect(GhostType::Disabled);
 }
 
 void PlayerObject::playBurstEffect()
 {
 	if (!levelFlipping()) {
-		m_pBurstEffect->resumeSystem();
+		m_burstParticle->resumeSystem();
 		this->stopActionByTag(6);
-		// *(undefined4 *)(pCVar4 + 0x20) = 6;
-		runAction(CCSequence::create(CCDelayTime::create(0.12f),
+		CCSequence* seq = CCSequence::create(CCDelayTime::create(0.12f),
 			CCCallFunc::create(this, callfunc_selector(PlayerObject::stopBurstEffect)),
-			nullptr));
+			nullptr);
+
+		seq->setTag(6);
+		runAction(seq);
 	}
 }
 
 void PlayerObject::stopBurstEffect()
 {
-	m_pBurstEffect->stopSystem();
+	m_burstParticle->stopSystem();
 }
 
 void PlayerObject::setColor(cocos2d::ccColor3B color)
@@ -305,10 +336,10 @@ void PlayerObject::setSecondColor(cocos2d::ccColor3B color)
 
 void PlayerObject::setPosition(CCPoint const &position) {
 	GameObject::setPosition(position);
-	//field695_0x2e4->setPosition(position);
+	field695_0x2e4->setPosition(position);
 
 
-	m_pGround->setPosition(position);
+	m_dragParticle->setPosition(position);
 }
 
 void PlayerObject::updateShipRotation(float dt)
@@ -483,7 +514,35 @@ bool PlayerObject::isSafeFlip()
 void PlayerObject::hitGround(bool notFlipped)
 {
 	m_yVelocity = 0;
-	// stuff
+
+	if ((!m_onGround && !notFlipped) && !levelFlipping()) {
+
+		CCParticleSystemQuad* landParticle;
+		if (!field_0x368)
+			landParticle = m_landParticle2;
+		else
+			landParticle = m_landParticle;
+
+		this->field_0x368 = field_0x368 ^ 1;
+		/*fVar6 = this->field793_0x374;
+		pcVar4 = *(code **)(*(int *)landParticle + 0x1ec);
+		iVar2 = flipMod(this);
+		(*pcVar4)(this_00, fVar6 * (float)(longlong)iVar2);
+		pcVar4 = *(code **)(*(int *)landParticle + 0x1fc);
+		(**(code **)(*(int *)this->m_landParticle + 0x1f8))();
+		uVar5 = flipMod(this);
+		cocos2d::CCPoint::CCPoint(aCStack_38, (float)uVar5, (float)((ulonglong)uVar5 >> 0x20));
+		(*pcVar4)(this_00, aCStack_38);
+		pcVar4 = *(code **)(*(int *)landParticle + 0x5c);
+		pCVar3 = (CCPoint *)(**(code **)(*(int *)this + 0x60))(this);
+		uVar5 = flipMod(this);
+		cocos2d::CCPoint::CCPoint(aCStack_30, (float)uVar5, (float)((ulonglong)uVar5 >> 0x20));
+		cocos2d::CCPoint::operator+(aCStack_28, pCVar3);
+		(*pcVar4)(this_00, aCStack_28);*/
+		landParticle->resetSystem();
+	}
+
+
 	m_onGround = true;
 	field772_0x30d = true;
 	field733_0x316 = true;
@@ -507,8 +566,7 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 
 	// currently used as a placeholder since this is a pretty big function
 	if (true) {
-		// if (this->getObjectRect(0.3f, 0.3f).intersectsRect(obj->getObjectRect())) {
-		if (true) {
+		if (this->getObjectRect(0.3f, 0.3f).intersectsRect(obj->getObjectRect())) {
 			if ((true) && (isSafeFlip())) {
 				CCPoint moveToPos;
 				if (!m_gravityFlipped) {
@@ -625,7 +683,7 @@ void PlayerObject::toggleFlyMode(bool enable)
 		// m_dragParticle2->resetSystem();
 		// m_dragParticle2->stopSystem();
 		
-		// this->field732_0x315 = false;
+		// this->m_pShipActive = false;
 		this->deactivateParticle();
 		// this->spawnPortalCircle(ccc3(255, 0, 255), 50.0f);
 		// this->activateStreak();
@@ -639,6 +697,16 @@ void PlayerObject::toggleRollMode(bool enable)
 }
 
 void PlayerObject::toggleBirdMode(bool enable)
+{
+
+}
+
+void PlayerObject::toggleGhostEffect(GhostType type)
+{
+
+}
+
+void PlayerObject::touchedObject(GameObject* obj)
 {
 
 }

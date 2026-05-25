@@ -17,6 +17,9 @@ public:
 
 	void onNew(cocos2d::CCObject* sender);
 
+	void onNextPage(cocos2d::CCObject* sender);
+	void onPrevPage(cocos2d::CCObject* sender);
+
 	TextArea* m_noInternet; // 0x110
 	GJSearchObject* m_searchObject; // 0x124
 	cocos2d::CCLabelBMFont* m_countText; // 0x128

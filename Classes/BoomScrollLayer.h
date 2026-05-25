@@ -18,6 +18,9 @@ public:
 	void moveToPageEnded();
     virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 	cocos2d::CCPoint positionForPageWithNumber(int page);
+	void repositionPagesLooped();
+
+	cocos2d::CCArray* unk_0x134; // 0x134
 
 	// vars
 	CC_SYNTHESIZE_READONLY(ExtendedLayer*, m_internalLayer, InternalLayer); // 0x144

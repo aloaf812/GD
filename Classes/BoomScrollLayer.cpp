@@ -41,7 +41,7 @@ BoomScrollLayer* BoomScrollLayer::create(cocos2d::CCArray* pages, int param1, bo
     return NULL;
 }
 
-bool BoomScrollLayer::init(cocos2d::CCArray* pages, int param1, bool looped)
+bool BoomScrollLayer::init(cocos2d::CCArray* pages, int offset, bool looped)
 {
     if (!CCLayer::init())
         return false;
@@ -59,14 +59,14 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int param1, bool looped)
     // robtop: this->setTouchSwallowEnabled(true);
     
 	this->m_minTouchSpeed = 0.3f;
+	this->unk_0x134 = pages;
 	this->m_currentScreen = 0;
 	this->m_touchSpeedMid = 0.4f;
+	this->m_pagesWidthOffset = offset;
 	this->m_touchSpeedFast = 0.6f;
 
-
-    m_pages = pages;
-    
-    CCSpriteBatchNode* dots = CCSpriteBatchNode::create("smallDot.png");
+	pages->retain();
+	CCSpriteBatchNode* dots = CCSpriteBatchNode::create("smallDot.png", 29);
     m_dotsArray = CCArray::create();
 	m_dotsArray->retain();
     this->addChild(dots, 5);
@@ -80,9 +80,12 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int param1, bool looped)
     }
     
     this->updatePages();
-	this->m_looped = looped;
 
-    this->schedule(schedule_selector(BoomScrollLayer::updateDots));
+	this->m_looped = looped;
+	if (looped)
+		repositionPagesLooped();
+
+	this->schedule(schedule_selector(BoomScrollLayer::updateDots), 0.1f);
     
 	return true;
 }
@@ -170,4 +173,9 @@ void BoomScrollLayer::moveToPageEnded()
 CCPoint BoomScrollLayer::positionForPageWithNumber(int page)
 {
 	return ccp(this->getContentSize().width * page, 0.f);
+}
+
+void BoomScrollLayer::repositionPagesLooped()
+{
+	// todo
 }

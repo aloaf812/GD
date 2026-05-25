@@ -216,9 +216,9 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->addChild(field_0x1e4);
 	field_0x1e4->setVisible(false);
 
-	this->field_0x1ec = CCSprite::create();
-	this->addChild(field_0x1ec);
-	field_0x1ec->setVisible(false);
+	this->m_objColorRef = CCSprite::create();
+	this->addChild(m_objColorRef);
+	m_objColorRef->setVisible(false);
 
 	this->field_0x1f4 = CCSprite::create();
 	this->addChild(field_0x1f4);
@@ -237,6 +237,9 @@ bool PlayLayer::init(GJGameLevel* level)
 	CCTexture2D* texture = pTextureCache->addImage("GJ_GameSheet.png");
 	this->m_batchNode = CCSpriteBatchNode::createWithTexture(texture, 29);
 	m_gameLayer->addChild(m_batchNode, 1);
+
+	this->m_batchNodeAdd = CCSpriteBatchNode::createWithTexture(texture, 29);
+	m_gameLayer->addChild(m_batchNodeAdd, 0);
 
 	// quite some more missing code
 
@@ -417,17 +420,17 @@ void PlayLayer::resetLevel()
 
 	this->toggleGlitter(false);
 
-	/*this->m_playerDead = false;
-	this->field314_0x1a9 = this->m_cleanReset;
+	this->m_playerDead = false;
+	/*this->field314_0x1a9 = this->m_cleanReset;
 	this->clearPickedUpItems();*/
 
 	// field277_0x130->removeAllObjects(); // this is a CCArray
 	// field339_0x1e0->removeAllObjects(); // this is a CCDictionary
 
 	this->m_flipValue = 0.0;
-	/*this->field336_0x1d4 = 0.0;
-	this->field_0x238 = 0;
-	this->field337_0x1d8 = 1.0;*/
+	// this->field336_0x1d4 = 0.0;
+	this->m_isFlipped = false;
+	//this->field337_0x1d8 = 1.0;
 	this->stopActionByTag(14);
 
 	this->m_cameraPortal = nullptr;
@@ -437,8 +440,8 @@ void PlayLayer::resetLevel()
 	this->animateOutRollGround(true);
 
 	m_realPlayerPos = m_player->getPosition();
-	//this->updateCamera();
-	// this->updateVisibility();
+	this->updateCamera(0.0f);
+	this->updateVisibility();
     updateAttempts();
 	m_isResetting = false;
 }
@@ -894,18 +897,20 @@ void PlayLayer::checkCollisions(float dt)
 				if (currentObject->getIsSleeping())
 					return;
 
-				if (currentObject->getType() == GameObjectType::Hazard)
+				if (currentObject->getType() == Hazard) {
 					m_hazardsArray->addObject(currentObject);
+					goto LAB_0018ffd8;
+				}
 
 				if ((currentObject->getIsDisabled()) || (currentObject->getHasBeenActivated()))
 					return;
 
-				/*if (!(m_player->getObjectRect()->intersectsRect(currentObject->getObjectRect())) ||
-					((0.0f < currentObject->getRadius() && (!(objectIntersectsCircle(m_player, currentObject))))
-				return;*/
+				if (!(m_player->getObjectRect().intersectsRect(currentObject->getObjectRect()))) 
+					return;
+					// || ((0.0f < currentObject->getRadius() && (!(objectIntersectsCircle(m_player, currentObject))))
 
 				switch (currentObject->getType()) {
-				case GameObjectType::InvertGravityPortal:
+				case InvertGravityPortal:
 					if (!m_player->getGravityFlipped()) {
 						// this->playGravityEffect(true);
 					}
@@ -913,7 +918,7 @@ void PlayLayer::checkCollisions(float dt)
 					m_player->setPortalObject(currentObject);
 					// m_player->flipGravity(true, false);
 					break;
-				case GameObjectType::NormalGravityPortal:
+				case NormalGravityPortal:
 					if (m_player->getGravityFlipped()) {
 						// this->playGravityEffect(false);
 					}
@@ -921,10 +926,10 @@ void PlayLayer::checkCollisions(float dt)
 					m_player->setPortalObject(currentObject);
 					// m_player->flipGravity(false, false);
 					break;
-				case GameObjectType::ShipPortal:
+				case ShipPortal:
 					this->switchToFlyMode(currentObject, false, false);
 					break;
-				case GameObjectType::CubePortal:
+				case CubePortal:
 					m_player->setPortalP(currentObject->getPosition());
 					m_player->setPortalObject(currentObject);
 					this->exitFlyMode();
@@ -935,10 +940,24 @@ void PlayLayer::checkCollisions(float dt)
 					m_player->collidedWithObject(dt, currentObject);
 					return;
 					// skip some more
+				case YellowPad:
+				case GravityPad:
+					m_player->setPortalP(currentObject->getPosition());
+					currentObject->triggerActivated();
+					if (((currentObject->getType() == GravityPad) && !m_player->getFlyMode()) && !m_player->getBirdMode())
+						m_player->getRollMode();
+
+					m_player->setPortalObject(currentObject);
+					this->switchToFlyMode(currentObject, false, false);
+					// m_player->propellPlayer(fVar3);
+					// goto LAB_0018ffd8;
+					break;
 				}
 			}
 		}
 	}
+
+LAB_0018ffd8:
 
 	unsigned int haIdx = 0;
 	while (true) {

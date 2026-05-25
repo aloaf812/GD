@@ -132,7 +132,7 @@ public:
 	cocos2d::CCDictionary* m_particlesDictionary; // 0x1dc
 
 	cocos2d::CCNode* field_0x1e4;
-	cocos2d::CCSprite* field_0x1ec;
+	cocos2d::CCSprite* m_objColorRef;
 	cocos2d::CCSprite* field_0x1f4;
 	cocos2d::CCSprite* field_0x1e8;
 	cocos2d::CCSprite* m_gColorRef; // 0x1f0

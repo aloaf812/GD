@@ -74,6 +74,10 @@ public:
 	void toggleRollMode(bool enable);
 	void toggleBirdMode(bool enable);
 
+	void toggleGhostEffect(GhostType type);
+
+	void touchedObject(GameObject* obj);
+
 
 	GhostType m_ghostType; // 0x2c0
 	// GhostTrailEffect* m_ghostTrail; // 0x2c4
@@ -110,9 +114,16 @@ public:
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 
 	// particles
-	cocos2d::CCParticleSystemQuad* m_pGround; // 0x354
-	cocos2d::CCParticleSystemQuad* m_pShipGround; // 0x360
-	cocos2d::CCParticleSystemQuad* m_pBurstEffect; // 0x364
+	cocos2d::CCParticleSystemQuad* m_dragParticle; // 0x354
+	cocos2d::CCParticleSystemQuad* m_birdDragParticle; // 0x358
+	cocos2d::CCParticleSystemQuad* m_dragParticle2; // 0x35c
+	cocos2d::CCParticleSystemQuad* m_shipDragParticle; // 0x360
+	cocos2d::CCParticleSystemQuad* m_burstParticle; // 0x364
+
+	bool field_0x368; // 0x368
+
+	cocos2d::CCParticleSystemQuad* m_landParticle; // 0x36c
+	cocos2d::CCParticleSystemQuad* m_landParticle2; // 0x370
 
 	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
 	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381

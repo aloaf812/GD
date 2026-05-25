@@ -50,37 +50,35 @@ bool GJGroundLayer::init(int gID)
 	m_groundSprite->setTextureRect(CCRectMake(0, 0, winSize.width, m_groundSprite->getContentSize().height));
     m_groundSprite->setPosition(ccp(0.0f, 90.0f));
 
-
 	m_line = CCSprite::createWithSpriteFrameName("floorLine_001.png");
 	this->addChild(m_line, 3);
 	m_line->setPosition(ccp(winSize.width * 0.5f, 90.5f));
 	m_line->setAnchorPoint(ccp(0.5f, 1.0f));
-	// m_line->setBlendFunc(0x302, 1);
+	m_line->setBlendFunc({GL_SRC_ALPHA, GL_ONE});
 	m_line->setTag(1);
-	// m_line->setColor(ccc3(255, 255, 255));
+	m_line->setColor(ccWHITE);
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
     leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, 90.0f));
     this->addChild(leftShadow, 3);
-    leftShadow->setOpacity(100);
-    leftShadow->setColor(ccc3(150, 150, 150));
-    leftShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     leftShadow->setTag(0);
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
     rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, 90.0f));
-    rightShadow->setFlipX(true);
     this->addChild(rightShadow, 3);
+    rightShadow->setFlipX(true);
+	rightShadow->setTag(0);
+
+    leftShadow->setOpacity(100);
     rightShadow->setOpacity(100);
-    rightShadow->setColor(ccc3(150, 150, 150));
-    rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
-    rightShadow->setTag(0);
+	
+	leftShadow->setScaleX(0.7f);
+	rightShadow->setScaleX(0.7f);
     
-    m_line = CCSprite::createWithSpriteFrameName("floorLine_001.png");
-    this->addChild(m_line, 3);
-    m_line->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 90.0f));
+	leftShadow->setBlendFunc({ GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA });
+	rightShadow->setBlendFunc({ GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA });
     
     m_isActive = false;
     

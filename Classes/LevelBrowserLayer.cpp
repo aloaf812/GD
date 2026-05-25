@@ -1,6 +1,7 @@
 #include "LevelBrowserLayer.h"
 #include "GameLevelManager.h"
 #include "AppDelegate.h"
+#include "GameManager.h"
 USING_NS_CC;
 
 CCScene* LevelBrowserLayer::scene(GJSearchObject* searchObject)
@@ -80,4 +81,16 @@ void LevelBrowserLayer::onNew(CCObject* sender)
 	/*CCScene* scene = EditLevelLayer::scene(newLevel);
 	CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
 	pDirector->replaceScene(fade);*/
+}
+
+void LevelBrowserLayer::onNextPage(CCObject* sender)
+{
+	GameManager::sharedState()->setLastLevelID(0);
+	// loadPage(m_searchObject->getNextPageObject());
+}
+
+void LevelBrowserLayer::onPrevPage(CCObject* sender)
+{
+	GameManager::sharedState()->setLastLevelID(0);
+	// loadPage(m_searchObject->getPrevPageObject());
 }

@@ -39,7 +39,7 @@ GameObject::GameObject() {
     this->m_scaleModX = 0;
     this->m_scaleModY = 0;
     this->m_ID = 0;
-    this->m_type = GameObjectType::None;
+    this->m_type = None;
     this->m_sectionIdx = 0;
     this->m_shouldSpawn = false;
     this->m_touchTriggered = false;
@@ -359,8 +359,50 @@ void GameObject::customSetup()
 		// field469_0x1d = 60.0f
 		break;
 	case 8:
-	case 39:
-	case 103:
+	case 39: break; // temp
+	case 9:
+	case 61:
+	case 135:
+	case 243:
+	case 244:
+		this->m_type = Hazard;
+		this->m_scaleModY = 0.4f;
+		this->m_scaleModX = 0.3f;
+		if (m_objectKey == 9) {
+			CCSpriteFrameCache* frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+			int randNum = roundf(rand() % 2);
+			char const* frameFile = CCString::createWithFormat("pit_%02d_001.png", randNum + 1)->getCString();
+			this->setDisplayFrame(frameCache->spriteFrameByName(frameFile));
+		}
+		/*else if (iVar11 == 0x87) {
+			lrand48();
+			roundf(__x_00);
+			iVar11 = (int)extraout_r0_04 + 1;
+			if (iVar11 == DAT_004be004) {
+				iVar11 = (int)extraout_r0_04 + 2;
+			}
+			if (4 < iVar11) {
+				iVar11 = 1;
+			}
+			pcVar14 = *(code **)(*(int *)this + 0x224);
+			pCVar4 = (CCSpriteFrameCache *)cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache();
+			pCVar5 = (CCString *)cocos2d::CCString::createWithFormat("pit_b_%02d_001.png", iVar11);
+			pcVar6 = (char *)cocos2d::CCString::getCString(pCVar5);
+			uVar7 = cocos2d::CCSpriteFrameCache::spriteFrameByName(pCVar4, pcVar6);
+			(*pcVar14)(this, uVar7);
+			DAT_004be004 = iVar11;
+		}*/
+		break;
+	case 35:
+		this->m_type = YellowPad;
+		this->m_scaleModX = 1.0;
+		this->m_scaleModY = 1.0;
+		// skip some
+	case 103: break; // temp
+	// skip some
+	case 140:
+		this->m_type = GravityPad;
+		// skip some
 	case 177:
 	case 178:
 	case 179:
@@ -384,19 +426,58 @@ void GameObject::customSetup()
 	case 211:
 		m_type = GameObjectType::Decoration;
 		m_objectZ = -2;
-		// m_dontFadeTinted = true;
-		// m_dontFade = true;
-		// m_dontShow = true;
+		m_dontFadeTinted = true;
+		m_dontFade = true;
+		m_dontShow = true;
 		break;
-	// skipping some
+
+	case 247:
+	case 248:
+	case 249:
+	case 250:
+	case 252:
+	case 253:
+	case 254:
+	case 255:
+	case 256:
+	case 257:
+	case 258:
+	case 260:
+	case 261:
+	case 263:
+	case 264:
+	case 265:
+	case 267:
+	case 268:
+	case 269:
+	case 270:
+	case 271:
+	case 272:
+	case 274:
+	case 275:
+		m_type = None;
+		unk_0x1d4 = 30.0f;
+		unk_0x1d8 = 30.0f;
+		break;
 	case 273:
 		m_type = GameObjectType::Decoration;
-		// m_dontShow = true;
+		m_dontShow = true;
 		m_objectZ = -2;
 	}
 
 	//if (m_type - 7 < 2)
-		//m_isDisabled = true;
+		// m_isDisabled = true;
+
+	// if (((uVar13 < 0xf) && ((1 << (uVar13 & 0xff) & 0x7002U) != 0)) || (this->m_objectKey == 8)) {
+	if (m_objectKey == 8) {
+		unk_0x1d4 = 30.0f;
+		unk_0x1d8 = 30.0f;
+	}
+
+	if (m_touchTriggered) {
+		// this->m_type = 21;
+		this->m_isDisabled = false;
+	}
 }
 
 CCRect GameObject::getObjectRect()
@@ -406,8 +487,12 @@ CCRect GameObject::getObjectRect()
 
 CCRect GameObject::getObjectRect(float scaleModX, float scaleModY)
 {
+	CCSize objSize = CCSizeMake(unk_0x1d4, unk_0x1d8);
+
+
+
 	// this function seems a bit complicated, will finish later
-	return CCRectMake(0, 0, scaleModX, scaleModY);
+	return CCRectMake(0, 0, objSize.width, objSize.height);
 }
 
 CCRect GameObject::getObjectRect2(float scaleModX, float scaleModY)
