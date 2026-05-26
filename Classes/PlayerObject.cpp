@@ -17,7 +17,7 @@ PlayerObject::PlayerObject()
 
 	this->m_gravityFlipped = false;
 
-	this->field772_0x30d = false;
+	this->m_canJump = false;
 	this->field773_0x30e = false;
 
 	this->field747_0x324 = 0.0f;
@@ -87,7 +87,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	this->m_isJumping = false;
 	this->m_yVelocity = 0;
 	//this->field737_0x32c = 0;
-	this->field772_0x30d = false;
+	this->m_canJump = false;
 	this->m_onGround = false;
 	this->m_isDead = false;
 	this->m_playerScale = 1.0;
@@ -276,7 +276,7 @@ void PlayerObject::pushButton(PlayerButton button)
 			return;
 		}
 
-		if (field772_0x30d != false) {
+		if (m_canJump != false) {
 			this->updateJump(0.0f);
 			return;
 		}
@@ -375,10 +375,10 @@ void PlayerObject::updateJump(float dt)
 			fVar5 = 1.0f;
 		}
 
-		if ((field773_0x30e) && (field772_0x30d)) {
+		if ((field773_0x30e) && (m_canJump)) {
 			this->m_isJumping = true;
 			this->m_onGround = false;
-			this->field772_0x30d = false;
+			this->m_canJump = false;
 			this->field729_0x312 = false;
 
 			this->m_yVelocity = m_yStart * flipMod() * pScale;
@@ -409,7 +409,7 @@ void PlayerObject::updateJump(float dt)
 		}
 
 		if (playerIsFalling()) {
-			field772_0x30d = false;
+			m_canJump = false;
 		}
 
 		m_yVelocity = m_yVelocity - gravity2 * dt * flipMod() * fVar5;
@@ -544,7 +544,7 @@ void PlayerObject::hitGround(bool notFlipped)
 
 
 	m_onGround = true;
-	field772_0x30d = true;
+	m_canJump = true;
 	field733_0x316 = true;
 
 	if ((!m_rollMode) && (getActionByTag(0)))
@@ -663,7 +663,7 @@ void PlayerObject::toggleFlyMode(bool enable)
 		m_yVelocity = m_yVelocity * 0.5;
 		this->setVisible(false);
 		m_onGround = false;
-		field772_0x30d = false;
+		m_canJump = false;
 		field727_0x310 = false;
 		// this->removePendingCheckpoint();
 
@@ -709,4 +709,31 @@ void PlayerObject::toggleGhostEffect(GhostType type)
 void PlayerObject::touchedObject(GameObject* obj)
 {
 
+}
+
+// HelloWorld("print")
+void PlayerObject::saveToCheckpoint(CheckpointObject* check)
+{
+	CCPoint playerPos;
+	if (PLAY_LAYER->isFlipping())
+		playerPos = this->getPosition();
+	else
+		playerPos = PLAY_LAYER->getRealPlayerPos();
+
+	check->setPlayerPos(playerPos);
+	check->setPlayerYVel(m_yVelocity);
+	check->setFlipGravity(m_gravityFlipped);
+	check->setFlyMode(m_flyMode);
+	check->setRollMode(m_rollMode);
+	check->setBirdMode(m_birdMode);
+	check->setCanJump(m_canJump);
+	check->setGhostType((int)m_ghostType);
+	check->setIsScaled(m_playerScale != 1.0f);
+	check->setTimeMod(m_timeMod);
+
+	if (isFlying() || m_rollMode) {
+		if (PLAY_LAYER->getCameraPortal()) {
+			check->setPortalObject(PLAY_LAYER->getCameraPortal());
+		}	
+	}
 }

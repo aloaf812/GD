@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/RT_COCOS/CCMenuItemSpriteExtra.cpp \
                    ../../Classes/RT_COCOS/CCSpritePlus.cpp \
                    ../../Classes/RT_COCOS/CCTextInputNode.cpp \
+                   ../../Classes/CheckpointObject.cpp \
                    ../../Classes/ColorAction.cpp \
                    ../../Classes/ColoredSection.cpp \
                    ../../Classes/CreatorLayer.cpp \

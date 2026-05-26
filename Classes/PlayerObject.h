@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GameObject.h"
+#include "CheckpointObject.h"
 
 enum class PlayerButton {
 	None = 0,
@@ -78,6 +79,7 @@ public:
 
 	void touchedObject(GameObject* obj);
 
+	void saveToCheckpoint(CheckpointObject* check);
 
 	GhostType m_ghostType; // 0x2c0
 	// GhostTrailEffect* m_ghostTrail; // 0x2c4
@@ -97,7 +99,7 @@ public:
 	double m_gravity; // 0x300
 
 	bool field771_0x30c; // 0x30c
-	bool field772_0x30d; // 0x30d
+	bool m_canJump; // 0x30d
 	bool field773_0x30e; // 0x30e
 
 	bool field727_0x310; // 0x310

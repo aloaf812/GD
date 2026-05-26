@@ -6,7 +6,7 @@
 
 class ExtendedLayer : public cocos2d::CCLayer {
 public:
-	CREATE_FUNC(ExtendedLayer);
+	static ExtendedLayer* create();
     bool init();
 
 	//CC_SYNTHESIZE(BoomScrollLayerDelegate*, m_delegate, Delegate);

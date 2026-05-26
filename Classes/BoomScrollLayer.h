@@ -19,8 +19,17 @@ public:
     virtual bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 	cocos2d::CCPoint positionForPageWithNumber(int page);
 	void repositionPagesLooped();
+	void setPagesIndicatorPosition(cocos2d::CCPoint position);
+	int getTotalPages();
 
+    cocos2d::CCArray* m_dotsArray; // 0x10c
+	int m_animatingToPage; // 0x110
+	bool m_looped; // 0x11c
+
+	cocos2d::CCArray* unk_0x120; // 0x120
+	bool unk_0x124; // 0x124
 	cocos2d::CCArray* unk_0x134; // 0x134
+	cocos2d::CCPoint m_targetPos; // 0x13c
 
 	// vars
 	CC_SYNTHESIZE_READONLY(ExtendedLayer*, m_internalLayer, InternalLayer); // 0x144
@@ -34,16 +43,21 @@ public:
 	CC_SYNTHESIZE(BoomScrollLayerDelegate*, m_delegate, Delegate); // 0x164
 	CC_SYNTHESIZE_READONLY(bool, m_movingToPage, MovingToPage); // 0x168
 
+	CC_SYNTHESIZE(float, m_minimumTouchLengthToSlide, MinimumTouchLengthToSlide); // 0x16c
+	CC_SYNTHESIZE(float, m_minimumTouchLengthToChangePage, MinimumTouchLengthToChangePage); // 0x170
+
 	CC_SYNTHESIZE(float, m_marginOffset, MarginOffset); // 0x174
+	CC_SYNTHESIZE(bool, m_stealTouches, StealTouches); // 0x178
+	CC_SYNTHESIZE(bool, m_showPagesIndicator, ShowPagesIndicator); // 0x179
+
+	cocos2d::CCPoint m_pagesIndicatorPosition; // 0x17c
+
+	CC_SYNTHESIZE(cocos2d::ccColor4B, m_pagesIndicatorSelectedColor, PagesIndicatorSelectedColor); // 0x184
+	CC_SYNTHESIZE(cocos2d::ccColor4B, m_pagesIndicatorNormalColor, PagesIndicatorNormalColor); // 0x188
 
     CC_SYNTHESIZE_READONLY(int, m_currentScreen, CurrentScreen); // 0x18c
 	CC_SYNTHESIZE(float, m_pagesWidthOffset, PagesWidthOffset); // 0x190
 	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_pages, pages); // 0x194
-protected:
-    BoomScrollLayerDelegate* m_bslDelegate;
-    cocos2d::CCArray* m_dotsArray; // 0x10c
-	cocos2d::CCPoint m_targetPos; // 0x4f
-	bool m_looped; // 0x11c
 };
 
 class BoomScrollLayerDelegate {

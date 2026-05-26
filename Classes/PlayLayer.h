@@ -95,17 +95,25 @@ public:
 	void createParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);
 	void playSpeedParticle(float timeMod);
 
+	CheckpointObject* createCheckpoint();
+	void storeCheckpoint(CheckpointObject* check);
+	void markCheckpoint();
+
 	void moveCameraToPos(cocos2d::CCPoint pos);
 	void cameraMoveX(float value, float duration, float rate);
 	void cameraMoveY(float value, float duration, float rate);
     
+	float unk_0x110; // 0x110
 	bool field279_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
 	EndPortalObject* m_endObject; // 0x128
 	cocos2d::CCArray* m_checkpoints; // 0x12c
     cocos2d::CCSprite* m_background; // 0x13c
     
-	cocos2d::CCSprite* field290_0x140; // 0x140
+	cocos2d::CCSprite* unk_0x140; // 0x140
+	cocos2d::CCSprite* unk_0x144; // 0x144
+	cocos2d::CCSprite* unk_0x148; // 0x148
+	cocos2d::CCSprite* unk_0x14c; // 0x14c
 
 	GJGroundLayer* m_ground; // 0x150
 	bool m_flyGroundActive; // 0x160
