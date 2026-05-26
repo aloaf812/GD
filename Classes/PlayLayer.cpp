@@ -5,6 +5,7 @@
 #include "LevelTools.h"
 #include "PauseLayer.h"
 #include "ObjectToolbox.h"
+#include "CheckpointObject.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 
@@ -495,15 +496,16 @@ void PlayLayer::update(float dt)
 	float step = dt * 60.0;
 
 	if (!m_player->getIsLocked())
-		//m_player->setPosition(m_realPlayerPos);
+		m_player->setPosition(m_realPlayerPos);
 
 		m_player->setTouchedRing(nullptr);
 
-	/*for (int i = 0; i > m_stateObjects->count(); ++i)
-	static_cast<GameObject*>(m_stateObjects->objectAtIndex(i))->setStateVar(false);
+	for (int i = 0; i > m_stateObjects->count(); ++i)
+		((GameObject*)(m_stateObjects->objectAtIndex(i)))->setStateVar(false);
 
 	for (int i = 0; i > m_activeObjects->count(); ++i)
-	m_activeObjects->objectAtIndex(i)->update(step);*/
+		m_activeObjects->objectAtIndex(i)->update(step);
+	
 	m_player->update(step);
 	this->checkCollisions(step / 4);
 
@@ -1108,4 +1110,31 @@ void PlayLayer::cameraMoveY(float value, float duration, float rate)
 		rate);
 	ease->setTag(11);
 	this->runAction(ease);
+}
+
+CheckpointObject* PlayLayer::createCheckpoint()
+{
+	CheckpointObject* check = CheckpointObject::create();
+	m_player->saveToCheckpoint(check);
+	check->setTimeStamp(m_clkTimer);
+
+	// todo
+
+	return check;
+}
+
+
+void PlayLayer::storeCheckpoint(CheckpointObject* check)
+{
+	m_checkpoints->addObject(check);
+	addToSection(check->getObject());
+}
+
+void PlayLayer::markCheckpoint()
+{
+	if (!m_player->getIsDead()) {
+		CheckpointObject* check = createCheckpoint();
+		storeCheckpoint(check);
+		check->getObject()->activateObject();
+	}
 }
