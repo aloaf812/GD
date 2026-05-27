@@ -16,8 +16,11 @@ public:
     void onInfo(CCObject* sender);
     void onPrev(CCObject* sender);
     void onNext(CCObject* sender);
+	virtual void scrollLayerMoved(cocos2d::CCPoint pos);
 protected:
-	cocos2d::CCSprite* m_backgroundSprite; // 0x114
+	BoomScrollLayerDelegate* m_bslDelegate; // 0x10c
+	float unk_0x110; // 0x110
+	cocos2d::CCSprite* m_background; // 0x114
 	cocos2d::CCSprite* m_ground; // 0x118
     BoomScrollLayer* m_scrollLayer; // 0x11c
 };

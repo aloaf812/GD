@@ -11,12 +11,13 @@
 #include "LevelPage.h"
 #include "LevelTools.h"
 #include "SongsLayer.h"
+#include "ExtendedLayer.h"
 USING_NS_CC;
 
 LevelSelectLayer::LevelSelectLayer()
 {
     // mUnknown1 = 0.0f;
-    m_backgroundSprite = NULL;
+    m_background = NULL;
     // mGroundLayer = NULL;
 }
 
@@ -56,23 +57,65 @@ LevelSelectLayer* LevelSelectLayer::create(int page)
 
 bool LevelSelectLayer::init(int page)
 {
-    if (!CCLayer::init())
-        return false;
+	if (!CCLayer::init())
+		return false;
+
+	this->setKeypadEnabled(true);
+
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
+
+	m_background = CCSprite::create("GJ_gradientBG.png");
+	m_background->setAnchorPoint(CCPoint(0.0f, 0.0f));
+	this->addChild(m_background, -2);
+	m_background->setScaleX((winSize.width + 10.0f) / m_background->getTextureRect().size.width);
+	m_background->setScaleY((winSize.height + 10.0f) / m_background->getTextureRect().size.height);
+	m_background->setPosition(CCPoint(-5.0f, -5.0f));
+	m_background->setColor(ccc3(40, 125, 255));
+
+	// ground
+	CCLayer* groundLayer = CCLayer::create();
+	this->addChild(groundLayer, 0);
+
+	m_ground = CCSprite::create(GameManager::sharedState()->getGTexture(1));
+	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+	m_ground->getTexture()->setTexParameters(&texParams);
+	groundLayer->addChild(m_ground, 2);
+	m_ground->setAnchorPoint(ccp(0, 1));
+	m_ground->setScale(pDirector->getScreenScaleFactorMax());
+	m_ground->setColor(ccc3(0, 102, 255));
+	m_ground->setTextureRect(CCRectMake(0, 0, winSize.width, m_ground->getContentSize().height));
+	m_ground->setPosition(ccp(0.0f, (winSize.height * 0.5f) - 110.0f));
+
+	float refYPos = (winSize.height * 0.5f) - 110.0f;
+
+	CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
+	groundLayer->addChild(lineSprite, 3);
+	lineSprite->setPosition(CCPoint(winSize.width * 0.5f, refYPos));
+	lineSprite->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
+	lineSprite->setOpacity(100);
+
+	CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
+    leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
+	leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, refYPos));
+    groundLayer->addChild(leftShadow, 3);
     
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSize winSize = pDirector->getWinSize();
+    CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
+    rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
+	rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, refYPos));
+    groundLayer->addChild(rightShadow, 3);
+    rightShadow->setFlipX(true);
+	
+    leftShadow->setOpacity(100);
+    rightShadow->setOpacity(100);
+
+	leftShadow->setScaleX(0.7f);
+	rightShadow->setScaleX(0.7f);
     
-    GameLevelManager* pGLM = GameLevelManager::sharedState();
-    GameManager* pGameManager = GameManager::sharedState();
-    
-    m_backgroundSprite = CCSprite::create("GJ_gradientBG.png");
-    m_backgroundSprite->setAnchorPoint(CCPoint(0.0f, 0.0f));
-    this->addChild(m_backgroundSprite, -4);
-    m_backgroundSprite->setScaleX((winSize.width + 10.0f) / m_backgroundSprite->getTextureRect().size.width);
-    m_backgroundSprite->setScaleY((winSize.height + 10.0f) / m_backgroundSprite->getTextureRect().size.height);
-    m_backgroundSprite->setPosition(CCPoint(-5.0f, -5.0f));
-    m_backgroundSprite->setColor(ccc3(40, 125, 255));
-    
+	ccBlendFunc shadowBlendFunc = { GL_ONE_MINUS_SRC_ALPHA, GL_DST_COLOR };
+	rightShadow->setBlendFunc(shadowBlendFunc);
+	rightShadow->setBlendFunc(shadowBlendFunc);
+
     CCSprite* topBar = CCSprite::createWithSpriteFrameName("GJ_topBar_001.png");
     topBar->setAnchorPoint(CCPoint(0.5f, 1.0f));
     topBar->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenTop() + 1.0f));
@@ -86,15 +129,17 @@ bool LevelSelectLayer::init(int page)
     CCSprite* sideArtRight = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtRight->setAnchorPoint(CCPoint(1.0f, 0.0f));
     sideArtRight->setPosition(CCPoint(pDirector->getScreenRight() + 1.0f, pDirector->getScreenBottom() - 1.0f));
+	int i = 1;
     sideArtRight->setFlipX(true);
     this->addChild(sideArtRight, 1);
-    
+
     CCArray* pages = CCArray::create();
-    for (int i = 1; i <= 15; ++i) {
-        GJGameLevel* level = pGLM->getMainLevel(i);
-        LevelPage* page = LevelPage::create(level);
-        pages->addObject(page);
-    }
+	do {
+		GJGameLevel* level = GameLevelManager::sharedState()->getMainLevel(i);
+		++i;
+		LevelPage* page = LevelPage::create(level);
+		pages->addObject(page);
+    } while (i != 16);
     
     // coming soon!
     CCLayer* csLayer = CCLayer::create();
@@ -105,18 +150,28 @@ bool LevelSelectLayer::init(int page)
     
 	// the third param is for looping
     bool showDots = pages->count() > 3;
-    BoomScrollLayer* scrollLayer = BoomScrollLayer::create(pages, 0, showDots);
-    m_scrollLayer = scrollLayer;
-    this->addChild(scrollLayer);
-    
-    
+	m_scrollLayer = BoomScrollLayer::create(pages, 0, showDots);
+	this->addChild(m_scrollLayer);
+	m_scrollLayer->setPagesIndicatorPosition(ccp(winSize.width * 0.5f, pDirector->getScreenBottom() + 15.0f));
+	m_scrollLayer->getInternalLayer()->setDelegate(m_bslDelegate);
+
+	if (page == 0) {
+		this->scrollLayerMoved(CCPointZero);
+	}
+	else {
+		if (page == 15) {
+			m_scrollLayer->instantMoveToPage(14);
+		}
+		m_scrollLayer->instantMoveToPage(page);
+	}
+
     CCLabelBMFont* downloadTxt = CCLabelBMFont::create("Download the soundtracks", "bigFont.fnt");
     downloadTxt->setScale(0.5f);
     CCMenuItemSpriteExtra* downloadExtra = CCMenuItemSpriteExtra::create(downloadTxt, NULL, this, menu_selector(LevelSelectLayer::onDownload));
     downloadExtra->setSizeMult(2.0f);
     
     CCMenu* downloadMenu = CCMenu::create(downloadExtra, NULL);
-    this->addChild(downloadMenu, 5);
+    this->addChild(downloadMenu);
     downloadMenu->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 35.0f));
     
     CCMenu* arrowsMenu = CCMenu::create();
@@ -149,45 +204,8 @@ bool LevelSelectLayer::init(int page)
     CCMenuItemSpriteExtra* infoBtn = CCMenuItemSpriteExtra::create(infoBtnSprite, NULL, this, menu_selector(LevelSelectLayer::onInfo));
     infoBtn->setSizeMult(2.0f);
     infoMenu->addChild(infoBtn);
-    
     infoMenu->setPosition(CCPoint(pDirector->getScreenRight() - 20.0f, pDirector->getScreenTop() - 20.0f));
 
-    // ground
-    CCLayer* groundLayer = CCLayer::create();
-    this->addChild(groundLayer, 0);
-    
-	m_ground = CCSprite::create(pGameManager->getGTexture(1));
-    ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-	m_ground->getTexture()->setTexParameters(&texParams);
-	groundLayer->addChild(m_ground, 2);
-	m_ground->setAnchorPoint(ccp(0, 1));
-	m_ground->setColor(ccc3(0, 102, 255));
-	m_ground->setPosition(ccp(0.0f, 60.0f));
-	m_ground->setTextureRect(CCRectMake(0, 0, winSize.width, m_ground->getContentSize().height));
-	
-    CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
-    leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
-	leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, m_ground->getPositionY()));
-    groundLayer->addChild(leftShadow, -2);
-    leftShadow->setOpacity(100);
-    leftShadow->setColor(ccc3(150, 150, 150));
-    leftShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
-    leftShadow->setTag(0);
-    
-    CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
-    rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
-    rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, m_ground->getPositionY()));
-    rightShadow->setFlipX(true);
-    groundLayer->addChild(rightShadow, -2);
-    rightShadow->setOpacity(100);
-    rightShadow->setColor(ccc3(150, 150, 150));
-    rightShadow->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
-    rightShadow->setTag(0);
-    
-    CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
-    groundLayer->addChild(lineSprite, 3);
-	lineSprite->setPosition(CCPoint(winSize.width * 0.5f, m_ground->getPositionY()));
-    
     return true;
 }
 
@@ -225,4 +243,9 @@ void LevelSelectLayer::onNext(CCObject* sender)
     
     int currentPage = m_scrollLayer->getCurrentScreen();
     m_scrollLayer->moveToPage(currentPage + 1);
+}
+
+void LevelSelectLayer::scrollLayerMoved(CCPoint pos)
+{
+	// todo
 }

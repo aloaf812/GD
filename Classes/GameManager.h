@@ -10,6 +10,7 @@
 #include "LevelSelectLayer.h"
 
 #define PLAY_LAYER GameManager::sharedState()->getPlayLayer()
+#define WIN_SIZE cocos2d::CCDirector::sharedDirector()->getWinSize()
 
 // thanks geode
 enum class UnlockType {

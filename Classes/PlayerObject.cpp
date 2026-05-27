@@ -18,9 +18,9 @@ PlayerObject::PlayerObject()
 	this->m_gravityFlipped = false;
 
 	this->m_canJump = false;
-	this->field773_0x30e = false;
+	this->unk_0x30e = false;
 
-	this->field747_0x324 = 0.0f;
+	this->unk_0x324 = 0.0f;
 }
 
 PlayerObject* PlayerObject::create(int player, int ship, cocos2d::CCLayer *layer)
@@ -138,11 +138,11 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 void PlayerObject::releaseButton(PlayerButton button)
 {
 	if (button == PlayerButton::Jump) {
-		if (m_isPlayLayer != false) {
+		if (m_isPlayLayer) {
 			PLAY_LAYER->recordAction(false);
 		}
-		this->field773_0x30e = false;
-		this->field729_0x312 = false;
+		this->unk_0x30e = false;
+		this->unk_0x312 = false;
 	}
 }
 
@@ -220,7 +220,7 @@ void PlayerObject::deactivateStreak()
 
 void PlayerObject::resetObject()
 {
-	this->field771_0x30c = true;
+	this->unk_0x30c = true;
 	this->deactivateStreak();
 	/* this->removePendingCheckpoint();
 	*(undefined4 *)&this->field_0x318 = 0;
@@ -246,7 +246,7 @@ void PlayerObject::resetObject()
 	// levelFlipFinished();
 	touchedObject(nullptr);
 
-	field771_0x30c = false;
+	unk_0x30c = false;
 }
 
 void PlayerObject::pushButton(PlayerButton button)
@@ -256,23 +256,23 @@ void PlayerObject::pushButton(PlayerButton button)
 			PLAY_LAYER->recordAction(true);
 		}
 
-		this->field773_0x30e = true;
-		this->field729_0x312 = true;
+		this->unk_0x30e = true;
+		this->unk_0x312 = true;
 		if (m_rollMode == false) {
 			if (m_touchedRing != nullptr) {
-				//this->ringJump();
+				this->ringJump();
 				return;
 			}
 			if (isFlying()) {
 				return;
 			}
 
-			if (field773_0x30e == false) {
+			if (unk_0x30e == false) {
 				return;
 			}
 		}
 		else if (m_touchedRing != nullptr) {
-			//this->ringJump();
+			this->ringJump();
 			return;
 		}
 
@@ -375,11 +375,11 @@ void PlayerObject::updateJump(float dt)
 			fVar5 = 1.0f;
 		}
 
-		if ((field773_0x30e) && (m_canJump)) {
+		if ((unk_0x30e) && (m_canJump)) {
 			this->m_isJumping = true;
 			this->m_onGround = false;
 			this->m_canJump = false;
-			this->field729_0x312 = false;
+			this->unk_0x312 = false;
 
 			this->m_yVelocity = m_yStart * flipMod() * pScale;
 			this->incrementJumps();
@@ -434,7 +434,7 @@ void PlayerObject::updateJump(float dt)
 
 void PlayerObject::updateTimeMod(float timeMod)
 {
-	if ((this->field771_0x30c == false) && (m_timeMod != timeMod))
+	if ((this->unk_0x30c == false) && (m_timeMod != timeMod))
 		PLAY_LAYER->playSpeedParticle(timeMod);
 
 	// temporary dummy values
@@ -545,7 +545,7 @@ void PlayerObject::hitGround(bool notFlipped)
 
 	m_onGround = true;
 	m_canJump = true;
-	field733_0x316 = true;
+	unk_0x316 = true;
 
 	if ((!m_rollMode) && (getActionByTag(0)))
 		this->stopRotation();
@@ -556,7 +556,12 @@ void PlayerObject::hitGround(bool notFlipped)
 		this->deactivateStreak();
 		// this->tryPlaceCheckpoint();
 	}
-	field727_0x310 = false;
+	unk_0x310 = false;
+}
+
+void PlayerObject::ringJump()
+{
+	// todo
 }
 
 void PlayerObject::collidedWithObject(float dt, GameObject* obj)
@@ -664,7 +669,7 @@ void PlayerObject::toggleFlyMode(bool enable)
 		this->setVisible(false);
 		m_onGround = false;
 		m_canJump = false;
-		field727_0x310 = false;
+		unk_0x310 = false;
 		// this->removePendingCheckpoint();
 
 		// if (!m_flyMode)

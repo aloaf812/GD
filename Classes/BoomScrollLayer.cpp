@@ -1,31 +1,28 @@
 #include "BoomScrollLayer.h"
+#include "ExtendedLayer.h"
 USING_NS_CC;
 
 // BoomScrollLayerDelegate because being in a single file is cleaner
 
-void BoomScrollLayerDelegate::scrollLayerMoved(cocos2d::CCPoint p0)
-{
-
-}
-
-void BoomScrollLayerDelegate::scrollLayerScrolledToPage(BoomScrollLayer* bsl, int p1)
-{
-
-}
-
-void BoomScrollLayerDelegate::scrollLayerScrollingStarted(BoomScrollLayer* bsl)
-{
-    
-}
+void BoomScrollLayerDelegate::scrollLayerScrollingStarted(BoomScrollLayer* bsl) {}
+void BoomScrollLayerDelegate::scrollLayerScrolledToPage(BoomScrollLayer* bsl, int p1) {}
+void BoomScrollLayerDelegate::scrollLayerMoved(cocos2d::CCPoint p0) {}
 
 // now for the real BoomScrollLayer code
 BoomScrollLayer::BoomScrollLayer()
 {
 	m_dotsArray = nullptr;
+	m_animatingToPage = 0;
+	unk_0x114 = 0.0f;
+	unk_0x118 = 0.0f;
 	m_looped = false;
 	unk_0x120 = nullptr;
 	unk_0x124 = false;
-	unk_0x134 = nullptr;
+	unk_0x128 = 0;
+	unk_0x12c = false;
+	unk_0x130 = nullptr;
+	m_actualPages = nullptr;
+	unk_0x138 = 0.0f;
 	m_internalLayer = nullptr;
 	m_minTouchSpeed = 0.0f;
 	m_touchSpeedFast = 0.0f;
@@ -42,11 +39,11 @@ BoomScrollLayer::BoomScrollLayer()
 	m_pages = 0;
 }
 
-BoomScrollLayer* BoomScrollLayer::create(cocos2d::CCArray* pages, int param1, bool param2)
+BoomScrollLayer* BoomScrollLayer::create(cocos2d::CCArray* pages, int offset, bool looped)
 {
     BoomScrollLayer* ret = new BoomScrollLayer();
     if (ret) {
-        if (ret->init(pages, param1, param2)) {
+		if (ret->init(pages, offset, looped)) {
             ret->autorelease();
             return ret;
         }
@@ -71,16 +68,15 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int offset, bool looped)
 	setMinimumTouchLengthToSlide(40.0f);
 	setMinimumTouchLengthToChangePage(100.0f);
 
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	setMarginOffset(winSize.width);
+	setMarginOffset(WIN_SIZE.width);
 	setShowPagesIndicator(true);
 	setPagesIndicatorPosition(ccp(getContentSize().width * 0.5f, 60.0f));
 	setPagesIndicatorNormalColor(ccc4(150, 150, 150, 255));
 	setPagesIndicatorSelectedColor(ccc4(255, 255, 255, 255));
-	setScrollArea(CCRectMake(0.0f, 0.0f, winSize.width, winSize.height));
+	setScrollArea(CCRectMake(0.0f, 0.0f, WIN_SIZE.width, WIN_SIZE.height));
 
 	// variables
-	unk_0x134 = pages;
+	m_actualPages = pages;
 	m_currentScreen = 0;
 	m_pagesWidthOffset = offset;
 	m_minTouchSpeed = 0.3f;
@@ -113,44 +109,51 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int offset, bool looped)
 
 void BoomScrollLayer::updateDots(float dt)
 {
-	if (m_dotsArray != nullptr) {
-		// add the missing logic lol
+	if (!m_dotsArray) {
+		int pageNum = pageNumberForPosition(m_internalLayer->getPosition());
+		
+		if (m_looped)
+			pageNum = getRelativePageForNum(pageNum);
+
+		/*for (int i = 0; i < getTotalPages(); ++i) {
+			if (i < m_dotsArray->count()) {
+				CCSprite* dot = ((CCSprite*)m_dotsArray->objectAtIndex(i));
+				ccColor3B dotColor = ccWHITE;
+				
+				if (i != pageNum)
+					dotColor = ccGRAY;
+				
+				dot->setColor(dotColor);
+			}
+		}*/
 	}
 }
 
 void BoomScrollLayer::updatePages()
 {
-	for (unsigned int i = 0; i < unk_0x134->count(); ++i) {
-		CCNode* page = (CCNode*)unk_0x134->objectAtIndex(i);
-        if (!page) continue;
-        
-        page->setPosition(CCPointZero);
-        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        page->setContentSize(winSize);
-        
-        float pageWidth = this->getContentSize().width;
-        float pageSpacing = 13.0f; //= getPageSpacing();
-        float xPos = i * (pageWidth - pageSpacing);
-        
-        page->setPosition(CCPoint(xPos, 0.0f));
-        if (!page->getParent()) {
+	for (int i = 0; i < m_actualPages->count(); ++i) {
+		CCNode* page = (CCNode*)m_actualPages->objectAtIndex(i);
+		page->setAnchorPoint(ccp(0.0f, 0.0f));
+		page->setContentSize(WIN_SIZE);
+		page->setPosition(ccp(getContentSize().width - getPagesWidthOffset(), 0.0f));
+		
+		if (!page->getParent())
 			m_internalLayer->addChild(page);
-        }
-    }
+	}
 }
 
 bool BoomScrollLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     CCPoint touchLocation = pTouch->getLocation();
     
-    CCLOG("x: %f, y: %f", touchLocation.x, touchLocation.y);
+    // CCLOG("x: %f, y: %f", touchLocation.x, touchLocation.y);
     
     return true;
 }
 
 void BoomScrollLayer::quickUpdate()
 {
-	if (this->m_movingToPage != false) {
+	if (m_movingToPage) {
 		this->m_movingToPage = false;
 		m_internalLayer->stopActionByTag(2);
 		m_internalLayer->setPosition(m_targetPos);
@@ -160,12 +163,24 @@ void BoomScrollLayer::quickUpdate()
 
 void BoomScrollLayer::moveToPage(int page)
 {
-	if (m_looped != false) {
+	// if i add this second condition, for some reason the accuracy drops to ZERO PERCENT BROOO
+	// if ((m_looped) || (-1 < page && (page < getTotalPages())) {
+	if (m_looped) {
 		m_movingToPage = true;
-		m_targetPos = this->positionForPageWithNumber(page);
+		m_targetPos = positionForPageWithNumber(page);
 		m_internalLayer->stopActionByTag(2);
 
-		CCMoveTo* moveAction = CCMoveTo::create((0.8f * 1.2f), m_targetPos);
+		float speed;
+		if (m_touchSpeedFast < unk_0x118)
+			speed = 0.4f;
+		else {
+			speed = 0.8f;
+			if (m_touchSpeedMid < unk_0x118)
+				speed = 0.6f;
+		}
+
+		unk_0x118 = 0.0f;
+		CCMoveTo* moveAction = CCMoveTo::create((speed * 1.2f), m_targetPos);
 		CCEaseElasticOut* elasticMove = CCEaseElasticOut::create(moveAction, 0.5f);
 		CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(BoomScrollLayer::moveToPageEnded));
 		CCSequence* sequence = CCSequence::create(elasticMove, callback, nullptr);
@@ -174,29 +189,76 @@ void BoomScrollLayer::moveToPage(int page)
 
 		m_currentScreen = page;
 
-		// if (m_looped != false)
-			//repositionPagesLooped();
+		if (m_looped)
+			repositionPagesLooped();
 
 	}
 }
 
+void BoomScrollLayer::instantMoveToPage(int page)
+{
+
+}
+
 void BoomScrollLayer::moveToPageEnded()
 {
-	// stuff
+	// THIS part isn't accurate just THIS part specifically
+	if ((m_animatingToPage != m_currentScreen) && (m_delegate)) {
+		m_delegate->scrollLayerScrollingStarted(this);
+	}
+
 	m_internalLayer->stopActionByTag(2);
-	// more stuff
+	int pageNum = pageNumberForPosition(m_internalLayer->getPosition());
+	m_currentScreen = pageNum;
+	m_animatingToPage = pageNum;
 	this->updateDots(0.0f);
 }
 
 // https://github.com/geode-sdk/bindings/blob/main/bindings/2.208/inline/BoomScrollLayer.cpp#L21
 CCPoint BoomScrollLayer::positionForPageWithNumber(int page)
 {
-	return ccp(this->getContentSize().width * page, 0.f);
+	return ccp((getContentSize().width + m_pagesWidthOffset) * page, 0.f);
+}
+
+CCPoint BoomScrollLayer::getRelativePosForPage(int page)
+{
+	return ccp((getContentSize().width - m_pagesWidthOffset) * page, 0.f);
 }
 
 void BoomScrollLayer::repositionPagesLooped()
 {
-	// todo
+	int page1 = getRelativePageForNum(m_currentScreen);
+	int page2 = getRelativePageForNum(m_currentScreen + -1);
+	int page3 = getRelativePageForNum(m_currentScreen + 1);
+
+	int actualPage3 = page3;
+	int actualPage2 = page2;
+
+	if (unk_0x124) {
+		getPage(m_currentScreen)->setPosition(getRelativePosForPage(m_currentScreen));
+		actualPage2 = this->m_currentScreen - 1;
+		actualPage3 = this->m_currentScreen + 1;
+	}
+
+	getPage(actualPage2)->setPosition(getRelativePosForPage(actualPage2));
+	getPage(actualPage3)->setPosition(getRelativePosForPage(actualPage3));
+	
+	for (int i = 0; i < m_actualPages->count(); ++i) {
+		CCLayer* tmpPage = (CCLayer*)(m_actualPages->objectAtIndex(i));
+		tmpPage->setVisible(false);
+	}
+
+	getPage(page1)->setVisible(true);
+	getPage(actualPage2)->setVisible(true);
+	getPage(actualPage3)->setVisible(true);
+	if (unk_0x124) {
+		/*getPage(m_currentScreen);
+		unk_0x120->objectAtIndex(page1);
+		getPage(m_currentScreen + -1);
+		unk_0x120->objectAtIndex(page2);
+		getPage(m_currentScreen + 1);
+		unk_0x120->objectAtIndex(page3);*/
+	}
 }
 
 void BoomScrollLayer::setPagesIndicatorPosition(CCPoint position)
@@ -209,9 +271,38 @@ int BoomScrollLayer::getTotalPages()
 {
 	CCArray* pagesArray;
 	if (!unk_0x124)
-		pagesArray = unk_0x134;
+		pagesArray = m_actualPages;
 	else
 		pagesArray = unk_0x120;
 
 	return pagesArray->count();
+}
+
+int BoomScrollLayer::pageNumberForPosition(CCPoint pos)
+{
+	// todo
+	return 1;
+}
+
+// https://github.com/geode-sdk/bindings/blob/main/bindings/2.208/inline/BoomScrollLayer.cpp#L111
+int BoomScrollLayer::getRelativePageForNum(int page)
+{
+	int pages = this->getTotalPages();
+	if (page > 0) return page % pages;
+	while (page < 0) page += pages;
+	return page;
+}
+
+CCLayer* BoomScrollLayer::getPage(int page)
+{
+	// somehow this isn't 100% accurate :/
+	if (unk_0x124) {
+		int totalPgs = m_actualPages->count();
+		if (page < 1)
+			for (; page < 0; page += totalPgs) {}
+		else
+			page %= totalPgs;
+	}
+
+	return (CCLayer*)m_actualPages->objectAtIndex(page);
 }

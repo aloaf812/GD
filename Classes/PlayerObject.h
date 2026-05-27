@@ -63,6 +63,7 @@ public:
 	bool playerIsFalling();
 	bool isSafeFlip();
 	void hitGround(bool notFlipped);
+	void ringJump();
 
 	void collidedWithObject(float dt, GameObject* obj);
 
@@ -97,20 +98,22 @@ public:
 	double m_speed; // 0x2f0
 	double m_yStart; // 0x2f8
 	double m_gravity; // 0x300
+	float unk_0x308; // 0x308
 
-	bool field771_0x30c; // 0x30c
+	bool unk_0x30c; // 0x30c
 	bool m_canJump; // 0x30d
-	bool field773_0x30e; // 0x30e
+	bool unk_0x30e; // 0x30e
+	bool unk_0x30f; // 0x30f
 
-	bool field727_0x310; // 0x310
+	bool unk_0x310; // 0x310
 	bool m_isPlayLayer; // 0x311
-	bool field729_0x312; // 0x312
-	bool field730_0x313; // 0x313; this one is quite odd since it goes completely unused, maybe there's a chance it's used in an older/newer gd version.
+	bool unk_0x312; // 0x312
+	bool unk_0x313; // 0x313; this one is quite odd since it goes completely unused, maybe there's a chance it's used in an older/newer gd version.
 	bool m_pGroundActive; // 0x314
 	bool m_pShipActive; // 0x315
-	bool field733_0x316; // 0x316
+	bool unk_0x316; // 0x316
 
-	float field747_0x324; // 0x324
+	float unk_0x324; // 0x324
 	double m_yVelocity; // 0x328
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
