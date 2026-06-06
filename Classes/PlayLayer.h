@@ -103,6 +103,8 @@ public:
 	void cameraMoveX(float value, float duration, float rate);
 	void cameraMoveY(float value, float duration, float rate);
     
+	bool hasUniqueCoin(GameObject* obj);
+
 	float unk_0x110; // 0x110
 	bool field279_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
@@ -125,7 +127,7 @@ public:
 	cocos2d::CCArray* m_stateObjects; // 0x17c
 	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180
 	cocos2d::CCArray* m_effectObjects; // 0x188
-	// AudioEffectsLayer* m_audioEffectsLayer // 0x18c
+	// AudioEffectsLayer* m_audioEffectsLayer; // 0x18c
 	
 	GJGroundLayer* m_ground2; // 0x198
 	GJGroundLayer* m_ground3; // 0x19c

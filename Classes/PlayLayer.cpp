@@ -6,6 +6,7 @@
 #include "PauseLayer.h"
 #include "ObjectToolbox.h"
 #include "CheckpointObject.h"
+#include "GameStatsManager.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 
@@ -1137,4 +1138,10 @@ void PlayLayer::markCheckpoint()
 		storeCheckpoint(check);
 		check->getObject()->activateObject();
 	}
+}
+
+bool PlayLayer::hasUniqueCoin(GameObject* obj)
+{
+	char const* key = m_level->getCoinKey(obj->getUniqueID());
+	return GameStatsManager::sharedState()->hasUniqueItem(key);
 }

@@ -42,3 +42,14 @@ void GameStatsManager::encodeDataTo(DS_Dictionary* dict)
 	dict->setDictForKey("GS_value", m_valueDict);
 	dict->setDictForKey("GS_completed", m_completedLevels);
 }
+
+std::string GameStatsManager::getUniqueItemKey(char const* itemKey)
+{
+	return CCString::createWithFormat("unique_%s")->getCString();
+}
+
+bool GameStatsManager::hasUniqueItem(char const* itemKey)
+{
+	CCObject* item = m_valueDict->objectForKey(getUniqueItemKey(itemKey));
+	return item != nullptr;
+}

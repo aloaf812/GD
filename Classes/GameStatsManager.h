@@ -12,6 +12,8 @@ public:
 	void encodeDataTo(DS_Dictionary* dict);
 	 
     int getStat(char const* stat);
+	std::string getUniqueItemKey(char const* itemKey);
+	bool hasUniqueItem(char const* itemKey);
 protected:
 	cocos2d::CCDictionary* m_valueDict; // 0xe8
 	cocos2d::CCDictionary* m_completedLevels; // 0xec

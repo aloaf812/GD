@@ -9,18 +9,22 @@ USING_NS_CC;
 
 PlayerObject::PlayerObject()
 {
-	this->m_flyMode = false;
-	this->m_birdMode = false;
-	this->m_rollMode = false;
+	m_vehicleSprite = nullptr;
+	m_vehicleSpriteSecondary = nullptr;
+	m_vehicleSpriteThird = nullptr;
+	unk_0x2e4 = nullptr;
+	m_flyMode = false;
+	m_birdMode = false;
+	m_rollMode = false;
 
-	this->m_isLocked = false;
+	m_isLocked = false;
 
-	this->m_gravityFlipped = false;
+	m_gravityFlipped = false;
 
-	this->m_canJump = false;
-	this->unk_0x30e = false;
+	m_canJump = false;
+	unk_0x30e = false;
 
-	this->unk_0x324 = 0.0f;
+	unk_0x324 = 0.0f;
 }
 
 PlayerObject* PlayerObject::create(int player, int ship, cocos2d::CCLayer *layer)
@@ -80,13 +84,21 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	char const* sFrameFile = CCString::createWithFormat("ship_%02d_001.png", shipIdx)->getCString();
 	char const* sFrameFile2 = CCString::createWithFormat("ship_%02d_2_001.png", shipIdx)->getCString();
 
-	m_vehicleSprite = CCSprite::createWithSpriteFrameName(frameFile);
+	m_vehicleSprite = CCSprite::createWithSpriteFrameName(sFrameFile);
 	this->addChild(m_vehicleSprite, 2);
 	m_vehicleSprite->setVisible(false);
 
+	m_vehicleSpriteSecondary = CCSprite::createWithSpriteFrameName(sFrameFile2);
+	m_vehicleSprite->addChild(m_vehicleSpriteSecondary, -1);
+	m_vehicleSpriteSecondary->setPosition(m_vehicleSprite->convertToNodeSpace(m_vehicleSprite->getPosition()));
+
+	m_vehicleSpriteThird = CCSprite::createWithSpriteFrameName(sFrameFile);
+	m_vehicleSprite->addChild(m_vehicleSpriteThird, -2);
+	m_vehicleSpriteThird->setPosition(m_vehicleSprite->convertToNodeSpace(m_vehicleSprite->getPosition()));
+	m_vehicleSpriteThird->setVisible(false);
+
 	this->m_isJumping = false;
 	this->m_yVelocity = 0;
-	//this->field737_0x32c = 0;
 	this->m_canJump = false;
 	this->m_onGround = false;
 	this->m_isDead = false;
@@ -96,41 +108,96 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 
 #pragma region Particles
 	this->m_dragParticle = CCParticleSystemQuad::create("dragEffect.plist");
-	m_dragParticle->setPositionType(tCCPositionType::kCCPositionTypeFree);
+	m_dragParticle->setPositionType(kCCPositionTypeFree);
 	m_gameLayer->addChild(m_dragParticle, -1);
 	m_dragParticle->stopSystem();
 	this->m_pGroundActive = false;
 
 	this->m_burstParticle = CCParticleSystemQuad::create("burstEffect.plist");
-	m_burstParticle->setPositionType(tCCPositionType::kCCPositionTypeFree);
+	m_burstParticle->setPositionType(kCCPositionTypeFree);
 	m_gameLayer->addChild(m_burstParticle, -1);
 	m_burstParticle->stopSystem();
 
-	// more code here just a massive chunk
+	m_birdDragParticle = CCParticleSystemQuad::create("dragEffect.plist");
+	m_birdDragParticle->setPositionType(kCCPositionTypeFree);
+	m_gameLayer->addChild(m_birdDragParticle, -1);
+	m_birdDragParticle->stopSystem();
+	unk_0x308 = m_birdDragParticle->getLife();
+	m_birdDragParticle->setPosVar(ccp(0.0f, 2.0f));
 
-	this->m_landParticle = CCParticleSystemQuad::create("landEffect.plist");;
-	m_landParticle->setPositionType(tCCPositionType::kCCPositionTypeGrouped);
+	m_dragParticle2 = CCParticleSystemQuad::create("dragEffect.plist");
+	m_dragParticle2->setPositionType(kCCPositionTypeFree);
+	m_gameLayer->addChild(m_dragParticle2, -1);
+	m_dragParticle2->stopSystem();
+
+	m_birdDragParticle->setSpeed(m_birdDragParticle->getSpeed() * 0.2f);
+	m_birdDragParticle->setSpeedVar(m_birdDragParticle->getSpeedVar() * 0.2);
+
+	m_dragParticle2->setPosVar(ccp(0.0f, 2.0f));
+
+	int tmpVar = m_dragParticle2->getSpeed();
+	m_dragParticle2->setSpeed(tmpVar + tmpVar);
+
+	tmpVar = m_dragParticle2->getSpeedVar();
+	m_dragParticle->setSpeedVar(tmpVar + tmpVar);
+
+	tmpVar = m_dragParticle2->getAngleVar();	
+	m_dragParticle2->setAngleVar(tmpVar + tmpVar);
+
+	m_dragParticle2->setStartSize(m_dragParticle2->getStartSize() * 1.5f);
+	m_dragParticle2->setStartSizeVar(m_dragParticle2->getStartSizeVar() * 1.5f);
+
+	m_pShipActive = false;
+
+	m_birdDragParticle->setStartColor(ccc4f(0.0f, 1.0f, 1.0f, 100));
+	m_birdDragParticle->setEndColor(ccc4f(0.0f, 0.0f, 1.0f, 1.0f));
+
+	m_dragParticle2->setStartColor(ccc4f(0.0f, 1.0f, 1.0, 190));
+	m_dragParticle2->setEndColor(ccc4f(0.0f, 0.0f, 1.0f, 1.0f));
+
+	m_shipDragParticle = CCParticleSystemQuad::create("shipDragEffect.plist");
+	m_shipDragParticle	->setPositionType(kCCPositionTypeGrouped);
+	m_gameLayer->addChild(m_shipDragParticle, 1);
+	m_shipDragParticle->stopSystem();
+
+	this->m_landParticle = CCParticleSystemQuad::create("landEffect.plist");
+	m_landParticle->setPositionType(kCCPositionTypeGrouped);
 	m_gameLayer->addChild(m_landParticle, 1);
 	m_landParticle->stopSystem();
-	/*fVar17 = (float)(**(code **)(*(int *)this->m_landParticle + 0x1e8))();
-	this->field793_0x374 = fVar17;
-	iVar3 = (**(code **)(*(int *)this->m_landParticle + 0x1f8))();
+	unk_0x374 = m_landParticle->getAngle();
+	/*iVar3 = (**(code **)(*(int *)this->m_landParticle + 0x1f8))();
 	*(undefined4 *)&this->field_0x378 = *(undefined4 *)(iVar3 + 4);*/
 
 	this->m_landParticle2 = CCParticleSystemQuad::create("landEffect.plist");
-	m_landParticle2->setPositionType(tCCPositionType::kCCPositionTypeGrouped);
+	m_landParticle2->setPositionType(kCCPositionTypeGrouped);
 	m_gameLayer->addChild(m_landParticle2, 1);
 	m_landParticle2->stopSystem();
 #pragma endregion Particles
 
-	field695_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
-	// field695_0x2e4->setTextureRect
-	field695_0x2e4->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
+	setupStreak();
+
+	ccBlendFunc blendFunc = { GL_SRC_ALPHA, GL_ONE };
+	unk_0x2e4 = CCSprite::createWithSpriteFrameName(frameFile);
+	// unk_0x2e4->setTextureRect
+	unk_0x2e4->setBlendFunc(blendFunc);
 
 	if (!m_isPlayLayer) 
-		m_gameLayer->addChild(field695_0x2e4);
+		m_gameLayer->addChild(unk_0x2e4);
 	else
-		PLAY_LAYER->getBatchNodeAdd()->addChild(field695_0x2e4, 20);
+		PLAY_LAYER->getBatchNodeAdd()->addChild(unk_0x2e4, 20);
+
+	m_iconGlow = CCSprite::createWithSpriteFrameName(
+		CCString::createWithFormat("player_%02d_glow_001.png", playerIdx)->getCString());
+	m_iconGlow->setVisible(false);
+	m_iconGlow->setBlendFunc(blendFunc);
+	unk_0x2e4->addChild(m_iconGlow, 2);
+
+	m_vehicleGlow = cocos2d::CCSprite::createWithSpriteFrameName(
+		CCString::createWithFormat("ship_%02d_glow_001.png", shipIdx)->getCString());
+	unk_0x2e4->addChild(m_vehicleGlow, -3);
+	m_vehicleGlow->setVisible(false);
+	m_vehicleGlow->setBlendFunc(blendFunc);
+	updatePlayerGlow();
 
     return true;
 }
@@ -207,10 +274,10 @@ void PlayerObject::update(float dt)
 
 void PlayerObject::deactivateParticle()
 {
-	if (this->m_pGroundActive != false)
+	if (m_pGroundActive)
 		m_dragParticle->stopSystem();
 
-	this->m_pGroundActive = false;
+	m_pGroundActive = false;
 }
 
 void PlayerObject::deactivateStreak()
@@ -229,7 +296,7 @@ void PlayerObject::resetObject()
 	m_portalObject = nullptr;
 	m_isLocked = false;
 	// *(undefined4 *)&this->field_0x340 = 0;
-	// this->field_0x310 = 0;
+	unk_0x310 = false;
 	this->setPosition(PLAY_LAYER->getStartPos());
 	// this->flipGravity(false, false);
 	toggleFlyMode(false);
@@ -251,14 +318,14 @@ void PlayerObject::resetObject()
 
 void PlayerObject::pushButton(PlayerButton button)
 {
-	if ((m_isLocked == false) && (button == PlayerButton::Jump)) {
-		if (m_isPlayLayer != false) {
+	if ((!m_isLocked) && (button == PlayerButton::Jump)) {
+		if (m_isPlayLayer) {
 			PLAY_LAYER->recordAction(true);
 		}
 
 		this->unk_0x30e = true;
 		this->unk_0x312 = true;
-		if (m_rollMode == false) {
+		if (!m_rollMode) {
 			if (m_touchedRing != nullptr) {
 				this->ringJump();
 				return;
@@ -267,7 +334,7 @@ void PlayerObject::pushButton(PlayerButton button)
 				return;
 			}
 
-			if (unk_0x30e == false) {
+			if (!unk_0x30e) {
 				return;
 			}
 		}
@@ -295,9 +362,9 @@ void PlayerObject::playerDestroyed()
 	this->deactivateParticle();
 	this->touchedObject(nullptr);
 
-	// m_birdDragParticle->stopSystem();
-	// m_dragParticle2->stopSystem();
-	// m_shipDragParticle->stopSystem();
+	m_birdDragParticle->stopSystem();
+	m_dragParticle2->stopSystem();
+	m_shipDragParticle->stopSystem();
 
 	toggleGhostEffect(GhostType::Disabled);
 }
@@ -321,22 +388,69 @@ void PlayerObject::stopBurstEffect()
 	m_burstParticle->stopSystem();
 }
 
-void PlayerObject::setColor(cocos2d::ccColor3B color)
+void PlayerObject::setColor(ccColor3B color)
 {
 	CCSprite::setColor(color);
 	m_iconSprite->setColor(color);
 	m_vehicleSprite->setColor(color);
 }
 
-void PlayerObject::setSecondColor(cocos2d::ccColor3B color)
+void PlayerObject::setSecondColor(ccColor3B color)
 {
 	m_iconSpriteSecondary->setColor(color);
-	//m_vehicleSpriteSecondary->setColor(color);
+	m_vehicleSpriteSecondary->setColor(color);
+}
+
+void PlayerObject::setVisible(bool visible)
+{
+	GameObject::setVisible(visible);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setVisible(visible);
+}
+
+void PlayerObject::setScale(float scale)
+{
+	GameObject::setScale(scale);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setScale(scale);
+}
+
+void PlayerObject::setScaleX(float scale)
+{
+	GameObject::setScaleX(scale);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setScaleX(scale);
+}
+
+void PlayerObject::setScaleY(float scale)
+{
+	GameObject::setScaleY(scale);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setScaleY(scale);
+}
+
+void PlayerObject::setRotation(float rotation)
+{
+	GameObject::setRotation(rotation);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setRotation(rotation);
+}
+
+void PlayerObject::setOpacity(GLubyte opacity)
+{
+	GameObject::setOpacity(opacity);
+	m_iconSprite->setOpacity(opacity);
+	m_iconSpriteSecondary->setOpacity(opacity);
+	m_iconGlow->setOpacity(opacity);
+	m_vehicleSprite->setOpacity(opacity);
+	m_vehicleSpriteSecondary->setOpacity(opacity);
+	m_vehicleSpriteThird->setOpacity(opacity);
+	m_vehicleGlow->setOpacity(opacity);
 }
 
 void PlayerObject::setPosition(CCPoint const &position) {
 	GameObject::setPosition(position);
-	field695_0x2e4->setPosition(position);
+	unk_0x2e4->setPosition(position);
 
 
 	m_dragParticle->setPosition(position);
@@ -387,9 +501,9 @@ void PlayerObject::updateJump(float dt)
 				/*flipGravity(this, (bool)(this->m_gravityFlipped ^ 1), true);
 				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&this->m_yVelocity + 4)
 					, 0x40000000, 0x3fe33333);
-				*pdVar8 = dVar11;
-				this->field_0x316 = 0;
-				this->field765_0x30e = false;*/
+				*pdVar8 = dVar11;*/
+				unk_0x316 = 0;
+				unk_0x30e = false;
 				return;
 			}
 			runRotateAction();
@@ -403,7 +517,7 @@ void PlayerObject::updateJump(float dt)
 				return;
 
 			this->m_isJumping = false;
-			// this->field_0x30f = true;
+			this->unk_0x30f = true;
 			this->m_onGround = false;
 			return;
 		}
@@ -505,8 +619,8 @@ bool PlayerObject::playerIsFalling()
 
 bool PlayerObject::isSafeFlip()
 {
-	// if (field747_0x324 == 0.0f)
-		// return false;
+	if (unk_0x324 == 0.0f)
+		return false;
 
 	return -15.0 <= m_yVelocity;
 }
@@ -741,4 +855,9 @@ void PlayerObject::saveToCheckpoint(CheckpointObject* check)
 			check->setPortalObject(PLAY_LAYER->getCameraPortal());
 		}	
 	}
+}
+
+void PlayerObject::setupStreak()
+{
+
 }

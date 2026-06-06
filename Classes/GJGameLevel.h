@@ -18,6 +18,8 @@ public:
     static GJGameLevel* create(cocos2d::CCDictionary* level);
     virtual bool init();
 
+	char const* getCoinKey(int coinNumber);
+
 	// DS_Dictionary is extremely broken on windows phone (and win32 in general)
 	// i would fix this but i'm lazy and tired rn
 	// so this is a solution

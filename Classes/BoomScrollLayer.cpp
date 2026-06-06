@@ -2,13 +2,8 @@
 #include "ExtendedLayer.h"
 USING_NS_CC;
 
-// BoomScrollLayerDelegate because being in a single file is cleaner
-
-void BoomScrollLayerDelegate::scrollLayerScrollingStarted(BoomScrollLayer* bsl) {}
-void BoomScrollLayerDelegate::scrollLayerScrolledToPage(BoomScrollLayer* bsl, int p1) {}
-void BoomScrollLayerDelegate::scrollLayerMoved(cocos2d::CCPoint p0) {}
-
 // now for the real BoomScrollLayer code
+// from what i can tell robtop just took CCScrollLayer's code and added more features to it
 BoomScrollLayer::BoomScrollLayer()
 {
 	m_dotsArray = nullptr;
@@ -163,9 +158,7 @@ void BoomScrollLayer::quickUpdate()
 
 void BoomScrollLayer::moveToPage(int page)
 {
-	// if i add this second condition, for some reason the accuracy drops to ZERO PERCENT BROOO
-	// if ((m_looped) || (-1 < page && (page < getTotalPages())) {
-	if (m_looped) {
+	if ((m_looped) || (-1 < page && (page < getTotalPages()))) {
 		m_movingToPage = true;
 		m_targetPos = positionForPageWithNumber(page);
 		m_internalLayer->stopActionByTag(2);
@@ -197,7 +190,17 @@ void BoomScrollLayer::moveToPage(int page)
 
 void BoomScrollLayer::instantMoveToPage(int page)
 {
+	if ((m_looped) || ((-1 < page && (page < getTotalPages())))) {
+		m_internalLayer->stopActionByTag(2);
+		m_movingToPage = false;
+		m_internalLayer->setPosition(positionForPageWithNumber(page));
+		m_currentScreen = page;
 
+		if (m_looped)
+			repositionPagesLooped();
+
+		moveToPageEnded();
+	}
 }
 
 void BoomScrollLayer::moveToPageEnded()
@@ -305,4 +308,22 @@ CCLayer* BoomScrollLayer::getPage(int page)
 	}
 
 	return (CCLayer*)m_actualPages->objectAtIndex(page);
+}
+
+// Dynamic Pages Control
+
+void BoomScrollLayer::addPage(CCLayer* aPage)
+{
+	addPage(aPage, m_actualPages->count());
+}
+
+void BoomScrollLayer::addPage(CCLayer* aPage, int pageNumber)
+{
+	pageNumber = MIN(pageNumber, m_actualPages->count());
+	pageNumber = MAX(pageNumber, 0);
+
+	m_actualPages->insertObject(aPage, pageNumber);
+
+	updatePages();
+	moveToPage(m_currentScreen);
 }

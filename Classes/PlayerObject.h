@@ -15,6 +15,8 @@ enum class GhostType {
 	Enabled = 1,
 };
 
+class GhostTrailEffect; // tmp while i decompile it
+
 class PlayerObject : public GameObject {
 public:
 	PlayerObject();
@@ -55,7 +57,12 @@ public:
 
 	void setColor(cocos2d::ccColor3B color);
 	void setSecondColor(cocos2d::ccColor3B color);
-	// void setVisible(bool visible);
+	void setVisible(bool visible);
+	void setScale(float scale);
+	void setScaleX(float scale);
+	void setScaleY(float scale);
+	void setRotation(float rotation);
+	void setOpacity(GLubyte opacity);
 	virtual void setPosition(cocos2d::CCPoint const &position);
 
 	float flipMod();
@@ -64,6 +71,7 @@ public:
 	bool isSafeFlip();
 	void hitGround(bool notFlipped);
 	void ringJump();
+	void setupStreak();
 
 	void collidedWithObject(float dt, GameObject* obj);
 
@@ -83,7 +91,7 @@ public:
 	void saveToCheckpoint(CheckpointObject* check);
 
 	GhostType m_ghostType; // 0x2c0
-	// GhostTrailEffect* m_ghostTrail; // 0x2c4
+	GhostTrailEffect* m_ghostTrail; // 0x2c4
 	
 	cocos2d::CCSprite* m_iconSprite; // 0x2c8
 	cocos2d::CCSprite* m_iconSpriteSecondary; // 0x2cc
@@ -92,7 +100,7 @@ public:
 	cocos2d::CCSprite* m_vehicleSpriteSecondary; // 0x2d8
 	cocos2d::CCSprite* m_vehicleSpriteThird; // 0x2dc
 	cocos2d::CCSprite* m_vehicleGlow; // 0x2e0
-	cocos2d::CCSprite* field695_0x2e4; // 0x2e4
+	cocos2d::CCSprite* unk_0x2e4; // 0x2e4
 	cocos2d::CCMotionStreak* m_playerStreak; // 0x2e8
 
 	double m_speed; // 0x2f0
@@ -129,6 +137,7 @@ public:
 
 	cocos2d::CCParticleSystemQuad* m_landParticle; // 0x36c
 	cocos2d::CCParticleSystemQuad* m_landParticle2; // 0x370
+	float unk_0x374; // 0x374
 
 	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
 	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381

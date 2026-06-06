@@ -29,6 +29,9 @@ public:
 	int getTotalPages();
 	int pageNumberForPosition(cocos2d::CCPoint pos);
 	int getRelativePageForNum(int page);
+	void selectPage(unsigned int pageNumber);
+	void addPage(cocos2d::CCLayer* aPage);
+	void addPage(cocos2d::CCLayer* aPage, int pageNumber);
 
 	cocos2d::CCLayer* getPage(int page);
 
@@ -78,9 +81,16 @@ public:
 
 class BoomScrollLayerDelegate {
 public:
-    virtual void scrollLayerScrollingStarted(BoomScrollLayer* bsl);
-    virtual void scrollLayerScrolledToPage(BoomScrollLayer* bsl, int p1);
-    virtual void scrollLayerMoved(cocos2d::CCPoint p0);
+	/** Called when scroll layer begins scrolling.
+	* Usefull to cancel CCTouchDispatcher standardDelegates.
+	*/
+	virtual void scrollLayerScrollingStarted(BoomScrollLayer* sender) {};
+
+	/** Called at the end of moveToPage:
+	* Doesn't get called in selectPage:
+	*/
+	virtual void scrollLayerScrolledToPage(BoomScrollLayer* sender, int page) {};
+	virtual void scrollLayerMoved(cocos2d::CCPoint p0) {};
 };
 
 

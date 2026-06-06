@@ -169,3 +169,8 @@ void GJGameLevel::encodeWithCoder(CCDictionary* dict)
     dict->setBoolForKey("k14", this->m_isVerified);
     dict->setBoolForKey("k15", this->m_isUploaded);*/
 }
+
+char const* GJGameLevel::getCoinKey(int coinNumber)
+{
+	return CCString::createWithFormat("%i_%i", m_levelID, coinNumber)->getCString();
+}
