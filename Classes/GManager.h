@@ -3,11 +3,11 @@
 
 #include "cocos2d.h"
 
-class GManager : public cocos2d::CCNode
-{
+class GManager : public cocos2d::CCNode {
+public:
     virtual bool init();
     virtual void setup();
-    // void save();
+    void save();
 };
 
 

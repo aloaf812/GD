@@ -74,6 +74,8 @@ public:
 	void updateVisibility();
 	void updateLevelColors();
 
+	void incrementJumps();
+
 	void switchToFlyMode(GameObject* obj, bool, bool);
 
 	void exitAirMode();

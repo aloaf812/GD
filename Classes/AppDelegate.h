@@ -32,25 +32,29 @@ public:
     */
     virtual void applicationWillEnterForeground();
     
-    virtual void loadingIsFinished();
+	virtual void applicationWillResignActive();
+	virtual void willSwitchToScene(cocos2d::CCScene* scene);
+
     void resumeSound();
-    static bool musicTest();
     void pauseGame();
     void checkSound();
-    virtual void trySaveGame();
-	CC_SYNTHESIZE(bool, m_paused, Paused); // 0x8
-	CC_SYNTHESIZE_READONLY(bool, m_loadingFinished, LoadingFinished); // 0x10
-	CC_SYNTHESIZE_READONLY(bool, m_managersLoaded, ManagersLoaded); // 0x11
-	CC_SYNTHESIZE_READONLY(bool, m_isIOS, IsIOS); // 0x12
-	CC_SYNTHESIZE(cocos2d::CCNode*, m_scenePointer, ScenePointer); // 0x13
-    
-    static AppDelegate* get()
-    {
-        return static_cast<AppDelegate*>(sharedApplication());
-    }
+    void trySaveGame();
+    void loadingIsFinished();
+    static bool musicTest();
 
+	void showLoadingCircle(bool, bool, bool);
+	void hideLoadingCircle();
+	void setIdleTimerDisabled(bool);
+
+	CC_SYNTHESIZE(bool, m_paused, Paused); // 0x8
+	CC_SYNTHESIZE(cocos2d::CCNode*, m_scenePointer, ScenePointer); // 0xc
+	CC_SYNTHESIZE_READONLY(bool, m_loadingFinished, LoadingFinished); // 0x10
+	CC_SYNTHESIZE(bool, m_managersLoaded, ManagersLoaded); // 0x11
+	CC_SYNTHESIZE_READONLY(bool, m_isIOS, IsIOS); // 0x12
     
-    // do not implement this right now: virtual void willSwitchToScene(cocos2d::CCScene* p0);
+
+	static AppDelegate* get();
+    
 };
 
 #endif // _APP_DELEGATE_H_

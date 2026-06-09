@@ -5,7 +5,7 @@
 #include "GManager.h"
 #include <stdio.h>
 
-class LocalLevelManager : GManager {
+class LocalLevelManager : public GManager {
 public:
     LocalLevelManager();
     static LocalLevelManager* sharedState();

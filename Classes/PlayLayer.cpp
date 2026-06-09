@@ -1145,3 +1145,8 @@ bool PlayLayer::hasUniqueCoin(GameObject* obj)
 	char const* key = m_level->getCoinKey(obj->getUniqueID());
 	return GameStatsManager::sharedState()->hasUniqueItem(key);
 }
+
+void PlayLayer::incrementJumps()
+{ 
+	// todo 
+}

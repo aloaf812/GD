@@ -16,6 +16,7 @@ public:
     static bool isNetworkAvailable();
     static void logEvent(char const* event);
     static void onNativePause();
+	static void onNativeResume();
     // google play
     static bool isSignedInGooglePlay();
     static void signInGooglePlay();
@@ -23,6 +24,7 @@ public:
     static void showAchievements();
     static void openAppPage();
     static void reportLoadingFinished();
+	static void onToggleKeyboard();
 };
 
 #endif /* defined(__GeometryDash__PlatformToolbox__) */

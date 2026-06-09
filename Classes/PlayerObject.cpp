@@ -601,9 +601,9 @@ float PlayerObject::flipMod()
 
 void PlayerObject::incrementJumps()
 {
-	if (this->m_isPlayLayer != false) {
-		// PLAY_LAYER->incrementJumps();
-		this->m_hasJumped = true;
+	if (m_isPlayLayer) {
+		PLAY_LAYER->incrementJumps();
+		m_hasJumped = true;
 	}
 }
 

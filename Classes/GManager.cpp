@@ -8,3 +8,7 @@ bool GManager::init(){
 void GManager::setup(){
     return;
 }
+
+void GManager::save(){
+
+}

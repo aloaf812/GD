@@ -95,7 +95,17 @@ void PlatformToolbox::onNativePause()
     }*/
 }
 
+void PlatformToolbox::onNativeResume()
+{
+	// todo
+}
+
 void PlatformToolbox::reportLoadingFinished()
 {
 
+}
+
+void PlatformToolbox::onToggleKeyboard()
+{
+	// todo
 }
