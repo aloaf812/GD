@@ -89,6 +89,11 @@ public:
     */
     static cocos2d::ccColor3B colorForIdx(int col);
 
+	bool unk_0xee; // 0xee
+	bool unk_0xef; // 0xef
+	float unk_0xf8; // 0xf8
+	int unk_0x100; // 0x100
+	std::string unk_0x104; // 0x104
 
 	CC_SYNTHESIZE(bool, m_didSyncAchievements, DidSyncAchievements); // 0x110
 	CC_SYNTHESIZE(PlayLayer*, m_playLayer, PlayLayer); // 0x114
@@ -155,10 +160,6 @@ protected:
     cocos2d::CCDictionary* m_valueKeeper;
     bool m_enableTutorial;
     bool m_hasRatedGame;
-    // unknown values
-    bool offset_0x5;
-    bool offset_0xf;
-    // i can't figure this out: bool offset_0x6;
 };
 
 #endif /* defined(__GeometryDash__GameManager__) */

@@ -40,6 +40,8 @@ public:
 	void playBurstEffect();
 	void stopBurstEffect();
 
+	void spawnPortalCircle(cocos2d::ccColor3B color, float size);
+
 	void update(float dt);
 	void updateJump(float dt);
 	void updateShipRotation(float dt);
@@ -47,11 +49,17 @@ public:
 	void updateTimeMod(float timeMod);
 
 	void updatePlayerGlow();
+	void updatePlayerScale();
+
+	void updatePlayerShipFrame(int sFrame);
 
 	void deactivateParticle();
+
+	void activateStreak();
 	void deactivateStreak();
 
 	virtual void resetObject();
+	void resetPlayerIcon();
 
 	bool levelFlipping();
 
@@ -63,7 +71,9 @@ public:
 	void setScaleY(float scale);
 	void setRotation(float rotation);
 	void setOpacity(GLubyte opacity);
-	virtual void setPosition(cocos2d::CCPoint const &position);
+	void setPosition(cocos2d::CCPoint const &position);
+	void setFlipX(bool flip);
+	void setFlipY(bool flip);
 
 	float flipMod();
 	void incrementJumps();
@@ -89,6 +99,7 @@ public:
 	void touchedObject(GameObject* obj);
 
 	void saveToCheckpoint(CheckpointObject* check);
+	void removePendingCheckpoint();
 
 	GhostType m_ghostType; // 0x2c0
 	GhostTrailEffect* m_ghostTrail; // 0x2c4
@@ -120,6 +131,8 @@ public:
 	bool m_pGroundActive; // 0x314
 	bool m_pShipActive; // 0x315
 	bool unk_0x316; // 0x316
+
+	float unk_0x318; // 0x318
 
 	float unk_0x324; // 0x324
 	double m_yVelocity; // 0x328

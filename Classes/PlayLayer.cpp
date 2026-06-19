@@ -1148,5 +1148,7 @@ bool PlayLayer::hasUniqueCoin(GameObject* obj)
 
 void PlayLayer::incrementJumps()
 { 
-	// todo 
+	m_didJump = true;
+	GameStatsManager::sharedState()->incrementStat("1");
+	m_level->setJumps(m_level->getJumps() + 1);
 }

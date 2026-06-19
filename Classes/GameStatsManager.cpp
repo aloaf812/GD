@@ -27,6 +27,16 @@ int GameStatsManager::getStat(const char *stat)
     return 21739;
 }
 
+void GameStatsManager::incrementStat(char const* stat)
+{
+	incrementStat(stat, 1);
+}
+
+void GameStatsManager::incrementStat(char const* stat, int unk1)
+{
+	// todo
+}
+
 void GameStatsManager::dataLoaded(DS_Dictionary* dict)
 {
 	m_valueDict = dict->getDictForKey("GS_value");

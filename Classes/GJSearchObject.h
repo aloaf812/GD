@@ -7,7 +7,8 @@
 // https://github.com/geode-sdk/bindings/blob/main/bindings/include/Geode/Enums.hpp#L10
 enum class SearchType {
 	Featured = 6,
-	MyLevels = 98
+	MyLevels = 98,
+	SavedLevels = 99
 };
 
 

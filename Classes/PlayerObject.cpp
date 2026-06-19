@@ -225,9 +225,9 @@ void PlayerObject::lockPlayer()
 
 bool PlayerObject::isFlying()
 {
-	if (this->m_flyMode == false) {
-		return this->m_birdMode;
-	}
+	if (!m_flyMode)
+		return m_birdMode;
+
 	return true;
 }
 
@@ -280,19 +280,24 @@ void PlayerObject::deactivateParticle()
 	m_pGroundActive = false;
 }
 
+void PlayerObject::activateStreak()
+{
+	if (!levelFlipping())
+		m_playerStreak->resumeStroke();
+}
+
 void PlayerObject::deactivateStreak()
 {
-	// m_playerStreak->stopStroke();
+	m_playerStreak->stopStroke();
 }
 
 void PlayerObject::resetObject()
 {
 	this->unk_0x30c = true;
 	this->deactivateStreak();
-	/* this->removePendingCheckpoint();
-	*(undefined4 *)&this->field_0x318 = 0;
-	cocos2d::CCPoint::operator=(&this[1].m_lastGroundPos,(CCPoint *)&DAT_004c6e48);
-	iVar5 = *(int *)this;*/
+	this->removePendingCheckpoint();
+	unk_0x318 = 0.0f;
+	m_lastGroundPos = CCPointZero;
 	m_portalObject = nullptr;
 	m_isLocked = false;
 	// *(undefined4 *)&this->field_0x340 = 0;
@@ -314,6 +319,32 @@ void PlayerObject::resetObject()
 	touchedObject(nullptr);
 
 	unk_0x30c = false;
+}
+
+void PlayerObject::resetPlayerIcon()
+{
+	this->runRotateAction();
+	
+	m_iconSprite->setScale(1.0f);
+	m_iconSprite->setPosition(CCPointZero);
+	m_vehicleSprite->setVisible(false);
+	m_vehicleSpriteThird->setVisible(false);
+	
+	updatePlayerGlow();
+	
+	m_birdDragParticle->stopSystem();
+	m_dragParticle2->stopSystem();
+	m_shipDragParticle->stopSystem();
+	
+	// one divided by 2.55 i have NO idea why robtop did this
+	m_birdDragParticle->setStartColor(ccc4f(0.0f, 1.0f, 1.0f, 1/2.55));
+	m_birdDragParticle->setEndColor(ccc4f(0.0f, 0.0f, 1.0f, 1.0f));
+
+	if (!unk_0x30c)
+		this->spawnPortalCircle(ccc3(0, 255, 100), 50.0f);
+	
+	this->deactivateStreak();
+	this->updatePlayerScale();
 }
 
 void PlayerObject::pushButton(PlayerButton button)
@@ -352,10 +383,10 @@ void PlayerObject::pushButton(PlayerButton button)
 
 void PlayerObject::playerDestroyed()
 {
-	/*if (this->field720_0x318 != 0.0) {
-		PLAY_LAYER->removeLastCheckpoint();
-		this->field720_0x318 = 0.0;
-	}*/
+	if (unk_0x318 != 0.0f) {
+		// PLAY_LAYER->removeLastCheckpoint();
+		unk_0x318 = 0.0f;
+	}
 
 	this->m_isDead = true;
 	this->stopRotation();
@@ -386,6 +417,11 @@ void PlayerObject::playBurstEffect()
 void PlayerObject::stopBurstEffect()
 {
 	m_burstParticle->stopSystem();
+}
+
+void PlayerObject::spawnPortalCircle(ccColor3B color, float size)
+{
+
 }
 
 void PlayerObject::setColor(ccColor3B color)
@@ -454,6 +490,20 @@ void PlayerObject::setPosition(CCPoint const &position) {
 
 
 	m_dragParticle->setPosition(position);
+}
+
+void PlayerObject::setFlipX(bool flip)
+{
+	GameObject::setFlipX(flip);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setFlipX(flip);
+}
+
+void PlayerObject::setFlipY(bool flip)
+{
+	GameObject::setFlipY(flip);
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setFlipY(flip);
 }
 
 void PlayerObject::updateShipRotation(float dt)
@@ -579,6 +629,16 @@ void PlayerObject::updateTimeMod(float timeMod)
 }
 
 void PlayerObject::updatePlayerGlow()
+{
+
+}
+
+void PlayerObject::updatePlayerScale()
+{
+
+}
+
+void PlayerObject::updatePlayerShipFrame(int sFrame)
 {
 
 }
@@ -784,29 +844,29 @@ void PlayerObject::toggleFlyMode(bool enable)
 		m_onGround = false;
 		m_canJump = false;
 		unk_0x310 = false;
-		// this->removePendingCheckpoint();
+		this->removePendingCheckpoint();
 
-		// if (!m_flyMode)
-			// this->resetPlayerIcon();
+		if (!m_flyMode)
+			this->resetPlayerIcon();
+		else {
+			this->updatePlayerShipFrame(GameManager::sharedState()->getPlayerShip());
+			m_iconSprite->setScale(0.55f);
+			m_iconSprite->setPosition(ccp(0.0f, 5.0f));
+
+			m_vehicleSprite->setVisible(true);
+			m_vehicleSprite->setPosition(ccp(0.0f, -5.0f));
+			this->updatePlayerGlow();
+
+			m_birdDragParticle->resetSystem();
+			m_dragParticle2->resetSystem();
+			m_dragParticle2->stopSystem();
+
+			this->m_pShipActive = false;
+			this->deactivateParticle();
+			this->spawnPortalCircle(ccc3(255, 0, 255), 50.0f);
+			this->activateStreak();
+			this->updatePlayerScale();
 		}
-	else {
-		// this->updatePlayerShipFrame(GameManager::sharedState()->getPlayerShip());
-		m_iconSprite->setScale(0.55f);
-		m_iconSprite->setPosition(ccp(0.0f, 5.0f));
-
-		m_vehicleSprite->setVisible(true);
-		m_vehicleSprite->setPosition(ccp(0.0f, -5.0f));
-		this->updatePlayerGlow();
-
-		// m_birdDragParticle->resetSystem();
-		// m_dragParticle2->resetSystem();
-		// m_dragParticle2->stopSystem();
-		
-		// this->m_pShipActive = false;
-		this->deactivateParticle();
-		// this->spawnPortalCircle(ccc3(255, 0, 255), 50.0f);
-		// this->activateStreak();
-		// this->updatePlayerScale();
 	}
 }
 
@@ -855,6 +915,11 @@ void PlayerObject::saveToCheckpoint(CheckpointObject* check)
 			check->setPortalObject(PLAY_LAYER->getCameraPortal());
 		}	
 	}
+}
+
+void PlayerObject::removePendingCheckpoint()
+{
+
 }
 
 void PlayerObject::setupStreak()

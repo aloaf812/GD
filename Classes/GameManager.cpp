@@ -2,6 +2,7 @@
 
 #include "AchievementManager.h"
 #include "GameSoundManager.h"
+#include "GameLevelManager.h"
 #include "SimpleAudioEngine.h"
 #include "GameToolbox.h"
 #include "PlatformToolbox.h"
@@ -16,7 +17,7 @@ using namespace CocosDenshion;
 
 GameManager::GameManager()
 {
-    this->offset_0x5 = false;                        
+	// todo
     this->m_didSyncAchievements = false;
     this->m_mainMenuActive = false;
     this->m_playerScoreValid = false;
@@ -34,7 +35,7 @@ GameManager::GameManager()
     this->m_playerColor = 0;
     this->m_playerColor2 = 0;
     this->m_playerStreak = 0;
-    // this->m_playerIconType = IconType::Cube;
+    this->m_playerIconType = IconType::Cube;
     this->m_autoCheckpoints = false;
     this->m_showSongMarkers = false;
     this->m_showBPMMarkers = false;
@@ -64,15 +65,13 @@ GameManager::GameManager()
 
 bool GameManager::init()
 {
-    // FUN_003b19f8(&this->data,"CCGameManager.dat");
-    this->offset_0x5 = false;
-    this->m_didSyncAchievements = false;
-    this->offset_0xf = false;
-	// TEMPORARY FIX WHILE I DECOMP GMANAGER:
-	this->firstLoad();
-    // this->data).offset_0x13 = 0;
-    // FUN_003b19f8(&(this->data).offset_0x17,&DAT_00403859);
-    // (this->data).offset_0x6 = 0;
+	m_saveFile = "CCGameManager.dat";
+	unk_0xee = false;
+    m_didSyncAchievements = false;
+	unk_0xf8 = 0.0f;
+	unk_0x100 = 0;
+	unk_0x104 = "none";
+	unk_0xef = false;
   return true;
 }
 
@@ -100,8 +99,8 @@ void GameManager::applicationWillEnterForeground()
 
 void GameManager::setup()
 {
-	// field182_0xec = 1;
-	// GManager::load();
+	unk_0xec = 1;
+	GManager::load();
 }
 
 void GameManager::encodeDataTo(DS_Dictionary* dict)
@@ -149,6 +148,8 @@ void GameManager::dataLoaded(DS_Dictionary* dict)
     this->m_showedRateDiffDialog = dict->getBoolForKey("showedRateDiffDialog");
     this->m_showedRateStarDialog = dict->getBoolForKey("showedRateStarDialog");
     this->m_showedLowDetailDialog = dict->getBoolForKey("showedLowDetailDialog");*/
+
+	GameLevelManager::sharedState()->dataLoaded(dict);
 
 }
 

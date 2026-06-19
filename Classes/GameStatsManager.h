@@ -14,6 +14,9 @@ public:
     int getStat(char const* stat);
 	std::string getUniqueItemKey(char const* itemKey);
 	bool hasUniqueItem(char const* itemKey);
+
+	void incrementStat(char const* stat);
+	void incrementStat(char const* stat, int unk1);
 protected:
 	cocos2d::CCDictionary* m_valueDict; // 0xe8
 	cocos2d::CCDictionary* m_completedLevels; // 0xec
