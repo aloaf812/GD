@@ -7,12 +7,13 @@ class GJGroundLayer : public cocos2d::CCLayer {
 public:
     GJGroundLayer();
     static GJGroundLayer* create(int gID);
-    virtual bool init(int gID);
+    bool init(int gID);
     void draw();
 
-    void fadeInGround(float duration);
+	virtual void showGround();
+    virtual void fadeInGround(float duration);
     void fadeInFinished();
-    void fadeOutGround(float duration);
+    virtual void fadeOutGround(float duration);
 
 	void deactivateGround();
 
@@ -21,6 +22,11 @@ public:
 	CC_SYNTHESIZE_READONLY(float, m_groundWidth, GroundWidth); // 0x110
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_line, Line); // 0x114
 	CC_SYNTHESIZE_READONLY(bool, m_isActive, IsActive); // 0x118
+};
+
+class GJFlyGroundLayer : public GJGroundLayer {
+	static GJFlyGroundLayer* create();
+	bool init();
 };
 
 #endif

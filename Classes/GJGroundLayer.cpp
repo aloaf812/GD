@@ -107,6 +107,11 @@ void GJGroundLayer::draw()
 
 }
 
+void GJGroundLayer::showGround()
+{
+
+}
+
 void GJGroundLayer::deactivateGround()
 {
 	this->stopAllActions();

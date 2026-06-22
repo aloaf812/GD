@@ -108,7 +108,7 @@ public:
 	bool hasUniqueCoin(GameObject* obj);
 
 	float unk_0x110; // 0x110
-	bool field279_0x120; // 0x120
+	bool unk_0x120; // 0x120
     LevelSettingsObject* m_levelSettings; // 0x124
 	EndPortalObject* m_endObject; // 0x128
 	cocos2d::CCArray* m_checkpoints; // 0x12c
@@ -120,6 +120,8 @@ public:
 	cocos2d::CCSprite* unk_0x14c; // 0x14c
 
 	GJGroundLayer* m_ground; // 0x150
+	GJFlyGroundLayer* m_flyGroundTop; // 0x154
+	GJFlyGroundLayer* m_flyGroundBottom; // 0x158
 	bool m_flyGroundActive; // 0x160
 	bool m_rollGroundActive; // 0x161
 
@@ -131,8 +133,14 @@ public:
 	cocos2d::CCArray* m_effectObjects; // 0x188
 	// AudioEffectsLayer* m_audioEffectsLayer; // 0x18c
 	
-	GJGroundLayer* m_ground2; // 0x198
-	GJGroundLayer* m_ground3; // 0x19c
+	float unk_0x190; // 0x190
+	float unk_0x194; // 0x194
+
+	GJGroundLayer* m_rollGroundTop; // 0x198
+	GJGroundLayer* m_rollGroundBottom; // 0x19c
+
+	float unk_0x1a0; // 0x1a0
+	float unk_0x1a4; // 0x1a4
 
 	bool m_playerDead; // 0x1a8
 	bool field383_0x1a9; // 0x1a9
@@ -157,9 +165,8 @@ public:
 	bool m_localLevel; // 0x210
 	bool field391_0x211; // 0x211
 	bool field392_0x212; // 0x212
-	// field373_0x220; // 0x220
-    // field374_0x224; // 0x224
-	// bool field522_0x228; // 0x228
+	double unk_0x220; // 0x220
+	bool unk_0x228; // 0x228
     CC_SYNTHESIZE(bool, m_playbackMode, PlaybackMode); // 0x229
 	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_realPlayerPos, RealPlayerPos); // 0x22c
 	CC_SYNTHESIZE_READONLY(GameObject*, m_cameraPortal, CameraPortal); // 0x234

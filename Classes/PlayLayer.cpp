@@ -74,8 +74,6 @@ void PlayLayer::onQuit()
     GameManager* pGameManager = GameManager::sharedState();
 	pGameManager->returnToLastScene(PLAY_LAYER->getLevel());
     pGameManager->fadeInMusic("menuLoop.mp3");
-    return;
-    
 }
 
 void PlayLayer::onExit()
@@ -89,8 +87,7 @@ void PlayLayer::onExit()
 void PlayLayer::onEnterTransitionDidFinish()
 {
 	AppDelegate::get()->setPaused(false);
-	this->CCLayer::onEnterTransitionDidFinish();
-	return;
+	CCLayer::onEnterTransitionDidFinish();
 }
 
 CCScene* PlayLayer::scene(GJGameLevel* level)
@@ -311,11 +308,11 @@ bool PlayLayer::init(GJGameLevel* level)
 	// temporary fix
 	this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
 	m_gameLayer->addChild(m_ground, 4);
-	this->m_ground2 = GJGroundLayer::create(m_levelSettings->getGIdx());
-	m_gameLayer->addChild(m_ground2, 4);
-	this->m_ground3 = GJGroundLayer::create(m_levelSettings->getGIdx());
-	m_gameLayer->addChild(m_ground3, 4);
-	this->m_ground3->setScaleY(1.0f);
+	this->m_rollGroundTop = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_gameLayer->addChild(m_rollGroundTop, 4);
+	this->m_rollGroundBottom = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_gameLayer->addChild(m_rollGroundBottom, 4);
+	this->m_rollGroundBottom->setScaleY(1.0f);
 
 	// missing code
 
@@ -385,7 +382,7 @@ bool PlayLayer::init(GJGameLevel* level)
 		//this->switchToFlyMode(nullptr, true, true);
 	}
 
-	this->field279_0x120 = true;
+	this->unk_0x120 = true;
 	this->updateVisibility();
 	this->updateCamera(0.0f);
 	//this->toggleAudioRain(false);
@@ -452,19 +449,18 @@ void PlayLayer::fullReset()
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	this->m_clkTimer = 0.0;
-	/*this->field373_0x220 = 0;
-	this->field374_0x224 = 0;
-	this->field270_0x120 = true;*/
+	this->unk_0x220 = 0.0;
+	this->unk_0x120 = true;
 	this->m_cleanReset = true;
 	this->m_attempts = 0;
 	this->m_jumps = 0;
 
-	if (!this->m_practiceMode)
-		this->resetLevel();
-	/*else
-		this->togglePracticeMode(false);*/
-	CCPoint newPostion = ccp(this->getAnchorPointInPoints().x + winSize.width * 0.5f, (this->getAnchorPointInPoints().y + winSize.height) + 125.0f);
-	m_attemptLabel->setPosition(newPostion);
+	if (m_practiceMode)
+		togglePracticeMode(false);
+	else
+		resetLevel();
+
+	m_attemptLabel->setPosition(ccp(m_cameraPos.x + winSize.width * 0.5f, (m_cameraPos.y + winSize.height * 0.5f) + 125.0f));
 }
 
 void PlayLayer::startGame()
@@ -805,50 +801,149 @@ void PlayLayer::exitFlyMode()
 
 void PlayLayer::exitRollMode()
 {
-	// m_player->toggleRollMode(false);
+	m_player->toggleRollMode(false);
 	this->animateOutRollGround(false);
 }
 
+void PlayLayer::animateInFlyGround(bool instant)
+{
+	if (!m_flyGroundActive) {
+		m_flyGroundActive = true;
+		m_flyGroundTop->deactivateGround();
+		m_flyGroundBottom->deactivateGround();
+		m_flyGroundTop->setVisible(true);
+		m_flyGroundBottom->setVisible(true);
+
+		if (!instant) {
+			CCMoveTo* moveAction = CCMoveTo::create(0.5f, ccp(0.0f, unk_0x1a0));
+			CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 2.0f);
+
+			CCMoveTo* moveAction2 = CCMoveTo::create(0.5f, ccp(0.0f, unk_0x1a4));
+			CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 2.0f);
+
+			m_flyGroundTop->runAction(easeMove);
+			m_flyGroundBottom->runAction(easeMove2);
+
+			m_flyGroundTop->fadeOutGround(0.5f);
+			m_flyGroundBottom->fadeOutGround(0.5f);
+		}
+		else {
+			m_flyGroundTop->setPosition(ccp(0.0f, unk_0x1a0));
+			m_flyGroundBottom->setPosition(ccp(0.0f, unk_0x1a4));
+			m_flyGroundTop->showGround();
+			m_flyGroundBottom->showGround();
+		}
+	}
+}
+
 void PlayLayer::animateOutFlyGround(bool instant)
-{	
-	// todo
+{
+	m_flyGroundActive = false;
+	CCPoint groundTopPos = ccp(0.0f, CCDirector::sharedDirector()->getScreenBottom() - 2.0f);
+	CCPoint groundBottomPos = ccp(0.0f, CCDirector::sharedDirector()->getScreenTop() + 2.0f);
+	m_flyGroundTop->deactivateGround();
+	m_flyGroundBottom->deactivateGround();
+
+	if (instant) {
+		animateOutRollGroundFinished();
+		m_flyGroundTop->setPosition(groundTopPos);
+		m_flyGroundBottom->setPosition(groundBottomPos);
+	}
+	else {
+		CCMoveTo* moveAction = CCMoveTo::create(0.4f, groundBottomPos);
+		CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 1.5f);
+
+		CCMoveTo* moveAction2 = CCMoveTo::create(0.4f, groundBottomPos);
+		CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 1.5f);
+
+		CCDelayTime* delay = CCDelayTime::create(0.6f);
+		CCSequence* doneSequence = CCSequence::create(delay, CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutFlyGroundFinished)), nullptr);
+
+		m_flyGroundTop->runAction(easeMove);
+		m_flyGroundBottom->runAction(easeMove2);
+		m_flyGroundBottom->runAction(doneSequence);
+
+		m_flyGroundTop->fadeOutGround(0.4f);
+		m_flyGroundBottom->fadeOutGround(0.4f);
+	}
+}
+
+void PlayLayer::animateOutFlyGroundFinished()
+{
+	m_flyGroundTop->setVisible(false);
+	m_flyGroundBottom->setVisible(false);
+}
+
+void PlayLayer::animateInRollGround(bool instant)
+{
+	if (!m_rollGroundActive) {
+		m_rollGroundActive = true;
+		m_rollGroundTop->setVisible(true);
+		m_rollGroundBottom->setVisible(true);
+		m_rollGroundTop->deactivateGround();
+		m_rollGroundBottom->deactivateGround();
+
+		if (!instant) {
+			CCMoveTo* moveAction = CCMoveTo::create(0.5f, ccp(0.0f, unk_0x190));
+			CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 2.0f);
+
+			CCMoveTo* moveAction2 = CCMoveTo::create(0.5f, ccp(0.0f, unk_0x194));
+			CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 2.0f);
+
+			m_rollGroundTop->runAction(easeMove);
+			m_rollGroundBottom->runAction(easeMove2);
+
+			m_rollGroundTop->fadeOutGround(0.5f);
+			m_rollGroundBottom->fadeOutGround(0.5f);
+		}
+		else {
+			m_rollGroundTop->setPosition(ccp(0.0f, unk_0x190));
+			m_rollGroundBottom->setPosition(ccp(0.0f, unk_0x194));
+			m_rollGroundTop->showGround();
+			m_rollGroundBottom->showGround();
+		}
+	}
 }
 
 void PlayLayer::animateOutRollGround(bool instant)
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
-	this->m_rollGroundActive = false;
-	float groundYPos = m_ground2->getGroundSprite()->getPosition().y;
-	CCPoint ground2Pos = ccp(0.0f, (pDirector->getScreenBottom() - 2.0f) - groundYPos);
-	CCPoint ground3Pos = ccp(0.0f, (pDirector->getScreenTop() + 2.0f) - (winSize.height - groundYPos));
-	m_ground2->deactivateGround();
-	m_ground3->deactivateGround();
-	if (!instant) {
-		CCMoveTo* moveAction = CCMoveTo::create(0.4f, ground2Pos);
-		CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 1.5f);
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-		CCMoveTo* moveAction2 = CCMoveTo::create(0.4f, ground3Pos);
-		CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 1.5f);
+	m_rollGroundActive = false;
+	float groundYPos = m_rollGroundTop->getGroundSprite()->getPosition().y;
+	CCPoint groundTopPos = ccp(0.0f, (CCDirector::sharedDirector()->getScreenBottom() - 2.0f) - groundYPos);
+	CCPoint groundBottomPos = ccp(0.0f, (CCDirector::sharedDirector()->getScreenTop() + 2.0f) - (winSize.height - groundYPos));
+	m_rollGroundTop->deactivateGround();
+	m_rollGroundBottom->deactivateGround();
 
-		CCSequence* doneSequence = CCSequence::create(CCDelayTime::create(0.6f), CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutRollGroundFinished)), nullptr);
-		m_ground2->runAction(easeMove);
-		m_ground3->runAction(easeMove2);
-		m_ground3->runAction(doneSequence);
-		m_ground2->fadeOutGround(0.4f);
-		m_ground3->fadeOutGround(0.4f);
+	if (instant) {
+		animateOutRollGroundFinished();
+		m_rollGroundTop->setPosition(groundTopPos);
+		m_rollGroundBottom->setPosition(groundBottomPos);
 	}
 	else {
-		this->animateOutRollGroundFinished();
-		m_ground2->setPosition(ground2Pos);
-		m_ground3->setPosition(ground3Pos);
+		CCMoveTo* moveAction = CCMoveTo::create(0.4f, groundTopPos);
+		CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 1.5f);
+
+		CCMoveTo* moveAction2 = CCMoveTo::create(0.4f, groundTopPos);
+		CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 1.5f);
+
+		CCDelayTime* delay = CCDelayTime::create(0.6f);
+		CCSequence* doneSequence = CCSequence::create(delay, CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutRollGroundFinished)), nullptr);
+		
+		m_rollGroundTop->runAction(easeMove);
+		m_rollGroundBottom->runAction(easeMove2);
+		m_rollGroundBottom->runAction(doneSequence);
+
+		m_rollGroundTop->fadeOutGround(0.4f);
+		m_rollGroundBottom->fadeOutGround(0.4f);
 	}
 }
 
 void PlayLayer::animateOutRollGroundFinished()
 {
-	m_ground2->setVisible(false);
-	m_ground3->setVisible(false);
+	m_rollGroundTop->setVisible(false);
+	m_rollGroundBottom->setVisible(false);
 }
 
 void PlayLayer::checkCollisions(float dt)
