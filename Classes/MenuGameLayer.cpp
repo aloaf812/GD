@@ -8,11 +8,11 @@ USING_NS_CC;
 MenuGameLayer::MenuGameLayer() 
 {
 	m_playerObject = nullptr;
-	m_backgroundSprite = nullptr;
+	m_bgSprite = nullptr;
 	m_groundSprite = nullptr;
 	m_groundLayer = nullptr;
 	m_groundSpeed = 0.0f;
-	m_backgroundSpeed = 0.0f;
+	m_bgSpeed = 0.0f;
 }
 
 MenuGameLayer* MenuGameLayer::create()
@@ -31,27 +31,26 @@ MenuGameLayer* MenuGameLayer::create()
 bool MenuGameLayer::init()
 {
     if ( !CCLayer::init() )
-    {
         return false;
-    }
     
-    GameManager* pGameManager = GameManager::sharedState();
     
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCSize winSize = pDirector->getWinSize();
 
-    m_backgroundSprite = CCSprite::create(pGameManager->getBGTexture(pGameManager->getLoadedBGIdx()));
-    m_backgroundSprite->setAnchorPoint(ccp(0, 0));
-    m_backgroundSprite->setScale(pDirector->getScreenScaleFactorMax());
-    m_backgroundSprite->setColor(ccc3(0, 102, 255));
-    ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-    m_backgroundSprite->getTexture()->setTexParameters(&texParams);
-    m_backgroundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_backgroundSprite->getContentSize().height));
-    this->addChild(m_backgroundSprite, -1);
-    
     // ground
     m_groundLayer = CCLayer::create();
     this->addChild(m_groundLayer, 3);
+
+    GameManager* pGameManager = GameManager::sharedState();
+
+    m_bgSprite = CCSprite::create(pGameManager->getBGTexture(pGameManager->getLoadedBGIdx()));
+    ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
+    m_bgSprite->getTexture()->setTexParameters(&texParams);
+    this->addChild(m_bgSprite, -1);
+    m_bgSprite->setAnchorPoint(ccp(0, 0));
+    m_bgSprite->setScale(pDirector->getScreenScaleFactorMax());
+	m_bgSprite->setColor(ccc3(0, 102, 255));	
+    m_bgSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_bgSprite->getContentSize().height));
     
     m_groundSprite = CCSprite::create(pGameManager->getGTexture(1));
     m_groundSprite->getTexture()->setTexParameters(&texParams);
@@ -61,56 +60,54 @@ bool MenuGameLayer::init()
     m_groundSprite->setPosition(ccp(0.0f, 90.0f));
 	m_groundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_groundSprite->getContentSize().height));
     
+    CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
+    m_groundLayer->addChild(lineSprite, 3);
+    lineSprite->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 90.0f));
+	lineSprite->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
+	lineSprite->setOpacity(200);
+
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
     leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, 90.0f));
     m_groundLayer->addChild(leftShadow, 3);
-    leftShadow->setOpacity(100);
-    leftShadow->setColor(ccc3(150, 150, 150));
-	ccBlendFunc sBlendFunc = { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
-	leftShadow->setBlendFunc(sBlendFunc);
-    leftShadow->setTag(0);
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
     rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, 90.0f));
-    rightShadow->setFlipX(true);
     m_groundLayer->addChild(rightShadow, 3);
-    rightShadow->setOpacity(100);
-    rightShadow->setColor(ccc3(150, 150, 150));
-    rightShadow->setBlendFunc(sBlendFunc);
-    rightShadow->setTag(0);
-    
-    // the line looks odd but it works
-    CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
-    m_groundLayer->addChild(lineSprite, 3);
-    lineSprite->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 90.0f));
-    
-#pragma region Player
-	/*int cube = ceilf((rand() * 4.6566e-10) * 37.0);
-	int ship = ceilf((rand() * 4.6566e-10) * 13.0);*/
+    rightShadow->setFlipX(true);
 
-	int cube = rand() % 37;
-	int ship = rand() % 13;
+    leftShadow->setOpacity(100);
+    rightShadow->setOpacity(100);
+
+	leftShadow->setScaleX(0.7f);
+	rightShadow->setScaleX(0.7f);
+	
+	ccBlendFunc sBlendFunc = { GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA };
+	leftShadow->setBlendFunc(sBlendFunc);
+    rightShadow->setBlendFunc(sBlendFunc);
+
+#pragma region Player
+	float cube = ceilf(CCRANDOM_0_1() * 37.0);
+	float ship = ceilf(CCRANDOM_0_1() * 13.0);
 
 	int tmpStreak = pGameManager->getPlayerStreak();
 	pGameManager->setPlayerStreak(1);
-	this->m_playerObject = PlayerObject::create((cube + 1), (ship + 1), this);
+	m_playerObject = PlayerObject::create((cube + 1), (ship + 1), this);
 	this->addChild(m_playerObject, 0);
 
 	m_playerObject->setPosition(ccp(0.0f, 105.0f));
 
-	// ccColor3B firstColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
-	ccColor3B firstColor = pGameManager->colorForIdx(rand() % 18);
+	ccColor3B firstColor = pGameManager->colorForIdx(CCRANDOM_0_1() * 18);
 	m_playerObject->setColor(firstColor);
-	// ccColor3B secondColor = pGameManager->colorForIdx(rand() * 4.656613e-10 * 18.0);
-	ccColor3B secondColor = pGameManager->colorForIdx(rand() % 18);
+
+	ccColor3B secondColor = pGameManager->colorForIdx(CCRANDOM_0_1() * 18);
 	m_playerObject->setSecondColor(secondColor);
 	pGameManager->setPlayerStreak(tmpStreak);
 #pragma endregion
 
     scheduleUpdate();
-    // this->schedule(schedule_selector(MenuGameLayer::tryJump), 0.25f);
+	this->schedule(schedule_selector(MenuGameLayer::tryJump), 0.25f);
     
     return true;
 }
@@ -122,31 +119,44 @@ void MenuGameLayer::update(float delta)
 
 	float step = delta * 60.0f;
 
-
 	m_playerObject->setLastP(m_playerObject->getPosition());
 	m_playerObject->update(step);
 
 	if (m_playerObject->getFlyMode())
 		m_playerObject->updateShipRotation(step);
 
-	if (winSize.width + 100 < m_playerObject->getPosition().x) {
-		m_playerObject->deactivateStreak();
+	float balancer;
+	float playerScale = m_playerObject->getPlayerScale();
+	if (playerScale == 1.0f)
+		balancer = 0.0f;
+	else
+		balancer = (playerScale * 30.0f) * 0.5f;
+
+	float groundYPos = pDirector->getScreenBottom();
+	if (m_playerObject->getPosition().y > (groundYPos + 90 + 15 - balancer)) {
+		m_playerObject->setPosition(m_playerObject->getPosition());
+		m_playerObject->hitGround(false);
 	}
 
+	if (winSize.width + 100 < m_playerObject->getPosition().x) {
+		m_playerObject->deactivateStreak();
+		
+		m_playerObject->setPosition(ccp(-100 + (CCRANDOM_0_1() * 5) * 100, m_playerObject->getPosition().y));
+		m_playerObject->setColor(GAME_MANAGER->colorForIdx(CCRANDOM_0_1() * 18));
 
+	}
 	// unfinished chunk here
-
 
 	// i redid my math what do you guys think
 
 	m_backgroundPosition = m_backgroundPosition + ccp(step * 5.77 * 0.9, 0.0f);
 	CCPoint newBGPos = m_backgroundPosition * 0.1;
+
 	int i;
+	for (i = newBGPos.x; i < -m_bgSpeed; i = i + m_bgSpeed)
+		newBGPos.x += m_bgSpeed;
 
-	for (i = newBGPos.x; i < -m_backgroundSpeed; i = i + m_backgroundSpeed)
-		newBGPos.x += m_backgroundSpeed;
-
-	m_backgroundSprite->setPosition(newBGPos);
+	m_bgSprite->setPosition(newBGPos);
 
 	CCPoint newGPos = ccp(m_backgroundPosition.x,
 		pDirector->getScreenBottom() + 90.0);
@@ -157,11 +167,9 @@ void MenuGameLayer::update(float delta)
 	m_groundSprite->setPosition(newGPos);
 }
 
-void MenuGameLayer::tryJump()
+void MenuGameLayer::tryJump(float dt)
 {
 	// unfinishedddddd
-
-	CCDirector* pDirector = CCDirector::sharedDirector();
 
 	if (!m_playerObject->getFlyMode()) {
 		if (m_playerObject->getRollMode()) {
@@ -172,8 +180,6 @@ void MenuGameLayer::tryJump()
 		{
 
 		}
-
-
 
 	}
 	

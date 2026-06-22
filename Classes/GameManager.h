@@ -11,6 +11,8 @@
 
 #define PLAY_LAYER GameManager::sharedState()->getPlayLayer()
 #define WIN_SIZE cocos2d::CCDirector::sharedDirector()->getWinSize()
+// apparently somehow for some reason robtop sometimes doesnt define GameManager as a variable in functions so i made this macro to make code slightly more readable
+#define GAME_MANAGER GameManager::sharedState()
 
 // thanks geode
 enum class UnlockType {
@@ -37,6 +39,10 @@ enum class LastGameScene {
 	LevelSelect = 9,
 	PreviousSearch = 10
 };
+
+// unused boomlings class
+class PremiumPopup;
+class GameRateDelegate;
 
 class GameManager: public GManager {
 public:
@@ -91,6 +97,10 @@ public:
 
 	bool unk_0xee; // 0xee
 	bool unk_0xef; // 0xef
+    
+	cocos2d::CCDictionary* m_scoreKeeper; // 0xf0
+	cocos2d::CCDictionary* m_valueKeeper; // 0xf4
+	
 	float unk_0xf8; // 0xf8
 	int unk_0x100; // 0x100
 	std::string unk_0x104; // 0x104
@@ -99,7 +109,7 @@ public:
 	CC_SYNTHESIZE(PlayLayer*, m_playLayer, PlayLayer); // 0x114
 	CC_SYNTHESIZE(LevelSelectLayer*, m_levelSelectLayer, LevelSelectLayer); // 0x118
 	CC_SYNTHESIZE(bool, m_mainMenuActive, MainMenuActive); // 0x11c
-	// CC_SYNTHESIZE(PremiumPopup*, m_premiumPopup, PremiumPopup); // 0x120
+	CC_SYNTHESIZE(PremiumPopup*, m_premiumPopup, PremiumPopup); // 0x120
 	CC_SYNTHESIZE(bool, m_gameCenterEnabled, GameCenterEnabled); // 0x124
 	CC_SYNTHESIZE(bool, m_firstSetup, FirstSetup); // 0x125
 	CC_SYNTHESIZE(bool, m_showedFirstTutorial, ShowedFirstTutorial); // 0x126
@@ -149,6 +159,7 @@ public:
 	CC_SYNTHESIZE(bool, m_showedRateStarDialog, ShowedRateStarDialog); // 0x177
 	CC_SYNTHESIZE(bool, m_showedLowDetailDialog, ShowedLowDetailDialog); // 0x178
     
+	CC_SYNTHESIZE(GameRateDelegate*, m_rateDelegate, RateDelegate); // 0x17c
 	CC_SYNTHESIZE(cocos2d::ccColor3B, m_storedColor, StoredColor); // 0x180
 	CC_SYNTHESIZE(int, m_lastLevelID, LastLevelID); // 0x184
 	CC_SYNTHESIZE_READONLY(int, m_loadedBGIdx, LoadedBGIdx); // 0x188
@@ -156,8 +167,6 @@ public:
 	CC_SYNTHESIZE(int, m_totalAttempts, TotalAttempts); // 0x190
 	CC_SYNTHESIZE_READONLY(bool, m_fullUnlocked, FullUnlocked); // 0x194
 protected:
-    // dictionaries
-    cocos2d::CCDictionary* m_valueKeeper;
     bool m_enableTutorial;
     bool m_hasRatedGame;
 };

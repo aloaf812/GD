@@ -76,9 +76,10 @@ bool GJGroundLayer::init(int gID)
 	
 	leftShadow->setScaleX(0.7f);
 	rightShadow->setScaleX(0.7f);
-    
-	leftShadow->setBlendFunc({ GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA });
-	rightShadow->setBlendFunc({ GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA });
+
+	ccBlendFunc sBlendFunc = { GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA };
+	leftShadow->setBlendFunc(sBlendFunc);
+	rightShadow->setBlendFunc(sBlendFunc);
     
     m_isActive = false;
     
