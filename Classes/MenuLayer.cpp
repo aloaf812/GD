@@ -168,6 +168,7 @@ void MenuLayer::willClose()
     pGameManager->setMainMenuActive(false);
 }
 
+bool m_firstLoaded = false;
 bool MenuLayer::init() {
     if (!CCLayer::init())
         return false;
@@ -176,7 +177,10 @@ bool MenuLayer::init() {
     CCSize winSize = pDirector->getWinSize();
     GameManager* pGameManager = GameManager::sharedState();
     
-    pGameManager->fadeInMusic("menuLoop.mp3");
+	if (!m_firstLoaded) {
+		pGameManager->fadeInMusic("menuLoop.mp3");
+		m_firstLoaded = true;
+	}
     
     MenuGameLayer* MGL = MenuGameLayer::create();
     this->addChild(MGL);

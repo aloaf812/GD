@@ -8,10 +8,14 @@ public:
 	static ColoredSection* create(cocos2d::ccColor3B col, int startPos, int endPos);
 	bool init(cocos2d::ccColor3B col, int startPos, int endPos);
 
-	CC_SYNTHESIZE(cocos2d::ccColor3B, m_col, Col); // 0x18
-	CC_SYNTHESIZE(float, m_startPos, StartPos); // 0x1c
-	CC_SYNTHESIZE(int, m_endPos, EndPos); // 0x20
+	int getStartIndex();
+	void setStartIndex(int index);
+	int getEndIndex();
+	cocos2d::ccColor3B getColor();
 
+	CC_SYNTHESIZE(cocos2d::ccColor3B, m_col, Col);
+	CC_SYNTHESIZE(float, m_startPos, StartPos);
+	CC_SYNTHESIZE(int, m_endPos, EndPos);
 };
 
 #endif

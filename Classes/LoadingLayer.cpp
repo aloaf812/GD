@@ -37,100 +37,104 @@ LoadingLayer::LoadingLayer() {
 }
 
 bool LoadingLayer::init() {
+	if (!CCLayer::init())
+		return false;
 
-    if (!CCLayer::init())
-        return false;
-    
 	srand(time(0));
 
-    GameSoundManager::sharedManager()->setup();
+	GameSoundManager::sharedManager()->setup();
 
-    GameManager* pGameManager = GameManager::sharedState();
+	GameManager* pGameManager = GameManager::sharedState();
 	pGameManager->setup();
-	
+
 	LocalLevelManager::sharedState()->setup();
 
-    CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-    pTextureCache->addImage("GJ_LaunchSheet.png");
+	CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
+	pTextureCache->addImage("GJ_LaunchSheet.png");
 
-    CCSpriteFrameCache* pSpriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-    pSpriteFrameCache->addSpriteFramesWithFile("GJ_LaunchSheet.plist");
+	CCSpriteFrameCache* pSpriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	pSpriteFrameCache->addSpriteFramesWithFile("GJ_LaunchSheet.plist");
 
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSize winSize = pDirector->getWinSize();
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCSize winSize = pDirector->getWinSize();
 
 	CCSprite* bgSprite = CCSprite::create(pGameManager->getBGTexture(1));
-    this->addChild(bgSprite);
-    
-    bgSprite->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
+	this->addChild(bgSprite);
+
+	bgSprite->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
 	bgSprite->setScale(pDirector->getScreenScaleFactorMax());
-    bgSprite->setColor(ccc3(0, 102, 255));
+	bgSprite->setColor(ccc3(0, 102, 255));
 
-    CCSprite* gjLogo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
-    this->addChild(gjLogo);
-    gjLogo->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f));
+	CCSprite* gjLogo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
+	this->addChild(gjLogo);
+	gjLogo->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
 
-    CCSprite* robTopLogo = CCSprite::createWithSpriteFrameName("RobTopLogoBig_001.png");
-    this->addChild(robTopLogo);
-    robTopLogo->setPosition(gjLogo->getPosition() + ccp(0.0f, 80.0f));
-    
-    // Loading Text
-    m_caption = CCLabelBMFont::create(getLoadingString(), "goldFont.fnt");
-    this->addChild(m_caption);
-    m_caption->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 70.0f));
-    m_caption->setScale(0.7f);
-    m_caption->setVisible(false);
+	CCSprite* robTopLogo = CCSprite::createWithSpriteFrameName("RobTopLogoBig_001.png");
+	this->addChild(robTopLogo);
+	robTopLogo->setPosition(gjLogo->getPosition() + ccp(0.0f, 80.0f));
 
-    m_textArea = TextArea::create(getLoadingString(), 440.0f, 0, ccp(0.5f, 0.5f), "goldFont.fnt", 28.0f);
-    this->addChild(m_textArea);
-    m_textArea->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f - 100.0f));
-    m_textArea->setScale(0.7f);
-    
-    if (300.0f < m_caption->getContentSize().width)
-    {
-        m_caption->setScale(300.0f / m_caption->getContentSize().width);
-    }
-    
-    float textScale;
-    if (m_caption->getScale() <= 0.7f)
-    {
-        textScale = m_caption->getScale();
-    } else
-    {
-        textScale = 0.7f;
-    }
-    
-    m_caption->setScale(textScale);
+	m_loadStep = 0;
+	// *((_BYTE *)this + 269) = 1; // Internal flag often mapped to m_isReady or similar
 
-    CCSprite* sliderGroove = CCSprite::create("slidergroove.png");
-    this->addChild(sliderGroove, 3);
-    
-    m_sliderBar = CCSprite::create("sliderBar.png");
+	// Crucial: Get the string once so both elements use the exact same text line
+	const char* randomLoadingText = LoadingLayer::getLoadingString();
+
+	// Setup the hidden reference caption
+	m_caption = CCLabelBMFont::create(randomLoadingText, "goldFont.fnt");
+	this->addChild(m_caption);
+	m_caption->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 70.0f));
+	m_caption->setScale(0.7f);
+	m_caption->setVisible(false);
+
+	// Setup the actual visible multiline text area
+	m_textArea = TextArea::create(randomLoadingText, 440.0f, 0, ccp(0.5f, 0.5f), "goldFont.fnt", 24.0f);
+	this->addChild(m_textArea);
+	m_textArea->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 100.0f));
+	m_textArea->setScale(0.7f);
+
+	// Scale check protection loop from the binary assembly
+	if (300.0f < m_caption->getContentSize().width)
+	{
+		m_caption->setScale(300.0f / m_caption->getContentSize().width);
+	}
+
+	float textScale = m_caption->getScale();
+	if (textScale > 0.7f)
+	{
+		textScale = 0.7f;
+	}
+	m_caption->setScale(textScale);
+
+	// Slider UI Setup
+	CCSprite* sliderGroove = CCSprite::create("slidergroove.png");
+	this->addChild(sliderGroove, 3);
+
+	m_sliderBar = CCSprite::create("sliderBar.png");
 	m_sliderGrooveHeight = 8.0f;
 	m_sliderGrooveXPos = sliderGroove->getTextureRect().size.width - 4.0f;
-    
-    CCTexture2D* tex = m_sliderBar->getTexture();
-    ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
-    tex->setTexParameters(&params);
-    
-    sliderGroove->addChild(m_sliderBar, -1);
-    m_sliderBar->setAnchorPoint(CCPoint(0.0f, 0.0f));
-    m_sliderBar->setPosition(CCPoint(2.0f, 4.0f));
-    
-    sliderGroove->setPosition(CCPoint(m_caption->getPosition().x, m_textArea->getPosition().y + 40.0f));
-    
-    this->updateProgress(0);
-    
-    CCActionManager* pActionManager = pDirector->getActionManager();
-    CCDelayTime* delayTime = CCDelayTime::create(0.0f);
-    CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(LoadingLayer::loadAssets));
-    CCSequence* sequence = CCSequence::create(delayTime, callFunc, NULL);
-    pActionManager->addAction(sequence, this, false);
+
+	CCTexture2D* tex = m_sliderBar->getTexture();
+	ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+	tex->setTexParameters(&params);
+
+	sliderGroove->addChild(m_sliderBar, -1);
+	m_sliderBar->setAnchorPoint(ccp(0.0f, 0.0f));
+	m_sliderBar->setPosition(ccp(2.0f, 4.0f));
+
+	sliderGroove->setPosition(ccp(m_caption->getPosition().x, m_textArea->getPosition().y + 40.0f));
+
+	this->updateProgress(0);
+
+	CCActionManager* pActionManager = pDirector->getActionManager();
+	CCDelayTime* delayTime = CCDelayTime::create(0.0f);
+	CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(LoadingLayer::loadAssets));
+	CCSequence* sequence = CCSequence::create(delayTime, callFunc, NULL);
+	pActionManager->addAction(sequence, this, false);
 
 	if (pGameManager->getGameCenterEnabled())
-        PlatformToolbox::activateGameCenter();
+		PlatformToolbox::activateGameCenter();
 
-    return true;
+	return true;
 }
 
 // todo: hd textures

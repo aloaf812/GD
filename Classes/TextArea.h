@@ -1,28 +1,43 @@
-#ifndef __GeometryDash__TextArea__
-#define __GeometryDash__TextArea__
+#ifndef __TEXTAREA_H__
+#define __TEXTAREA_H__
 
 #include "cocos2d.h"
+#include "MultilineBitmapFont.h"
+#include <string>
 
-#include <stdio.h>
+class MultilineBitmapFont;
 
 class TextArea : public cocos2d::CCSprite {
 public:
-    bool init(char const*, float scale, int order, cocos2d::CCPoint align, char const*, float);
-    static TextArea* create(char const*, float scale, int order, cocos2d::CCPoint align, char const*, float);
+	TextArea();
+	virtual ~TextArea();
+	virtual void onExit();
 
-	void finishFade() { m_fadeInFinished = true; }
+	static TextArea* create(char const* text, float width, int order, cocos2d::CCPoint align, char const* fontFile, float height);
+	static TextArea* create(char const* text, float width, int order, cocos2d::CCPoint align, char const* fontFile);
 
-	// MultilineBitmapFont* m_label; // 0x1b8
-	float m_scale; // 0x1bc
+	bool init(char const* text, float width, int order, cocos2d::CCPoint align, char const* fontFile, float height);
 
-	CC_SYNTHESIZE(int, m_order, Order); // 0x1c8
-	CC_SYNTHESIZE(float, m_lineSpace, LineSpace); // 0x1cc
-	CC_SYNTHESIZE(bool, m_fadeInFinished, FadeInFinished); // 0x1dc
-	CC_SYNTHESIZE(cocos2d::CCPoint, m_align, Align); // 0x1d4
-	CC_SYNTHESIZE_READONLY(float, m_textHeight, TextHeight); // 0x1e0
-	CC_SYNTHESIZE_READONLY(float, m_textWidth, TextWidth); // 0x1e8
-	CC_SYNTHESIZE_READONLY(float, m_sizeWidth, SizeWidth); // 0x1e8
-	CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_textPosition, TextPosition); // 0x1ec
+	void setString(char const* text);
+	void hideAll();
+	void showAll();
+	void stopAllCharacterActions();
+	void colorAllCharactersTo(cocos2d::ccColor3B color);
+
+private:
+	MultilineBitmapFont* m_label;
+	float m_width;
+	int m_unk1C0;
+	std::string m_fontFileName;
+	int m_order;
+	float m_lineSpace;
+	bool m_onTimer;
+	cocos2d::CCPoint m_align;
+	bool m_fadeInFinished;
+	float m_textHeight;
+	float m_textWidth;
+	float m_sizeWidth;
+	cocos2d::CCPoint m_textPosition;
 };
 
-#endif /* defined(__GeometryDash__TextArea__) */
+#endif
