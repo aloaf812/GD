@@ -48,6 +48,21 @@ bool GameLevelManager::init()
     return true;
 }
 
+void GameLevelManager::firstSetup()
+{
+	unk_0xe8 = CCDictionary::create();
+	unk_0xe8->retain();
+
+	m_localLevels = CCArray::create();
+	m_localLevels->retain();
+
+	unk_0x104 = CCDictionary::create();
+	unk_0x104->retain();
+
+	unk_0xec = CCDictionary::create();
+	unk_0xec->retain();
+}
+
 void GameLevelManager::dataLoaded(DS_Dictionary* dict) {
 	unk_0xe8 = dict->getDictForKey("GLM_01");
 	unk_0xe8->retain();

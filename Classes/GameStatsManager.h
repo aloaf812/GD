@@ -8,6 +8,7 @@ public:
     static GameStatsManager* sharedState();
     virtual bool init();
 
+	void firstSetup();
 	void dataLoaded(DS_Dictionary* dict);
 	void encodeDataTo(DS_Dictionary* dict);
 	 

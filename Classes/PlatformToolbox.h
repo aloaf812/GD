@@ -25,6 +25,8 @@ public:
     static void openAppPage();
     static void reportLoadingFinished();
 	static void onToggleKeyboard();
+
+	static std::string getUniqueUserID();
 };
 
 #endif /* defined(__GeometryDash__PlatformToolbox__) */

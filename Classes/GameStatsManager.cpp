@@ -21,6 +21,15 @@ bool GameStatsManager::init()
     return true;
 }
 
+void GameStatsManager::firstSetup()
+{
+	m_valueDict = CCDictionary::create();
+	m_valueDict->retain();
+
+	m_completedLevels = CCDictionary::create();
+	m_completedLevels->retain();
+}
+
 int GameStatsManager::getStat(const char *stat)
 {
     // this is just a temporary value while i actually decompile this class

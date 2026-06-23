@@ -10,6 +10,7 @@ class GameLevelManager : public cocos2d::CCNode {
 public:
     static GameLevelManager* sharedState();
     bool init();
+	void firstSetup();
 	void downloadLevel(int level_id);
     void getLeaderboardScores(char const* leaderboardType);
     void getOnlineLevels();

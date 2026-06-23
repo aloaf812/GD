@@ -109,3 +109,9 @@ void PlatformToolbox::onToggleKeyboard()
 {
 	// todo
 }
+
+std::string PlatformToolbox::getUniqueUserID()
+{
+	// todo
+	return "1";
+}

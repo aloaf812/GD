@@ -3,6 +3,7 @@
 #include "AchievementManager.h"
 #include "GameSoundManager.h"
 #include "GameLevelManager.h"
+#include "GameStatsManager.h"
 #include "SimpleAudioEngine.h"
 #include "GameToolbox.h"
 #include "PlatformToolbox.h"
@@ -105,7 +106,51 @@ void GameManager::setup()
 
 void GameManager::encodeDataTo(DS_Dictionary* dict)
 {
-	// temporary stub
+	dict->setDictForKey("scoreKeeper", m_scoreKeeper);
+	dict->setDictForKey("valueKeeper", m_valueKeeper);
+	dict->setDictForKey("reportedAchievements", AchievementManager::sharedState()->getReportedAchievements());
+	dict->setBoolForKey("gameCenterEnabled", m_gameCenterEnabled);
+	dict->setBoolForKey("firstSetup", m_firstSetup);
+	dict->setBoolForKey("showedFirstTutorial", m_showedFirstTutorial);
+	dict->setBoolForKey("musicEnabled", m_musicEnabled);
+	dict->setBoolForKey("fxEnabled", m_fxEnabled);
+	dict->setStringForKey("playerUDID", m_playerUDID);
+	dict->setStringForKey("playerName", m_playerName);
+	dict->setIntegerForKey("playerUserID", m_playerUserID);
+	dict->setIntegerForKey("playerFrame", m_playerFrame);
+	dict->setIntegerForKey("playerShip", m_playerShip);
+	dict->setIntegerForKey("playerBall", m_playerBall);
+	dict->setIntegerForKey("playerBird", m_playerBird);
+	dict->setIntegerForKey("playerColor", m_playerColor);
+	dict->setIntegerForKey("playerColor2", m_playerColor2);
+	dict->setIntegerForKey("playerIconType", (int)m_playerIconType);
+	dict->setIntegerForKey("playerStreak", m_playerStreak);
+
+	// MoreGamesManager::sharedState()->encodeDataTo(dict);
+	// GameLevelManager::sharedState()->encodeDataTo(dict);
+	GameStatsManager::sharedState()->encodeDataTo(dict);
+
+	dict->setBoolForKey("autoCheckpoints", m_autoCheckpoints);
+	dict->setBoolForKey("showSongMarkers", m_showSongMarkers);
+	dict->setBoolForKey("showBPMMarkers", m_showBPMMarkers);
+	dict->setBoolForKey("recordGameplay", m_recordGameplay);
+	dict->setBoolForKey("autoRetryLevel", m_autoRetryLevel);
+	dict->setBoolForKey("showProgressBar", m_showProgressBar);
+	dict->setBoolForKey("commentSortRecent", m_commentSortRecent);
+	dict->setBoolForKey("performanceMode", m_performanceMode);
+	dict->setBoolForKey("clickedGarage", m_clickedGarage);
+	dict->setBoolForKey("clickedEditor", m_clickedEditor);
+	dict->setBoolForKey("clickedName", m_clickedName);
+	dict->setBoolForKey("clickedPractice", m_clickedPractice);
+	dict->setBoolForKey("showedEditorGuide", m_showedEditorGuide);
+	dict->setBoolForKey("showedRateDiffDialog", m_showedRateDiffDialog);
+	dict->setBoolForKey("showedRateStarDialog", m_showedRateStarDialog);
+	dict->setBoolForKey("showedLowDetailDialog", m_showedLowDetailDialog);
+	dict->setBoolForKey("kEnableTutorial", m_fullUnlocked);
+	dict->setIntegerForKey("binaryVersion", 11);
+
+	// dict->setIntegerForKey("timeCounter", getValidationNumber());
+	dict->setBoolForKey("playerScoreValid", m_playerScoreValid);
 }
 
 void GameManager::dataLoaded(DS_Dictionary* dict)
@@ -310,23 +355,21 @@ void GameManager::followTwitter()
 }
 
 void GameManager::toggleFX()
-{
-    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-    float volume;
-    
-    if (!(m_fxEnabled ^ 1)) { volume = 1.0f; }
-    else { volume = 0.0f; }
-    SAE->setEffectsVolume(volume);
+{   
+	m_fxEnabled ^= 1;
+	if (m_fxEnabled)
+		SimpleAudioEngine::sharedEngine()->setEffectsVolume(1.0f);
+    else
+		SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.0f);
 }
 
 void GameManager::toggleMusic()
 {
-	GameSoundManager* GSM = GameSoundManager::sharedManager();
-    float volume;
-    
-    if (!(m_musicEnabled ^ 1)) { volume = 1.0f; }
-    else { volume = 0.0f; }
-    GSM->setBGMusicVolume(volume);
+	m_musicEnabled ^= 1;
+    if (m_musicEnabled)
+		GameSoundManager::sharedManager()->setBGMusicVolume(1.0f);
+	else
+		GameSoundManager::sharedManager()->setBGMusicVolume(0.0f);
 }
 
 std::string GameManager::colorKey(int param_1, bool param_2)
@@ -384,56 +427,57 @@ ccColor3B GameManager::colorForIdx(int col)
 
 void GameManager::rateGame()
 {
-    if (!GameToolbox::doWeHaveInternet()) {
+    if (GameToolbox::doWeHaveInternet()) {
         PlatformToolbox::openAppPage();
-        this->m_hasRatedGame = true;
+        m_hasRatedGame = true;
     }
 }
 
 void GameManager::firstLoad()
 {
-    // TODO: give proper names to these values, define in header file
+	m_scoreKeeper = CCDictionary::create(); 
+	m_scoreKeeper->retain();
+	
+	m_valueKeeper = CCDictionary::create(); 
+	m_valueKeeper->retain();
 
-    // this->m_scoreKeeper = CCDictionary::create()->retain();
-    // this->m_valueKeeper = CCDictionary::create()->retain();
-    /* PlatformToolbox::getUniqueUserID();
-     FUN_003b28d4(&(this->data).offset_0x3b,auStack_14);
-     FUN_003b16dc(auStack_14);
-     pGVar2 = (GameSoundManager *)FUN_003b19f8(&(this->data).offset_0x3f,"Player");*/
-    this->m_playerUserID = 0;
-    this->m_playerColor2 = 3;
-    this->m_gameCenterEnabled = false;
-    this->m_firstSetup = true;
-    this->m_showedFirstTutorial = false;
-    this->m_playerColor = 0;
-    this->m_playerFrame = 1;
-    this->m_playerShip = 1;
-    this->m_playerBall = 1;
-    this->m_playerBird = 1;
-    this->m_playerStreak = 1;
-    // this->m_playerIconType = IconType::Cube;
-    this->m_musicEnabled = true;
-    this->m_fxEnabled = true;
+	m_playerUDID = PlatformToolbox::getUniqueUserID();
+	m_playerName = "Player";
+	m_playerUserID = 0;
+	m_playerColor2 = 3;
+	m_gameCenterEnabled = false;
+	m_firstSetup = true;
+	m_showedFirstTutorial = false;
+	m_playerColor = 0;
+	m_playerFrame = 1;
+	m_playerShip = 1;
+	m_playerBall = 1;
+	m_playerBird = 1;
+	m_playerStreak = 1;
+	m_playerIconType = IconType::Cube;
+	m_musicEnabled = true;
+	m_fxEnabled = true;
+
     GameSoundManager::sharedManager()->setBGMusicVolume(1.0f);
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(1.0f);
-    /*this_01 = (GameLevelManager *)GameLevelManager::sharedState();
-     pGVar3 = (GameStatsManager *)GameLevelManager::firstSetup(this_01);
-     pGVar3 = GameStatsManager::GameStatsManager(pGVar3);
-     GameStatsManager::firstSetup(pGVar3);*/
-    this->m_autoCheckpoints = true;
-    this->m_showSongMarkers = true;
-    this->m_showBPMMarkers = false;
-    this->m_autoRetryLevel = true;
-    this->m_showProgressBar = false;
-    this->m_commentSortRecent = false;
-    this->m_performanceMode = false;
-    this->m_enableTutorial = false;
-    // (this->data).offset_0x6 = 1;
-    this->m_showedRateDiffDialog = false;
-    this->m_showedRateStarDialog = false;
-    this->m_showedLowDetailDialog = false;
-    this->m_recordGameplay = false;
-    this->m_playerScoreValid = false;
+
+    GameLevelManager::sharedState()->firstSetup();
+	GameStatsManager::sharedState()->firstSetup();
+
+	m_autoCheckpoints = true;
+	m_showSongMarkers = true;
+	m_showBPMMarkers = false;
+	m_autoRetryLevel = true;
+	m_showProgressBar = false;
+	m_commentSortRecent = false;
+	m_performanceMode = false;
+	m_fullUnlocked = false;
+	unk_0xef = true;
+	m_showedRateDiffDialog = false;
+	m_showedRateStarDialog = false;
+	m_showedLowDetailDialog = false;
+	m_recordGameplay = false;
+	m_playerScoreValid = false;
 }
 
 void GameManager::resetMusic()
