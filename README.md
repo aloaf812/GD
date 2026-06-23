@@ -54,3 +54,6 @@ Currently the project only supports the following platforms, with more on the wa
 
 * IPA File: `269eef85b33ff75cba487b7cce77f0eb947d4ab0`
 * GeometryJump (executable): `f1dfe8232462155c02bd610f6b62942118f9cbfa`
+
+# About this Fork
+- This fork doesnt really focus on reverse engineering the game, but instead just recreating the things. This helps **aloaf** to know what I edited and how I fix some stuffs.

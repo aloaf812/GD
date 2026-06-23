@@ -140,31 +140,21 @@ void MenuGameLayer::update(float delta)
 
 	if (winSize.width + 100 < m_playerObject->getPosition().x) {
 		m_playerObject->deactivateStreak();
-		
 		m_playerObject->setPosition(ccp(-100 + (CCRANDOM_0_1() * 5) * 100, m_playerObject->getPosition().y));
 		m_playerObject->setColor(GAME_MANAGER->colorForIdx(CCRANDOM_0_1() * 18));
-
 	}
-	// unfinished chunk here
 
-	// i redid my math what do you guys think
+	m_backgroundPosition.x -= step * 5.193f;
 
-	m_backgroundPosition = m_backgroundPosition + ccp(step * 5.77 * 0.9, 0.0f);
-	CCPoint newBGPos = m_backgroundPosition * 0.1;
+	// bg wraps at its natural texture width (before the x2 stretch)
+	float bgTileW = m_bgSprite->getTexture()->getContentSizeInPixels().width;
+	float bgX = fmodf(m_backgroundPosition.x * 0.1f, bgTileW);
+	if (bgX > 0) bgX -= bgTileW;
+	m_bgSprite->setPosition(ccp(bgX, 0.0f));
 
-	int i;
-	for (i = newBGPos.x; i < -m_bgSpeed; i = i + m_bgSpeed)
-		newBGPos.x += m_bgSpeed;
-
-	m_bgSprite->setPosition(newBGPos);
-
-	CCPoint newGPos = ccp(m_backgroundPosition.x,
-		pDirector->getScreenBottom() + 90.0);
-
-	for (i = newGPos.x; i < -m_groundSpeed; i = i + m_groundSpeed)
-		newGPos.x += m_groundSpeed;
-
-	m_groundSprite->setPosition(newGPos);
+	float gX = fmodf(m_backgroundPosition.x, winSize.width);
+	if (gX > 0) gX -= winSize.width;
+	m_groundSprite->setPosition(ccp(gX, pDirector->getScreenBottom() + 90.0f));
 }
 
 void MenuGameLayer::tryJump(float dt)

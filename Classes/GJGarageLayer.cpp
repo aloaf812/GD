@@ -128,7 +128,7 @@ void GJGarageLayer::setupIconSelect()
 	CCSprite* unlockTxt = CCSprite::createWithSpriteFrameName("GJ_unlockTxt_001.png");
 	this->addChild(unlockTxt);
 	unlockTxt->setAnchorPoint(ccp(0.5, 0.5));
-	unlockTxt->setPosition(base->getPosition() + ccp(120, (winSize.height * 0.5) + 12));
+	unlockTxt->setPosition(base->getPosition() + ccp(120, (winSize.height * 0.5) - 100));
 
 	CCMenu* buttonMenu = CCMenu::create();
 	this->addChild(buttonMenu, 100);
@@ -169,7 +169,7 @@ void GJGarageLayer::setupIconSelect()
 	unk_0x144->setTag(99);
 	
 	buttonMenu->alignItemsHorizontallyWithPadding(0.0f);
-	buttonMenu->setPosition(base->getPosition() + ccp(-125, (winSize.height * 0.5) + 18));
+	buttonMenu->setPosition(base->getPosition() + ccp(-125, (winSize.height * 0.5) - 92));
 
 	unk_0x130 = CCArray::create();
 	unk_0x130->retain();

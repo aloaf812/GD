@@ -27,7 +27,9 @@ CCDictionary* CCContentManager::addDict(const char* filePath, bool unk) {
         delete dsDict;
         m_pDicts->setObject(obj, filePath);*/
     }
-    return obj;
+    // return obj;
+
+	return CCDictionary::createWithContentsOfFile(filePath);
 }
 /*
 cocos2d::CCDictionary* CCContentManager::addDictDS(const char* dict) {

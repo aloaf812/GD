@@ -22,40 +22,38 @@ AppDelegate::~AppDelegate()
 AppDelegate* AppDelegate::get() { return static_cast<AppDelegate*>(sharedApplication()); }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-    
-    
-    // initialize director
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+	CCDirector* pDirector = CCDirector::sharedDirector();
+	CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
-    pDirector->setOpenGLView(pEGLView);
+	pDirector->setOpenGLView(pEGLView);
 	pDirector->setProjection(kCCDirectorProjection2D);
 	pDirector->setupScreenScale(CCSizeMake(480.0f, 320.0f));
-    
-    CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-    CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-    pDirector->setDepthTest(false);
+	pDirector->setContentScaleFactor(2.0f);
+
+	// set the content scale factor to 2.0f for hd
+	// while 1.0 for low quality.
+
+	CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
+	CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
+	pDirector->setDepthTest(false);
 	pDirector->setAnimationInterval(1.0 / 60.0);
 
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 		CCFileUtils::sharedFileUtils()->addSearchPath("Resources");
 	#endif
-	
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	#else
 		this->m_isIOS = false;
 	#endif
 
 	CCContentManager::sharedManager();
-    // check performance with this: pDirector->setDisplayStats(true);
 	AdToolbox::setupAds();
-    
-	// run
-    CCScene *pScene = LoadingLayer::scene();
-    pDirector->runWithScene(pScene);
 
-    return true;
+	CCScene *pScene = LoadingLayer::scene();
+	pDirector->runWithScene(pScene);
+
+	return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
