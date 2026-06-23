@@ -62,8 +62,7 @@ bool LevelSelectLayer::init(int page)
 
 	this->setKeypadEnabled(true);
 
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	m_background = CCSprite::create("GJ_gradientBG.png");
 	m_background->setAnchorPoint(CCPoint(0.0f, 0.0f));
@@ -77,12 +76,12 @@ bool LevelSelectLayer::init(int page)
 	CCLayer* groundLayer = CCLayer::create();
 	this->addChild(groundLayer, 0);
 
-	m_ground = CCSprite::create(GameManager::sharedState()->getGTexture(1));
+	m_ground = CCSprite::create(GameManager::sharedState()->getGTexture(GameManager::sharedState()->getLoadedGIdx()));
 	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 	m_ground->getTexture()->setTexParameters(&texParams);
 	groundLayer->addChild(m_ground, 2);
 	m_ground->setAnchorPoint(ccp(0, 1));
-	m_ground->setScale(pDirector->getScreenScaleFactorMax());
+	m_ground->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
 	m_ground->setColor(ccc3(0, 102, 255));
 	m_ground->setTextureRect(CCRectMake(0, 0, winSize.width, m_ground->getContentSize().height));
 	m_ground->setPosition(ccp(0.0f, (winSize.height * 0.5f) - 110.0f));
@@ -92,17 +91,18 @@ bool LevelSelectLayer::init(int page)
 	CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
 	groundLayer->addChild(lineSprite, 3);
 	lineSprite->setPosition(CCPoint(winSize.width * 0.5f, refYPos));
-	lineSprite->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
+	ccBlendFunc lineBlendFunc = { GL_SRC_ALPHA, GL_ONE };
+	lineSprite->setBlendFunc(lineBlendFunc);
 	lineSprite->setOpacity(100);
 
 	CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
-	leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, refYPos));
+	leftShadow->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() - 1.0f, refYPos));
     groundLayer->addChild(leftShadow, 3);
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
-	rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, refYPos));
+	rightShadow->setPosition(ccp(CCDirector::sharedDirector()->getScreenRight() + 1.0f, refYPos));
     groundLayer->addChild(rightShadow, 3);
     rightShadow->setFlipX(true);
 	
@@ -112,23 +112,23 @@ bool LevelSelectLayer::init(int page)
 	leftShadow->setScaleX(0.7f);
 	rightShadow->setScaleX(0.7f);
     
-	ccBlendFunc shadowBlendFunc = { GL_ONE_MINUS_SRC_ALPHA, GL_DST_COLOR };
+	ccBlendFunc shadowBlendFunc = { GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA };
 	rightShadow->setBlendFunc(shadowBlendFunc);
 	rightShadow->setBlendFunc(shadowBlendFunc);
 
     CCSprite* topBar = CCSprite::createWithSpriteFrameName("GJ_topBar_001.png");
     topBar->setAnchorPoint(CCPoint(0.5f, 1.0f));
-    topBar->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenTop() + 1.0f));
+	topBar->setPosition(CCPoint(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenTop() + 1.0f));
     this->addChild(topBar, 1);
     
     CCSprite* sideArtLeft = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtLeft->setAnchorPoint(CCPoint(0.0f, 0.0f));
-    sideArtLeft->setPosition(CCPoint(pDirector->getScreenLeft() - 1.0f, pDirector->getScreenBottom() - 1.0f));
+	sideArtLeft->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() - 1.0f, CCDirector::sharedDirector()->getScreenBottom() - 1.0f));
     this->addChild(sideArtLeft, 1);
     
     CCSprite* sideArtRight = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtRight->setAnchorPoint(CCPoint(1.0f, 0.0f));
-    sideArtRight->setPosition(CCPoint(pDirector->getScreenRight() + 1.0f, pDirector->getScreenBottom() - 1.0f));
+	sideArtRight->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() + 1.0f, CCDirector::sharedDirector()->getScreenBottom() - 1.0f));
 	int i = 1;
     sideArtRight->setFlipX(true);
     this->addChild(sideArtRight, 1);
@@ -152,7 +152,7 @@ bool LevelSelectLayer::init(int page)
     bool showDots = pages->count() > 3;
 	m_scrollLayer = BoomScrollLayer::create(pages, 0, showDots);
 	this->addChild(m_scrollLayer);
-	m_scrollLayer->setPagesIndicatorPosition(ccp(winSize.width * 0.5f, pDirector->getScreenBottom() + 15.0f));
+	m_scrollLayer->setPagesIndicatorPosition(ccp(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenBottom() + 15.0f));
 	m_scrollLayer->getInternalLayer()->setDelegate(m_bslDelegate);
 
 	if (page == 0) {
@@ -172,7 +172,7 @@ bool LevelSelectLayer::init(int page)
     
     CCMenu* downloadMenu = CCMenu::create(downloadExtra, NULL);
     this->addChild(downloadMenu);
-    downloadMenu->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 35.0f));
+	downloadMenu->setPosition(CCPoint(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenBottom() + 35.0f));
     
     CCMenu* arrowsMenu = CCMenu::create();
     this->addChild(arrowsMenu, 5);
@@ -182,20 +182,20 @@ bool LevelSelectLayer::init(int page)
     CCMenuItemSpriteExtra* leftBtn = CCMenuItemSpriteExtra::create(leftBtnSprite, NULL, this, menu_selector(LevelSelectLayer::onPrev));
     arrowsMenu->addChild(leftBtn);
     leftBtn->setSizeMult(2.0f);
-    leftBtn->setPosition(arrowsMenu->convertToNodeSpace(CCPoint(pDirector->getScreenLeft() + 25.0f, winSize.height * 0.5f)));
+	leftBtn->setPosition(arrowsMenu->convertToNodeSpace(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 25.0f, winSize.height * 0.5f)));
     
     CCSprite* rightBtnSprite = CCSprite::createWithSpriteFrameName("navArrowBtn_001.png");
     CCMenuItemSpriteExtra* rightBtn = CCMenuItemSpriteExtra::create(rightBtnSprite, NULL, this, menu_selector(LevelSelectLayer::onNext));
     arrowsMenu->addChild(rightBtn);
     rightBtn->setSizeMult(2.0f);
-    rightBtn->setPosition(arrowsMenu->convertToNodeSpace(CCPoint(pDirector->getScreenRight() - 25.0f, winSize.height * 0.5f)));
+	rightBtn->setPosition(arrowsMenu->convertToNodeSpace(CCPoint(CCDirector::sharedDirector()->getScreenRight() - 25.0f, winSize.height * 0.5f)));
     
     CCSprite* backBtnSprite = CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png");
     CCMenuItemSpriteExtra* backBtn = CCMenuItemSpriteExtra::create(backBtnSprite, NULL, this, menu_selector(LevelSelectLayer::onBack));
     backBtn->setSizeMult(1.6f);
     CCMenu* backMenu = CCMenu::create(backBtn, NULL);
     this->addChild(backMenu, 1);
-    backMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 25.0f, pDirector->getScreenTop() - 22.0f));
+	backMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 25.0f, CCDirector::sharedDirector()->getScreenTop() - 22.0f));
 
     CCMenu* infoMenu = CCMenu::create();
     this->addChild(infoMenu);
@@ -204,7 +204,7 @@ bool LevelSelectLayer::init(int page)
     CCMenuItemSpriteExtra* infoBtn = CCMenuItemSpriteExtra::create(infoBtnSprite, NULL, this, menu_selector(LevelSelectLayer::onInfo));
     infoBtn->setSizeMult(2.0f);
     infoMenu->addChild(infoBtn);
-    infoMenu->setPosition(CCPoint(pDirector->getScreenRight() - 20.0f, pDirector->getScreenTop() - 20.0f));
+	infoMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() - 20.0f, CCDirector::sharedDirector()->getScreenTop() - 20.0f));
 
     return true;
 }
@@ -226,7 +226,9 @@ void LevelSelectLayer::onBack(CCObject* sender)
 
 void LevelSelectLayer::onInfo(CCObject* sender)
 {
-
+	int pageNum = m_scrollLayer->getRelativePageForNum(m_scrollLayer->getCurrentScreen());
+	if (pageNum != m_scrollLayer->getTotalPages() + -1)
+		((LevelPage*)m_scrollLayer->getPage(pageNum))->onInfo(nullptr);
 }
 
 void LevelSelectLayer::onPrev(CCObject* sender)

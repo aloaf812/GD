@@ -19,15 +19,18 @@ bool CCContentManager::init() {
 }
 
 CCDictionary* CCContentManager::addDict(const char* filePath, bool unk) {
-    CCDictionary* obj = static_cast<CCDictionary*>(m_pDicts->objectForKey(filePath));
+    /*CCDictionary* obj = static_cast<CCDictionary*>(m_pDicts->objectForKey(filePath));
     if (!obj) {
-        /*DS_Dictionary* dsDict = new DS_Dictionary();
+        DS_Dictionary* dsDict = new DS_Dictionary();
         dsDict->loadRootSubDictFromFile(filePath);
         obj = dsDict->getDictForKey(nullptr);
         delete dsDict;
-        m_pDicts->setObject(obj, filePath);*/
+        m_pDicts->setObject(obj, filePath);
     }
-    return obj;
+    return obj;*/
+
+	// yeah so this just DOESNT work so deal with this fix for now
+	return CCDictionary::createWithContentsOfFile(filePath);
 }
 /*
 cocos2d::CCDictionary* CCContentManager::addDictDS(const char* dict) {
