@@ -14,7 +14,7 @@ GJDropDownLayer::GJDropDownLayer() {
 }
 
 GJDropDownLayer::~GJDropDownLayer() {
-	// CCDirector::sharedDirector()->getTouchDispatcher()->decrementForcePrio(2);
+	CCDirector::sharedDirector()->getTouchDispatcher()->setForcePrio(false);
 }
 
 void GJDropDownLayer::disableUI() {
@@ -66,6 +66,7 @@ void GJDropDownLayer::hideLayer(bool instantHide) {
 }
 
 void GJDropDownLayer::registerWithTouchDispatcher() {
+	// Layer priority is -500
 	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -500, true);
 }
 
@@ -104,6 +105,8 @@ void GJDropDownLayer::showLayer(bool instantShow) {
 }
 
 bool GJDropDownLayer::ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent) {
+	// Always return true to swallow background clicks on underlying screens.
+	// The menu buttons will bypass this safely now because their priority is higher.
 	return true;
 }
 
@@ -161,8 +164,10 @@ bool GJDropDownLayer::init(const char* title, float height) {
 	backBtn->setSizeMult(1.6f);
 
 	this->m_buttonMenu = CCMenu::create(backBtn, NULL);
-	this->m_buttonMenu->setPosition(CCPoint((winSize.width * 0.5f) + 178.0f, (winSize.height * 0.5f) - (height * 0.5f)));
 	this->m_buttonMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 24, pDirector->getScreenTop() - 23));
+
+	// FIX: Explicitly set CCMenu priority higher (-501) than the layer (-500)
+	this->m_buttonMenu->setTouchPriority(-501);
 
 	m_internalLayer->addChild(m_buttonMenu, 10);
 

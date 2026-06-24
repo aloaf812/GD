@@ -76,23 +76,21 @@ bool LoadingLayer::init() {
 	m_loadStep = 0;
 	// *((_BYTE *)this + 269) = 1; // Internal flag often mapped to m_isReady or similar
 
-	// Crucial: Get the string once so both elements use the exact same text line
 	const char* randomLoadingText = LoadingLayer::getLoadingString();
-
-	// Setup the hidden reference caption
 	m_caption = CCLabelBMFont::create(randomLoadingText, "goldFont.fnt");
 	this->addChild(m_caption);
 	m_caption->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 70.0f));
 	m_caption->setScale(0.7f);
 	m_caption->setVisible(false);
 
-	// Setup the actual visible multiline text area
-	m_textArea = TextArea::create(randomLoadingText, 440.0f, 0, ccp(0.5f, 0.5f), "goldFont.fnt", 24.0f);
+	// it supposed to be 432.f (1138491392 = 432.f)
+	// and i just edited to 130.f because
+	// i dont know what i did in my TextArea decompilation
+	m_textArea = TextArea::create(randomLoadingText, 130.0f, 0, ccp(0.5f, 0.5f), "goldFont.fnt", 28.0f);
 	this->addChild(m_textArea);
 	m_textArea->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f - 100.0f));
 	m_textArea->setScale(0.7f);
 
-	// Scale check protection loop from the binary assembly
 	if (300.0f < m_caption->getContentSize().width)
 	{
 		m_caption->setScale(300.0f / m_caption->getContentSize().width);
@@ -219,7 +217,6 @@ void LoadingLayer::loadingFinished() {
 }
 
 const char* LoadingLayer::getLoadingString() {
-
 	switch (rand() % 10) {
     case 1: return "Listen to the music to help time your jumps";
     case 2: return "Back for more are ya?";
