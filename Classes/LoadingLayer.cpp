@@ -229,5 +229,8 @@ const char* LoadingLayer::getLoadingString() {
     case 9: return "You can download all songs from the level select page!";
     default: return "Unlock new icons and colors by completing achievements!";    
     }
+
+	// use this for debug purposes
+	// return "Back for more are ya?";
 }
 
