@@ -207,6 +207,9 @@
     <ClCompile Include="..\Classes\GJComment.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\RT_COCOS\CCCircleWave.cpp">
+      <Filter>Classes\RT_COCOS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -406,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GJComment.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RT_COCOS\CCCircleWave.h">
+      <Filter>Classes\RT_COCOS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
