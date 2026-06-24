@@ -1,90 +1,145 @@
-#include "AchievementBar.h"
+﻿#include "AchievementBar.h"
 #include "AchievementNotifier.h"
+#include "GameManager.h"
 #include "SimplePlayer.h"
+#include "TextArea.h"
 #include "cocos-ext.h"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 
 AchievementBar::AchievementBar()
+	: m_layerColor(nullptr)
+	, m_targetScene(nullptr)
+	, m_screenOffset(0.0f)
 {
-	m_targetScene = nullptr;
 }
 
 AchievementBar* AchievementBar::create(char const* title, char const* description, char const* icon)
 {
-    AchievementBar* pRet = new AchievementBar();
-    if (pRet && pRet->init(title, description, icon))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = NULL;
-        return NULL;
-    }
+	AchievementBar* pRet = new AchievementBar();
+	if (pRet && pRet->init(title, description, icon))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	CC_SAFE_DELETE(pRet);
+	return nullptr;
 }
 
-// gonna have to redecompile this entire function again...
 bool AchievementBar::init(char const* title, char const* description, char const* icon)
 {
-	CCLOG("creating achievement bar for %s", title);
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
+	if (!CCNodeRGBA::init()) return false;
 
-	this->m_layerColor = CCLayerColor::create(ccc4(0, 0, 0, 0));
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+	m_layerColor = CCLayerColor::create(ccc4(0, 0, 0, 0), winSize.width, 80.0f);
 	this->addChild(m_layerColor);
+	m_layerColor->setPosition(ccp(0.0f, CCDirector::sharedDirector()->getScreenTop() + 2.0f));
 
-	CCScale9Sprite* box = CCScale9Sprite::create("GJ_square01.png", CCRect(0, 0, 80, 80));
-	box->setPosition(ccp(winSize.width / 2, pDirector->getScreenTop() - 50));
-	box->setContentSize(CCSize(300, 70));
-	m_layerColor->addChild(box);
+	CCScale9Sprite* bg = CCScale9Sprite::create("GJ_square01.png", CCRectMake(0, 0, 80, 80));
+	bg->setContentSize(CCSize(300.0f, 70.0f));
+	m_layerColor->addChild(bg, 1);
+	bg->setPosition(ccp(winSize.width * 0.5f, 35.0f));
 
-	CCSprite* playerSquare = CCSprite::createWithSpriteFrameName("playerSquare_001.png");
-	if (icon)
+	CCSprite* measureSprite = CCSprite::createWithSpriteFrameName("playerSquare_001.png");
+
+	CCNode* iconNode = nullptr;
+	const char* unlockStr = nullptr;
+
+	if (icon && strlen(icon) > 0)
 	{
-		char const* item = "color";
-		if (true)
+		CCArray* parts = CCArray::create();
+		std::string iconStr(icon), seg;
+		for (size_t i = 0; i <= iconStr.size(); ++i)
 		{
-			char const* descString = CCString::createWithFormat("Unlocked new %s!", item)->getCString();
-			SimplePlayer* achIcon = SimplePlayer::create(1);
-			achIcon->updatePlayerFrame(1, IconType::Cube);
-			m_layerColor->addChild(achIcon);
-			/*local_11c = 175;
-			local_11b = 175;
-			local_11a = 175;
-			(**(code **)(*(int *)pSVar10 + 0x1cc))(pSVar10, &local_11c);*/
-			achIcon->setSecondColor(ccc3(255, 255, 255));
+			if (i == iconStr.size() || iconStr[i] == '_')
+			{
+				if (!seg.empty()) { parts->addObject(CCString::create(seg.c_str())); seg.clear(); }
+			}
+			else seg += iconStr[i];
 		}
-		else 
+
+		if (parts->count() > 1)
 		{
+			const char* typeStr = static_cast<CCString*>(parts->objectAtIndex(0))->getCString();
+			int idx = static_cast<CCString*>(parts->objectAtIndex(1))->intValue();
 
+			bool isColor = (strcmp(typeStr, "color") == 0 || strcmp(typeStr, "color2") == 0);
+			if (isColor)
+			{
+				unlockStr = "Unlocked new Color!";
+				measureSprite->setColor(GameManager::sharedState()->colorForIdx(idx - 1));
+				iconNode = measureSprite;
+			}
+			else
+			{
+				int playerType;
+				if (strcmp(typeStr, "ship") == 0) { playerType = 1; unlockStr = CCString::createWithFormat("Unlocked new %s!", "Ship")->getCString(); }
+				else if (strcmp(typeStr, "ball") == 0) { playerType = 2; unlockStr = CCString::createWithFormat("Unlocked new %s!", "Ball")->getCString(); }
+				else if (strcmp(typeStr, "bird") == 0) { playerType = 3; unlockStr = CCString::createWithFormat("Unlocked new %s!", "UFO")->getCString(); }
+				else { playerType = 0; unlockStr = CCString::createWithFormat("Unlocked new %s!", "Icon")->getCString(); }
+
+				SimplePlayer* sp = SimplePlayer::create(1);
+				sp->updatePlayerFrame(idx, static_cast<IconType>(playerType));
+				sp->setColor(ccc3(0xAF, 0xAF, 0xAF));
+				sp->setSecondColor(ccc3(0xFF, 0xFF, 0xFF));
+				iconNode = sp;
+			}
 		}
-	}
-
-	// CCSprite* gkIcon = CCSprite::create("gk-icon.png");  this is literally just a checkmark and idk when it is shown
-
-	CCLabelBMFont* titleText = CCLabelBMFont::create(title, "bigFont.fnt");
-	titleText->setPosition(ccp(winSize.width / 2, pDirector->getScreenTop() - 50));
-	this->addChild(titleText);
-
-	if (200.0f < titleText->getContentSize().width)
-	{
-		titleText->setScale(200.0f / titleText->getContentSize().width);
-	}
-
-	float textScale;
-	if (titleText->getScale() <= 0.7f)
-	{
-		textScale = titleText->getScale();
+		else goto use_fallback;
 	}
 	else
 	{
-		textScale = 0.7f;
+	use_fallback:
+		CCSprite* fallback = CCSprite::create("gk-icon.png");
+		fallback->setColor(ccc3(0, 0, 0));
+		fallback->setZOrder(100);
+		iconNode = fallback;
 	}
 
-	titleText->setScale(textScale);
+	iconNode->setPosition(ccp(40.0f, 35.0f));
+	m_layerColor->addChild(iconNode, 3);
+
+	CCNode* textNode = CCNode::create();
+	m_layerColor->addChild(textNode, 2);
+
+	CCLabelBMFont* titleLabel = CCLabelBMFont::create(title, "bigFont.fnt");
+	textNode->addChild(titleLabel);
+	titleLabel->setAnchorPoint(ccp(0.0f, 0.5f));
+	titleLabel->setScale(0.7f);
+	float titleW = titleLabel->getContentSize().width;
+	if (titleW > 200.0f)
+		titleLabel->setScale(200.0f / titleW);
+	if (titleLabel->getScale() < 0.7f)
+		titleLabel->setScale(0.7f);
+
+	const char* descText = unlockStr ? unlockStr : description;
+
+	// fok this textarea T-T
+	// its soo buggy
+	TextArea* descLabel = TextArea::create(descText, 200.0f, 0, ccp(0.0f, 1.0f), "chatFont.fnt");
+	textNode->addChild(descLabel);
+	descLabel->setAnchorPoint(ccp(0.0f, 0.5f));
+
+	float titleH = titleLabel->getContentSize().height;
+	float descH = descLabel->getContentSize().height + 17.0f;
+	float midH = (titleH + descH) * 0.5f;
+	titleLabel->setPosition(ccp(0.0f, (midH - titleH * 0.5f) + 2.0f));
+	descLabel->setPosition(ccp(1.0f, 15.0f - (midH - descH * 0.5f) - 1.0f));
+
+	measureSprite->setScale(1.0f);
+	iconNode->setScale(1.0f);
+
+	float squareW = measureSprite->getContentSize().width;
+	float titleScaledW = titleLabel->getContentSize().width * titleLabel->getScaleX();
+	float descW = descLabel->getContentSize().width;
+	float textBlockW = ((titleScaledW >= descW) ? titleScaledW : descW) + 5.0f;
+
+	float totalW = squareW * 0.5f + textBlockW + 30.0f;
+	float iconX = (winSize.width * 0.5f) - (totalW * 0.5f) + (squareW * 0.5f);
+	iconNode->setPosition(ccp(iconX, 35.0f));
+	textNode->setPosition(ccp(iconNode->getPositionX() + 30.0f, 35.0f));
 
 	m_screenOffset = 74.0f;
 
@@ -93,19 +148,15 @@ bool AchievementBar::init(char const* title, char const* description, char const
 
 void AchievementBar::show()
 {
-	CCNode* scene = CCDirector::sharedDirector()->getRunningScene();
-	
-	if (m_targetScene != nullptr)
-		scene = m_targetScene;
-
-	scene->addChild(this, 105);
-
-	// the animation
-	CCMoveBy* moveIn = CCMoveBy::create(1.0f, ccp(0.0f, -m_screenOffset));
+	CCMoveBy* moveIn = CCMoveBy::create(1.0f, ccp(0, -m_screenOffset));
 	CCEaseInOut* easeIn = CCEaseInOut::create(moveIn, 2.0f);
-	CCDelayTime* delay = CCDelayTime::create(1.5f);
-	CCMoveBy* moveOut = CCMoveBy::create(1.0f, ccp(0.0f, m_screenOffset));
+	CCDelayTime* delay = CCDelayTime::create(2.0f);
+	CCMoveBy* moveOut = CCMoveBy::create(1.0f, ccp(0, m_screenOffset));
 	CCEaseInOut* easeOut = CCEaseInOut::create(moveOut, 2.0f);
-	CCCallFunc* callback = CCCallFunc::create(AchievementNotifier::sharedState(), callfunc_selector(AchievementNotifier::achievementDisplayFinished));
-	m_layerColor->runAction(CCSequence::create(easeIn, delay, easeOut, nullptr));
+
+	CCCallFunc* callback = CCCallFunc::create(
+		AchievementNotifier::sharedState(),
+		callfunc_selector(AchievementNotifier::achievementDisplayFinished));
+
+	m_layerColor->runAction(CCSequence::create(easeIn, delay, easeOut, callback, nullptr));
 }

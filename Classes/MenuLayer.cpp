@@ -43,7 +43,7 @@ void MenuLayer::onMoreGames(CCObject* sender)
 	GameManager::sharedState()->reportAchievementWithID("geometry.ach.moreGames", 100, false);
 	GJMoreGamesLayer* moreGamesLayer = GJMoreGamesLayer::create();
 	this->addChild(moreGamesLayer, 100);
-	moreGamesLayer->showLayer(false); // wow this is broken
+	moreGamesLayer->showLayer(false); // it aint broken no more
     return;
 }
 

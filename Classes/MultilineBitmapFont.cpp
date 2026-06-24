@@ -332,11 +332,13 @@ MultilineBitmapFont::MultilineBitmapFont()
 
 MultilineBitmapFont::~MultilineBitmapFont()
 {
+	/*
 	if (m_unkArray)
 	{
 		m_unkArray->release();
 	}
 	cocos2d::CCSprite::~CCSprite();
+	*/
 }
 
 BitmapFontCache* BitmapFontCache::sharedFontCache()
