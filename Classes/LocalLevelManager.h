@@ -13,10 +13,8 @@ public:
     void setup();
     std::string getMainLevelString(int level);
 
+    cocos2d::CCDictionary* m_mainLevels; // 0xf0
 	CC_SYNTHESIZE_READONLY(cocos2d::CCArray*, m_localLevels, LocalLevels); // 0xf4
-protected:
-    cocos2d::CCDictionary* m_mainLevels;
-    std::string m_temp;
 };
 
 #endif /* defined(__GeometryDash__LocalLevelManager__) */

@@ -25,6 +25,7 @@ public:
 };
 
 class GJFlyGroundLayer : public GJGroundLayer {
+public:
 	static GJFlyGroundLayer* create();
 	bool init();
 };

@@ -32,11 +32,14 @@ bool LevelPage::init(GJGameLevel* level)
     if (!CCLayer::init())
         return false;
     
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
     m_level = level;
     m_level->retain();
     
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    
+	// int userCoins = GameStatsManager::sharedState()->getStat("8");
+	int reqCoins = m_level->getRequiredCoins();
+
 	m_levelMenu = CCMenu::create();
 	this->addChild(m_levelMenu, -1);
 	m_levelMenu->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f + 60.0f));

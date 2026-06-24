@@ -121,3 +121,30 @@ void GJGroundLayer::deactivateGround()
 	}
 	m_isActive = false;
 }
+
+// GJFlyGroundLayer
+GJFlyGroundLayer* GJFlyGroundLayer::create()
+{
+	GJFlyGroundLayer *pRet = new GJFlyGroundLayer();
+	if (pRet && pRet->init())
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+}
+
+
+bool GJFlyGroundLayer::init()
+{
+	if (!CCLayer::init())
+		return false;
+
+	// unk_0x118 = 0;
+	return true;
+}

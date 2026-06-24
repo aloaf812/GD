@@ -314,6 +314,11 @@ bool PlayLayer::init(GJGameLevel* level)
 	m_gameLayer->addChild(m_rollGroundBottom, 4);
 	this->m_rollGroundBottom->setScaleY(1.0f);
 
+	m_flyGroundTop = GJFlyGroundLayer::create();
+	m_gameLayer->addChild(m_flyGroundTop, 5);
+	m_flyGroundBottom = GJFlyGroundLayer::create();
+	m_gameLayer->addChild(m_flyGroundBottom, 5);
+
 	// missing code
 
 	this->m_uiLayer = UILayer::create();
@@ -838,14 +843,14 @@ void PlayLayer::animateInFlyGround(bool instant)
 
 void PlayLayer::animateOutFlyGround(bool instant)
 {
-	m_flyGroundActive = false;
+	/*m_flyGroundActive = false;
 	CCPoint groundTopPos = ccp(0.0f, CCDirector::sharedDirector()->getScreenBottom() - 2.0f);
 	CCPoint groundBottomPos = ccp(0.0f, CCDirector::sharedDirector()->getScreenTop() + 2.0f);
 	m_flyGroundTop->deactivateGround();
 	m_flyGroundBottom->deactivateGround();
 
 	if (instant) {
-		animateOutRollGroundFinished();
+		animateOutFlyGroundFinished();
 		m_flyGroundTop->setPosition(groundTopPos);
 		m_flyGroundBottom->setPosition(groundBottomPos);
 	}
@@ -865,7 +870,7 @@ void PlayLayer::animateOutFlyGround(bool instant)
 
 		m_flyGroundTop->fadeOutGround(0.4f);
 		m_flyGroundBottom->fadeOutGround(0.4f);
-	}
+	}*/
 }
 
 void PlayLayer::animateOutFlyGroundFinished()

@@ -23,15 +23,18 @@ bool LocalLevelManager::init()
 {
 	m_saveFile = "CCLocalLevels.dat";
 	m_mainLevels = CCContentManager::sharedManager()->addDict("LevelData.plist", true);
+	m_mainLevels->retain();
     return true;
 }
 
 std::string LocalLevelManager::getMainLevelString(int level)
 {
-    return m_temp;
+	level = 1; // temporary fix because c++
+	return m_mainLevels->valueForKey(CCString::createWithFormat("%i", level)->getCString())->getCString();
 }
 
 void LocalLevelManager::setup()
 {
-
+	unk_0xec = true;
+	GManager::load();
 }
