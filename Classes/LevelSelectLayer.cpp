@@ -241,6 +241,8 @@ bool LevelSelectLayer::init(int page)
 	infoMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() - 20.0f,
 		CCDirector::sharedDirector()->getScreenTop() - 20.0f));
 
+	this->scheduleUpdate();
+
 	return true;
 }
 
@@ -329,4 +331,11 @@ void LevelSelectLayer::scrollLayerMoved(CCPoint pos)
 	gndColor.g = (GLubyte)((float)bgColor.g * 0.8f);
 	gndColor.b = (GLubyte)((float)bgColor.b * 0.8f);
 	m_ground->setColor(gndColor);
+}
+
+void LevelSelectLayer::update(float dt) {
+	if (m_scrollLayer && m_scrollLayer->getInternalLayer()) {
+		CCPoint pos = m_scrollLayer->getInternalLayer()->getPosition();
+		this->scrollLayerMoved(pos);
+	}
 }

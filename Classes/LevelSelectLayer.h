@@ -3,13 +3,14 @@
 #include "cocos2d.h"
 #include "BoomScrollLayer.h"
 
-class LevelSelectLayer : public cocos2d::CCLayer
+class LevelSelectLayer : public cocos2d::CCLayer, public BoomScrollLayerDelegate
 {
 public:
 	LevelSelectLayer();
 	static cocos2d::CCScene* scene(int page);
 	static LevelSelectLayer* create(int page);
 	bool init(int page);
+	void update(float dt);
 
 	void onDownload(cocos2d::CCObject* sender);
 	void onBack(cocos2d::CCObject* sender);
@@ -19,6 +20,9 @@ public:
 
 	virtual void keyBackClicked();
 	virtual void scrollLayerMoved(cocos2d::CCPoint pos);
+
+	// zyann addition
+	// void updateColorForPage();
 
 	cocos2d::ccColor3B colorForPage(int page);
 	cocos2d::ccColor3B getColorValue(int pageA, int pageB, float t);
