@@ -13,6 +13,10 @@
 #include "EndPortalObject.h"
 //#include "GameObject.h"
 
+enum class EnterEffect {
+	unk1 = 1
+};
+
 class PlayLayer : public cocos2d::CCLayer {
 public:
     PlayLayer();
@@ -112,6 +116,9 @@ public:
     LevelSettingsObject* m_levelSettings; // 0x124
 	EndPortalObject* m_endObject; // 0x128
 	cocos2d::CCArray* m_checkpoints; // 0x12c
+	cocos2d::CCArray* unk_0x130; // 0x130
+	cocos2d::CCArray* unk_0x134; // 0x134
+	EnterEffect m_activeEnterEffect; // 0x138
     cocos2d::CCSprite* m_background; // 0x13c
     
 	cocos2d::CCSprite* unk_0x140; // 0x140
@@ -128,8 +135,11 @@ public:
 	cocos2d::CCArray* m_sections; // 0x164
 	cocos2d::CCArray* m_hazardsArray; // 0x168
 	cocos2d::CCArray* m_activeObjects; // 0x16c
+	cocos2d::CCArray* unk_0x170; // 0x170
+	cocos2d::CCArray* unk_0x178; // 0x178
 	cocos2d::CCArray* m_stateObjects; // 0x17c
 	cocos2d::CCParticleSystemQuad* m_glitter; // 0x180
+	cocos2d::CCDictionary* unk_0x184; // 0x184
 	cocos2d::CCArray* m_effectObjects; // 0x188
 	// AudioEffectsLayer* m_audioEffectsLayer; // 0x18c
 	
@@ -145,11 +155,15 @@ public:
 	bool m_playerDead; // 0x1a8
 	bool field383_0x1a9; // 0x1a9
 	bool m_cameraMovingY; // 0x1ab
+
+	int unk_0x1b8; // 0x1b8
 	
+	float m_realLevelLength; // 0x1c0;
 	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
 	bool m_showingHint; // 0x1d0
 	
 	cocos2d::CCDictionary* m_particlesDictionary; // 0x1dc
+	cocos2d::CCDictionary* unk_0x1e0; // 0x1e0
 
 	cocos2d::CCNode* field_0x1e4;
 	cocos2d::CCSprite* m_objColorRef;

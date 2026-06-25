@@ -44,26 +44,19 @@ bool LoadingLayer::init() {
 	srand(time(0));
 
     GameSoundManager::sharedManager()->setup();
-
-    GameManager* pGameManager = GameManager::sharedState();
-	pGameManager->setup();
-	
+	GameManager::sharedState()->setup();
 	LocalLevelManager::sharedState()->setup();
 
-    CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-    pTextureCache->addImage("GJ_LaunchSheet.png");
+	CCTextureCache::sharedTextureCache()->addImage("GJ_LaunchSheet.png");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("GJ_LaunchSheet.plist");
 
-    CCSpriteFrameCache* pSpriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-    pSpriteFrameCache->addSpriteFramesWithFile("GJ_LaunchSheet.plist");
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSize winSize = pDirector->getWinSize();
-
-	CCSprite* bgSprite = CCSprite::create(pGameManager->getBGTexture(1));
+	CCSprite* bgSprite = CCSprite::create(GameManager::sharedState()->getBGTexture(1));
     this->addChild(bgSprite);
     
     bgSprite->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
-	bgSprite->setScale(pDirector->getScreenScaleFactorMax());
+	bgSprite->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
     bgSprite->setColor(ccc3(0, 102, 255));
 
     CCSprite* gjLogo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
@@ -109,9 +102,8 @@ bool LoadingLayer::init() {
 	m_sliderGrooveHeight = 8.0f;
 	m_sliderGrooveXPos = sliderGroove->getTextureRect().size.width - 4.0f;
     
-    CCTexture2D* tex = m_sliderBar->getTexture();
     ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
-    tex->setTexParameters(&params);
+	m_sliderBar->getTexture()->setTexParameters(&params);
     
     sliderGroove->addChild(m_sliderBar, -1);
     m_sliderBar->setAnchorPoint(CCPoint(0.0f, 0.0f));
@@ -121,13 +113,10 @@ bool LoadingLayer::init() {
     
     this->updateProgress(0);
     
-    CCActionManager* pActionManager = pDirector->getActionManager();
-    CCDelayTime* delayTime = CCDelayTime::create(0.0f);
-    CCCallFunc* callFunc = CCCallFunc::create(this, callfunc_selector(LoadingLayer::loadAssets));
-    CCSequence* sequence = CCSequence::create(delayTime, callFunc, NULL);
-    pActionManager->addAction(sequence, this, false);
+	CCSequence* sequence = CCSequence::create(CCDelayTime::create(0.0f), CCCallFunc::create(this, callfunc_selector(LoadingLayer::loadAssets)), NULL);
+	CCDirector::sharedDirector()->getActionManager()->addAction(sequence, this, false);
 
-	if (pGameManager->getGameCenterEnabled())
+	if (GameManager::sharedState()->getGameCenterEnabled())
         PlatformToolbox::activateGameCenter();
 
     return true;

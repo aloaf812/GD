@@ -325,7 +325,7 @@ void PlayerObject::resetPlayerIcon()
 {
 	this->runRotateAction();
 	
-	m_iconSprite->setScale(1.0f);
+	m_iconSprite->setScale(1.0f);	
 	m_iconSprite->setPosition(CCPointZero);
 	m_vehicleSprite->setVisible(false);
 	m_vehicleSpriteThird->setVisible(false);
@@ -424,14 +424,14 @@ void PlayerObject::spawnPortalCircle(ccColor3B color, float size)
 
 }
 
-void PlayerObject::setColor(ccColor3B color)
+void PlayerObject::setColor(const ccColor3B& color)
 {
 	CCSprite::setColor(color);
 	m_iconSprite->setColor(color);
 	m_vehicleSprite->setColor(color);
 }
 
-void PlayerObject::setSecondColor(ccColor3B color)
+void PlayerObject::setSecondColor(const ccColor3B& color)
 {
 	m_iconSpriteSecondary->setColor(color);
 	m_vehicleSpriteSecondary->setColor(color);

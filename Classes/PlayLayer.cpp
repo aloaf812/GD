@@ -150,60 +150,73 @@ bool PlayLayer::init(GJGameLevel* level)
 {
     if (!CCLayer::init())
         return false;
-	
-	GameManager* pGameManager = GameManager::sharedState();
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
 
-	// add missing code
-
-	m_startPos = ccp(0.0f, 105.0f);
-
-	// missing code
-
-	pGameManager->setEditMode(false);
-	pGameManager->setPlayLayer(this);
-	pGameManager->setWasHigh(false);
+	bool recordGP = GameManager::sharedState()->getRecordGameplay();
+	m_testMode = false;
 
 #pragma region Variables
+	float screenRight = CCDirector::sharedDirector()->getScreenRight();
+	float screenLeft = CCDirector::sharedDirector()->getScreenLeft();
+	float screenTop = CCDirector::sharedDirector()->getScreenTop();
+	float screenBottom = CCDirector::sharedDirector()->getScreenBottom();
+	float screenMiddle = screenRight * 0.5f;
+
+	m_playbackMode = false;
+	m_localLevel = level->getLevelType() == GJLevelType::LocalLevel;
+	m_activeEnterEffect = EnterEffect::unk1;
+	m_startPos = ccp(0.0f, 105.0f);
+	m_attempts = 0;  
+	unk_0x220 = 0.0;
+	m_jumps = 0;
+	m_realLevelLength = 0.0f;
+	m_clkTimer = 0.0f;
+	m_endTriggered = false;
+	m_isResetting = true;
+
+	GameManager::sharedState()->setEditMode(false);
+	GameManager::sharedState()->setPlayLayer(this);
+	GameManager::sharedState()->setWasHigh(false);
+
 	m_level = level;
 	level->retain();
 
-	this->m_particlesDictionary = CCDictionary::create();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+	m_particlesDictionary = CCDictionary::create();
 	m_particlesDictionary->retain();
 
-	/*this->field_0x1e0 = CCDictionary::create();
-	field_0x1e0->retain();*/
+	unk_0x1e0 = CCDictionary::create();
+	unk_0x1e0->retain();
 
-	this->m_gameLayer = CCLayer::create();
+	m_gameLayer = CCLayer::create();
 	this->addChild(m_gameLayer, 1);
 
-	/*this->field_0x184 = CCDictionary::create();
-	field_0x184->retain();
+	unk_0x184 = CCDictionary::create();
+	unk_0x184->retain();
 
-	this->field_0x12c = CCArray::create();
-	field_0x12c->retain();
+	m_checkpoints = CCArray::create();
+	m_checkpoints->retain();
 
-	this->field_0x130 = CCArray::create();
-	field_0x130->retain();
+	unk_0x130 = CCArray::create();
+	unk_0x130->retain();
+	
+	unk_0x134 = CCArray::create();
+	unk_0x134->retain();
 
-	this->field_0x134 = CCArray::create();
-	field_0x134->retain();
+	m_effectObjects = CCArray::create();
+	m_effectObjects->retain();
 
-	this->field_0x188 = CCArray::create()
-	field_0x188->retain();*/
-
-	this->m_hazardsArray = CCArray::create();
+	m_hazardsArray = CCArray::create();
 	m_hazardsArray->retain();
 
-	this->m_activeObjects = CCArray::create();
+	m_activeObjects = CCArray::create();
 	m_activeObjects->retain();
 
-	/*this->field_0x178 = CCArray::create();
-	field_0x178->retain();
+	unk_0x178 = CCArray::create();
+	unk_0x178->retain();
 
-	this->field_0x170 = CCArray::create();
-	field_0x170->retain();*/
+	unk_0x170 = CCArray::create();
+	unk_0x170->retain();
 
 	this->m_stateObjects = CCArray::create();
 	m_stateObjects->retain();
@@ -234,39 +247,37 @@ bool PlayLayer::init(GJGameLevel* level)
 
 	CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
 	CCTexture2D* texture = pTextureCache->addImage("GJ_GameSheet.png");
-	this->m_batchNode = CCSpriteBatchNode::createWithTexture(texture, 29);
+	m_batchNode = CCSpriteBatchNode::createWithTexture(texture, 29);
 	m_gameLayer->addChild(m_batchNode, 1);
 
-	this->m_batchNodeAdd = CCSpriteBatchNode::createWithTexture(texture, 29);
+	m_batchNodeAdd = CCSpriteBatchNode::createWithTexture(texture, 29);
+	ccBlendFunc blendFunc = { GL_SRC_ALPHA, GL_ONE };
+	m_batchNodeAdd->setBlendFunc(blendFunc);
 	m_gameLayer->addChild(m_batchNodeAdd, 0);
 
-	// quite some more missing code
+	m_batchNodeBottom = CCSpriteBatchNode::createWithTexture(texture, 29);
+	m_gameLayer->addChild(m_batchNodeBottom, -1);
 
+	m_flyGroundTop = GJFlyGroundLayer::create();
+	m_gameLayer->addChild(m_flyGroundTop, 5);
+	m_flyGroundBottom = GJFlyGroundLayer::create();
+	m_gameLayer->addChild(m_flyGroundBottom, 5);
+
+	unk_0x1b8 = roundf(CCRANDOM_0_1()) + 1;
 	
 	this->m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
 	m_glitter->setPositionType(tCCPositionType::kCCPositionTypeFree);
 	m_gameLayer->addChild(m_glitter, 0);
-	float scaleFactorW = pDirector->getScreenScaleFactorW();
-	float scaleFactorH = pDirector->getScreenScaleFactorH();
-	CCPoint glitterPos = CCPoint((scaleFactorW * 480.0) / 1.8, (scaleFactorH * 320.0) * 0.5);
-	m_glitter->setPosVar(glitterPos);
+	m_glitter->setPosVar(CCPoint((SCREEN_SCALE_F_W * 480.0f) / 1.8f, (SCREEN_SCALE_F_H * 320.0f) * 0.5f));
 	m_glitter->stopSystem();
 
 #pragma region Player
 
-	int pFrame = pGameManager->getPlayerFrame();
-	int pShip = pGameManager->getPlayerShip();
-	this->m_player = PlayerObject::create(pFrame, pShip, nullptr);
-
-	int pColor = pGameManager->getPlayerColor();
-	ccColor3B primaryColor = pGameManager->colorForIdx(pColor);
-	m_player->setColor(primaryColor);
-
-	int pColor2 = pGameManager->getPlayerColor2();
-	ccColor3B secondColor = pGameManager->colorForIdx(pColor2);
-	m_player->setSecondColor(secondColor);
+	this->m_player = PlayerObject::create(GameManager::sharedState()->getPlayerFrame(),
+		GameManager::sharedState()->getPlayerShip(), nullptr);
+	m_player->setColor(GameManager::colorForIdx(GameManager::sharedState()->getPlayerColor()));
+	m_player->setSecondColor(GameManager::colorForIdx(GameManager::sharedState()->getPlayerColor2()));
 	m_player->updateGlowColor();
-
 	m_batchNode->addChild(m_player, 10);
 
 #pragma endregion
@@ -282,30 +293,19 @@ bool PlayLayer::init(GJGameLevel* level)
 		m_levelSettings->retain();
 	}
 
-	pGameManager = GameManager::sharedState();
-	char const* bgSpriteFile = pGameManager->getBGTexture(m_levelSettings->getBGIdx());
+	char const* bgSpriteFile = GameManager::sharedState()->getBGTexture(m_levelSettings->getBGIdx());
 	this->m_background = CCSprite::create(bgSpriteFile);
 	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 	m_background->getTexture()->setTexParameters(&texParams);
 	this->addChild(this->m_background, -1);
 
 	m_background->setAnchorPoint(ccp(0.0f, 0.0f));
-	m_background->setScale(pDirector->getScreenScaleFactorMax());
+	m_background->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
 	m_background->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
 	m_background->setColor(ccc3(40, 255, 125));
 	// some weird math goes on in the midde of this...
 	// m_background->setTextureRect(m_background->getUserData());
-	
-	/*this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
-	this->addChild(m_ground, 4);
-	this->m_ground2 = GJGroundLayer::create(m_levelSettings->getGIdx());
-	this->addChild(m_ground2, 4);
-	this->m_ground3 = GJGroundLayer::create(m_levelSettings->getGIdx());
-	this->addChild(m_ground3, 4);
-	this->m_ground3->setScaleY(1.0f);*/
 
-
-	// temporary fix
 	this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
 	m_gameLayer->addChild(m_ground, 4);
 	this->m_rollGroundTop = GJGroundLayer::create(m_levelSettings->getGIdx());
@@ -313,11 +313,6 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->m_rollGroundBottom = GJGroundLayer::create(m_levelSettings->getGIdx());
 	m_gameLayer->addChild(m_rollGroundBottom, 4);
 	this->m_rollGroundBottom->setScaleY(1.0f);
-
-	m_flyGroundTop = GJFlyGroundLayer::create();
-	m_gameLayer->addChild(m_flyGroundTop, 5);
-	m_flyGroundBottom = GJFlyGroundLayer::create();
-	m_gameLayer->addChild(m_flyGroundBottom, 5);
 
 	// missing code
 
@@ -392,7 +387,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->updateCamera(0.0f);
 	//this->toggleAudioRain(false);
 	this->toggleGlitter(false);
-	pGameManager->resetMusic();
+	GameManager::sharedState()->resetMusic();
     return true;
 }
 

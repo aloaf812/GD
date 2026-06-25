@@ -54,6 +54,8 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int offset, bool looped)
     if (!CCLayer::init())
         return false;
     
+	m_actualPages = pages; // temporary fix boomscrolllayer SUCKS
+
 	m_internalLayer = ExtendedLayer::create();
 	this->addChild(m_internalLayer);
 
@@ -71,7 +73,7 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int offset, bool looped)
 	setScrollArea(CCRectMake(0.0f, 0.0f, WIN_SIZE.width, WIN_SIZE.height));
 
 	// variables
-	m_actualPages = pages;
+	// m_actualPages = pages;
 	m_currentScreen = 0;
 	m_pagesWidthOffset = offset;
 	m_minTouchSpeed = 0.3f;
@@ -128,9 +130,9 @@ void BoomScrollLayer::updatePages()
 {
 	for (int i = 0; i < m_actualPages->count(); ++i) {
 		CCNode* page = (CCNode*)m_actualPages->objectAtIndex(i);
-		page->setAnchorPoint(ccp(0.0f, 0.0f));
+		page->setAnchorPoint(ccp(0,0));
 		page->setContentSize(WIN_SIZE);
-		page->setPosition(ccp(getContentSize().width - getPagesWidthOffset(), 0.0f));
+		page->setPosition(ccp(getContentSize().width - getPagesWidthOffset(), 0));
 		
 		if (!page->getParent())
 			m_internalLayer->addChild(page);
@@ -206,9 +208,8 @@ void BoomScrollLayer::instantMoveToPage(int page)
 void BoomScrollLayer::moveToPageEnded()
 {
 	// THIS part isn't accurate just THIS part specifically
-	if ((m_animatingToPage != m_currentScreen) && (m_delegate)) {
+	if ((m_animatingToPage != m_currentScreen) && m_delegate)
 		m_delegate->scrollLayerScrollingStarted(this);
-	}
 
 	m_internalLayer->stopActionByTag(2);
 	int pageNum = pageNumberForPosition(m_internalLayer->getPosition());

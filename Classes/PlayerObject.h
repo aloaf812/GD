@@ -63,8 +63,8 @@ public:
 
 	bool levelFlipping();
 
-	void setColor(cocos2d::ccColor3B color);
-	void setSecondColor(cocos2d::ccColor3B color);
+	void setColor(const cocos2d::ccColor3B& color);
+	void setSecondColor(const cocos2d::ccColor3B& color);
 	void setVisible(bool visible);
 	void setScale(float scale);
 	void setScaleX(float scale);

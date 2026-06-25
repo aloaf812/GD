@@ -52,6 +52,7 @@ bool MenuGameLayer::init()
 	m_bgSprite->setColor(ccc3(0, 102, 255));	
     m_bgSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2, m_bgSprite->getContentSize().height));
     
+#pragma region Ground
     m_groundSprite = CCSprite::create(pGameManager->getGTexture(1));
     m_groundSprite->getTexture()->setTexParameters(&texParams);
     m_groundLayer->addChild(m_groundSprite, 2);
@@ -86,6 +87,7 @@ bool MenuGameLayer::init()
 	ccBlendFunc sBlendFunc = { GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA };
 	leftShadow->setBlendFunc(sBlendFunc);
     rightShadow->setBlendFunc(sBlendFunc);
+#pragma endregion
 
 #pragma region Player
 	float cube = ceilf(CCRANDOM_0_1() * 37.0);

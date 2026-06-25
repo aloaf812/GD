@@ -32,12 +32,9 @@ bool GJGroundLayer::init(int gID)
 	if (!CCLayer::init())
     	return false;
 
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSize winSize = pDirector->getWinSize();
-    
-    GameManager* pGameManager = GameManager::sharedState();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-   	m_groundSprite = CCSprite::create(pGameManager->getGTexture(gID));
+	m_groundSprite = CCSprite::create(GameManager::sharedState()->getGTexture(gID));
     
     ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
     m_groundSprite->getTexture()->setTexParameters(&texParams);
@@ -60,13 +57,13 @@ bool GJGroundLayer::init(int gID)
     
     CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
-    leftShadow->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, 90.0f));
+	leftShadow->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() - 1.0f, 90.0f));
     this->addChild(leftShadow, 3);
     leftShadow->setTag(0);
     
     CCSprite* rightShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     rightShadow->setAnchorPoint(ccp(1.0f, 1.0f));
-    rightShadow->setPosition(ccp(pDirector->getScreenRight() + 1.0f, 90.0f));
+	rightShadow->setPosition(ccp(CCDirector::sharedDirector()->getScreenRight() + 1.0f, 90.0f));
     this->addChild(rightShadow, 3);
     rightShadow->setFlipX(true);
 	rightShadow->setTag(0);
