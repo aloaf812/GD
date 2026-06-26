@@ -1,3 +1,6 @@
+// decompiled by ItzZyann
+// from GD 1.71 binary
+
 #include "TextArea.h"
 USING_NS_CC;
 
@@ -85,9 +88,12 @@ void TextArea::setString(char const* text)
 		m_lineSpace
 		);
 
-	this->setContentSize(m_label->getContentSize());
+	// FIX: MultilineBitmapFont lines are laid out starting at y=0 going downward,
+	// so offset the label up by m_textHeight to align top of text with TextArea origin.
+	// Also set content size from actual text dimensions instead of the sprite default (0,0).
+	this->setContentSize(CCSize(m_width, m_label->m_textHeight + m_label->m_sizeHeight));
 	this->addChild(m_label, 1);
-	m_label->setPosition(m_label->getPosition());
+	m_label->setPosition(ccp(m_width * 0.5f, m_label->m_textHeight));
 }
 
 void TextArea::hideAll()

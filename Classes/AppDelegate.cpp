@@ -22,6 +22,10 @@ AppDelegate::~AppDelegate()
 AppDelegate* AppDelegate::get() { return static_cast<AppDelegate*>(sharedApplication()); }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+	// this fix the gradient bg
+	// being wacky
+	CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
+
 	CCDirector* pDirector = CCDirector::sharedDirector();
 	CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 

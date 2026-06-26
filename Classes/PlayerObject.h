@@ -175,6 +175,10 @@ public:
 	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor1, GlowColor1); // 0x3ba
 	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor2, GlowColor2); // 0x3bd
 
+	void updatePlayerFrame(int) { };
+	void updatePlayerRollFrame(int) { };
+	void updatePlayerBirdFrame(int) { };
+	bool canJump() { return true; }
 };
 
 #endif /* defined(__GeometryDash__PlayerObject__) */

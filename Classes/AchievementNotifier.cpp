@@ -1,3 +1,6 @@
+// decompiled by ItzZyann
+// from GD 1.71 binary
+
 #include "AchievementNotifier.h"
 #include "AchievementBar.h"
 #include "GameSoundManager.h"

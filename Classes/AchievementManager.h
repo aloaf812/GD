@@ -1,3 +1,6 @@
+// decompiled by ItzZyann
+// from GD 1.71 binary
+
 #ifndef _ACHIEVEMENT_MANAGER_H_
 #define _ACHIEVEMENT_MANAGER_H_
 

@@ -45,18 +45,18 @@ static CCArray* splitString(std::string input) // 0x0018c210 (for some reason do
 
 PlayLayer* PlayLayer::create(GJGameLevel* level)
 {
-    PlayLayer* pRet = new PlayLayer();
-    if (pRet && pRet->init(level))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = NULL;
-        return NULL;
-    }
+	PlayLayer* pRet = new PlayLayer();
+	if (pRet && pRet->init(level))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
 }
 
 PlayLayer::PlayLayer()
@@ -67,13 +67,13 @@ PlayLayer::PlayLayer()
 
 void PlayLayer::onQuit()
 {
-    this->stopAllActions();
-    this->unscheduleAllSelectors();
-    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-    SAE->stopBackgroundMusic();
-    GameManager* pGameManager = GameManager::sharedState();
+	this->stopAllActions();
+	this->unscheduleAllSelectors();
+	SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
+	SAE->stopBackgroundMusic();
+	GameManager* pGameManager = GameManager::sharedState();
 	pGameManager->returnToLastScene(PLAY_LAYER->getLevel());
-    pGameManager->fadeInMusic("menuLoop.mp3");
+	pGameManager->fadeInMusic("menuLoop.mp3");
 }
 
 void PlayLayer::onExit()
@@ -81,7 +81,7 @@ void PlayLayer::onExit()
 	AppDelegate* AppDel = AppDelegate::get();
 	if (!AppDel->getPaused())
 		AppDel->setPaused(true);
-		this->CCLayer::onExit();
+	this->CCLayer::onExit();
 }
 
 void PlayLayer::onEnterTransitionDidFinish()
@@ -92,13 +92,13 @@ void PlayLayer::onEnterTransitionDidFinish()
 
 CCScene* PlayLayer::scene(GJGameLevel* level)
 {
-    CCScene *scene = CCScene::create();
-    AppDelegate* pApp = AppDelegate::get();
+	CCScene *scene = CCScene::create();
+	AppDelegate* pApp = AppDelegate::get();
 	pApp->setScenePointer(scene);
-    PlayLayer* layer = PlayLayer::create(level);
-    scene->addChild(layer);
-    // scene->setObjType(5);
-    return scene;
+	PlayLayer* layer = PlayLayer::create(level);
+	scene->addChild(layer);
+	// scene->setObjType(5);
+	return scene;
 }
 
 void PlayLayer::createObjectsFromSetup(std::string setup)
@@ -114,8 +114,8 @@ void PlayLayer::createObjectsFromSetup(std::string setup)
 
 
 	/*m_levelSettings->updateColors(
-		m_player->getGlowColor1(),
-		m_player->getGlowColor2());*/
+	m_player->getGlowColor1(),
+	m_player->getGlowColor2());*/
 
 	m_tintObjectsUseBlend = m_levelSettings->getTintObjectsUseBlend();
 
@@ -127,7 +127,7 @@ void PlayLayer::createObjectsFromSetup(std::string setup)
 			static_cast<CCString*>(parts->objectAtIndex(i))->getCString();
 
 		GameObject* obj = GameObject::objectFromString(objStr);
-		
+
 		if (obj)
 		{
 			// obj->setVisible(false);
@@ -136,7 +136,7 @@ void PlayLayer::createObjectsFromSetup(std::string setup)
 
 
 			//obj->setObjectParent(m_batchNode);
-			
+
 			obj->customSetup();
 			this->addToSection(obj);
 			m_batchNode->addChild(obj);
@@ -148,9 +148,9 @@ void PlayLayer::createObjectsFromSetup(std::string setup)
 
 bool PlayLayer::init(GJGameLevel* level)
 {
-    if (!CCLayer::init())
-        return false;
-	
+	if (!CCLayer::init())
+		return false;
+
 	GameManager* pGameManager = GameManager::sharedState();
 	CCDirector* pDirector = CCDirector::sharedDirector();
 	CCSize winSize = pDirector->getWinSize();
@@ -242,7 +242,7 @@ bool PlayLayer::init(GJGameLevel* level)
 
 	// quite some more missing code
 
-	
+
 	this->m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
 	m_glitter->setPositionType(tCCPositionType::kCCPositionTypeFree);
 	m_gameLayer->addChild(m_glitter, 0);
@@ -295,7 +295,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	m_background->setColor(ccc3(40, 255, 125));
 	// some weird math goes on in the midde of this...
 	// m_background->setTextureRect(m_background->getUserData());
-	
+
 	/*this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
 	this->addChild(m_ground, 4);
 	this->m_ground2 = GJGroundLayer::create(m_levelSettings->getGIdx());
@@ -349,7 +349,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	field383_0x1a9 = true;
 	this->updateCamera(0.0f);
 	m_attemptLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 125.0f));
-	
+
 	this->m_progressBar = CCSprite::create("slidergroove2.png");
 	this->addChild(m_progressBar, 10);
 	this->m_progressFill = CCSprite::create("sliderBar2.png");
@@ -393,7 +393,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	//this->toggleAudioRain(false);
 	this->toggleGlitter(false);
 	pGameManager->resetMusic();
-    return true;
+	return true;
 }
 
 void PlayLayer::resetLevel()
@@ -446,7 +446,7 @@ void PlayLayer::resetLevel()
 	m_realPlayerPos = m_player->getPosition();
 	this->updateCamera(0.0f);
 	this->updateVisibility();
-    updateAttempts();
+	updateAttempts();
 	m_isResetting = false;
 }
 
@@ -470,7 +470,7 @@ void PlayLayer::fullReset()
 
 void PlayLayer::startGame()
 {
-    scheduleUpdate();
+	scheduleUpdate();
 	m_cleanReset = true;
 	m_player->setVisible(true);
 	this->resetLevel();
@@ -500,14 +500,14 @@ void PlayLayer::update(float dt)
 	if (!m_player->getIsLocked())
 		m_player->setPosition(m_realPlayerPos);
 
-		m_player->setTouchedRing(nullptr);
+	m_player->setTouchedRing(nullptr);
 
 	for (int i = 0; i > m_stateObjects->count(); ++i)
 		((GameObject*)(m_stateObjects->objectAtIndex(i)))->setStateVar(false);
 
 	for (int i = 0; i > m_activeObjects->count(); ++i)
 		m_activeObjects->objectAtIndex(i)->update(step);
-	
+
 	m_player->update(step);
 	this->checkCollisions(step / 4);
 
@@ -587,12 +587,12 @@ void PlayLayer::updateCamera(float dt)
 
 void PlayLayer::updateProgressbar()
 {
-    
+
 }
 
 void PlayLayer::updateEffectPositions()
 {
-    
+
 }
 
 void PlayLayer::updateLevelColors()
@@ -606,7 +606,7 @@ void PlayLayer::updateLevelColors()
 
 void PlayLayer::tintBackground(ccColor3B color, float duration)
 {
-    m_background->setColor(color);
+	m_background->setColor(color);
 }
 
 void PlayLayer::tintGround(ccColor3B color, float duration)
@@ -625,7 +625,7 @@ void PlayLayer::tintGround(ccColor3B color, float duration)
 
 void PlayLayer::tintLine(ccColor3B color, float duration)
 {
-    m_ground->getLine()->setColor(color);
+	m_ground->getLine()->setColor(color);
 }
 
 void PlayLayer::tintObjects(ccColor3B color, float duration)
@@ -689,7 +689,7 @@ void PlayLayer::togglePracticeMode(bool practice)
 		return;
 	}
 	//while (int idx = m_checkpoints->count(), idx != 0) {
-		// removeLastCheckpoint();
+	// removeLastCheckpoint();
 	//}
 	this->m_cleanReset = true;
 	resetLevel();
@@ -776,9 +776,9 @@ void PlayLayer::switchToFlyMode(GameObject* obj, bool param_1, bool param_2)
 	}
 
 	/*if (param_2)
-		m_player->toggleBirdMode(true);
+	m_player->toggleBirdMode(true);
 	else
-		m_player->toggleFlyMode(true);*/
+	m_player->toggleFlyMode(true);*/
 
 	this->toggleGlitter(true);
 
@@ -850,26 +850,26 @@ void PlayLayer::animateOutFlyGround(bool instant)
 	m_flyGroundBottom->deactivateGround();
 
 	if (instant) {
-		animateOutFlyGroundFinished();
-		m_flyGroundTop->setPosition(groundTopPos);
-		m_flyGroundBottom->setPosition(groundBottomPos);
+	animateOutFlyGroundFinished();
+	m_flyGroundTop->setPosition(groundTopPos);
+	m_flyGroundBottom->setPosition(groundBottomPos);
 	}
 	else {
-		CCMoveTo* moveAction = CCMoveTo::create(0.4f, groundBottomPos);
-		CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 1.5f);
+	CCMoveTo* moveAction = CCMoveTo::create(0.4f, groundBottomPos);
+	CCEaseInOut* easeMove = CCEaseInOut::create(moveAction, 1.5f);
 
-		CCMoveTo* moveAction2 = CCMoveTo::create(0.4f, groundBottomPos);
-		CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 1.5f);
+	CCMoveTo* moveAction2 = CCMoveTo::create(0.4f, groundBottomPos);
+	CCEaseInOut* easeMove2 = CCEaseInOut::create(moveAction2, 1.5f);
 
-		CCDelayTime* delay = CCDelayTime::create(0.6f);
-		CCSequence* doneSequence = CCSequence::create(delay, CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutFlyGroundFinished)), nullptr);
+	CCDelayTime* delay = CCDelayTime::create(0.6f);
+	CCSequence* doneSequence = CCSequence::create(delay, CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutFlyGroundFinished)), nullptr);
 
-		m_flyGroundTop->runAction(easeMove);
-		m_flyGroundBottom->runAction(easeMove2);
-		m_flyGroundBottom->runAction(doneSequence);
+	m_flyGroundTop->runAction(easeMove);
+	m_flyGroundBottom->runAction(easeMove2);
+	m_flyGroundBottom->runAction(doneSequence);
 
-		m_flyGroundTop->fadeOutGround(0.4f);
-		m_flyGroundBottom->fadeOutGround(0.4f);
+	m_flyGroundTop->fadeOutGround(0.4f);
+	m_flyGroundBottom->fadeOutGround(0.4f);
 	}*/
 }
 
@@ -935,7 +935,7 @@ void PlayLayer::animateOutRollGround(bool instant)
 
 		CCDelayTime* delay = CCDelayTime::create(0.6f);
 		CCSequence* doneSequence = CCSequence::create(delay, CCCallFunc::create(this, callfunc_selector(PlayLayer::animateOutRollGroundFinished)), nullptr);
-		
+
 		m_rollGroundTop->runAction(easeMove);
 		m_rollGroundBottom->runAction(easeMove2);
 		m_rollGroundBottom->runAction(doneSequence);
@@ -1008,9 +1008,9 @@ void PlayLayer::checkCollisions(float dt)
 				if ((currentObject->getIsDisabled()) || (currentObject->getHasBeenActivated()))
 					return;
 
-				if (!(m_player->getObjectRect().intersectsRect(currentObject->getObjectRect()))) 
+				if (!(m_player->getObjectRect().intersectsRect(currentObject->getObjectRect())))
 					return;
-					// || ((0.0f < currentObject->getRadius() && (!(objectIntersectsCircle(m_player, currentObject))))
+				// || ((0.0f < currentObject->getRadius() && (!(objectIntersectsCircle(m_player, currentObject))))
 
 				switch (currentObject->getType()) {
 				case InvertGravityPortal:
@@ -1111,11 +1111,11 @@ void PlayLayer::destroyPlayer()
 
 		if (!m_showingHint && (m_level->getLevelID() == 3) && !m_player->getHasRingJumped() && m_attempts > 1)
 			this->showHint();
-		
+
 		// bVar1 = true;
 		m_playerDead = true;
 		m_player->playerDestroyed();
-		
+
 		// more left to implement
 	}
 }
@@ -1161,7 +1161,7 @@ std::string PlayLayer::getParticleKey(int objType, char const* file, int zOrder,
 
 /*std::string PlayLayer::getParticleKey2(std::string pKey)
 {
-	return CCString::createWithFormat("%s%s", pKey, )->getCString();
+return CCString::createWithFormat("%s%s", pKey, )->getCString();
 }*/
 
 void PlayLayer::createParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)
@@ -1247,7 +1247,7 @@ bool PlayLayer::hasUniqueCoin(GameObject* obj)
 }
 
 void PlayLayer::incrementJumps()
-{ 
+{
 	m_didJump = true;
 	GameStatsManager::sharedState()->incrementStat("1");
 	m_level->setJumps(m_level->getJumps() + 1);

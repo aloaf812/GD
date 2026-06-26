@@ -1,4 +1,7 @@
-﻿#include "AchievementBar.h"
+﻿// decompiled by ItzZyann
+// from GD 1.71 binary
+
+#include "AchievementBar.h"
 #include "AchievementNotifier.h"
 #include "GameManager.h"
 #include "SimplePlayer.h"

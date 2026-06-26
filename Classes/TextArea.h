@@ -1,3 +1,6 @@
+// decompiled by ItzZyann
+// from GD 1.71 binary
+
 #ifndef __TEXTAREA_H__
 #define __TEXTAREA_H__
 

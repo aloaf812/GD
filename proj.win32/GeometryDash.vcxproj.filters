@@ -210,6 +210,9 @@
     <ClCompile Include="..\Classes\RT_COCOS\CCCircleWave.cpp">
       <Filter>Classes\RT_COCOS</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ButtonSprite.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -412,6 +415,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\RT_COCOS\CCCircleWave.h">
       <Filter>Classes\RT_COCOS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ButtonSprite.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RingObject.h">
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

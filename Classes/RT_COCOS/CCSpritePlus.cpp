@@ -2,94 +2,109 @@
 #include "CCSpritePlus.h"
 USING_NS_CC;
 
+// FIX: there was no constructor here at all, so m_followers, m_followingSprite,
+// and m_hasFollower were left as uninitialized heap garbage on every
+// CCSpritePlus-derived object (GameObject, PlayerObject, etc). m_hasFollower
+// being garbage could read as "true", causing setScale() below to dereference
+// the also-garbage m_followers pointer -> CCArray::count() access violation.
+// This is the root cause of the crash that appears once a PlayerObject is
+// constructed (e.g. via MenuGameLayer), since GameObject::init() calls
+// setScale(1.0f) during construction, which dispatches here.
+CCSpritePlus::CCSpritePlus()
+	: m_followers(nullptr)
+	, m_followingSprite(nullptr)
+	, m_hasFollower(false)
+{
+}
+
 void CCSpritePlus::addFollower(cocos2d::CCNode * sprite){
-    m_hasFollower = true;
-    if (m_followers == nullptr) {
-        m_followers = cocos2d::CCArray::create();
-        m_followers->retain();
-    }
-    m_followers->addObject(sprite);
+	m_hasFollower = true;
+	if (m_followers == nullptr) {
+		m_followers = cocos2d::CCArray::create();
+		m_followers->retain();
+	}
+	m_followers->addObject(sprite);
 }
 
 
 CCSpritePlus* CCSpritePlus::createWithSpriteFrame(cocos2d::CCSpriteFrame* frame){
-    CCSpritePlus* sprite = new CCSpritePlus;
-    if ((frame != nullptr) && (sprite->initWithSpriteFrame(frame))){
-        sprite->autorelease();
-        return sprite;
-    }
-    CC_SAFE_DELETE(sprite);
-    return nullptr;
+	CCSpritePlus* sprite = new CCSpritePlus;
+	if ((frame != nullptr) && (sprite->initWithSpriteFrame(frame))){
+		sprite->autorelease();
+		return sprite;
+	}
+	CC_SAFE_DELETE(sprite);
+	return nullptr;
 }
 
 CCSpritePlus* CCSpritePlus::createWithSpriteFrameName(const char* name){
-    return createWithSpriteFrame(cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name));
+	return createWithSpriteFrame(cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name));
 }
 
 void CCSpritePlus::followSprite(CCSpritePlus *sprite){
-    m_followingSprite = sprite;
-    sprite->addFollower(this);
+	m_followingSprite = sprite;
+	sprite->addFollower(this);
 }
 
 /* This is where the fun begins... */
 
 
-cocos2d::CCSprite * CCSpritePlus::getFollower(){   
-    if (m_hasFollower != false){
-        return reinterpret_cast<cocos2d::CCSprite *>(m_followers->objectAtIndex(0));
-    }
-    return nullptr;
+cocos2d::CCSprite * CCSpritePlus::getFollower(){
+	if (m_hasFollower != false){
+		return reinterpret_cast<cocos2d::CCSprite *>(m_followers->objectAtIndex(0));
+	}
+	return nullptr;
 }
 
 
 bool CCSpritePlus::initWithSpriteFrameName(char const* name){
-    // m_eObjType = 13;
-    return cocos2d::CCSprite::initWithSpriteFrameName(name);
+	// m_eObjType = 13;
+	return cocos2d::CCSprite::initWithSpriteFrameName(name);
 }
 
 bool CCSpritePlus::initWithTexture(cocos2d::CCTexture2D *texture){
-    // m_eObjType = 13;
-    return cocos2d::CCSprite::initWithTexture(texture);
+	// m_eObjType = 13;
+	return cocos2d::CCSprite::initWithTexture(texture);
 }
 
 void CCSpritePlus::removeFollower(CCNode *sprite){
-    if (m_followers != nullptr) {
-        m_followers->removeObject(sprite,true);
-        if (m_followers->count() == 0) {
-            m_hasFollower = false;
-        }
-    }
+	if (m_followers != nullptr) {
+		m_followers->removeObject(sprite, true);
+		if (m_followers->count() == 0) {
+			m_hasFollower = false;
+		}
+	}
 }
 
 void CCSpritePlus::setFlipX(bool value){
-    // unsigned int i;
-    cocos2d::CCSprite::setFlipX(value);
-    /*if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
-        for (i= 0; i < m_pParent->getChildrenCount(); i++) {
-            (reinterpret_cast<cocos2d::CCSprite*>(m_pParent->getChildren()->objectAtIndex(i)))->setFlipX(value);
-        }
-    }
-    if (m_hasFollower) {
-        for (i = 0; i < m_followers->count(); i++) {
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setFlipX(value);
-        }
-    }*/
+	// unsigned int i;
+	cocos2d::CCSprite::setFlipX(value);
+	/*if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
+	for (i= 0; i < m_pParent->getChildrenCount(); i++) {
+	(reinterpret_cast<cocos2d::CCSprite*>(m_pParent->getChildren()->objectAtIndex(i)))->setFlipX(value);
+	}
+	}
+	if (m_hasFollower) {
+	for (i = 0; i < m_followers->count(); i++) {
+	reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setFlipX(value);
+	}
+	}*/
 }
 
 
 void CCSpritePlus::setFlipY(bool value){
-    // unsigned int i;
-    cocos2d::CCSprite::setFlipY(value);
-    /*if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
-        for (i= 0; i < m_pParent->getChildrenCount(); i++) {
-            (reinterpret_cast<cocos2d::CCSprite*>(m_pParent->getChildren()->objectAtIndex(i)))->setFlipY(value);
-        }
-    }
-    if (m_hasFollower) {
-        for (i = 0; i < m_followers->count(); i++) {
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setFlipY(value);
-        }
-    }*/
+	// unsigned int i;
+	cocos2d::CCSprite::setFlipY(value);
+	/*if ((m_propagateFlipChanges != false) && (m_pParent != nullptr)) {
+	for (i= 0; i < m_pParent->getChildrenCount(); i++) {
+	(reinterpret_cast<cocos2d::CCSprite*>(m_pParent->getChildren()->objectAtIndex(i)))->setFlipY(value);
+	}
+	}
+	if (m_hasFollower) {
+	for (i = 0; i < m_followers->count(); i++) {
+	reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setFlipY(value);
+	}
+	}*/
 }
 
 
@@ -100,60 +115,60 @@ void CCSpritePlus::setFlipY(bool value){
         if (m_hasFollower){ \
             for (unsigned int i = 0;  i < m_followers->count(); i++){\
                 reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->set##CALLNAME(VALUE);\
-            } \
-        } \
+			            } \
+		        } \
     }
 
 
 void CCSpritePlus::setPosition(cocos2d::CCPoint const &pos){
-    CCSprite::setPosition(pos);
-    /*if (m_hasFollower) {
-        for (unsigned int i = 0;  i < m_followers->count(); i++){
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setPosition(pos);
-        }
-    }*/
+	CCSprite::setPosition(pos);
+	/*if (m_hasFollower) {
+	for (unsigned int i = 0;  i < m_followers->count(); i++){
+	reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setPosition(pos);
+	}
+	}*/
 }
 
 
 
 void CCSpritePlus::setRotation(float fRotation){
-    cocos2d::CCSprite::setRotation(fRotation);
-    /*if (m_hasFollower) {
-        for (unsigned int i = 0;  i < m_followers->count(); i++){
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotation(fRotation);
-        }
-    }*/
+	cocos2d::CCSprite::setRotation(fRotation);
+	/*if (m_hasFollower) {
+	for (unsigned int i = 0;  i < m_followers->count(); i++){
+	reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setRotation(fRotation);
+	}
+	}*/
 }
 
-void CCSpritePlus::setScale(float fScale){ 
-    cocos2d::CCSprite::setScale(fScale); 
-    if (m_hasFollower){ 
-        for (unsigned int i = 0; i < m_followers->count(); i++){ 
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setScale(fScale); 
-        } 
-    }
+void CCSpritePlus::setScale(float fScale){
+	cocos2d::CCSprite::setScale(fScale);
+	if (m_hasFollower){
+		for (unsigned int i = 0; i < m_followers->count(); i++){
+			reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setScale(fScale);
+		}
+	}
 }
 
-void CCSpritePlus::setScaleX(float fScaleX){ 
-    cocos2d::CCSprite::setScaleX(fScaleX); 
-    /*if (m_hasFollower){ 
-        for (unsigned int i = 0; i < m_followers->count(); i++){ 
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setScaleX(fScaleX); 
-        } 
-    }*/ 
-}
-
-void CCSpritePlus::setScaleY(float fScaleY){ 
-    cocos2d::CCSprite::setScaleY(fScaleY); 
+void CCSpritePlus::setScaleX(float fScaleX){
+	cocos2d::CCSprite::setScaleX(fScaleX);
 	/*if (m_hasFollower){
-        for (unsigned int i = 0; i < m_followers->count(); i++){ 
-            reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setScaleY(fScaleY); 
-        } 
-    } */
+	for (unsigned int i = 0; i < m_followers->count(); i++){
+	reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setScaleX(fScaleX);
+	}
+	}*/
+}
+
+void CCSpritePlus::setScaleY(float fScaleY){
+	cocos2d::CCSprite::setScaleY(fScaleY);
+	/*if (m_hasFollower){
+	for (unsigned int i = 0; i < m_followers->count(); i++){
+	reinterpret_cast<cocos2d::CCSprite*>(m_followers->objectAtIndex(i))->setScaleY(fScaleY);
+	}
+	} */
 }
 
 void CCSpritePlus::stopFollow(){
-    if (m_followingSprite != nullptr){
-        m_followingSprite->removeFollower(this);
-    }
+	if (m_followingSprite != nullptr){
+		m_followingSprite->removeFollower(this);
+	}
 }

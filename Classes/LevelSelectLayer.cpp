@@ -1,4 +1,7 @@
-﻿#include "LevelSelectLayer.h"
+﻿// decompiled by ItzZyann and Aloaf
+// from GD 1.71 binary
+
+#include "LevelSelectLayer.h"
 
 #include "AppDelegate.h"
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
@@ -285,13 +288,15 @@ void LevelSelectLayer::onNext(CCObject* sender)
 	m_scrollLayer->moveToPage(m_scrollLayer->getCurrentScreen() + 1);
 }
 
-
-// not yet working
 cocos2d::ccColor3B LevelSelectLayer::colorForPage(int page)
 {
-	static const int palette[] = { 5, 7, 8, 9, 10, 11, 1, 3, 4 };
-	int idx = palette[page % 9];
-	return GameManager::sharedState()->colorForIdx(idx);
+	static const int colorIndices[] = { 5, 7, 8, 9, 10, 11, 1, 3, 4 };
+
+	if (page >= 9)
+		return this->colorForPage(page % 9);
+
+	int colorIdx = colorIndices[page];
+	return GameManager::sharedState()->colorForIdx(colorIdx);
 }
 
 cocos2d::ccColor3B LevelSelectLayer::getColorValue(int pageA, int pageB, float t)

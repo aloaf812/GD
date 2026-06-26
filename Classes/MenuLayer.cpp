@@ -97,9 +97,10 @@ void MenuLayer::onOptions(CCObject* sender)
 	layer->showLayer(false);
 }
 
+#include "FLAlertLayer.h"
 void MenuLayer::onStats(CCObject* sender)
 {
-    
+	FLAlertLayer::create(nullptr, "Test Alert", "Hello world!", "OK", nullptr, 330)->show();
 }
 
 void MenuLayer::onRobTop(CCObject* sender)

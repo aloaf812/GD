@@ -25,41 +25,55 @@ PlayerObject::PlayerObject()
 	unk_0x30e = false;
 
 	unk_0x324 = 0.0f;
+
+	// FIX: these were left uninitialized until later in init(), but
+	// PlayerObject::setPosition() can be invoked virtually (e.g. via
+	// setTextureRect -> setPosition) before init() reaches the lines that
+	// actually create these objects. Zero them here so any early call
+	// is a safe no-op instead of dereferencing uninitialized heap memory
+	// (the 0xCDCDCDCD MSVC debug-heap pattern seen in the crash dump).
+	m_dragParticle = nullptr;
+	m_birdDragParticle = nullptr;
+	m_dragParticle2 = nullptr;
+	m_shipDragParticle = nullptr;
+	m_burstParticle = nullptr;
+	m_landParticle = nullptr;
+	m_landParticle2 = nullptr;
 }
 
 PlayerObject* PlayerObject::create(int player, int ship, cocos2d::CCLayer *layer)
 {
-    PlayerObject* pRet = new PlayerObject();
-    if (pRet && pRet->init(player, ship, layer))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = NULL;
-        return NULL;
-    }
+	PlayerObject* pRet = new PlayerObject();
+	if (pRet && pRet->init(player, ship, layer))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
 }
 
 bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
-    int playerIdx;
-    int shipIdx;
-    
-    playerIdx = player;
-    if (player <= 0) playerIdx = 1;
-    if (player >= 38) playerIdx = 38;
-    
-    shipIdx = ship;
-    if (ship >= 14) shipIdx = 14;
-    if (ship <= 0) shipIdx = 1;
-    
-    char const* frameFile = CCString::createWithFormat("player_%02d_001.png", playerIdx)->getCString();
-    char const* frameFile2 = CCString::createWithFormat("player_%02d_2_001.png", playerIdx)->getCString();
-    
+	int playerIdx;
+	int shipIdx;
+
+	playerIdx = player;
+	if (player <= 0) playerIdx = 1;
+	if (player >= 38) playerIdx = 38;
+
+	shipIdx = ship;
+	if (ship >= 14) shipIdx = 14;
+	if (ship <= 0) shipIdx = 1;
+
+	char const* frameFile = CCString::createWithFormat("player_%02d_001.png", playerIdx)->getCString();
+	char const* frameFile2 = CCString::createWithFormat("player_%02d_2_001.png", playerIdx)->getCString();
+
 	if (!GameObject::init(frameFile)) return false;
-	
+
 	m_ghostType = GhostType::Disabled;
 	m_timeMod = 0.9f;
 
@@ -75,8 +89,17 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 
 #pragma region Icon Frames
 	m_iconSprite = CCSprite::createWithSpriteFrameName(frameFile);
+	if (!m_iconSprite) {
+		CCLOG("PlayerObject::init - missing sprite frame: %s", frameFile);
+		return false;
+	}
 	this->addChild(m_iconSprite, 1);
+
 	m_iconSpriteSecondary = CCSprite::createWithSpriteFrameName(frameFile2);
+	if (!m_iconSpriteSecondary) {
+		CCLOG("PlayerObject::init - missing sprite frame: %s", frameFile2);
+		return false;
+	}
 	this->addChild(m_iconSpriteSecondary);
 	m_iconSpriteSecondary->setPosition(this->convertToNodeSpace(m_iconSprite->getPosition()));
 #pragma endregion
@@ -141,7 +164,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	tmpVar = m_dragParticle2->getSpeedVar();
 	m_dragParticle->setSpeedVar(tmpVar + tmpVar);
 
-	tmpVar = m_dragParticle2->getAngleVar();	
+	tmpVar = m_dragParticle2->getAngleVar();
 	m_dragParticle2->setAngleVar(tmpVar + tmpVar);
 
 	m_dragParticle2->setStartSize(m_dragParticle2->getStartSize() * 1.5f);
@@ -156,7 +179,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	m_dragParticle2->setEndColor(ccc4f(0.0f, 0.0f, 1.0f, 1.0f));
 
 	m_shipDragParticle = CCParticleSystemQuad::create("shipDragEffect.plist");
-	m_shipDragParticle	->setPositionType(kCCPositionTypeGrouped);
+	m_shipDragParticle->setPositionType(kCCPositionTypeGrouped);
 	m_gameLayer->addChild(m_shipDragParticle, 1);
 	m_shipDragParticle->stopSystem();
 
@@ -181,7 +204,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	// unk_0x2e4->setTextureRect
 	unk_0x2e4->setBlendFunc(blendFunc);
 
-	if (!m_isPlayLayer) 
+	if (!m_isPlayLayer)
 		m_gameLayer->addChild(unk_0x2e4);
 	else
 		PLAY_LAYER->getBatchNodeAdd()->addChild(unk_0x2e4, 20);
@@ -199,7 +222,7 @@ bool PlayerObject::init(int player, int ship, cocos2d::CCLayer *layer) {
 	m_vehicleGlow->setBlendFunc(blendFunc);
 	updatePlayerGlow();
 
-    return true;
+	return true;
 }
 
 void PlayerObject::releaseButton(PlayerButton button)
@@ -324,25 +347,25 @@ void PlayerObject::resetObject()
 void PlayerObject::resetPlayerIcon()
 {
 	this->runRotateAction();
-	
+
 	m_iconSprite->setScale(1.0f);
 	m_iconSprite->setPosition(CCPointZero);
 	m_vehicleSprite->setVisible(false);
 	m_vehicleSpriteThird->setVisible(false);
-	
+
 	updatePlayerGlow();
-	
+
 	m_birdDragParticle->stopSystem();
 	m_dragParticle2->stopSystem();
 	m_shipDragParticle->stopSystem();
-	
+
 	// one divided by 2.55 i have NO idea why robtop did this
-	m_birdDragParticle->setStartColor(ccc4f(0.0f, 1.0f, 1.0f, 1/2.55));
+	m_birdDragParticle->setStartColor(ccc4f(0.0f, 1.0f, 1.0f, 1 / 2.55));
 	m_birdDragParticle->setEndColor(ccc4f(0.0f, 0.0f, 1.0f, 1.0f));
 
 	if (!unk_0x30c)
 		this->spawnPortalCircle(ccc3(0, 255, 100), 50.0f);
-	
+
 	this->deactivateStreak();
 	this->updatePlayerScale();
 }
@@ -486,10 +509,19 @@ void PlayerObject::setOpacity(GLubyte opacity)
 
 void PlayerObject::setPosition(CCPoint const &position) {
 	GameObject::setPosition(position);
-	unk_0x2e4->setPosition(position);
 
+	// FIX: unk_0x2e4 and m_dragParticle are not created until partway
+	// through init(). This override can be invoked virtually before
+	// then (e.g. init() calls setTextureRect(...) early on, which
+	// internally triggers setPosition()). Without these null checks,
+	// the first call dereferences uninitialized/garbage pointers and
+	// crashes with an access violation (matches the 0xCDCDCDCD debug-heap
+	// pattern seen in the crash dump).
+	if (unk_0x2e4 != nullptr)
+		unk_0x2e4->setPosition(position);
 
-	m_dragParticle->setPosition(position);
+	if (m_dragParticle != nullptr)
+		m_dragParticle->setPosition(position);
 }
 
 void PlayerObject::setFlipX(bool flip)
@@ -550,7 +582,7 @@ void PlayerObject::updateJump(float dt)
 			if (this->m_rollMode != false) {
 				/*flipGravity(this, (bool)(this->m_gravityFlipped ^ 1), true);
 				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&this->m_yVelocity + 4)
-					, 0x40000000, 0x3fe33333);
+				, 0x40000000, 0x3fe33333);
 				*pdVar8 = dVar11;*/
 				unk_0x316 = 0;
 				unk_0x30e = false;
@@ -913,7 +945,7 @@ void PlayerObject::saveToCheckpoint(CheckpointObject* check)
 	if (isFlying() || m_rollMode) {
 		if (PLAY_LAYER->getCameraPortal()) {
 			check->setPortalObject(PLAY_LAYER->getCameraPortal());
-		}	
+		}
 	}
 }
 

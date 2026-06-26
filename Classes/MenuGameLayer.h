@@ -1,3 +1,6 @@
+// decompiled by ItzZyann
+// from GD 1.71 binary
+
 #ifndef _MENU_GAME_LAYER_H
 #define _MENU_GAME_LAYER_H
 

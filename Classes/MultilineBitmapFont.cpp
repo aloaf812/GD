@@ -1,11 +1,10 @@
+// decompiled by ItzZyann
+// from GD 1.71 binary
+
 #include "MultilineBitmapFont.h"
 #include "ColoredSection.h"
 
 USING_NS_CC;
-
-// decompiled by ItzZyann
-// not that accurate since im a beginner in
-// reing
 
 MultilineBitmapFont* MultilineBitmapFont::createWithFont(
 	const char* fontFile,
@@ -102,48 +101,51 @@ bool MultilineBitmapFont::initWithFont(
 		int lineStrLen = lineStr.length();
 		int endCharIdx = totalProcessedChars + lineStrLen;
 
-		while (m_lines->count() > 0)
+		// FIX: cast to ColoredSection* (not CustomColoredSection*) so getStartIndex/
+		// getEndIndex/getColor read the actual m_startPos/m_endPos/m_col fields that
+		// ColoredSection::init() set. CustomColoredSection had its own shadow fields
+		// that were never initialized, so colors were always garbage.
+		// Also fixed loop to iterate all blocks (not just index 0) and corrected
+		// the start index calculation to not break on the first line.
+		int blockIdx = 0;
+		while (blockIdx < (int)m_lines->count())
 		{
-			// Change this typecast to CustomColoredSection*
-			CustomColoredSection* colorBlock = static_cast<CustomColoredSection*>(m_lines->objectAtIndex(0));
-			if (colorBlock->getStartIndex() < totalProcessedChars)
+			ColoredSection* colorBlock = static_cast<ColoredSection*>(m_lines->objectAtIndex(blockIdx));
+
+			if (colorBlock->getEndIndex() < totalProcessedChars)
 			{
-				break;
+				m_lines->removeObjectAtIndex(blockIdx, true);
+				continue;
 			}
-			if (colorBlock->getStartIndex() > endCharIdx)
+
+			if (colorBlock->getStartIndex() >= endCharIdx)
 			{
 				break;
 			}
 
-			int blockEndIdx = colorBlock->getEndIndex();
-			int startIdx;
+			int blockStart = colorBlock->getStartIndex();
+			int blockEnd = colorBlock->getEndIndex();
 
-			if (colorBlock->getEndIndex() > endCharIdx)
+			int applyStart = blockStart - totalProcessedChars;
+			int applyEnd = (blockEnd < endCharIdx ? blockEnd : endCharIdx - 1) - totalProcessedChars;
+
+			for (int ci = applyStart; ci <= applyEnd; ++ci)
 			{
-				colorBlock->setStartIndex(endCharIdx + 1);
-				startIdx = endCharIdx - totalProcessedChars;
+				cocos2d::CCSprite* fontChar = static_cast<cocos2d::CCSprite*>(labelLine->getChildByTag(ci));
+				if (fontChar)
+				{
+					fontChar->setColor(colorBlock->getColor());
+				}
+			}
+
+			if (blockEnd < endCharIdx)
+			{
+				m_lines->removeObjectAtIndex(blockIdx, true);
 			}
 			else
 			{
-				m_lines->removeObjectAtIndex(0, true);
-				startIdx = blockEndIdx - totalProcessedChars;
-			}
-
-			int currentBlockIdx = colorBlock->getStartIndex() - totalProcessedChars;
-			if (currentBlockIdx == 1)
-			{
-				currentBlockIdx = 0;
-			}
-
-			while (currentBlockIdx <= startIdx)
-			{
-				cocos2d::CCSprite* fontChar = static_cast<cocos2d::CCSprite*>(labelLine->getChildByTag(currentBlockIdx));
-				if (fontChar)
-				{
-					cocos2d::ccColor3B blockColor = colorBlock->getColor();
-					fontChar->setColor(blockColor);
-				}
-				++currentBlockIdx;
+				colorBlock->setStartIndex(endCharIdx);
+				++blockIdx;
 			}
 		}
 
@@ -335,7 +337,7 @@ MultilineBitmapFont::~MultilineBitmapFont()
 	/*
 	if (m_unkArray)
 	{
-		m_unkArray->release();
+	m_unkArray->release();
 	}
 	cocos2d::CCSprite::~CCSprite();
 	*/

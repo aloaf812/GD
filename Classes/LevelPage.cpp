@@ -1,4 +1,7 @@
-﻿#include "LevelPage.h"
+﻿// decompiled by ItzZyann
+// from GD 1.71 binary
+
+#include "LevelPage.h"
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "cocos-ext.h"
 #include "GameManager.h"
@@ -38,7 +41,7 @@ bool LevelPage::init(GJGameLevel* level)
 
 	// int userCoins = GameStatsManager::sharedState()->getStat("8");
 	int reqCoins = m_level->getRequiredCoins();
-	bool locked = false; // reqCoins > userCoins, commented out until GameStatsManager is ready
+	bool locked = false;
 
 	m_levelMenu = CCMenu::create();
 	this->addChild(m_levelMenu, -1);
@@ -70,16 +73,19 @@ bool LevelPage::init(GJGameLevel* level)
 		lockSpr->setPosition(ccp(170.0f, 47.5f));
 
 		// int userCoins = GameStatsManager::sharedState()->getStat("8");
-		// CCSprite* coinIcon = CCSprite::createWithSpriteFrameName("GJ_coinsIcon_001.png");
-		// button->addChild(coinIcon);
-		// coinIcon->setScale(1.0f);
-		// coinIcon->setPosition(ccp(325.0f, 15.0f));
-		// CCString* coinStr = CCString::createWithFormat("%i/%i", userCoins, reqCoins);
-		// CCLabelBMFont* coinLabel = CCLabelBMFont::create(coinStr->getCString(), "bigFont.fnt");
-		// button->addChild(coinLabel);
-		// coinLabel->setAnchorPoint(ccp(1.0f, 0.5f));
-		// coinLabel->setPosition(coinIcon->getPosition() + ccp(-15.0f, 0.5f));
-		// coinLabel->setScale(0.5f);
+		int userCoins = 0;
+		CCSprite* coinIcon = CCSprite::createWithSpriteFrameName("GJ_coinsIcon_001.png");
+		coinIcon->setScale(1.0f);
+		coinIcon->setPosition(ccp(325.0f, 15.0f));
+
+		CCString* coinStr = CCString::createWithFormat("%i/%i", userCoins, reqCoins);
+		CCLabelBMFont* coinLabel = CCLabelBMFont::create(coinStr->getCString(), "bigFont.fnt");
+		coinLabel->setAnchorPoint(ccp(1.0f, 0.5f));
+		coinLabel->setPosition(coinIcon->getPosition() + ccp(-15.0f, 0.5f));
+		coinLabel->setScale(0.5f);
+
+		button->addChild(coinIcon);
+		button->addChild(coinLabel);
 	}
 	else {
 		CCLabelBMFont* nameLabel = CCLabelBMFont::create(
@@ -224,9 +230,24 @@ bool LevelPage::init(GJGameLevel* level)
 	return true;
 }
 
-void LevelPage::onInfo(cocos2d::CCObject* sender)
-{
-	FLAlertLayer::create(nullptr, "Level Stats", "insert string here", "OK", nullptr, 300.0f)->show();
+void LevelPage::onInfo(cocos2d::CCObject* sender) {
+	cocos2d::CCString* text = cocos2d::CCString::createWithFormat(
+		"<cy>%s</c>\n"
+		"<cg>Total Attempts</c>: %i\n"
+		"<cl>Total Jumps</c>: %i\n"
+		"<cp>Normal</c>: %i%%\n"
+		"<co>Practice</c>: %i%%",
+			m_level->getLevelName().c_str(),
+			m_level->getAttempts(),
+			m_level->getJumps(),
+			m_level->getNormalPercent(),
+			m_level->getPracticePercent()
+		);
+
+	FLAlertLayer::create(
+		nullptr, "Level Stats", text->getCString(),
+		"OK", nullptr,
+		300.0f)->show();
 }
 
 void LevelPage::onPlay(cocos2d::CCObject* sender)
