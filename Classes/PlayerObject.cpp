@@ -332,7 +332,14 @@ void PlayerObject::resetObject()
 	toggleBirdMode(false);
 	// togglePlayerScale(false);
 	setRotation(0.0f);
-	setVisible(false);
+	// FIX: this used to unconditionally call setVisible(false) here, which
+	// re-hid the player every time resetObject() ran - including right after
+	// PlayLayer::startGame() set it visible (startGame calls resetLevel(),
+	// which calls this). Nothing else in the current code re-shows the
+	// player afterward, so the icon would flash once at load and then stay
+	// invisible for the rest of the attempt/level. Visibility is already
+	// handled by startGame() and (eventually) the death/respawn flash, so
+	// it doesn't belong here.
 	m_isDead = false;
 	stopActionByTag(3);
 	setOpacity(255);
@@ -540,12 +547,54 @@ void PlayerObject::setFlipY(bool flip)
 
 void PlayerObject::updateShipRotation(float dt)
 {
+	CCPoint delta = this->getPosition() - m_lastPos;
 
+	float distSq = (delta.x * delta.x) + (delta.y * delta.y);
+	if (distSq >= 1.2f)
+	{
+		double targetAngle = atan2(-delta.y, delta.x);
+		float currentRotation = this->getRotation();
+
+		double turnAngle = targetAngle;
+		float turnRate;
+		if (m_birdMode)
+		{
+			turnAngle = targetAngle * -0.4;
+			turnRate = 0.07f;
+			if (turnAngle <= -0.08)
+				turnAngle = -0.08;
+		}
+		else
+		{
+			turnRate = 0.15f;
+		}
+
+		float t = turnRate * dt;
+		if (t >= 1.0f)
+			t = 1.0f;
+
+		float currentRad = currentRotation * 0.017453f; // degrees -> radians
+		float newRad = currentRad + (float)((turnAngle - currentRad) * t); // simple lerp toward target angle (slerp2D approximation)
+		this->setRotation(newRad * 57.296f); // radians -> degrees
+	}
 }
 
 void PlayerObject::updateGlowColor()
 {
+	ccColor3B iconColor = m_iconSprite->getColor();
+	ccColor3B vehicleColor = m_vehicleSprite->getColor();
 
+	bool iconIsBlack = (iconColor.r == 0 && iconColor.g == 0 && iconColor.b == 0);
+	bool vehicleIsBlack = (vehicleColor.r == 0 && vehicleColor.g == 0 && vehicleColor.b == 0);
+
+	ccColor3B glow1 = iconIsBlack ? ccc3(255, 255, 255) : iconColor;
+	ccColor3B glow2 = vehicleIsBlack ? ccc3(255, 255, 255) : vehicleColor;
+
+	m_glowColor1 = glow1;
+	m_glowColor2 = glow2;
+
+	if (m_iconGlow) m_iconGlow->setColor(glow2);
+	if (m_vehicleGlow) m_vehicleGlow->setColor(glow2);
 }
 
 void PlayerObject::updateJump(float dt)
@@ -662,17 +711,113 @@ void PlayerObject::updateTimeMod(float timeMod)
 
 void PlayerObject::updatePlayerGlow()
 {
+	// Decompiled (simplified) from PlayerObject::updatePlayerGlow @ 0x18F6E0.
+	// The icon glow is shown whenever the icon color is pure black (the
+	// "default, needs an outline to read against dark backgrounds" case),
+	// and follows the icon sprite's position/scale. The vehicle glow
+	// mirrors the vehicle sprite's visibility.
+	ccColor3B iconColor = m_iconSprite->getColor();
+	bool iconIsBlack = (iconColor.r == 0 && iconColor.g == 0 && iconColor.b == 0);
 
+	m_iconGlow->setScale(m_iconSprite->getScale());
+	m_iconGlow->setPosition(m_iconSprite->getPosition());
+
+	m_iconGlow->setVisible(iconIsBlack);
+
+	bool vehicleVisible = m_vehicleSprite->isVisible();
+	m_vehicleGlow->setVisible(vehicleVisible);
+	m_vehicleGlow->setScale(m_vehicleSprite->getScale());
+	m_vehicleGlow->setPosition(m_vehicleSprite->getPosition());
 }
 
 void PlayerObject::updatePlayerScale()
 {
+	this->stopActionByTag(5);
+	this->setScale(m_playerScale);
 
+	if (this->isFlying() && m_gravityFlipped)
+		this->setScaleY(-m_playerScale);
+	else
+		this->setScaleY(m_playerScale);
 }
 
 void PlayerObject::updatePlayerShipFrame(int sFrame)
 {
+	int shipIdx = sFrame;
+	if (shipIdx >= 14) shipIdx = 14;
+	if (shipIdx <= 0) shipIdx = 1;
 
+	const char* frame1 = CCString::createWithFormat("ship_%02d_001.png", shipIdx)->getCString();
+	const char* frame2 = CCString::createWithFormat("ship_%02d_2_001.png", shipIdx)->getCString();
+	const char* frameGlow = CCString::createWithFormat("ship_%02d_glow_001.png", shipIdx)->getCString();
+
+	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	m_vehicleSprite->setDisplayFrame(cache->spriteFrameByName(frame1));
+	m_vehicleSpriteSecondary->setDisplayFrame(cache->spriteFrameByName(frame2));
+	m_vehicleGlow->setDisplayFrame(cache->spriteFrameByName(frameGlow));
+
+	CCSize size = m_vehicleSprite->getContentSize();
+	m_vehicleSpriteSecondary->setPosition(ccp(size.width * 0.5f, size.height * 0.5f));
+}
+
+void PlayerObject::updatePlayerFrame(int frame)
+{
+	int playerIdx = frame;
+	if (playerIdx >= 38) playerIdx = 38;
+	if (playerIdx <= 0) playerIdx = 1;
+
+	const char* frame1 = CCString::createWithFormat("player_%02d_001.png", playerIdx)->getCString();
+	const char* frame2 = CCString::createWithFormat("player_%02d_2_001.png", playerIdx)->getCString();
+	const char* frameGlow = CCString::createWithFormat("player_%02d_glow_001.png", playerIdx)->getCString();
+
+	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	m_iconSprite->setDisplayFrame(cache->spriteFrameByName(frame1));
+	m_iconSpriteSecondary->setDisplayFrame(cache->spriteFrameByName(frame2));
+	m_iconGlow->setDisplayFrame(cache->spriteFrameByName(frameGlow));
+
+	CCSize size = m_iconSprite->getContentSize();
+	m_iconSpriteSecondary->setPosition(ccp(size.width * 0.5f, size.height * 0.5f));
+}
+
+void PlayerObject::updatePlayerRollFrame(int frame)
+{
+	int ballIdx = frame;
+	if (ballIdx >= 7) ballIdx = 7;
+	if (ballIdx <= 0) ballIdx = 0;
+
+	const char* frame1 = CCString::createWithFormat("player_ball_%02d_001.png", ballIdx)->getCString();
+	const char* frame2 = CCString::createWithFormat("player_ball_%02d_2_001.png", ballIdx)->getCString();
+	const char* frameGlow = CCString::createWithFormat("player_ball_%02d_glow_001.png", ballIdx)->getCString();
+
+	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	m_iconSprite->setDisplayFrame(cache->spriteFrameByName(frame1));
+	m_iconSpriteSecondary->setDisplayFrame(cache->spriteFrameByName(frame2));
+	m_iconGlow->setDisplayFrame(cache->spriteFrameByName(frameGlow));
+
+	CCSize size = m_iconSprite->getContentSize();
+	m_iconSpriteSecondary->setPosition(ccp(size.width * 0.5f, size.height * 0.5f));
+}
+
+void PlayerObject::updatePlayerBirdFrame(int frame)
+{
+	int birdIdx = frame;
+	if (birdIdx >= 7) birdIdx = 7;
+	if (birdIdx <= 0) birdIdx = 1;
+
+	const char* frame1 = CCString::createWithFormat("bird_%02d_001.png", birdIdx)->getCString();
+	const char* frame2 = CCString::createWithFormat("bird_%02d_2_001.png", birdIdx)->getCString();
+	const char* frame3 = CCString::createWithFormat("bird_%02d_3_001.png", birdIdx)->getCString();
+	const char* frameGlow = CCString::createWithFormat("bird_%02d_glow_001.png", birdIdx)->getCString();
+
+	CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+	m_iconSprite->setDisplayFrame(cache->spriteFrameByName(frame1));
+	m_iconSpriteSecondary->setDisplayFrame(cache->spriteFrameByName(frame2));
+	m_vehicleSpriteThird->setDisplayFrame(cache->spriteFrameByName(frame3));
+	m_iconGlow->setDisplayFrame(cache->spriteFrameByName(frameGlow));
+
+	CCSize size = m_iconSprite->getContentSize();
+	m_iconSpriteSecondary->setPosition(ccp(size.width * 0.5f, size.height * 0.5f));
+	m_vehicleSpriteThird->setPosition(m_iconSpriteSecondary->getPosition());
 }
 
 bool PlayerObject::levelFlipping()
@@ -730,21 +875,16 @@ void PlayerObject::hitGround(bool notFlipped)
 			landParticle = m_landParticle;
 
 		this->field_0x368 = field_0x368 ^ 1;
-		/*fVar6 = this->field793_0x374;
-		pcVar4 = *(code **)(*(int *)landParticle + 0x1ec);
-		iVar2 = flipMod(this);
-		(*pcVar4)(this_00, fVar6 * (float)(longlong)iVar2);
-		pcVar4 = *(code **)(*(int *)landParticle + 0x1fc);
-		(**(code **)(*(int *)this->m_landParticle + 0x1f8))();
-		uVar5 = flipMod(this);
-		cocos2d::CCPoint::CCPoint(aCStack_38, (float)uVar5, (float)((ulonglong)uVar5 >> 0x20));
-		(*pcVar4)(this_00, aCStack_38);
-		pcVar4 = *(code **)(*(int *)landParticle + 0x5c);
-		pCVar3 = (CCPoint *)(**(code **)(*(int *)this + 0x60))(this);
-		uVar5 = flipMod(this);
-		cocos2d::CCPoint::CCPoint(aCStack_30, (float)uVar5, (float)((ulonglong)uVar5 >> 0x20));
-		cocos2d::CCPoint::operator+(aCStack_28, pCVar3);
-		(*pcVar4)(this_00, aCStack_28);*/
+
+		// orients and repositions the landing-dust particle so it faces
+		// the correct direction when gravity is flipped, then fires it
+		// at the player's current ground position.
+		landParticle->setAngle(unk_0x374 * flipMod());
+		CCPoint posVar = landParticle->getPosVar();
+		landParticle->setPosVar(ccp(posVar.x, posVar.y * flipMod()));
+		CCPoint particlePos = this->getPosition() + ccp(0.0f, (-15.0f * flipMod()) * m_playerScale);
+		landParticle->setPosition(particlePos);
+
 		landParticle->resetSystem();
 	}
 
@@ -904,12 +1044,70 @@ void PlayerObject::toggleFlyMode(bool enable)
 
 void PlayerObject::toggleRollMode(bool enable)
 {
+	if (m_rollMode != enable) {
+		m_rollMode = enable;
 
+		if (enable) {
+			this->toggleFlyMode(false);
+			this->toggleBirdMode(false);
+		}
+
+		if (m_rollMode) {
+			int ballFrame = (m_playerScale == 1.0f) ? GameManager::sharedState()->getPlayerBall() : 0;
+			this->updatePlayerRollFrame(ballFrame);
+			this->spawnPortalCircle(ccc3(0xFF, 0x32, 0xFF), 50.0f);
+		}
+		else {
+			if (!unk_0x30c)
+				this->spawnPortalCircle(ccc3(0xFF, 0x9F, 0x63), 100.0f);
+
+			int cubeFrame = (m_playerScale == 1.0f) ? GameManager::sharedState()->getPlayerFrame() : 0;
+			this->updatePlayerFrame(cubeFrame);
+		}
+
+		this->stopRotation();
+	}
 }
 
 void PlayerObject::toggleBirdMode(bool enable)
 {
+	if (m_birdMode != enable) {
+		m_birdMode = enable;
 
+		if (enable) {
+			this->toggleRollMode(false);
+			this->toggleFlyMode(false);
+		}
+
+		this->stopRotation();
+		m_yVelocity = m_yVelocity * 0.5;
+		setRotation(0.0f);
+		m_onGround = false;
+		unk_0x30f = false;
+		unk_0x312 = false;
+		this->removePendingCheckpoint();
+
+		if (m_birdMode) {
+			this->updatePlayerBirdFrame(GameManager::sharedState()->getPlayerBird());
+
+			m_iconSprite->setScale(0.55f);
+			m_iconSprite->setPosition(ccp(0.0f, 5.0f));
+			m_vehicleSpriteThird->setVisible(true);
+			m_vehicleSpriteThird->setPosition(ccp(0.0f, -7.0f));
+
+			this->updatePlayerGlow();
+
+			m_birdDragParticle->resetSystem();
+			this->deactivateParticle();
+			this->spawnPortalCircle(ccc3(0xFF, 0xC8, 0xC8), 200.0f);
+			this->activateStreak();
+			this->updatePlayerScale();
+			m_vehicleSprite->setVisible(true);
+		}
+		else {
+			this->resetPlayerIcon();
+		}
+	}
 }
 
 void PlayerObject::toggleGhostEffect(GhostType type)

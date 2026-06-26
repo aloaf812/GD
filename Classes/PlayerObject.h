@@ -20,10 +20,10 @@ class GhostTrailEffect; // tmp while i decompile it
 class PlayerObject : public GameObject {
 public:
 	PlayerObject();
-    static PlayerObject* create(int player, int ship, cocos2d::CCLayer* layer);
-    bool init(int player, int ship, cocos2d::CCLayer* layer);
+	static PlayerObject* create(int player, int ship, cocos2d::CCLayer* layer);
+	bool init(int player, int ship, cocos2d::CCLayer* layer);
 
-	
+
 	void pushButton(PlayerButton button);
 	// this was changed to a bool in modern gd
 	void releaseButton(PlayerButton button);
@@ -103,7 +103,7 @@ public:
 
 	GhostType m_ghostType; // 0x2c0
 	GhostTrailEffect* m_ghostTrail; // 0x2c4
-	
+
 	cocos2d::CCSprite* m_iconSprite; // 0x2c8
 	cocos2d::CCSprite* m_iconSpriteSecondary; // 0x2cc
 	cocos2d::CCSprite* m_iconGlow; // 0x2d0
@@ -160,7 +160,7 @@ public:
 	CC_SYNTHESIZE_READONLY(float, m_playerScale, PlayerScale); // 0x388
 	CC_SYNTHESIZE_READONLY(float, m_timeMod, TimeMod); // 0x38c
 	CC_SYNTHESIZE(cocos2d::CCPoint, m_lastPos, LastP) // 0x390
-	CC_SYNTHESIZE(cocos2d::CCPoint, m_portalPos, PortalP); // 0x398
+		CC_SYNTHESIZE(cocos2d::CCPoint, m_portalPos, PortalP); // 0x398
 	CC_SYNTHESIZE(cocos2d::CCLayer*, m_gameLayer, GameLayer); // 0x3a0
 	CC_SYNTHESIZE(bool, m_onGround, OnGround); // 0x3a4
 	CC_SYNTHESIZE_READONLY(bool, m_isJumping, IsJumping); // 0x3a5	
@@ -175,9 +175,9 @@ public:
 	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor1, GlowColor1); // 0x3ba
 	CC_SYNTHESIZE_READONLY(cocos2d::ccColor3B, m_glowColor2, GlowColor2); // 0x3bd
 
-	void updatePlayerFrame(int) { };
-	void updatePlayerRollFrame(int) { };
-	void updatePlayerBirdFrame(int) { };
+	void updatePlayerFrame(int frame);
+	void updatePlayerRollFrame(int frame);
+	void updatePlayerBirdFrame(int frame);
 	bool canJump() { return true; }
 };
 

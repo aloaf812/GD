@@ -29,7 +29,7 @@ bool LocalLevelManager::init()
 
 std::string LocalLevelManager::getMainLevelString(int level)
 {
-	level = 1; // temporary fix because c++
+	level = 16; // temporary fix because c++
 	return m_mainLevels->valueForKey(CCString::createWithFormat("%i", level)->getCString())->getCString();
 }
 

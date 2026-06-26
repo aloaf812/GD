@@ -158,7 +158,43 @@ void GameObject::deactivateObject() {
 }
 
 GameObject* GameObject::objectFromString(std::string objString) {
-	return nullptr;
+	CCDictionary* objDict = ObjectToolbox::stringSetupToDict(objString);
+	if (!objDict) return nullptr;
+
+	if (!objDict->objectForKey("1")) return nullptr;
+	int objID = atoi(objDict->valueForKey("1")->getCString());
+	if (!objID) return nullptr;
+
+	const char* frame = ObjectToolbox::sharedState()->keyToFrame(objDict->valueForKey("1")->getCString());
+
+	float x = objDict->valueForKey("2")->floatValue();
+	float y = objDict->valueForKey("3")->floatValue();
+	bool flipX = objDict->objectForKey("4") ? objDict->valueForKey("4")->boolValue() : false;
+	bool flipY = objDict->objectForKey("5") ? objDict->valueForKey("5")->boolValue() : false;
+	int rotation = objDict->objectForKey("6") ? objDict->valueForKey("6")->intValue() : 0;
+
+	// TODO: RingObject (object IDs 84, 36, 141) is not implemented yet
+	// (RingObject.cpp is still a stub) - route those through the normal
+	// GameObject path for now instead of linking to a nonexistent create().
+	GameObject* object = GameObject::create(frame);
+	if (!object) return nullptr;
+
+	object->setObjectKey(objID);
+	object->setFlipX(flipX);
+	object->setFlipY(flipY);
+	object->setRotation((float)rotation);
+
+	// y + 90.0f matches the save-string convention used elsewhere in this
+	// codebase (see getSaveString subtracting 90.0f) - the editor origin
+	// is offset from the in-game origin by the ground height.
+	CCPoint startPos = ccp(x, y + 90.0f);
+	object->m_startPos = startPos;
+	object->setPosition(startPos);
+
+	object->customSetup();
+	object->calculateSpawnXPos();
+
+	return object;
 }
 
 void GameObject::updateState() {
