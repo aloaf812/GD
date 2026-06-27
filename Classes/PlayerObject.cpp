@@ -885,6 +885,11 @@ void PlayerObject::toggleGhostEffect(GhostType type)
 
 }
 
+void PlayerObject::togglePlayerScale(bool scaled)
+{
+
+}
+
 void PlayerObject::touchedObject(GameObject* obj)
 {
 

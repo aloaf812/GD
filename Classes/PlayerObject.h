@@ -94,6 +94,7 @@ public:
 	void toggleRollMode(bool enable);
 	void toggleBirdMode(bool enable);
 
+	void togglePlayerScale(bool scaled);
 	void toggleGhostEffect(GhostType type);
 
 	void touchedObject(GameObject* obj);

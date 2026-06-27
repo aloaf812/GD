@@ -168,7 +168,7 @@ GJGameLevel* LevelTools::getLevel(int level)
 std::string LevelTools::getAudioString(int audio)
 {
     // too much work i'll do it later
-    return nullptr;
+    return "";
 }
 
 const char* LevelTools::nameForArtist(int artist)

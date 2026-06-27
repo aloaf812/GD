@@ -259,13 +259,14 @@ bool PlayLayer::init(GJGameLevel* level)
 	m_gameLayer->addChild(m_batchNodeBottom, -1);
 
 	m_flyGroundTop = GJFlyGroundLayer::create();
-	m_gameLayer->addChild(m_flyGroundTop, 5);
+	this->addChild(m_flyGroundTop, 5);
 	m_flyGroundBottom = GJFlyGroundLayer::create();
-	m_gameLayer->addChild(m_flyGroundBottom, 5);
+	this->addChild(m_flyGroundBottom, 5);
 
-	unk_0x1b8 = roundf(CCRANDOM_0_1()) + 1;
+	float randVal = rand();
+	unk_0x1b8 = roundf((randVal / RAND_MAX) + (randVal / RAND_MAX)) + 1;
 	
-	this->m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
+	m_glitter = CCParticleSystemQuad::create("glitterEffect.plist");
 	m_glitter->setPositionType(tCCPositionType::kCCPositionTypeFree);
 	m_gameLayer->addChild(m_glitter, 0);
 	m_glitter->setPosVar(CCPoint((SCREEN_SCALE_F_W * 480.0f) / 1.8f, (SCREEN_SCALE_F_H * 320.0f) * 0.5f));
@@ -273,7 +274,7 @@ bool PlayLayer::init(GJGameLevel* level)
 
 #pragma region Player
 
-	this->m_player = PlayerObject::create(GameManager::sharedState()->getPlayerFrame(),
+	m_player = PlayerObject::create(GameManager::sharedState()->getPlayerFrame(),
 		GameManager::sharedState()->getPlayerShip(), nullptr);
 	m_player->setColor(GameManager::colorForIdx(GameManager::sharedState()->getPlayerColor()));
 	m_player->setSecondColor(GameManager::colorForIdx(GameManager::sharedState()->getPlayerColor2()));
@@ -282,11 +283,10 @@ bool PlayLayer::init(GJGameLevel* level)
 
 #pragma endregion
 
-	this->m_sections = CCArray::create();
+	m_sections = CCArray::create();
 	m_sections->retain();
 
-	std::string levelString = m_level->getLevelString();
-	this->createObjectsFromSetup(levelString);
+	this->createObjectsFromSetup(m_level->getLevelString());
 
 	if (!m_levelSettings) {
 		this->m_levelSettings = LevelSettingsObject::create();
@@ -294,25 +294,36 @@ bool PlayLayer::init(GJGameLevel* level)
 	}
 
 	char const* bgSpriteFile = GameManager::sharedState()->getBGTexture(m_levelSettings->getBGIdx());
-	this->m_background = CCSprite::create(bgSpriteFile);
+	m_background = CCSprite::create(bgSpriteFile);
 	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 	m_background->getTexture()->setTexParameters(&texParams);
-	this->addChild(this->m_background, -1);
+	this->addChild(m_background, -1);
 
-	m_background->setAnchorPoint(ccp(0.0f, 0.0f));
+	m_background->setAnchorPoint(ccp(0, 0));
 	m_background->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
-	m_background->setBlendFunc({ GL_SRC_ALPHA, GL_ONE });
-	m_background->setColor(ccc3(40, 255, 125));
-	// some weird math goes on in the midde of this...
-	// m_background->setTextureRect(m_background->getUserData());
+	ccBlendFunc bgBlendFunc = { GL_ONE, GL_ZERO };
+	m_background->setBlendFunc(bgBlendFunc);
+	m_background->setColor(ccc3(40, 125, 255));
+	unk_0x15c = m_background->getTextureRect().size.height * m_background->getScale();
+	m_background->setTextureRect(m_background->getTextureRect());
 
-	this->m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_ground = GJGroundLayer::create(m_levelSettings->getGIdx());
 	m_gameLayer->addChild(m_ground, 4);
-	this->m_rollGroundTop = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_rollGroundTop = GJGroundLayer::create(m_levelSettings->getGIdx());
 	m_gameLayer->addChild(m_rollGroundTop, 4);
-	this->m_rollGroundBottom = GJGroundLayer::create(m_levelSettings->getGIdx());
+	m_rollGroundBottom = GJGroundLayer::create(m_levelSettings->getGIdx());
 	m_gameLayer->addChild(m_rollGroundBottom, 4);
-	this->m_rollGroundBottom->setScaleY(1.0f);
+	m_rollGroundBottom->setScaleY(-1.0f);
+	
+	unk_0x140 = CCSprite::createWithSpriteFrameName("whiteSquare60_001.png");
+	unk_0x140->setAnchorPoint(ccp(1, 0));
+	unk_0x140->setBlendFunc(bgBlendFunc);
+	// unk_0x140->setScaleX((winSize.width + 20.0f) / m_progressBar->unk_0x138);
+	/*fVar6 = ((local_124 - 320.0) * 0.5 + 10.0 + 20.0) / m_progressBar->0x13c);
+	uVar28 = (**(code **)(*(int *)this->field287_0x140 + 0x48))(this->field287_0x140, fVar6);*/
+	unk_0x140->setPosition(ccp(-10, 0));
+	unk_0x140->setColor(ccc3(0, 102, 255));
+	m_flyGroundTop->addChild(unk_0x140, 5);
 
 	// missing code
 
@@ -333,7 +344,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	// field_0x13c->addChild(m_audioEffectsLayer, 1);
 	// m_audioEffectsLayer->setVisible(false);
 
-	this->m_attemptLabel = CCLabelBMFont::create("Attempt 1", "bigFont.fnt");
+	m_attemptLabel = CCLabelBMFont::create("Attempt 1", "bigFont.fnt");
 	m_gameLayer->addChild(m_attemptLabel, 3);
 
 	runAction(CCSequence::create(
@@ -348,45 +359,46 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->m_progressBar = CCSprite::create("slidergroove2.png");
 	this->addChild(m_progressBar, 10);
 	this->m_progressFill = CCSprite::create("sliderBar2.png");
-	this->field453_0x204 = 8.0f;
-	// this->field449_0x200 = m_progressBar->getUserObject() - 4.0f;
+	unk_0x204 = 8.0f;
+	// unk_0x200 = m_progressBar->isDirty() - 4.0f;
 	ccTexParams texParams2 = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
-	m_progressFill->getTexture()->setTexParameters(&texParams2);
+	m_progressFill->getTexture()->setTexParameters(&texParams);
 	m_progressFill->setColor(m_player->getGlowColor1());
 	m_progressBar->addChild(m_progressFill, -1);
 
-	m_progressFill->setPosition(ccp(0.0f, 0.0f));
+	m_progressFill->setAnchorPoint(ccp(0.0f, 0.0f));
 	m_progressFill->setPosition(ccp(2.0f, 4.0f));
 	m_progressBar->setPosition(ccp(winSize.width * 0.5, winSize.height - 8.0));
 
-	this->updateProgressbar();
-	this->toggleProgressbar();
-	m_player->setVisible(this->m_testMode != false);
+	updateProgressbar();
+	toggleProgressbar();
+	m_player->setVisible(m_testMode);
 
-	this->tintBackground(m_levelSettings->getStartBGColor(), 0.0f);
-	this->tintGround(m_levelSettings->getStartGColor(), 0.0f);
-	this->tintLine(m_levelSettings->getStartLineColor(), 0.0f);
-	this->tintObjects(m_levelSettings->getStartObjColor(), 0.0f);
-	this->tintColorObjects(m_levelSettings->getStartTintObjColor(), 0.0f);
+	tintBackground(m_levelSettings->getStartBGColor(), 0.0f);
+	tintGround(m_levelSettings->getStartGColor(), 0.0f);
+	tintLine(m_levelSettings->getStartLineColor(), 0.0f);
+	tintObjects(m_levelSettings->getStartObjColor(), 0.0f);
+	tintColorObjects(m_levelSettings->getStartTintObjColor(), 0.0f);
 
-	this->updateLevelColors();
-	this->animateOutFlyGround(true);
-	this->animateOutRollGround(true);
+	updateLevelColors();
+	animateOutFlyGround(true);
+	animateOutRollGround(true);
 
-	//m_player->togglePlayerScale(m_levelSettings->getStartMiniMode());
+	m_player->togglePlayerScale(m_levelSettings->getStartMiniMode());
 	int startMode = m_levelSettings->getStartMode();
-	if (startMode == 2) {
-		//this->switchToRollMode(nullptr, true);
-	}
-	else if (startMode == 3) {
-		//this->switchToFlyMode(nullptr, true, true);
-	}
 
-	this->unk_0x120 = true;
-	this->updateVisibility();
-	this->updateCamera(0.0f);
-	//this->toggleAudioRain(false);
-	this->toggleGlitter(false);
+	if (startMode == 2)
+		switchToRollMode(nullptr, true);
+	else if (startMode == 3)
+		switchToFlyMode(nullptr, true, true);
+	/*else
+		switchToFlyMode(nullptr, true, false);*/
+		
+	unk_0x120 = true;
+	updateVisibility();
+	updateCamera(0.0f);
+	toggleAudioRain(false);
+	toggleGlitter(false);
 	GameManager::sharedState()->resetMusic();
     return true;
 }
@@ -695,6 +707,11 @@ void PlayLayer::toggleProgressbar()
 	m_progressBar->setVisible(GameManager::sharedState()->getShowProgressBar());
 }
 
+void PlayLayer::toggleAudioRain(bool toggle)
+{
+	// m_audioEffectsLayer->setRainActive(toggle);
+}
+
 void PlayLayer::registerStateObject(GameObject* obj)
 {
 	if (m_stateObjects->containsObject(obj)) {
@@ -778,6 +795,11 @@ void PlayLayer::switchToFlyMode(GameObject* obj, bool param_1, bool param_2)
 	this->toggleGlitter(true);
 
 	// incomplete
+}
+
+void PlayLayer::switchToRollMode(GameObject* obj, bool)
+{
+
 }
 
 void PlayLayer::exitAirMode()

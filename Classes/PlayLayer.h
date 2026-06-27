@@ -66,6 +66,7 @@ public:
 	void toggleGlitter(bool visible);
 	void togglePracticeMode(bool practice);
 	void toggleProgressbar();
+	void toggleAudioRain(bool toggle);
     
     void registerStateObject(GameObject* obj);
     
@@ -81,6 +82,7 @@ public:
 	void incrementJumps();
 
 	void switchToFlyMode(GameObject* obj, bool, bool);
+	void switchToRollMode(GameObject* obj, bool);
 
 	void exitAirMode();
 	void exitBirdMode();
@@ -129,6 +131,7 @@ public:
 	GJGroundLayer* m_ground; // 0x150
 	GJFlyGroundLayer* m_flyGroundTop; // 0x154
 	GJFlyGroundLayer* m_flyGroundBottom; // 0x158
+	float unk_0x15c; // 0x15c
 	bool m_flyGroundActive; // 0x160
 	bool m_rollGroundActive; // 0x161
 
@@ -173,8 +176,8 @@ public:
 
 	cocos2d::CCSprite* m_progressBar; // 0x1f8
 	cocos2d::CCSprite* m_progressFill; // 0x1fc
-	float field449_0x200;
-	float field453_0x204;
+	float unk_0x200;
+	float unk_0x204;
 
 	bool m_localLevel; // 0x210
 	bool field391_0x211; // 0x211
