@@ -24,7 +24,7 @@ public:
 	void updateSpriteBGSize();
 	void setString(const char* text);
 	void updateBGImage(const char* bgImage);
-	virtual void setColor(const cocos2d::ccColor3B& color) override;
+	void setColor(const cocos2d::ccColor3B& color);
 
 	CC_SYNTHESIZE(int, m_buttonType, ButtonType);
 	CC_SYNTHESIZE(float, m_width, Width);

@@ -316,8 +316,6 @@ void MultilineBitmapFont::stringWithMaxWidth(std::string* outStr, MultilineBitma
 
 MultilineBitmapFont::MultilineBitmapFont()
 {
-	cocos2d::CCSprite::CCSprite();
-
 	m_lines = NULL;
 	m_characters = NULL;
 	m_unkArray = NULL;
