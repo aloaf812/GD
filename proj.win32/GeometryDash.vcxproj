@@ -137,6 +137,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BoomListView.cpp" />
     <ClCompile Include="..\Classes\BoomScrollLayer.cpp" />
+    <ClCompile Include="..\Classes\ButtonSprite.cpp" />
     <ClCompile Include="..\Classes\CheckpointObject.cpp" />
     <ClCompile Include="..\Classes\ColorAction.cpp" />
     <ClCompile Include="..\Classes\ColoredSection.cpp" />
@@ -205,6 +206,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\AppMacros.h" />
     <ClInclude Include="..\Classes\BoomListView.h" />
     <ClInclude Include="..\Classes\BoomScrollLayer.h" />
+    <ClInclude Include="..\Classes\ButtonSprite.h" />
     <ClInclude Include="..\Classes\CheckpointObject.h" />
     <ClInclude Include="..\Classes\ColorAction.h" />
     <ClInclude Include="..\Classes\ColoredSection.h" />

@@ -14,6 +14,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/BoomListView.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
+                   ../../Classes/ButtonSprite.cpp \
                    ../../Classes/RT_COCOS/CCBlockLayer.cpp \
                    ../../Classes/RT_COCOS/CCContentManager.cpp \
                    ../../Classes/RT_COCOS/CCMenuItemSpriteExtra.cpp \

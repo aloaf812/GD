@@ -40,6 +40,7 @@ public:
 	void playBurstEffect();
 	void stopBurstEffect();
 
+	void spawnCircle();
 	void spawnPortalCircle(cocos2d::ccColor3B color, float size);
 
 	void update(float dt);
@@ -79,9 +80,12 @@ public:
 	void incrementJumps();
 	bool playerIsFalling();
 	bool isSafeFlip();
+	void levelFlipFinished();
 	void hitGround(bool notFlipped);
 	void ringJump();
+	void resetStreak();
 	void setupStreak();
+	void flipGravity(bool, bool);
 
 	void collidedWithObject(float dt, GameObject* obj);
 
@@ -137,6 +141,8 @@ public:
 
 	float unk_0x324; // 0x324
 	double m_yVelocity; // 0x328
+
+	GameObject* unk_0x340; // 0x340
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 

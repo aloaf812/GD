@@ -173,21 +173,31 @@ bool LevelPage::init(GJGameLevel* level)
 
 void LevelPage::onInfo(cocos2d::CCObject* sender)
 {
-    // WIP
-	FLAlertLayer::create(nullptr, "Level Stats", "insert string here", "OK", nullptr, 300.0f)->show();
+	CCString* text = CCString::createWithFormat(
+		"<cy>%s</c>\n"
+		"<cg>Total Attempts</c>: %i\n"
+		"<cl>Total Jumps</c>: %i\n"
+		"<cp>Normal</c>: %i%%\n"
+		"<co>Practice</c>: %i%%",
+		m_level->getLevelName().c_str(),
+		m_level->getAttempts(),
+		m_level->getJumps(),
+		m_level->getNormalPercent(),
+		m_level->getPracticePercent()
+		);
+
+	FLAlertLayer::create(
+		nullptr, "Level Stats", text->getCString(),
+		"OK", nullptr,
+		300.0f)->show();
 }
 
 void LevelPage::onPlay(cocos2d::CCObject* sender)
 {
     // GameStatsManager* GStatsM = GameStatsManager::GameStatsManager();
-    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-    SAE->stopBackgroundMusic();
-    
-	GameSoundManager* GSoundM = GameSoundManager::sharedManager();
-	GSoundM->playEffect("playSound_01.ogg", 1.0f, 0.0f, 0.3f);
-
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setLastScene(LastGameScene::LevelSelect);
+	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+	GameSoundManager::sharedManager()->playEffect("playSound_01.ogg", 1.0f, 0.0f, 0.3f);
+	GameManager::sharedState()->setLastScene(LastGameScene::LevelSelect);
     
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene* pScene = PlayLayer::scene(m_level);

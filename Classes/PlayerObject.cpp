@@ -293,31 +293,47 @@ void PlayerObject::deactivateStreak()
 
 void PlayerObject::resetObject()
 {
-	this->unk_0x30c = true;
-	this->deactivateStreak();
-	this->removePendingCheckpoint();
+	unk_0x30c = true;
+	deactivateStreak();
+	removePendingCheckpoint();
 	unk_0x318 = 0.0f;
 	m_lastGroundPos = CCPointZero;
 	m_portalObject = nullptr;
 	m_isLocked = false;
-	// *(undefined4 *)&this->field_0x340 = 0;
+	unk_0x340 = nullptr;
 	unk_0x310 = false;
-	this->setPosition(PLAY_LAYER->getStartPos());
-	// this->flipGravity(false, false);
+	setPosition(PLAY_LAYER->getStartPos());
+	m_yVelocity = 0;
+	flipGravity(false, false);
 	toggleFlyMode(false);
 	toggleRollMode(false);
 	toggleBirdMode(false);
-	// togglePlayerScale(false);
-	setRotation(0.0f);
-	setVisible(false);
+	togglePlayerScale(false);
+	stopRotation();
+	setRotation(0);
 	m_isDead = false;
 	stopActionByTag(3);
 	setOpacity(255);
+	toggleGhostEffect(GhostType::Disabled);
+	updateTimeMod(0.9f);
 
-	// resetStreak();
-	// levelFlipFinished();
+	if (PLAY_LAYER && !PLAY_LAYER->getCleanReset()) {
+		CCBlink* blink = CCBlink::create(0.4f, 4);
+		CCSequence* seq1 = CCSequence::create(blink, CCShow::create(), nullptr);
+		this->runAction(seq1);
+		if (!GameManager::sharedState()->getPerformanceMode()) {
+			int i = 0;
+			do {
+				CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(PlayerObject::spawnCircle));
+				CCSequence* seq2 = CCSequence::create(CCDelayTime::create(i++ * 0.1f), callback, nullptr);
+				this->runAction(seq2);
+			} while (i != 4);
+		}
+	}
+
+	resetStreak();
+	levelFlipFinished();
 	touchedObject(nullptr);
-
 	unk_0x30c = false;
 }
 
@@ -417,6 +433,11 @@ void PlayerObject::playBurstEffect()
 void PlayerObject::stopBurstEffect()
 {
 	m_burstParticle->stopSystem();
+}
+
+void PlayerObject::spawnCircle()
+{
+
 }
 
 void PlayerObject::spawnPortalCircle(ccColor3B color, float size)
@@ -685,6 +706,11 @@ bool PlayerObject::isSafeFlip()
 	return -15.0 <= m_yVelocity;
 }
 
+void PlayerObject::levelFlipFinished()
+{
+
+}
+
 void PlayerObject::hitGround(bool notFlipped)
 {
 	m_yVelocity = 0;
@@ -927,7 +953,17 @@ void PlayerObject::removePendingCheckpoint()
 
 }
 
+void PlayerObject::resetStreak()
+{
+
+}
+
 void PlayerObject::setupStreak()
+{
+
+}
+
+void PlayerObject::flipGravity(bool, bool)
 {
 
 }

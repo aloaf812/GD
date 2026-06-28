@@ -55,8 +55,8 @@ void LevelInfoLayer::onPlay(CCObject* sender)
 {
     // GameManager* pGameManager = GameManager::sharedState();
     // GameSoundManager* GSM = GameSoundManager::GameSoundManager();
-    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-    SAE->stopBackgroundMusic();
+	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene* pScene = PlayLayer::scene(m_level);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);

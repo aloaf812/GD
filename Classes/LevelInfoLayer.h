@@ -12,9 +12,8 @@ public:
     bool init(GJGameLevel* level);
     void onPlay(cocos2d::CCObject* sender);
     void onBack(cocos2d::CCObject* sender);
-protected:
-    GJGameLevel* m_level;
-    
+
+    GJGameLevel* m_level; // 0x130
 };
 
 #endif /* defined(_LEVEL_INFO_LAYER_H) */

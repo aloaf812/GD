@@ -26,7 +26,7 @@ public:
 	cocos2d::CCPoint getRelativePosForPage(int page);
 	void repositionPagesLooped();
 	void setPagesIndicatorPosition(cocos2d::CCPoint position);
-	int getTotalPages();
+	unsigned int getTotalPages();
 	int pageNumberForPosition(cocos2d::CCPoint pos);
 	int getRelativePageForNum(int page);
 	void selectPage(unsigned int pageNumber);
