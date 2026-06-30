@@ -87,7 +87,7 @@ bool LevelSelectLayer::init(int page)
 	CCRect groundRect = m_ground->getTextureRect();
 	int cols = ceilf(winSize.width / groundRect.size.width) + 1.0;
 	groundRect.size.width = groundRect.size.width * cols;
-	m_ground->setTextureRect(groundRect.size.width * cols);
+	m_ground->setTextureRect(groundRect);
 
 	float refYPos = (winSize.height * 0.5f) - 110.0f;
 	float groundH = m_ground->getContentSize().height;
