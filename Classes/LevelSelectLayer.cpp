@@ -80,20 +80,28 @@ bool LevelSelectLayer::init(int page)
 	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 	m_ground->getTexture()->setTexParameters(&texParams);
 	groundLayer->addChild(m_ground, 2);
-	m_ground->setAnchorPoint(ccp(0, 1));
+	m_ground->setAnchorPoint(ccp(0.0f, 1.0f));
 	m_ground->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
 	m_ground->setColor(ccc3(0, 102, 255));
-	m_ground->setTextureRect(CCRectMake(0, 0, winSize.width, m_ground->getContentSize().height));
-	m_ground->setPosition(ccp(0.0f, (winSize.height * 0.5f) - 110.0f));
+
+	CCRect groundRect = m_ground->getTextureRect();
+	int cols = ceilf(winSize.width / groundRect.size.width) + 1.0;
+	groundRect.size.width = groundRect.size.width * cols;
+	m_ground->setTextureRect(groundRect.size.width * cols);
 
 	float refYPos = (winSize.height * 0.5f) - 110.0f;
+	float groundH = m_ground->getContentSize().height;
+	if (refYPos > groundH)
+		refYPos = groundH;
+
+	m_ground->setPosition(ccp(0.0f, refYPos));
 
 	CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
 	groundLayer->addChild(lineSprite, 3);
 	lineSprite->setPosition(CCPoint(winSize.width * 0.5f, refYPos));
 	ccBlendFunc lineBlendFunc = { GL_SRC_ALPHA, GL_ONE };
 	lineSprite->setBlendFunc(lineBlendFunc);
-	lineSprite->setOpacity(100);
+	lineSprite->setOpacity(200);
 
 	CCSprite* leftShadow = CCSprite::createWithSpriteFrameName("groundSquareShadow_001.png");
     leftShadow->setAnchorPoint(ccp(0.0f, 1.0f));
@@ -136,21 +144,18 @@ bool LevelSelectLayer::init(int page)
     CCArray* pages = CCArray::create();
 	do {
 		GJGameLevel* level = GameLevelManager::sharedState()->getMainLevel(i);
-		++i;
-		LevelPage* page = LevelPage::create(level);
-		pages->addObject(page);
+		i++;
+		pages->addObject(LevelPage::create(level));
     } while (i != 16);
     
     // coming soon!
     CCLayer* csLayer = CCLayer::create();
     CCLabelBMFont* csLabel = CCLabelBMFont::create("Coming Soon!", "bigFont.fnt");
-    csLabel->setPosition(ccp(winSize.width / 2, winSize.height / 2 + 50));
+    csLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 50.0f));
     csLayer->addChild(csLabel);
     pages->addObject(csLayer);
     
-	// the third param is for looping
-    bool showDots = pages->count() > 3;
-	m_scrollLayer = BoomScrollLayer::create(pages, 0, showDots);
+	m_scrollLayer = BoomScrollLayer::create(pages, 0, pages->count() > 3);
 	this->addChild(m_scrollLayer);
 	m_scrollLayer->setPagesIndicatorPosition(ccp(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenBottom() + 15.0f));
 	m_scrollLayer->getInternalLayer()->setDelegate(m_bslDelegate);
@@ -192,7 +197,7 @@ bool LevelSelectLayer::init(int page)
     
     CCSprite* backBtnSprite = CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png");
     CCMenuItemSpriteExtra* backBtn = CCMenuItemSpriteExtra::create(backBtnSprite, NULL, this, menu_selector(LevelSelectLayer::onBack));
-    backBtn->setSizeMult(1.6f);
+    backBtn->setSizeMult(2.0f);
     CCMenu* backMenu = CCMenu::create(backBtn, NULL);
     this->addChild(backMenu, 1);
 	backMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 25.0f, CCDirector::sharedDirector()->getScreenTop() - 22.0f));

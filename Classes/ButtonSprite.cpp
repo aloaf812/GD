@@ -183,17 +183,15 @@ void ButtonSprite::setString(const char* text) {
 }
 
 void ButtonSprite::updateBGImage(const char* bgImage) {
-	m_bgSprite->removeFromParentAndCleanup(true);
+	m_bgSprite->removeMeAndCleanup();
 	m_bgSprite = cocos2d::extension::CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
 	m_bgSprite->setContentSize(CCSize(16.0f, 16.0f));
 	this->addChild(m_bgSprite, 0);
 
-	if (m_buttonType == 1) {
+	if (m_buttonType == 1)
 		this->setString(m_textStr);
-	}
-	else {
+	else
 		this->updateSpriteBGSize();
-	}
 }
 
 bool ButtonSprite::init(const char* caption, int width, int height, float scale, bool absoluteWidth, const char* font, const char* bgImage, float absoluteHeight) {
@@ -251,14 +249,12 @@ ButtonSprite* ButtonSprite::create(const char* caption) {
 	return ButtonSprite::create(caption, 0, 0, 1.0f, false);
 }
 
-void ButtonSprite::setColor(const cocos2d::ccColor3B& color) {
-	if (m_label) {
+void ButtonSprite::setColor(ccColor3B color) {
+	if (m_label)
 		m_label->setColor(color);
-	}
-	if (m_subSprite) {
+
+	if (m_subSprite)
 		m_subSprite->setColor(color);
-	}
-	if (m_bgSprite) {
-		m_bgSprite->setColor(color);
-	}
+
+	m_bgSprite->setColor(color);
 }

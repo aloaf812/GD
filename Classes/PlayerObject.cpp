@@ -238,37 +238,56 @@ void PlayerObject::logValues()
 
 void PlayerObject::update(float dt)
 {
-	if (!this->m_isDead)
-	{
-		m_lastUpdatePos = this->getPosition();
-		if (!this->m_isLocked)
-		{
+	if (!m_isDead) {
+		m_lastUpdatePos = getPosition();
+		if (!m_isLocked) {
 			this->updateJump(dt * 0.9f);
-			float addXPos = dt * m_speed * m_timeMod;
-			float addYPos = dt * 0.9f * m_yVelocity;
-			this->setPosition(this->getPosition() + ccp(addXPos, addYPos));
+			this->setPosition(getPosition() + ccp(dt * m_speed * m_timeMod, dt * 0.9f * m_yVelocity));
 		}
-
-		if (this->isFlying())
-		{
-			if (m_flyMode)
-			{
-				if (m_pShipActive)
-				{ // m_pShipLift->stopSystem(); 
+		if (isFlying()) {
+			if (m_flyMode) {
+				if (!unk_0x30e || levelFlipping()) {
+					if (m_pShipActive)
+						m_dragParticle2->stopSystem();
+					
+					m_pShipActive = false;
 				}
-				else { // m_pShipLift->resumeSystem(); 
+				else {
+					if (!m_pShipActive)
+						m_dragParticle2->resumeSystem();
+
+					m_pShipActive = true;
 				}
 			}
-
-			//if (!m_onGround)
+			if (!m_onGround || (m_yVelocity <= -1.0))
+				m_shipDragParticle->stopSystem();
+			else
+				m_shipDragParticle->resumeSystem();
+		}
+		else if (!m_onGround || levelFlipping() || !m_isLocked) {
+			this->touchedObject(nullptr);
+			if (m_pGroundActive && this->getActionByTag(2) == 0) {
+				CCDelayTime* delay = CCDelayTime::create(0.6f);
+				CCCallFunc* uVar4 = CCCallFunc::create(this, callfunc_selector(PlayerObject::deactivateParticle));
+				CCSequence* pCVar5 = CCSequence::create(delay, uVar4, nullptr);
+				pCVar5->setTag(2);
+				this->runAction(pCVar5);
+			}
 		}
 		else {
-			if (this->m_pGroundActive == false)
+			if (!m_pGroundActive)
 				m_dragParticle->resumeSystem();
 
-			this->m_pGroundActive = true;
+			m_pGroundActive = true;
 			this->stopActionByTag(2);
 		}
+		/*if ((isFlying()) &&
+			(iVar6 = *(int *)&this->field_0x348 + 1, *(int *)&this->field_0x348 = iVar6, 0x13 < iVar6)) {
+			*(undefined4 *)&this->field_0x348 = 0;
+			tryPlaceCheckpoint(this);
+		}
+		if (unk_0x318 != 0.0 && (0.1 < FUN_0019d1c8() - unk_0x31c))
+			unk_0x318 = 0.0;*/
 	}
 }
 
@@ -773,6 +792,7 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 	float objMinY = objRect.getMinY();
 
 	// currently used as a placeholder since this is a pretty big function
+	if (false) {
 		if (this->getObjectRect(0.3f, 0.3f).intersectsRect(obj->getObjectRect())) {
 			if ((true) && (isSafeFlip())) {
 				CCPoint moveToPos;

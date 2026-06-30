@@ -24,19 +24,19 @@ public:
 	void updateSpriteBGSize();
 	void setString(const char* text);
 	void updateBGImage(const char* bgImage);
-	void setColor(const cocos2d::ccColor3B& color);
+	void setColor(cocos2d::ccColor3B color);
 
-	CC_SYNTHESIZE(int, m_buttonType, ButtonType);
-	CC_SYNTHESIZE(float, m_width, Width);
-	CC_SYNTHESIZE(float, m_height, Height);
+	int m_buttonType; // 0x1b8
+	float m_width; // 0x1bc
+	float m_height;
 	CC_SYNTHESIZE(float, m_customScale, CustomScale);
 	CC_SYNTHESIZE(float, m_absoluteHeight, AbsoluteHeight);
 	CC_SYNTHESIZE(bool, m_absoluteWidth, AbsoluteWidth);
-	CC_SYNTHESIZE(cocos2d::CCLabelBMFont*, m_label, Label);
-	CC_SYNTHESIZE(cocos2d::CCSprite*, m_subSprite, SubSprite);
-	CC_SYNTHESIZE(cocos2d::extension::CCScale9Sprite*, m_bgSprite, BgSprite);
+	cocos2d::CCLabelBMFont* m_label; // 0x1d0
+	cocos2d::CCSprite* m_subSprite; // 0x1d4
+	cocos2d::extension::CCScale9Sprite* m_bgSprite; // 0x1d8
 	CC_SYNTHESIZE(cocos2d::CCPoint, m_textPositionOffset, TextPositionOffset);
-	CC_SYNTHESIZE(const char*, m_textStr, TextStr);
+	const char* m_textStr; // 0x1e4
 };
 
 #endif
