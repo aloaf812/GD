@@ -489,10 +489,20 @@ CCRect GameObject::getObjectRect(float scaleModX, float scaleModY)
 {
 	CCSize objSize = CCSizeMake(unk_0x1d4, unk_0x1d8);
 
+	float newSizeWidth = scaleModX * objSize.width;
+	float newSizeHeight = scaleModY * objSize.height;
 
+	objSize.width = scaleModX * objSize.width;
+	objSize.height = scaleModY * objSize.height;
 
-	// this function seems a bit complicated, will finish later
-	return CCRectMake(0, 0, objSize.width, objSize.height);
+	// This inverses the values (i assume this was changed in update 2.0 when free rotate was added)
+	if (m_isRotated) {
+		objSize.width = newSizeHeight;
+		objSize.height = newSizeWidth;
+	}
+
+	CCPoint realPos = getRealPosition();
+	return CCRectMake(realPos.x - objSize.width * 0.5f, realPos.y - objSize.height * 0.5f, objSize.width, objSize.height);
 }
 
 CCRect GameObject::getObjectRect2(float scaleModX, float scaleModY)

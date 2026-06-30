@@ -156,7 +156,8 @@ public:
 	float unk_0x1a4; // 0x1a4
 
 	bool m_playerDead; // 0x1a8
-	bool field383_0x1a9; // 0x1a9
+	bool unk_0x1a9; // 0x1a9
+	bool m_cameraMovingX; // 0x1aa
 	bool m_cameraMovingY; // 0x1ab
 
 	int unk_0x1b8; // 0x1b8
@@ -179,9 +180,12 @@ public:
 	float unk_0x200;
 	float unk_0x204;
 
+	int unk_0x20c; // 0x20c (this could be a bool)
+
 	bool m_localLevel; // 0x210
 	bool field391_0x211; // 0x211
 	bool field392_0x212; // 0x212
+	std::string unk_0x214; // 0x214
 	double unk_0x220; // 0x220
 	bool unk_0x228; // 0x228
     CC_SYNTHESIZE(bool, m_playbackMode, PlaybackMode); // 0x229

@@ -769,17 +769,17 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 	CCRect playerRect = this->getObjectRect();
 	CCRect objRect = obj->getObjectRect();
 
+	float objMaxY = objRect.getMaxY();
+	float objMinY = objRect.getMinY();
+
 	// currently used as a placeholder since this is a pretty big function
-	if (true) {
 		if (this->getObjectRect(0.3f, 0.3f).intersectsRect(obj->getObjectRect())) {
 			if ((true) && (isSafeFlip())) {
 				CCPoint moveToPos;
-				if (!m_gravityFlipped) {
-					moveToPos = ccp(getPosition().x, getPosition().y - objRect.getMinY());
-				}
-				else {
+				if (!m_gravityFlipped)
+					moveToPos = ccp(getPosition().x, getPosition().y - objMinY);
+				else
 					// moveToPos = ccp(getPosition().x, (float)((ulonglong)uVar11 >> 0x20));
-				}
 				this->setPosition(moveToPos);
 				this->hitGround(true);
 				m_onGround = false;
@@ -789,9 +789,8 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 					// obj->destroyObject();
 				}
 				else {
-					if (!PLAY_LAYER->getPlaybackMode()) {
+					if (!PLAY_LAYER->getPlaybackMode())
 						PLAY_LAYER->destroyPlayer();
-					}
 				}
 			}
 		}

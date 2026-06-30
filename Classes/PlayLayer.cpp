@@ -69,11 +69,9 @@ void PlayLayer::onQuit()
 {
     this->stopAllActions();
     this->unscheduleAllSelectors();
-    SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-    SAE->stopBackgroundMusic();
-    GameManager* pGameManager = GameManager::sharedState();
-	pGameManager->returnToLastScene(PLAY_LAYER->getLevel());
-    pGameManager->fadeInMusic("menuLoop.mp3");
+	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(false);
+	GameManager::sharedState()->returnToLastScene(PLAY_LAYER->getLevel());
+	GameManager::sharedState()->fadeInMusic("menuLoop.mp3");
 }
 
 void PlayLayer::onExit()
@@ -327,7 +325,7 @@ bool PlayLayer::init(GJGameLevel* level)
 
 	// missing code
 
-	this->m_uiLayer = UILayer::create();
+	m_uiLayer = UILayer::create();
 	this->addChild(m_uiLayer, 10);
 
 	// add other missing code
@@ -352,9 +350,9 @@ bool PlayLayer::init(GJGameLevel* level)
 		CCCallFunc::create(this, callfunc_selector(PlayLayer::startGame)), nullptr));
 
 	m_cleanReset = true;
-	field383_0x1a9 = true;
+	unk_0x1a9 = true;
 	this->updateCamera(0.0f);
-	m_attemptLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 125.0f));
+	m_attemptLabel->setPosition(ccp(m_cameraPos.x + winSize.width * 0.5f, m_cameraPos.y + (winSize.height * 0.5f) + 125.0f));
 	
 	this->m_progressBar = CCSprite::create("slidergroove2.png");
 	this->addChild(m_progressBar, 10);
@@ -405,9 +403,7 @@ bool PlayLayer::init(GJGameLevel* level)
 
 void PlayLayer::resetLevel()
 {
-	//i genuinely don't know these first 2 maybe i'll figure them out later
-	/*this->field373_0x220 = 0;
-	this->field374_0x224 = 0;*/
+	unk_0x220 = 0;
 	m_resetQueued = false;
 	m_isResetting = true;
 	m_showingEndLayer = false;
@@ -415,28 +411,35 @@ void PlayLayer::resetLevel()
 	m_didAwardStars = false;
 	m_didJump = false;
 
-	/*FUN_003b1bb8(&this->field_0x214,&DAT_00401f12);
-	*(undefined4 *)&this->field_0x20c = 0;*/
+	unk_0x214 = "";
+	unk_0x20c = 0;
 
 	m_uiLayer->enableMenu();
 
 	// this->stopCameraShake();
-	// this->field279_0x138 = 1;
+	m_activeEnterEffect = EnterEffect::unk1;
 
 	this->stopActionByTag(10);
 	this->stopActionByTag(11);
 
-	/*this->field315_0x1aa = false;
-	this->field316_0x1ab = false;*/
+	m_cameraMovingX = false;
+	m_cameraMovingY = false;
 
 	this->toggleGlitter(false);
 
-	this->m_playerDead = false;
-	/*this->field314_0x1a9 = this->m_cleanReset;
-	this->clearPickedUpItems();*/
+	m_playerDead = false;
+	unk_0x1a9 = m_cleanReset;
+	// this->clearPickedUpItems();
 
-	// field277_0x130->removeAllObjects(); // this is a CCArray
-	// field339_0x1e0->removeAllObjects(); // this is a CCDictionary
+	unk_0x130->removeAllObjects(); // this is a CCArray
+	unk_0x1e0->removeAllObjects(); // this is a CCDictionary
+
+	// unk_0x178 is unused so far so this will be unused for now
+	/*for (int i = 0; i < unk_0x178->count(); i++) {
+		piVar12 = unk_0x178->objectAtIndex(i);
+		piVar12->resetObject();
+		piVar12->setEnterEffect(EnterEffect::unk1);
+	}*/
 
 	this->m_flipValue = 0.0;
 	// this->field336_0x1d4 = 0.0;
@@ -485,17 +488,14 @@ void PlayLayer::startGame()
 
 void PlayLayer::pauseGame()
 {
-	if (!m_endTriggered) {
-		if (!AppDelegate::get()->getPaused()) {
-			m_player->releaseButton(PlayerButton::Jump);
-			SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-			SAE->pauseAllEffects();
-			SAE->pauseBackgroundMusic();
-			auto pauseScreen = PauseLayer::create();
-			this->getParent()->addChild(pauseScreen);
-			this->onExit();
-			pauseScreen->customSetup();
-		}
+	if (!m_endTriggered && !AppDelegate::get()->getPaused()) {	
+		m_player->releaseButton(PlayerButton::Jump);
+		SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+		SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+		PauseLayer* pauseScreen = PauseLayer::create();
+		this->getParent()->addChild(pauseScreen, 10);
+		this->onExit();
+		pauseScreen->customSetup();
 	}
 }
 
@@ -556,9 +556,15 @@ void PlayLayer::update(float dt)
 
 void PlayLayer::updateAttempts()
 {
-	// m_attemptLabel->setString(CCString::createWithFormat("Attempt %i", m_attempts)->getCString);
-}
+	m_attempts++;
+	GAME_MANAGER->setTotalAttempts(GAME_MANAGER->getTotalAttempts() + 1);
+	char const* attemptString = CCString::createWithFormat("Attempt %i", m_attempts)->getCString();
+	m_attemptLabel->setString(attemptString);
 
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	if (m_attempts != 1)
+		m_attemptLabel->setPosition(ccp(m_cameraPos.x + (winSize.width * 0.5f) + 50.0f, m_cameraPos.y + (winSize.height * 0.5f) + 125.0f));
+}
 
 void PlayLayer::updateCamera(float dt)
 {
@@ -665,7 +671,7 @@ void PlayLayer::setActiveGColorAction(ColorAction* action)
 		if (this->m_activeGColorAction != nullptr)
 			m_activeGColorAction->release();
 
-		this->m_activeGColorAction = action;
+			this->m_activeGColorAction = action;
 	}
 }
 
@@ -684,11 +690,11 @@ void PlayLayer::toggleGlitter(bool visible)
 
 void PlayLayer::togglePracticeMode(bool practice)
 {
-	if (this->m_practiceMode == practice) {
+	if (m_practiceMode == practice)
 		return;
-	}
-	this->m_practiceMode = practice;
-	//m_uiLayer->toggleCheckpointsMenu(practice);
+
+	m_practiceMode = practice;
+	m_uiLayer->toggleCheckpointsMenu(practice);
 	if (practice) {
 		SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
 		SAE->pauseBackgroundMusic();
@@ -1267,5 +1273,6 @@ void PlayLayer::incrementJumps()
 { 
 	m_didJump = true;
 	GameStatsManager::sharedState()->incrementStat("1");
+	m_jumps++;
 	m_level->setJumps(m_level->getJumps() + 1);
 }
