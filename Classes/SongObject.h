@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class SongObject : cocos2d::CCObject{
+class SongObject : public cocos2d::CCObject {
 public:
 	static SongObject* create(int track);
     virtual bool init(int track);

@@ -32,8 +32,7 @@ bool GJGarageLayer::init()
     if (!CCLayer::init())
         return false;
     
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSize winSize = pDirector->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
     GAME_MANAGER->setMainMenuActive(true);
 	GAME_MANAGER->setLastScene(LastGameScene::unk0);
@@ -51,13 +50,13 @@ bool GJGarageLayer::init()
     // looks matching enough
     CCSprite* sideArtLeft = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtLeft->setAnchorPoint(CCPoint(0.0f, 0.0f));
-    sideArtLeft->setPosition(CCPoint(pDirector->getScreenLeft() - 1.0f, pDirector->getScreenTop() - 71.0f));
+	sideArtLeft->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() - 1.0f, CCDirector::sharedDirector()->getScreenTop() - 71.0f));
     sideArtLeft->setFlipY(true);
     this->addChild(sideArtLeft, 1);
     
     CCSprite* sideArtRight = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
     sideArtRight->setAnchorPoint(CCPoint(1.0f, 0.0f));
-    sideArtRight->setPosition(CCPoint(pDirector->getScreenRight() + 1.0f, pDirector->getScreenTop() - 71.0f));
+	sideArtRight->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() + 1.0f, CCDirector::sharedDirector()->getScreenTop() - 71.0f));
     sideArtRight->setFlipY(true);
     sideArtRight->setFlipX(true);
     this->addChild(sideArtRight, 1);
@@ -67,14 +66,14 @@ bool GJGarageLayer::init()
     backBtn->setSizeMult(1.6f);
     CCMenu* backMenu = CCMenu::create(backBtn, NULL);
     this->addChild(backMenu, 1);
-    backMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 25.0f, pDirector->getScreenTop() - 22.0f));
+	backMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 25.0f, CCDirector::sharedDirector()->getScreenTop() - 22.0f));
     
     CCSprite* floorLine = CCSprite::createWithSpriteFrameName("floorLine_001.png");
     floorLine->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f + 50.0f));
     this->addChild(floorLine, 0);
     
     CCSprite* starIcon = CCSprite::createWithSpriteFrameName("GJ_starsIcon_001.png");
-    starIcon->setPosition(CCPoint(pDirector->getScreenRight() - 40.0f, pDirector->getScreenTop() - 40.0f));
+	starIcon->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() - 40.0f, CCDirector::sharedDirector()->getScreenTop() - 40.0f));
     this->addChild(starIcon);
     
     GameStatsManager* GSM = GameStatsManager::sharedState();

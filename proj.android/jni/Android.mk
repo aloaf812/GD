@@ -63,6 +63,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/PlatformToolbox.cpp \
                    ../../Classes/PlayerObject.cpp \
                    ../../Classes/PlayLayer.cpp \
+                   ../../Classes/SavedLevelsLayer.cpp \
                    ../../Classes/SimplePlayer.cpp \
                    ../../Classes/Slider.cpp \
                    ../../Classes/SongInfoLayer.cpp \

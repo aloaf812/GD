@@ -46,8 +46,7 @@ bool LevelBrowserLayer::init(GJSearchObject* searchObject)
 	GameLevelManager::sharedState()->setLastSearchType(searchObject->getType());
 	this->setKeypadEnabled(true);
 
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite* bgSprite = CCSprite::create("GJ_gradientBG.png");
 	bgSprite->setAnchorPoint(ccp(0.0f, 0.0f));
@@ -60,12 +59,12 @@ bool LevelBrowserLayer::init(GJSearchObject* searchObject)
 
 	CCSprite* sideArtL = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
 	sideArtL->setAnchorPoint(ccp(0.0f, 0.0f));
-	sideArtL->setPosition(ccp(pDirector->getScreenLeft() - 1.0f, pDirector->getScreenBottom() - 1.0f));
+	sideArtL->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() - 1.0f, CCDirector::sharedDirector()->getScreenBottom() - 1.0f));
 	this->addChild(sideArtL, 1);
 
 	CCSprite* sideArtR = CCSprite::createWithSpriteFrameName("GJ_sideArt_001.png");
 	sideArtR->setAnchorPoint(ccp(1.0f, 0.0f));
-	sideArtR->setPosition(ccp(pDirector->getScreenRight() + 1.0f, pDirector->getScreenBottom() - 1.0f));
+	sideArtR->setPosition(ccp(CCDirector::sharedDirector()->getScreenRight() + 1.0f, CCDirector::sharedDirector()->getScreenBottom() - 1.0f));
 	sideArtR->setFlipX(true);
 	this->addChild(sideArtR, 1);
 

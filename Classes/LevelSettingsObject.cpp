@@ -14,13 +14,13 @@ bool LevelSettingsObject::init()
 	m_startLineColor = ccc3(255, 255, 255);
 	m_startObjColor = ccc3(255, 255, 255);
 	m_startTintObjColor = ccc3(255, 255, 255);
-	this->m_audioTrack = 0;
-	this->m_startMiniMode = false;
-	this->m_startMode = 0;
-	this->m_startSpeed = 0;
-	this->m_BGIdx = 0;
-	this->m_GIdx = 0;
-	this->m_tintObjectsUseBlend = true;
+	m_audioTrack = 0;
+	m_startMiniMode = false;
+	m_startMode = 0;
+	m_startSpeed = 0;
+	m_BGIdx = 0;
+	m_GIdx = 0;
+	m_tintObjectsUseBlend = true;
     return true;
 }
 

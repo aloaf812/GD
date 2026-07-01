@@ -57,7 +57,11 @@ bool LoadingLayer::init() {
     
     bgSprite->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
 	bgSprite->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
-    bgSprite->setColor(ccc3(0, 102, 255));
+
+	// i dont even come CLOSE to understanding what rob was smoking when he wrote this
+	ccColor3B color1 = ccc3(0, 102, 255);
+	bgSprite->setColor(ccc3(40, 125, 255));
+	bgSprite->setColor(color1);
 
     CCSprite* gjLogo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     this->addChild(gjLogo);
@@ -67,6 +71,9 @@ bool LoadingLayer::init() {
     this->addChild(robTopLogo);
     robTopLogo->setPosition(gjLogo->getPosition() + ccp(0.0f, 80.0f));
     
+	m_loadStep = 0;
+	unk_0x10d = 1;
+
     // Loading Text
     m_caption = CCLabelBMFont::create(getLoadingString(), "goldFont.fnt");
     this->addChild(m_caption);
@@ -80,20 +87,10 @@ bool LoadingLayer::init() {
     m_textArea->setScale(0.7f);
     
     if (300.0f < m_caption->getContentSize().width)
-    {
         m_caption->setScale(300.0f / m_caption->getContentSize().width);
-    }
-    
-    float textScale;
-    if (m_caption->getScale() <= 0.7f)
-    {
-        textScale = m_caption->getScale();
-    } else
-    {
-        textScale = 0.7f;
-    }
-    
-    m_caption->setScale(textScale);
+
+	// ah yes, ternary operations
+	m_caption->setScale(m_caption->getScale() < 0.7f ? m_caption->getScale() : 0.7f);
 
     CCSprite* sliderGroove = CCSprite::create("slidergroove.png");
     this->addChild(sliderGroove, 3);

@@ -210,6 +210,9 @@
     <ClCompile Include="..\Classes\ButtonSprite.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SavedLevelsLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -411,6 +414,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ButtonSprite.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SavedLevelsLayer.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

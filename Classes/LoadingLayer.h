@@ -36,6 +36,7 @@ public:
     void updateProgress(int progress);
     NODE_FUNC(LoadingLayer);
 private:
+	bool unk_0x10d; // 0x10d
     int m_loadStep; // 0x110
     cocos2d::CCLabelBMFont* m_caption; // 0x114
     TextArea* m_textArea; // 0x118

@@ -187,6 +187,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\RT_COCOS\CCMenuItemToggler.cpp" />
     <ClCompile Include="..\Classes\RT_COCOS\CCSpritePlus.cpp" />
     <ClCompile Include="..\Classes\RT_COCOS\CCTextInputNode.cpp" />
+    <ClCompile Include="..\Classes\SavedLevelsLayer.cpp" />
     <ClCompile Include="..\Classes\SimplePlayer.cpp" />
     <ClCompile Include="..\Classes\Slider.cpp" />
     <ClCompile Include="..\Classes\SongInfoLayer.cpp" />
@@ -256,6 +257,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\RT_COCOS\CCMenuItemToggler.h" />
     <ClInclude Include="..\Classes\RT_COCOS\CCSpritePlus.h" />
     <ClInclude Include="..\Classes\RT_COCOS\CCTextInputNode.h" />
+    <ClInclude Include="..\Classes\SavedLevelsLayer.h" />
     <ClInclude Include="..\Classes\SimplePlayer.h" />
     <ClInclude Include="..\Classes\Slider.h" />
     <ClInclude Include="..\Classes\SongInfoLayer.h" />
