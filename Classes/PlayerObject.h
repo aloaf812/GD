@@ -52,7 +52,10 @@ public:
 	void updatePlayerGlow();
 	void updatePlayerScale();
 
+	void updatePlayerFrame(int frame);
 	void updatePlayerShipFrame(int sFrame);
+	void updatePlayerRollFrame(int rFrame);
+	void updatePlayerBirdFrame(int bFrame);
 
 	void deactivateParticle();
 

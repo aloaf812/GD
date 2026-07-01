@@ -678,7 +678,22 @@ void PlayerObject::updatePlayerScale()
 
 }
 
+void PlayerObject::updatePlayerFrame(int frame)
+{
+
+}
+
 void PlayerObject::updatePlayerShipFrame(int sFrame)
+{
+
+}
+
+void PlayerObject::updatePlayerRollFrame(int rFrame)
+{
+
+}
+
+void PlayerObject::updatePlayerBirdFrame(int bFrame)
 {
 
 }
