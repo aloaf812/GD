@@ -173,6 +173,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\LocalLevelManager.cpp" />
     <ClCompile Include="..\Classes\MenuGameLayer.cpp" />
     <ClCompile Include="..\Classes\MenuLayer.cpp" />
+    <ClCompile Include="..\Classes\MoreGamesManager.cpp" />
     <ClCompile Include="..\Classes\MultilineBitmapFont.cpp" />
     <ClCompile Include="..\Classes\MyLevelsLayer.cpp" />
     <ClCompile Include="..\Classes\ObjectToolbox.cpp" />
@@ -243,6 +244,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\LocalLevelManager.h" />
     <ClInclude Include="..\Classes\MenuGameLayer.h" />
     <ClInclude Include="..\Classes\MenuLayer.h" />
+    <ClInclude Include="..\Classes\MoreGamesManager.h" />
     <ClInclude Include="..\Classes\MultilineBitmapFont.h" />
     <ClInclude Include="..\Classes\MyLevelsLayer.h" />
     <ClInclude Include="..\Classes\ObjectToolbox.h" />

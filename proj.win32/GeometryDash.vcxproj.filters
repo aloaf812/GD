@@ -213,6 +213,9 @@
     <ClCompile Include="..\Classes\SavedLevelsLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\MoreGamesManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -417,6 +420,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SavedLevelsLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MoreGamesManager.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,6 +16,7 @@
 #include "GameLevelManager.h"
 #include "OptionsLayer.h"
 #include "GJMoreGamesLayer.h"
+#include "MoreGamesManager.h"
 USING_NS_CC;
 
 CCScene* MenuLayer::scene(){
@@ -50,8 +51,7 @@ void MenuLayer::onMoreGames(CCObject* sender)
 void MenuLayer::onPlay(CCObject* sender)
 {
     this->willClose();
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setLastScene(LastGameScene::unk8);
+	GameManager::sharedState()->setLastScene(LastGameScene::unk8);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = LevelSelectLayer::scene(0);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -62,8 +62,7 @@ void MenuLayer::onPlay(CCObject* sender)
 void MenuLayer::onGarage(CCObject* sender)
 {
     this->willClose();
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setClickedGarage(true);
+	GameManager::sharedState()->setClickedGarage(true);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = GJGarageLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -75,8 +74,7 @@ void MenuLayer::onGarage(CCObject* sender)
 void MenuLayer::onCreator(CCObject* sender)
 {
     this->willClose();
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setClickedEditor(true);
+	GameManager::sharedState()->setClickedEditor(true);
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = CreatorLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
@@ -104,39 +102,34 @@ void MenuLayer::onStats(CCObject* sender)
 
 void MenuLayer::onRobTop(CCObject* sender)
 {
-    CCApplication* pApplication = CCApplication::sharedApplication();
-    pApplication->openURL("http://www.robtopgames.com");
+	CCApplication::sharedApplication()->openURL("http://www.robtopgames.com");
 }
 
 void MenuLayer::onFacebook(CCObject* sender)
 {
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->likeFacebook();
+	GameManager::sharedState()->likeFacebook();
     
 }
 
 void MenuLayer::onTwitter(CCObject* sender)
 {
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->followTwitter();
+	GameManager::sharedState()->followTwitter();
 }
 
 void MenuLayer::onTrailer(CCObject* sender)
 {
     PlatformToolbox::logEvent("gjl_trailer");
     if (!GameToolbox::doWeHaveInternet()) {
-        CCApplication* pApplication = CCApplication::sharedApplication();
-        pApplication->openURL("https://www.youtube.com/watch?v=k90y6PIzIaE");
+		CCApplication::sharedApplication()->openURL("https://www.youtube.com/watch?v=k90y6PIzIaE");
     }
 }
 
 void MenuLayer::onGameCenter(CCObject* sender)
 {
-    GameManager* pGameManager = GameManager::sharedState();
-    if (!pGameManager->getGameCenterEnabled()) {
+	if (!GameManager::sharedState()->getGameCenterEnabled())
         showGCQuestion();
-    }
-    pGameManager->syncPlatformAchievements();
+
+	GameManager::sharedState()->syncPlatformAchievements();
     PlatformToolbox::showAchievements();
 }
 
@@ -155,8 +148,7 @@ void MenuLayer::onGooglePlayGames(CCObject* sender)
 {
     if (!PlatformToolbox::isSignedInGooglePlay())
     {
-        GameManager* pGameManager = GameManager::sharedState();
-        pGameManager->syncPlatformAchievements();
+		GameManager::sharedState()->syncPlatformAchievements();
         PlatformToolbox::showAchievements();
     }
     PlatformToolbox::signInGooglePlay();
@@ -164,27 +156,27 @@ void MenuLayer::onGooglePlayGames(CCObject* sender)
 
 void MenuLayer::willClose()
 {
-    GameManager* pGameManager = GameManager::sharedState();
-    pGameManager->setMainMenuActive(false);
+	GameManager::sharedState()->setMainMenuActive(false);
 }
 
 bool MenuLayer::init() {
     if (!CCLayer::init())
         return false;
     
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCSize winSize = pDirector->getWinSize();
-    GameManager* pGameManager = GameManager::sharedState();
+	GameManager::sharedState()->fadeInMusic("menuLoop.mp3");
+	GameManager::sharedState()->setMainMenuActive(true);
+	GameManager::sharedState()->setLastScene(LastGameScene::unk0);
+	this->setKeypadEnabled(true);
     
-    pGameManager->fadeInMusic("menuLoop.mp3");
-    
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
     MenuGameLayer* MGL = MenuGameLayer::create();
     this->addChild(MGL);
     
     // creates the logo
     CCSprite* logo = CCSprite::createWithSpriteFrameName("GJ_logo_001.png");
     this->addChild(logo, 2);
-    logo->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenTop() - 50.0f));
+	logo->setPosition(CCPoint(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenTop() - 50.0f));
     
     CCMenu* mainMenu = CCMenu::create();
     
@@ -201,7 +193,7 @@ bool MenuLayer::init() {
     mainMenu->addChild(garageExtra);
     garageExtra->setPosition(playExtra->getPosition() + CCPoint(-110.0f, 0.0f));
     
-    if (!pGameManager->getClickedGarage())
+	if (!GameManager::sharedState()->getClickedGarage())
     {
         CCSprite* chrSel = CCSprite::createWithSpriteFrameName("GJ_chrSel_001.png");
         this->addChild(chrSel);
@@ -214,7 +206,7 @@ bool MenuLayer::init() {
     mainMenu->addChild(creatorExtra);
     creatorExtra->setPosition(playExtra->getPosition() + CCPoint(110.0f, 0.0f));
 
-    if (!pGameManager->getClickedEditor())
+	if (!GameManager::sharedState()->getClickedEditor())
     {
         CCSprite* lvlEdit = CCSprite::createWithSpriteFrameName("GJ_lvlEdit_001.png");
         this->addChild(lvlEdit);
@@ -252,7 +244,7 @@ bool MenuLayer::init() {
     CCMenuItemSpriteExtra* statsExtra = CCMenuItemSpriteExtra::create(statsButton, NULL, this, menu_selector(MenuLayer::onStats));
     bottomMenu->addChild(statsExtra);
     
-    bottomMenu->setPosition(CCPoint(winSize.width * 0.5f, pDirector->getScreenBottom() + 45.0f));
+	bottomMenu->setPosition(CCPoint(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenBottom() + 45.0f));
     bottomMenu->alignItemsHorizontallyWithPadding(5.0f);
     
     CCSprite* robtopLogo = CCSprite::createWithSpriteFrameName("robtoplogo_small.png");
@@ -262,7 +254,7 @@ bool MenuLayer::init() {
     
     CCMenu* socialsMenu = CCMenu::create(robtopExtra, NULL);
     this->addChild(socialsMenu, 2);
-    socialsMenu->setPosition(CCPoint(pDirector->getScreenLeft() + 50.0f, pDirector->getScreenBottom() + 30.0f - 6.0f));
+	socialsMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 50.0f, CCDirector::sharedDirector()->getScreenBottom() + 30.0f - 6.0f));
     
     CCSprite* facebookIcon = CCSprite::createWithSpriteFrameName("gj_fbIcon_001.png");
     CCMenuItemSpriteExtra* facebookExtra = CCMenuItemSpriteExtra::create(facebookIcon, NULL, this, menu_selector(MenuLayer::onFacebook));
@@ -274,7 +266,7 @@ bool MenuLayer::init() {
     twitterExtra->setSizeMult(1.5f);
     socialsMenu->addChild(twitterExtra);
     
-    facebookExtra->setPosition(socialsMenu->convertToNodeSpace(CCPoint(pDirector->getScreenLeft() + 30.0f, pDirector->getScreenBottom() + 30.0f + 30.0f)));
+	facebookExtra->setPosition(socialsMenu->convertToNodeSpace(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 30.0f, CCDirector::sharedDirector()->getScreenBottom() + 30.0f + 30.0f)));
     twitterExtra->setPosition(facebookExtra->getPosition() + CCPoint(40.0, 0.0f));
     
     CCSprite* moreGamesButton = CCSprite::createWithSpriteFrameName("GJ_moreGamesBtn_001.png");
@@ -283,9 +275,15 @@ bool MenuLayer::init() {
     CCMenu* extraMenu = CCMenu::create(moreGamesExtra, NULL);
     this->addChild(extraMenu, 2);
     
-    extraMenu->setPosition(CCPoint(pDirector->getScreenRight() - 43.0f, pDirector->getScreenBottom() + 45.0f));
+	extraMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() - 43.0f, CCDirector::sharedDirector()->getScreenBottom() + 45.0f));
 
-    pGameManager->setFirstSetup(false);
+	if (MoreGamesManager::sharedState()->getHasNewGames()) {
+		CCSprite* exMark = CCSprite::createWithSpriteFrameName("exMark_001.png");
+		moreGamesButton->addChild(exMark);
+		exMark->setPosition(ccp(moreGamesButton->getTextureRect().size.width * 0.5f, moreGamesButton->getTextureRect().size.height + exMark->getTextureRect().size.height * 0.5f + 4));
+	}
+
+	GameManager::sharedState()->setFirstSetup(false);
     return true;
 }
 

@@ -55,6 +55,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/LocalLevelManager.cpp \
                    ../../Classes/MenuGameLayer.cpp \
                    ../../Classes/MenuLayer.cpp \
+                   ../../Classes/MoreGamesManager.cpp \
                    ../../Classes/MultilineBitmapFont.cpp \
                    ../../Classes/MyLevelsLayer.cpp \
                    ../../Classes/ObjectToolbox.cpp \

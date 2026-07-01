@@ -2,8 +2,7 @@
 #define __GeometryDash__LoadingLayer__
 
 #include "cocos2d.h"
-
-class TextArea;
+#include "TextArea.h"
 
 /**
 
