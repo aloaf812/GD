@@ -274,8 +274,8 @@ bool PlayLayer::init(GJGameLevel* level)
 
 	m_player = PlayerObject::create(GameManager::sharedState()->getPlayerFrame(),
 		GameManager::sharedState()->getPlayerShip(), nullptr);
-	m_player->setColor(GameManager::colorForIdx(GameManager::sharedState()->getPlayerColor()));
-	m_player->setSecondColor(GameManager::colorForIdx(GameManager::sharedState()->getPlayerColor2()));
+	m_player->setColor(GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor()));
+	m_player->setSecondColor(GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2()));
 	m_player->updateGlowColor();
 	m_batchNode->addChild(m_player, 10);
 

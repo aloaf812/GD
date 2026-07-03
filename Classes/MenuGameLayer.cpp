@@ -41,8 +41,8 @@ bool MenuGameLayer::init()
     this->addChild(m_groundLayer, 3);
 
 	m_bgSprite = CCSprite::create(GameManager::sharedState()->getBGTexture(GameManager::sharedState()->getLoadedBGIdx()));
-    ccTexParams texParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
-    m_bgSprite->getTexture()->setTexParameters(&texParams);
+    ccTexParams bgTexParams = {GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT};
+    m_bgSprite->getTexture()->setTexParameters(&bgTexParams);
     this->addChild(m_bgSprite, -1);
     m_bgSprite->setAnchorPoint(ccp(0, 0));
 	m_bgSprite->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
@@ -54,19 +54,24 @@ bool MenuGameLayer::init()
     
 	CCRect bgTexRect = m_bgSprite->getTextureRect();
 	m_bgSpeed = bgTexRect.size.width * m_bgSprite->getScale();
-	float bgDoubleW = m_bgSpeed * 2.0f;
-	m_bgSprite->setTextureRect(CCRectMake(0, 0, bgDoubleW, bgTexRect.size.height));
+	bgTexRect.size.width = bgTexRect.size.width * 2.0f;
+	m_bgSprite->setTextureRect(bgTexRect);
     
 #pragma region Ground
-	m_groundSprite = CCSprite::create(GameManager::sharedState()->getGTexture(GameManager::sharedState()->getLoadedGIdx()));
-    m_groundSprite->getTexture()->setTexParameters(&texParams);
+	char const* gIdx = GameManager::sharedState()->getGTexture(GameManager::sharedState()->getLoadedGIdx());
+	m_groundSprite = CCSprite::create(gIdx);
+	ccTexParams gTexParams = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
+    m_groundSprite->getTexture()->setTexParameters(&gTexParams);
     m_groundLayer->addChild(m_groundSprite, 2);
     m_groundSprite->setAnchorPoint(ccp(0, 1));
-	m_groundSprite->setColor(ccc3(color1.r * 0.8, color1.g * 0.8, color1.b * 0.8f));
+	m_groundSprite->setScale(CCDirector::sharedDirector()->getScreenScaleFactorMax());
+	m_groundSprite->setColor(ccc3(color1.r * 0.8f, color1.g * 0.8f, color1.b * 0.8f));
 
 	CCRect gTexRect = m_groundSprite->getTextureRect();
-	m_groundSpeed = gTexRect.size.width * CCDirector::sharedDirector()->getScreenScaleFactorMax();
-	m_groundSprite->setTextureRect(CCRectMake(0, 0, winSize.width * 2.0f, gTexRect.size.height));
+	m_groundSpeed = gTexRect.size.width * m_groundSprite->getScale();
+	int gBalancer = ceil(winSize.width / gTexRect.size.height) + 1; // idk if this is the right name to give the var
+	gTexRect.size.width = gTexRect.size.height * gBalancer;
+	m_groundSprite->setTextureRect(gTexRect);
 	m_groundSprite->setPosition(ccp(0.0f, CCDirector::sharedDirector()->getScreenBottom() + 90.0f));
     
     CCSprite* lineSprite = CCSprite::createWithSpriteFrameName("floorLine_001.png");
@@ -123,8 +128,7 @@ bool MenuGameLayer::init()
 
 void MenuGameLayer::update(float delta)
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	float step = delta * 60.0f;
 
@@ -141,7 +145,7 @@ void MenuGameLayer::update(float delta)
 	else
 		balancer = ((1.0f - playerScale) * 30.0f) * 0.5f;
 
-	float groundY = pDirector->getScreenBottom() + 90.0f + 15.0f - balancer;
+	float groundY = CCDirector::sharedDirector()->getScreenBottom() + 90.0f + 15.0f - balancer;
 	if (m_playerObject->getPosition().y < groundY)
 	{
 		m_playerObject->setPosition(ccp(m_playerObject->getPosition().x, groundY));
@@ -152,8 +156,7 @@ void MenuGameLayer::update(float delta)
 	{
 		m_playerObject->deactivateStreak();
 
-		float newX = -100.0f - (CCRANDOM_0_1() * 5.0f * 100.0f);
-		m_playerObject->setPosition(ccp(newX, m_playerObject->getPosition().y));
+		m_playerObject->setPosition(ccp(-100.0f - (CCRANDOM_0_1() * 5.0f * 100.0f), m_playerObject->getPosition().y));
 
 		m_playerObject->setColor(GameManager::sharedState()->colorForIdx((int)(CCRANDOM_0_1() * 18.0f)));
 		m_playerObject->setSecondColor(GameManager::sharedState()->colorForIdx((int)(CCRANDOM_0_1() * 18.0f)));
@@ -186,16 +189,18 @@ void MenuGameLayer::update(float delta)
 		m_playerObject->updateGlowColor();
 	}
 
-	m_backgroundPosition.x -= step * 5.193f;
+	m_backgroundPosition = ccp(m_backgroundPosition.x + (step * 5.77f) * 0.9f, 0.0f);
+	CCPoint newBGPos = ccp(-m_backgroundPosition.x * 0.1f, -m_backgroundPosition.y * 0.1f);
+	float i;
+	for (i = newBGPos.x; i < -m_bgSpeed; i += m_bgSpeed);
+	newBGPos.x = i;
+	m_bgSprite->setPosition(newBGPos);
 
-	float bgTileW = m_bgSprite->getTexture()->getContentSizeInPixels().width;
-	float bgX = fmodf(m_backgroundPosition.x * 0.1f, bgTileW);
-	if (bgX > 0) bgX -= bgTileW;
-	m_bgSprite->setPosition(ccp(bgX, 0.0f));
+	CCPoint groundPos = ccp(m_backgroundPosition.x, CCDirector::sharedDirector()->getScreenBottom() + 90.0f);
+	for (i = groundPos.x; i < -m_groundSpeed; i += m_groundSpeed);
+	groundPos.x = i;
+	m_groundSprite->setPosition(groundPos);
 
-	float gX = fmodf(m_backgroundPosition.x, winSize.width);
-	if (gX > 0) gX -= winSize.width;
-	m_groundSprite->setPosition(ccp(gX, pDirector->getScreenBottom() + 90.0f));
 }
 
 void MenuGameLayer::tryJump(float dt)

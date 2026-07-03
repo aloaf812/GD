@@ -95,7 +95,7 @@ public:
     @param col The number of the player color.
     @returns an RGB color in ccColor3B form corresponding to the player color #.
     */
-    static cocos2d::ccColor3B colorForIdx(int col);
+    cocos2d::ccColor3B colorForIdx(int col);
 
 	bool unk_0xee; // 0xee
 	bool unk_0xef; // 0xef
