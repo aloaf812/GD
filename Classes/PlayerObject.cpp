@@ -828,13 +828,8 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 	CCRect playerRect = this->getObjectRect();
 	CCRect objRect = obj->getObjectRect();
 
-	fVar18 = *(float *)&this->field_0x350;
-	fVar13 = (fVar17 - fVar13 * (float)(longlong)-iVar6) - fVar19;*/
 	float objMaxY = objRect.getMaxY();
 	float objMinY = objRect.getMinY();
-
-	}*/
-
 
 	// currently used as a placeholder since this is a pretty big function
 	if (false) {
