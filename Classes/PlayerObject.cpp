@@ -718,7 +718,8 @@ void PlayerObject::updatePlayerRollFrame(int rFrame)
 
 void PlayerObject::updatePlayerBirdFrame(int bFrame)
 {
-
+	if (bFrame >= 7) bFrame = 7;
+	if (bFrame <= 0) bFrame = 1;
 
 	char const* birdFrame1 = CCString::createWithFormat("bird_%02d_001.png", bFrame)->getCString();
 	char const* birdFrame2 = CCString::createWithFormat("bird_%02d_2_001.png", bFrame)->getCString();
@@ -792,7 +793,6 @@ void PlayerObject::hitGround(bool notFlipped)
 		else
 			landParticle = m_landParticle2;
 
-		cocos2d::CCPoint::CCPoint(aCStack_30, (float)uVar5, (float)((ulonglong)uVar5 >> 0x20));
 		this->unk_0x368 = unk_0x368 ^ 1;
 		landParticle->setAngle(unk_0x374 * flipMod());
 		landParticle->setGravity(ccp(m_landParticle->getGravity().x, unk_0x378 * flipMod()));
