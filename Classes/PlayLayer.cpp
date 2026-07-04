@@ -783,6 +783,11 @@ void PlayLayer::addToSection(GameObject* obj)
 	obj->setSectionIdx(targetSection);
 }
 
+void PlayLayer::removeObjectFromSection(GameObject* obj)
+{
+	m_sections->removeObject(m_sections->objectAtIndex(obj->getSectionIdx()), true);
+}
+
 void PlayLayer::switchToFlyMode(GameObject* obj, bool param_1, bool param_2)
 {
 	this->exitRollMode();

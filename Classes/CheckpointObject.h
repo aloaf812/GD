@@ -9,7 +9,9 @@ public:
 
 	bool init();
 
-	CC_PROPERTY(GameObject*, m_object, Object); // 0xe8
+	GameObject* getObject();
+	void setObject(GameObject* obj);
+	GameObject* m_object; // 0xe8
 
 	CC_SYNTHESIZE(cocos2d::CCPoint, m_playerPos, PlayerPos); // 0xec
 	CC_SYNTHESIZE(float, m_playerYVel, PlayerYVel); // 0xf4

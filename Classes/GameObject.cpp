@@ -171,12 +171,12 @@ void GameObject::triggerActivated() {
     this->m_hasBeenActivated = true;
 }
 
-/*void GameObject::removeGlow() {
-    if (!this->m_glowSprite) return;
-    this->m_glowSprite->release();
-    this->m_glowSprite->removeMeAndCleanup();
-    this->m_glowSprite = nullptr;
-}*/
+void GameObject::removeGlow() {
+    if (!m_glowSprite) return;
+    m_glowSprite->release();
+    m_glowSprite->removeMeAndCleanup();
+    m_glowSprite = nullptr;
+}
 
 void GameObject::powerOnObject() {
     this->m_stateVar = true;

@@ -29,6 +29,7 @@ public:
 	void resumeAndRestart();
 
 	void addToSection(GameObject* obj);
+	void removeObjectFromSection(GameObject* obj);
     void createObjectsFromSetup(std::string setup);
     
 	virtual void onExit();

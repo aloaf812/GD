@@ -107,6 +107,7 @@ public:
 	void touchedObject(GameObject* obj);
 
 	void saveToCheckpoint(CheckpointObject* check);
+	void tryPlaceCheckpoint();
 	void removePendingCheckpoint();
 
 	GhostType m_ghostType; // 0x2c0
@@ -147,6 +148,8 @@ public:
 	double m_yVelocity; // 0x328
 
 	GameObject* unk_0x340; // 0x340
+	CheckpointObject* m_checkpointArray; // 0x344
+	int unk_0x348;
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 
@@ -157,11 +160,12 @@ public:
 	cocos2d::CCParticleSystemQuad* m_shipDragParticle; // 0x360
 	cocos2d::CCParticleSystemQuad* m_burstParticle; // 0x364
 
-	bool field_0x368; // 0x368
+	bool unk_0x368; // 0x368
 
 	cocos2d::CCParticleSystemQuad* m_landParticle; // 0x36c
 	cocos2d::CCParticleSystemQuad* m_landParticle2; // 0x370
 	float unk_0x374; // 0x374
+	float unk_0x378; // 0x378
 
 	CC_SYNTHESIZE_READONLY(bool, m_flyMode, FlyMode); // 0x380
 	CC_SYNTHESIZE_READONLY(bool, m_birdMode, BirdMode); // 0x381

@@ -46,7 +46,7 @@ public:
     void disableObject();
     const char* getBallFrame(int idx);
     // void addColorSprite();
-    /*void removeGlow();*/
+    void removeGlow();
 
 	void updateState();
 	void customSetup();
