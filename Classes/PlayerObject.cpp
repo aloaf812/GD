@@ -54,7 +54,7 @@ bool PlayerObject::init(int player, int ship, CCLayer* layer) {
 	if (!GameObject::init(frameFile.c_str())) 
 		return false;
 	
-	m_ghostType = GhostType::Disabled;:
+	m_ghostType = GhostType::Disabled;
 	m_timeMod = 0.9f;
 
 	if (!layer)
