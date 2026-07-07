@@ -514,6 +514,9 @@ void PlayerObject::setPosition(CCPoint const &position) {
 	GameObject::setPosition(position);
 	unk_0x2e4->setPosition(position);
 
+	// what the :sob: am i doing bro this isnt even right
+	m_startPos = position;
+
 	// this is WRONG like very very WRONG
 	m_birdDragParticle->setPosition(position);
 	m_dragParticle2->setPosition(position);
@@ -845,7 +848,7 @@ void PlayerObject::collidedWithObject(float dt, GameObject* obj)
 				m_onGround = false;
 			}
 			else {
-				if (obj->getType() == GameObjectType::unknown22) {
+				if (obj->getType() == GameObjectType::unk22) {
 					// obj->destroyObject();
 				}
 				else {

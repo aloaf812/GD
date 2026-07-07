@@ -615,8 +615,6 @@ void PlayLayer::updateLevelColors()
 
 }
 
-
-
 void PlayLayer::tintBackground(ccColor3B color, float duration)
 {
     m_background->setColor(color);
@@ -1000,7 +998,7 @@ void PlayLayer::checkCollisions(float dt)
 	else {
 		if (m_player->getGravityFlipped()) {
 			if (m_player->isSafeFlip()) {
-				// missing stuff
+				m_player->setPosition(ccp(m_player->getPosition().x, 105.0f - balancer));
 				m_player->hitGround(true);
 				return;
 			}
@@ -1012,6 +1010,9 @@ void PlayLayer::checkCollisions(float dt)
 			m_player->setPosition(ccp(m_player->getPosition().x, 105.0f - balancer));
 			m_player->hitGround(false);
 		}
+	}
+
+	if (m_player->isFlying() || m_player->getRollMode()) {
 	}
 
 	// welcome to the worst switch statement i've had to write so far
@@ -1036,9 +1037,7 @@ void PlayLayer::checkCollisions(float dt)
 				if ((currentObject->getIsDisabled()) || (currentObject->getHasBeenActivated()))
 					return;
 
-				if (!(m_player->getObjectRect().intersectsRect(currentObject->getObjectRect()))) 
-					return;
-					// || ((0.0f < currentObject->getRadius() && (!(objectIntersectsCircle(m_player, currentObject))))
+				if (!(m_player->getObjectRect().intersectsRect(currentObject->getObjectRect())))
 
 				switch (currentObject->getType()) {
 				case InvertGravityPortal:
@@ -1098,7 +1097,6 @@ LAB_0018ffd8:
 		}
 
 		currentObject = (GameObject*)m_hazardsArray->objectAtIndex(haIdx);
-		// doesnt work for some reason
 		if ((m_player->getObjectRect().intersectsRect(currentObject->getObjectRect())) && (currentObject->getRadius() <= 0.0f)) // || (objectIntersectsCircle(m_player, currentObject)) && (!m_playbackMode))))
 			break;
 
@@ -1114,12 +1112,11 @@ int PlayLayer::sectionForPos(CCPoint point)
 
 void PlayLayer::recordAction(bool pressed)
 {
-	if (m_localLevel != false) {
-		if (pressed) {
+	if (m_localLevel) {
+		if (pressed)
 			field391_0x211 = true;
-			return;
-		}
-		field392_0x212 = true;
+		else
+			field392_0x212 = true;
 	}
 }
 
@@ -1222,7 +1219,7 @@ void PlayLayer::moveCameraToPos(cocos2d::CCPoint pos)
 void PlayLayer::cameraMoveX(float value, float duration, float rate)
 {
 	this->stopActionByTag(10);
-	// field_0x1aa = true;
+	m_cameraMovingY = true;
 	CCEaseInOut* ease = CCEaseInOut::create(
 		CCActionTween::create(duration, "cTX", m_cameraPos.x, value),
 		rate);

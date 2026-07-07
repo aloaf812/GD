@@ -6,110 +6,106 @@ USING_NS_CC;
 // hi antimatter some of your code was kind of broken so i fixed it up
 
 GameObject::GameObject() {
-    this->unk_0x1b8 = 0;
-    this->unk_0x1bc = 0;
-    this->unk_0x1c0 = false;
-    //  *(_DWORD *)this = &off_486138;
-    this->m_glowSprite = nullptr;
-    //  *((_DWORD *)this + 0x3A) = &off_486538;
-    //  *((_DWORD *)this + 0x3E) = &off_486578;
-    this->unk_0x1c8 = false;
-    this->unk_0x1c9 = false;
-    this->m_myAction = nullptr;
-    this->unk_0x1d0 = false;
-    this->m_poweredOn = false;
-    this->unk_0x1d4 = 0;
-    this->unk_0x1d8 = 0;
-    this->m_isActive = false;
-    this->m_hasGlow = false;
-    this->unk_0x1de = false;
-    this->m_particleSystem = nullptr;
-	this->m_particleString = "";
-    this->m_particleAdded = false;
-    // cocos2d::CCPoint::CCPoint((GameObject *)((char *)this + 0x1EC));
-    // cocos2d::CCRect::CCRect((GameObject *)((char *)this + 0x1F4));
-    this->unk_0x204 = false;
-    // cocos2d::CCRect::CCRect((GameObject *)((char *)this + 0x208));
-    this->unk_0x218 = false;
-	this->m_hasColor = false;
-    this->m_colorSprite = nullptr;
-    this->m_ignoreScreenCheck = false;
-    this->m_radius = 0.0f;
-	this->m_isRotated = false;
-    this->m_scaleModX = 0;
-    this->m_scaleModY = 0;
-    this->m_ID = 0;
-    this->m_type = None;
-    this->m_sectionIdx = 0;
-    this->m_shouldSpawn = false;
-    this->m_touchTriggered = false;
-    // cocos2d::CCPoint::CCPoint((GameObject *)((char *)this + 0x244));
-    this->m_blendAdditive = false;
-    this->m_frame = "";
-    this->m_usePlayerColor = false;
-    this->m_usePlayerColor2 = false;
-    this->m_isDisabled = false;
-    this->m_useAudioScale = false;
-    this->m_isSleeping = false;
-    this->m_startRotation = 0;
-    this->m_startScaleX = 0;
-    this->m_startScaleY = 0;
-    this->m_shouldHide = false;
-    this->m_spawnXPos = 0;
-    this->m_isInvisible = false;
-    this->m_enterAngle = 0;
-    this->m_enterEffect = 0;
-    this->m_tintDuration = 0;
-    this->m_tintGround = false;
-    this->m_objectKey = 0;
-    this->m_dontTransform = false;
-    this->m_dontFade = false;
-    this->m_dontFadeTinted = false;
-    this->m_isTintObject = false;
-    this->m_hasBeenActivated = false;
-    this->m_stateVar = false;
-    this->m_objectZ = 0;
-    this->m_objectParent = nullptr;
-    this->m_customAudioScale = false;
-    this->m_minAudioScale = 0;
-    this->m_maxAudioScale = 0;
-    this->m_uniqueID = 0;
-    this->m_invisibleMode = false;
-    this->m_glowUseBGColor = false;
-    this->m_useBGColor = false;
-    this->m_useSpecialLight = false;
-    this->m_opacityMod = 0;
-    this->m_glowOpacityMod = 0;
-    this->m_dontShow = false;
-    this->m_editorSelected = false;
-    this->m_copyPlayerColor1 = false;
-    this->m_copyPlayerColor2 = false;
-    this->m_tintObjectsUseBlend = false;
+	unk_0x1b8 = 0;
+	unk_0x1bc = 0;
+	unk_0x1c0 = false;
+	m_glowSprite = nullptr;
+	unk_0x1c8 = false;
+	unk_0x1c9 = false;
+	m_myAction = nullptr;
+	unk_0x1d0 = false;
+	m_poweredOn = false;
+	unk_0x1d4 = 0.0f;
+	unk_0x1d8 = 0.0f;
+	m_isActive = false;
+	m_hasGlow = false;
+	unk_0x1de = false;
+	m_particleSystem = nullptr;
+	m_particleString = "";
+	m_particleAdded = false;
+	unk_0x204 = false;
+	unk_0x218 = false;
+	m_hasColor = false;
+	m_colorSprite = nullptr;
+	m_ignoreScreenCheck = false;
+	m_radius = 0.0f;
+	m_isRotated = false;
+	m_scaleModX = 0.0f;
+	m_scaleModY = 0.0f;
+	m_ID = 0;
+	m_type = None;
+	m_sectionIdx = 0;
+	m_shouldSpawn = false;
+	m_touchTriggered = false;
+	m_startPos = CCPointZero;
+	m_blendAdditive = false;
+	m_frame = "";
+	m_usePlayerColor = false;
+	m_usePlayerColor2 = false;
+	m_isDisabled = false;
+	m_useAudioScale = false;
+	m_isSleeping = false;
+	m_startRotation = 0.0f;
+	m_startScaleX = 0.0f;
+	m_startScaleY = 0.0f;
+	m_shouldHide = false;
+	m_spawnXPos = 0;
+	m_isInvisible = false;
+	m_enterAngle = 0.0f;
+	m_enterEffect = 0;
+	m_tintDuration = 0.0f;
+	m_tintGround = false;
+	m_objectKey = 0;
+	m_dontTransform = false;
+	m_dontFade = false;
+	m_dontFadeTinted = false;
+	m_isTintObject = false;
+	m_hasBeenActivated = false;
+	m_stateVar = false;
+	m_objectZ = 0;
+	m_objectParent = nullptr;
+	m_customAudioScale = false;
+	m_minAudioScale = 0.0f;
+	m_maxAudioScale = 0.0f;
+	m_uniqueID = 0;
+	m_invisibleMode = false;
+	m_glowUseBGColor = false;
+	m_useBGColor = false;
+	m_useSpecialLight = false;
+	m_opacityMod = 1.0f;
+	m_glowOpacityMod = 1.0f;
+	m_dontShow = false;
+	m_editorSelected = false;
+	m_copyPlayerColor1 = false;
+	m_copyPlayerColor2 = false;
+	m_tintObjectsUseBlend = false;
 }
+
 bool GameObject::init(const char *spriteName) {
     if (!CCSpritePlus::initWithSpriteFrameName(spriteName)) return false;
-    this->m_objectZ = 2;
-    this->m_opacityMod = 1.0f;
-    this->m_glowOpacityMod = 1.0f;
-    this->m_enterEffect = 0;
-    this->m_frame = spriteName;
-    this->m_shouldSpawn = false;
-    // this->unk_0x1d4 = 0; // this + 0x138
-    // this->unk_0x1d8 = 0; // this + 0x13c
-    this->m_scaleModX = 1;
-    this->m_scaleModY = 1;
-    this->m_startScaleX = 1;
-    this->m_startScaleY = 1;
+    m_objectZ = 2;
+    m_opacityMod = 1.0f;
+    m_glowOpacityMod = 1.0f;
+    m_enterEffect = 0;
+    m_frame = spriteName;
+    m_shouldSpawn = false;
+	// set to 0.1f for now since i just CANNOT figure out what these variables are, probably some inlined functions in CCSprite...
+	unk_0x1d4 = 1.0f; // 0x138
+	unk_0x1d8 = 1.0f; // 0x13c
+    m_scaleModX = 1.0f;
+    m_scaleModY = 1.0f;
+    m_startScaleX = 1.0f;
+    m_startScaleY = 1.0f;
     //  this->m_ID = dword_4B6E6C;
-    this->m_startRotation = 0.0f;
-    this->m_tintColor = ccc3(255, 255, 255);
-    this->m_tintDuration = 0.5f;
-    this->setScaleX(1.0f);
-    this->setScaleY(1.0f);
-    this->m_isActive = false;
-    this->unk_0x204 = true;
-    this->unk_0x218 = true;
-    this->m_tintObjectsUseBlend = true;
+    m_startRotation = 0.0f;
+    m_tintColor = ccc3(255, 255, 255);
+    m_tintDuration = 0.5f;
+    setScaleX(1.0f);
+    setScaleY(1.0f);
+    m_isActive = false;
+    unk_0x204 = true;
+    unk_0x218 = true;
+    m_tintObjectsUseBlend = true;
     return true;
 }
 
@@ -129,8 +125,39 @@ GameObject* GameObject::create(const char* frame)
 GameObject* GameObject::objectFromString(std::string objString)
 {
 	CCDictionary* objDict = ObjectToolbox::stringSetupToDict(objString);
+	if (!objDict) return nullptr;
 
+	if (!objDict->objectForKey("1")) return nullptr;
+	int objID = atoi(objDict->valueForKey("1")->getCString());
+	if (!objID) return nullptr;
 
+	const char* frame = ObjectToolbox::sharedState()->keyToFrame(objDict->valueForKey("1")->getCString());
+
+	float x = objDict->valueForKey("2")->floatValue();
+	float y = objDict->valueForKey("3")->floatValue();
+	bool flipX = objDict->objectForKey("4") ? objDict->valueForKey("4")->boolValue() : false;
+	bool flipY = objDict->objectForKey("5") ? objDict->valueForKey("5")->boolValue() : false;
+	int rotation = objDict->objectForKey("6") ? objDict->valueForKey("6")->intValue() : 0;
+
+	GameObject* object = GameObject::create(frame);
+	if (!object) return nullptr;
+
+	object->setObjectKey(objID);
+	object->setFlipX(flipX);
+	object->setFlipY(flipY);
+	object->setRotation((float)rotation);
+
+	CCPoint startPos = ccp(x, y + 90.0f);
+	object->m_startPos = startPos;
+	object->setPosition(startPos);
+
+	object->customSetup();
+	object->calculateSpawnXPos();
+
+	return object;
+
+	// old thing i was doing, keeping it here just in case..
+	/*CCDictionary* objDict = ObjectToolbox::stringSetupToDict(objString);
 
 	char const* key = objDict->valueForKey("1")->getCString();
 	int objID = atoi(key);
@@ -140,7 +167,6 @@ GameObject* GameObject::objectFromString(std::string objString)
 		return nullptr;
 
 	GameObject* object;
-
 	if (objID == 84 || objID == 36 || objID == 141) {
 		// object = RingObject::create();
 		return nullptr;
@@ -152,15 +178,16 @@ GameObject* GameObject::objectFromString(std::string objString)
 	}
 
 	object->setObjectKey(objID);
+	object->customSetup();
 
-	return object;
+	return object;*/
 }
 
 void GameObject::disableObject() {
-	this->m_type = GameObjectType::Decoration;
-    this->m_isDisabled = true;
-	this->m_particleAdded = false;
-    this->m_opacityMod = 0.2f;
+	m_type = GameObjectType::Decoration;
+    m_isDisabled = true;
+	m_particleAdded = false;
+    m_opacityMod = 0.2f;
 }
 
 const char* GameObject::getBallFrame(int idx) {
@@ -243,25 +270,25 @@ void GameObject::activateObject() {
 void GameObject::setFlipX(bool flipX) {
     CCSpritePlus::setFlipX(flipX);
 
-    /*if (this->m_glowSprite) {
+    if (this->m_glowSprite) {
         m_glowSprite->setFlipX(flipX);
     }
     if (this->m_hasColor) {
         m_colorSprite->setFlipX(flipX);
-    }*/
+    }
 }
 
 void GameObject::setFlipY(bool flipY) {
     CCSpritePlus::setFlipY(flipY);
-    /*if (this->m_glowSprite) {
+    if (this->m_glowSprite) {
         m_glowSprite->setFlipY(flipY);
     }
     if (this->m_hasColor) {
         m_colorSprite->setFlipY(flipY);
-    }*/
+    }
 }
 
-/*void GameObject::setScaleX(float scaleX) {
+void GameObject::setScaleX(float scaleX) {
     CCSpritePlus::setScaleX(scaleX);
     if (this->m_glowSprite) {
         this->m_glowSprite->setScaleX(scaleX);
@@ -279,7 +306,7 @@ void GameObject::setScaleY(float scaleY) {
     if (this->m_hasColor) {
         m_colorSprite->setScaleY(scaleY);
     }
-}*/
+}
 
 void GameObject::resetObject() {
     this->m_hasBeenActivated = false;
@@ -296,8 +323,8 @@ void GameObject::resetObject() {
 void GameObject::setPosition(cocos2d::CCPoint const &position) {
     this->unk_0x218 = true;
     CCSpritePlus::setPosition(position);
-    if (this->m_particleSystem) {
-        // this->m_particleSystem->setPosition()
+    if (m_particleSystem) {
+		m_particleSystem->setPosition(position);
     }
 }
 
@@ -336,16 +363,21 @@ void GameObject::updateState()
 
 void GameObject::customSetup()
 {
-	GameManager* pGameManager = GameManager::sharedState();
-
 	switch (m_objectKey) {
 	case 5:
 	case 73:
-	case 74:
-		// ok skip some of this
+	case 80:
+	case 120:
+	case 164:
+	case 191:
+	case 193:
+	case 198:
+	case 199:
+	case 245:
 	case 246:
 		m_type = GameObjectType::Decoration;
 		m_objectZ = -2;
+		break;
 	default:
 		if (m_frame.find("edit_e", 0)) {
 			m_type = GameObjectType::None;
@@ -353,120 +385,28 @@ void GameObject::customSetup()
 		}
 		m_type = GameObjectType::Decoration;
 		m_shouldSpawn = true;
-		// field_0x1c8 = 1;
+		unk_0x1c8 = true;
 		m_isInvisible = true;
-		// field468_0x1d4 = 30.0f;
-		// field469_0x1d = 60.0f
+		unk_0x1d4 = 30.0f;
+		unk_0x1d8 = 60.0f;
 		break;
 	case 8:
-	case 39: break; // temp
-	case 9:
-	case 61:
-	case 135:
-	case 243:
-	case 244:
-		this->m_type = Hazard;
-		this->m_scaleModY = 0.4f;
-		this->m_scaleModX = 0.3f;
-		if (m_objectKey == 9) {
-			CCSpriteFrameCache* frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-			int randNum = roundf(rand() % 2);
-			char const* frameFile = CCString::createWithFormat("pit_%02d_001.png", randNum + 1)->getCString();
-			this->setDisplayFrame(frameCache->spriteFrameByName(frameFile));
-		}
-		/*else if (iVar11 == 0x87) {
-			lrand48();
-			roundf(__x_00);
-			iVar11 = (int)extraout_r0_04 + 1;
-			if (iVar11 == DAT_004be004) {
-				iVar11 = (int)extraout_r0_04 + 2;
-			}
-			if (4 < iVar11) {
-				iVar11 = 1;
-			}
-			pcVar14 = *(code **)(*(int *)this + 0x224);
-			pCVar4 = (CCSpriteFrameCache *)cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache();
-			pCVar5 = (CCString *)cocos2d::CCString::createWithFormat("pit_b_%02d_001.png", iVar11);
-			pcVar6 = (char *)cocos2d::CCString::getCString(pCVar5);
-			uVar7 = cocos2d::CCSpriteFrameCache::spriteFrameByName(pCVar4, pcVar6);
-			(*pcVar14)(this, uVar7);
-			DAT_004be004 = iVar11;
-		}*/
-		break;
-	case 35:
-		this->m_type = YellowPad;
-		this->m_scaleModX = 1.0;
-		this->m_scaleModY = 1.0;
-		// skip some
-	case 103: break; // temp
-	// skip some
-	case 140:
-		this->m_type = GravityPad;
-		// skip some
-	case 177:
-	case 178:
-	case 179:
+	case 39:
+	case 103:
+	case 117:
+	case 118:
+	case 119:
 	case 216:
 	case 217:
 	case 218:
-		this->m_type = GameObjectType::Hazard;
-		this->m_scaleModX = 0.2f;
-		this->m_scaleModY = 0.4f;
-		/*if (iVar11 - 0xb1U < 3)
-			this->field_0x2a9 = 1;*/
+		m_type = GameObjectType::Hazard;
+		m_scaleModX = 0.2f;
+		m_scaleModY = 0.4f;
+		if (m_objectKey - 117U < 3) {
+			m_glowUseBGColor = true;
+		}
 		break;
-	// more left
-	case 13:
-		this->m_type = GameObjectType::ShipPortal;
-		this->m_objectZ = 10;
-		if (pGameManager->getEditMode()) break;
-		this->createAndAddParticle(m_type, "portalEffect04.plist", 3, tCCPositionType::kCCPositionTypeGrouped);
-		break;
-	// skipping
-	case 211:
-		m_type = GameObjectType::Decoration;
-		m_objectZ = -2;
-		m_dontFadeTinted = true;
-		m_dontFade = true;
-		m_dontShow = true;
-		break;
-
-	case 247:
-	case 248:
-	case 249:
-	case 250:
-	case 252:
-	case 253:
-	case 254:
-	case 255:
-	case 256:
-	case 257:
-	case 258:
-	case 260:
-	case 261:
-	case 263:
-	case 264:
-	case 265:
-	case 267:
-	case 268:
-	case 269:
-	case 270:
-	case 271:
-	case 272:
-	case 274:
-	case 275:
-		m_type = None;
-		unk_0x1d4 = 30.0f;
-		unk_0x1d8 = 30.0f;
-		break;
-	case 273:
-		m_type = GameObjectType::Decoration;
-		m_dontShow = true;
-		m_objectZ = -2;
 	}
-
-	//if (m_type - 7 < 2)
-		// m_isDisabled = true;
 
 	// if (((uVar13 < 0xf) && ((1 << (uVar13 & 0xff) & 0x7002U) != 0)) || (this->m_objectKey == 8)) {
 	if (m_objectKey == 8) {
@@ -474,10 +414,10 @@ void GameObject::customSetup()
 		unk_0x1d8 = 30.0f;
 	}
 
-	if (m_touchTriggered) {
-		// this->m_type = 21;
-		this->m_isDisabled = false;
-	}
+	/*if (m_touchTriggered) {
+		m_type = GameObjectType::unk21;
+		m_isDisabled = false;
+	}*/
 }
 
 CCRect GameObject::getObjectRect()
@@ -539,12 +479,12 @@ CCRect GameObject::getObjectTextureRect()
 
 CCPoint GameObject::getRealPosition()
 {
-	return m_realPosition;
+	return m_startPos;
 }
 
 void GameObject::setStartPos(CCPoint position)
 {
-	m_realPosition = position;
+	m_startPos = position;
 	this->setPosition(position);
 }
 
@@ -556,5 +496,5 @@ std::string GameObject::getSaveString()
 
 void GameObject::calculateSpawnXPos()
 {
-	m_spawnXPos = m_realPosition.x;
+	m_spawnXPos = m_startPos.x;
 }

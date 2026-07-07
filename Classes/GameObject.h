@@ -20,8 +20,9 @@ enum GameObjectType : int32_t {
     BlueOrb = 12,
     MirrorPortal = 13,
     CounterMirrorPortal = 14,
-    BallPortal = 15,
-	unknown22 = 22,
+	BallPortal = 15,
+	unk21 = 21,
+	unk22 = 22,
     SecretCoin = 23
 };
 /**
@@ -35,10 +36,10 @@ public:
     bool init(const char* spriteName);
     
     // virtual void update(float dt);
-    // virtual void setScaleX(float scaleX);
-    // virtual void setScaleY(float scaleY);
-    // virtual void setScale(float scale);
-	virtual void setPosition(cocos2d::CCPoint const &position);
+    void setScaleX(float scaleX);
+    void setScaleY(float scaleY);
+    // void setScale(float scale);
+	void setPosition(cocos2d::CCPoint const &position);
     // virtual void setVisible(bool visible);
     // virtual void setRotation(float rotation);
     // virtual void setOpacity(unsigned char opacity);
@@ -106,7 +107,7 @@ public:
     CC_SYNTHESIZE_READONLY(bool, m_shouldSpawn, ShouldSpawn); // 0x240
 	CC_SYNTHESIZE(bool, m_touchTriggered, TouchTriggered); // 0x241
 	// this is a bit strange theres this function getStartPos and getRealPosition and they both return this variable which is 0x244
-    CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_realPosition, StartPos); // 0x244
+    CC_SYNTHESIZE_READONLY(cocos2d::CCPoint, m_startPos, StartPos); // 0x244
     CC_SYNTHESIZE_READONLY(std::string, m_frame, Frame); // 0x24c
     CC_SYNTHESIZE_READONLY(bool, m_blendAdditive, BlendAdditive); // 0x250
 	CC_SYNTHESIZE_READONLY(bool, m_usePlayerColor, UsePlayerColor); // 0x251

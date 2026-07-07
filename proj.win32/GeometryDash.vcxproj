@@ -153,6 +153,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\GameSoundManager.cpp" />
     <ClCompile Include="..\Classes\GameStatsManager.cpp" />
     <ClCompile Include="..\Classes\GameToolbox.cpp" />
+    <ClCompile Include="..\Classes\GaragePage.cpp" />
     <ClCompile Include="..\Classes\GJComment.cpp" />
     <ClCompile Include="..\Classes\GJDropDownLayer.cpp" />
     <ClCompile Include="..\Classes\GJGameLevel.cpp" />
@@ -224,6 +225,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\GameSoundManager.h" />
     <ClInclude Include="..\Classes\GameStatsManager.h" />
     <ClInclude Include="..\Classes\GameToolbox.h" />
+    <ClInclude Include="..\Classes\GaragePage.h" />
     <ClInclude Include="..\Classes\GJComment.h" />
     <ClInclude Include="..\Classes\GJDropDownLayer.h" />
     <ClInclude Include="..\Classes\GJGameLevel.h" />

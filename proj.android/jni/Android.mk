@@ -36,6 +36,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameStatsManager.cpp \
                    ../../Classes/GameSoundManager.cpp \
                    ../../Classes/GameToolbox.cpp \
+                   ../../Classes/GaragePage.cpp \
                    ../../Classes/GJDropDownLayer.cpp \
                    ../../Classes/GJGameLevel.cpp \
                    ../../Classes/GJGarageLayer.cpp \
