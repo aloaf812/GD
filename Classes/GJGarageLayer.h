@@ -15,8 +15,16 @@ public:
 	void setupIconSelect();
 
 	void updatePlayerColors();
-    void onBack(CCObject* sender);
-	void onSelectTab(CCObject* sender);
+    
+	void onBack(cocos2d::CCObject* sender);
+	void onSelectTab(cocos2d::CCObject* sender);
+	
+	void onPlayerIcon(cocos2d::CCObject* sender);
+	void onShipIcon(cocos2d::CCObject* sender);
+	void onBallIcon(cocos2d::CCObject* sender);
+	void onBirdIcon(cocos2d::CCObject* sender);
+	void onSpecialIcon(cocos2d::CCObject* sender);
+
 	void selectPage(IconType type);
 
 	SimplePlayer* m_playerObject; // 0x118

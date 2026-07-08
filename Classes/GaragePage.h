@@ -6,8 +6,8 @@
 
 class GaragePage : public cocos2d::CCLayer {
 public:
-	static GaragePage* create(IconType type, GJGarageLayer* garage);
-	bool init(IconType type, GJGarageLayer* garage);
+	static GaragePage* create(IconType type, GJGarageLayer* garage, cocos2d::SEL_MenuHandler selector);
+	bool init(IconType type, GJGarageLayer* garage, cocos2d::SEL_MenuHandler selector);
 	void onSelect(cocos2d::CCObject* sender);
 
 	cocos2d::CCSprite* unk_0x118; // 0x118

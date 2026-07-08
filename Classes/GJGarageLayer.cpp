@@ -6,6 +6,7 @@
 #include "MenuLayer.h"
 #include "GameManager.h"
 #include "GameStatsManager.h"
+#include "GaragePage.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -115,14 +116,15 @@ bool GJGarageLayer::init()
 
 void GJGarageLayer::setupIconSelect()
 {
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+	float baseYPos = (winSize.height * 0.5f) - 5;
 
 	CCScale9Sprite* base = CCScale9Sprite::create("square02_001.png", CCRect(0, 0, 80, 80));
 	base->setOpacity(75);
 	base->setContentSize(CCSize(440, 100));
 	this->addChild(base, -1);
-	base->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) - 5.0f - 31.0f));
+	base->setPosition(ccp(winSize.width * 0.5f, baseYPos - 31.0f));
 
 	CCSprite* unlockTxt = CCSprite::createWithSpriteFrameName("GJ_unlockTxt_001.png");
 	this->addChild(unlockTxt);
@@ -173,7 +175,25 @@ void GJGarageLayer::setupIconSelect()
 	unk_0x130 = CCArray::create();
 	unk_0x130->retain();
 
-	// GaragePage is unimplemented
+	GaragePage* playerPage = GaragePage::create(IconType::Cube, this, menu_selector(GJGarageLayer::onPlayerIcon));
+	this->addChild(playerPage, 100);
+	unk_0x130->addObject(playerPage);
+
+	GaragePage* shipPage = GaragePage::create(IconType::Ship, this, menu_selector(GJGarageLayer::onShipIcon));
+	this->addChild(shipPage, 100);
+	unk_0x130->addObject(shipPage);
+
+	GaragePage* ballPage = GaragePage::create(IconType::Ball, this, menu_selector(GJGarageLayer::onBallIcon));
+	this->addChild(ballPage, 100);
+	unk_0x130->addObject(ballPage);
+
+	GaragePage* birdPage = GaragePage::create(IconType::UFO, this, menu_selector(GJGarageLayer::onBirdIcon));
+	this->addChild(birdPage, 100);
+	unk_0x130->addObject(birdPage);
+
+	GaragePage* specialPage = GaragePage::create(IconType::Special, this, menu_selector(GJGarageLayer::onSpecialIcon));
+	this->addChild(specialPage, 100);
+	unk_0x130->addObject(specialPage);
 
 	selectPage(IconType::Cube);
 }
@@ -197,6 +217,31 @@ void GJGarageLayer::onSelectTab(CCObject* sender)
 {
 	int senderTag = ((CCNode*)sender)->getTag();
 	selectPage((IconType)senderTag);
+}
+
+void GJGarageLayer::onPlayerIcon(CCObject* sender)
+{
+
+}
+
+void GJGarageLayer::onShipIcon(CCObject* sender)
+{
+
+}
+
+void GJGarageLayer::onBallIcon(CCObject* sender)
+{
+
+}
+
+void GJGarageLayer::onBirdIcon(CCObject* sender)
+{
+
+}
+
+void GJGarageLayer::onSpecialIcon(CCObject* sender)
+{
+
 }
 
 void GJGarageLayer::selectPage(IconType type)

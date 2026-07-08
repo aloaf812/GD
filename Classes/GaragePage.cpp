@@ -2,11 +2,11 @@
 USING_NS_CC;
 
 
-GaragePage* GaragePage::create(IconType type, GJGarageLayer* garage)
+GaragePage* GaragePage::create(IconType type, GJGarageLayer* garage, SEL_MenuHandler selector)
 {
 	GaragePage* ret = new GaragePage();
 	if (ret) {
-		if (ret->init(type, garage)) {
+		if (ret->init(type, garage, selector)) {
 			ret->autorelease();
 			return ret;
 		}
@@ -17,7 +17,7 @@ GaragePage* GaragePage::create(IconType type, GJGarageLayer* garage)
 	return NULL;
 }
 
-bool GaragePage::init(IconType type, GJGarageLayer* garage)
+bool GaragePage::init(IconType type, GJGarageLayer* garage, SEL_MenuHandler selector)
 {
 
 	if (!CCLayer::init())
