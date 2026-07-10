@@ -25,6 +25,8 @@ PlayerObject::PlayerObject()
 	unk_0x30e = false;
 
 	unk_0x324 = 0.0f;
+	m_hasJumped = false;
+	m_hasRingJumped = false;
 }
 
 PlayerObject* PlayerObject::create(int player, int ship, CCLayer* layer)

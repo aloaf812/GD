@@ -63,6 +63,7 @@ PlayLayer::PlayLayer()
 {
 	m_practiceMode = false;
 	m_activeGColorAction = nullptr;
+	m_showingHint = false;
 }
 
 void PlayLayer::onQuit()
@@ -463,12 +464,12 @@ void PlayLayer::resetLevel()
 void PlayLayer::fullReset()
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	this->m_clkTimer = 0.0;
-	this->unk_0x220 = 0.0;
-	this->unk_0x120 = true;
-	this->m_cleanReset = true;
-	this->m_attempts = 0;
-	this->m_jumps = 0;
+	m_clkTimer = 0.0;
+	unk_0x220 = 0.0;
+	unk_0x120 = true;
+	m_cleanReset = true;
+	m_attempts = 0;
+	m_jumps = 0;
 
 	if (m_practiceMode)
 		togglePracticeMode(false);
@@ -476,6 +477,21 @@ void PlayLayer::fullReset()
 		resetLevel();
 
 	m_attemptLabel->setPosition(ccp(m_cameraPos.x + winSize.width * 0.5f, (m_cameraPos.y + winSize.height * 0.5f) + 125.0f));
+}
+
+void PlayLayer::delayedResetLevel()
+{
+	if (m_resetQueued)
+		resetLevel();
+}
+
+void PlayLayer::showRetryLayer()
+{
+	m_showingEndLayer = true;
+	// RetryLevelLayer is unimplemented
+	/*RetryLevelLayer* retryLayer = RetryLevelLayer::create();
+	this->addChild(retryLayer, 100);
+	retryLayer->showLayer(false);*/
 }
 
 void PlayLayer::startGame()
@@ -1137,19 +1153,39 @@ void PlayLayer::destroyPlayer()
 		if (!m_showingHint && (m_level->getLevelID() == 3) && !m_player->getHasRingJumped() && m_attempts > 1)
 			this->showHint();
 		
-		// bVar1 = true;
+		bool newBest = true;
 		m_playerDead = true;
 		m_player->playerDestroyed();
 		
 		// more left to implement
+		CCSequence* sequence;
+		if ((!GameManager::sharedState()->getAutoRetryLevel()) && (!m_practiceMode)) {
+			PLAY_LAYER->getUILayer()->disableMenu();
+			sequence = CCSequence::create(CCDelayTime::create(1.0f), CCCallFunc::create(this, callfunc_selector(PlayLayer::showRetryLayer)), nullptr);
+		}
+		else {
+			m_resetQueued = true;
+			float delayTime;
+			if (newBest) {
+				delayTime = 1.4f;
+				// this->showNewBest();
+			}
+			else
+				delayTime = 1.0f;
+
+			this->stopActionByTag(16);
+			sequence = CCSequence::create(CCDelayTime::create(delayTime), CCCallFunc::create(this, callfunc_selector(PlayLayer::delayedResetLevel)), nullptr);
+			sequence->setTag(16);
+		}
+
+		this->runAction(sequence);
 	}
 }
 
 void PlayLayer::showHint()
 {
-	this->m_showingHint = true;
-	CCDirector* pDirector = CCDirector::sharedDirector();
-	CCSize winSize = pDirector->getWinSize();
+	m_showingHint = true;
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	float delayTime;
 	float scale;
@@ -1172,11 +1208,9 @@ void PlayLayer::showHint()
 	hintLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 60.0f));
 	hintLabel->setOpacity(0);
 
-	hintLabel->runAction(CCSequence::create(
-		CCFadeIn::create(0.5f),
-		CCDelayTime::create(delayTime),
-		CCFadeOut::create(0.5f),
-		CCCallFunc::create(hintLabel, callfunc_selector(CCNode::removeMeAndCleanup))));
+	// crashes the game somehow :/
+	CCSequence* sequence = CCSequence::create(CCFadeIn::create(0.5f), CCDelayTime::create(delayTime), CCFadeOut::create(0.5f), CCCallFunc::create(hintLabel, callfunc_selector(CCNode::removeMeAndCleanup)));
+	hintLabel->runAction(sequence);
 }
 
 std::string PlayLayer::getParticleKey(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)

@@ -73,7 +73,7 @@ bool GameManager::init()
 	unk_0x100 = 0;
 	unk_0x104 = "none";
 	unk_0xef = false;
-  return true;
+	return true;
 }
 
 void GameManager::applicationDidEnterBackground()

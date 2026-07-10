@@ -39,6 +39,8 @@ public:
 	void pauseGame();
     void resetLevel();
 	void fullReset();
+	void delayedResetLevel();
+	void showRetryLayer();
 
 	void checkCollisions(float dt);
 	int sectionForPos(cocos2d::CCPoint point);
