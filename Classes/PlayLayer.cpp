@@ -573,7 +573,7 @@ void PlayLayer::update(float dt)
 void PlayLayer::updateAttempts()
 {
 	m_attempts++;
-	GAME_MANAGER->setTotalAttempts(GAME_MANAGER->getTotalAttempts() + 1);
+	GM->setTotalAttempts(GM->getTotalAttempts() + 1);
 	char const* attemptString = CCString::createWithFormat("Attempt %i", m_attempts)->getCString();
 	m_attemptLabel->setString(attemptString);
 

@@ -35,8 +35,8 @@ bool GJGarageLayer::init()
     
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-    GAME_MANAGER->setMainMenuActive(true);
-	GAME_MANAGER->setLastScene(LastGameScene::unk0);
+	GM->setMainMenuActive(true);
+	GM->setLastScene(LastGameScene::unk0);
     
     this->setKeypadEnabled(true);
     
@@ -102,7 +102,7 @@ bool GJGarageLayer::init()
     editBarBG->setPosition(CCPoint(pDirector->getScreenLeft(), pDirector->getScreenBottom()));
     this->addChild(editBarBG, 1);*/
 
-	m_playerObject = SimplePlayer::create(GAME_MANAGER->getPlayerFrame());
+	m_playerObject = SimplePlayer::create(GM->getPlayerFrame());
 	m_playerObject->setAnchorPoint(CCPoint(0.0f, 0.0f));
 	this->addChild(m_playerObject, 1);
 	m_playerObject->setScale(1.6f);

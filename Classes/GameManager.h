@@ -14,7 +14,7 @@
 #define SCREEN_SCALE_F_W CCDirector::sharedDirector()->getScreenScaleFactorW()
 #define SCREEN_SCALE_F_H CCDirector::sharedDirector()->getScreenScaleFactorH()
 // apparently somehow for some reason robtop sometimes doesnt define GameManager as a variable in functions so i made this macro to make code slightly more readable
-#define GAME_MANAGER GameManager::sharedState()
+#define GM GameManager::sharedState()
 
 // thanks geode
 enum class UnlockType {
