@@ -21,19 +21,20 @@ void PauseLayer::customSetup()
 
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-	CCScale9Sprite* background = CCScale9Sprite::create("square04_001.png", CCRect(0, 0, 80, 80));
-	background->setOpacity(175);
-
+	CCRect bgRect = CCRect(0, 0, 80, 80);
 	float bgWidth = (CCDirector::sharedDirector()->getScreenRight() - 20.0f) - CCDirector::sharedDirector()->getScreenLeft();
 	float bgHeight = (CCDirector::sharedDirector()->getScreenTop() - 20.0f) - CCDirector::sharedDirector()->getScreenBottom();
-
-	background->setContentSize(CCSize(bgWidth, bgHeight));
+	
+	CCScale9Sprite* background = CCScale9Sprite::create("square04_001.png", bgRect);
+	background->setOpacity(175);
+	CCSize bgSize = CCSize(bgWidth, bgHeight);
+	background->setContentSize(bgSize);
+	this->addChild(background, -1);
+	
 	background->setPosition(ccp(winSize.width * 0.5f, winSize.height * 0.5f));
 	background->setColor(ccBLACK);
-	this->addChild(background);
 
-	std::string levelName = PLAY_LAYER->getLevel()->getLevelName(); 
-	CCLabelBMFont* levelLabel = CCLabelBMFont::create(levelName.c_str(), "bigFont.fnt");
+	CCLabelBMFont* levelLabel = CCLabelBMFont::create(PLAY_LAYER->getLevel()->getLevelName().c_str(), "bigFont.fnt");
 	levelLabel->setPosition(ccp(winSize.width * 0.5f, (bgHeight * 0.5f + winSize.height * 0.5f) - 20.0f));
 	this->addChild(levelLabel);
 
@@ -77,8 +78,6 @@ void PauseLayer::customSetup()
 		mainButtonMenu->addChild(restartExtra);
 	}
 
-	mainButtonMenu->setPosition(CCPoint(winSize.width * 0.5f, winSize.height * 0.5f));
-
 	float spacing;
 	if (PLAY_LAYER->getLevel()->getLevelType() == GJLevelType::LocalLevel)
 		spacing = 15.0f;
@@ -88,8 +87,14 @@ void PauseLayer::customSetup()
 	mainButtonMenu->alignItemsHorizontallyWithPadding(spacing);
 	mainButtonMenu->setPosition(ccp(mainButtonMenu->getPosition().x, (winSize.height * 0.5f) - 30.0f));
 
+	
+	if (!GM->getClickedPractice() && PLAY_LAYER->getLevel()->getLevelType() != GJLevelType::LocalLevel) {
+		CCSprite* practiceTxt = CCSprite::createWithSpriteFrameName("GJ_practiceTxt_001.png");
+		this->addChild(practiceTxt);
+		practiceTxt->setPosition(ccp((winSize.width * 0.5f) - 165.0f, (winSize.height * 0.5f) - 12.0f));
+	}
+
 	CCMenu* toggleMenu = CCMenu::create();
-	this->addChild(toggleMenu);
 
 	float screenBottom = CCDirector::sharedDirector()->getScreenBottom();
 	float centerX = winSize.width * 0.5f;
@@ -99,6 +104,8 @@ void PauseLayer::customSetup()
 	createToggleButton("Auto-Retry", menu_selector(PauseLayer::onAutoRetry), !GM->getAutoRetryLevel(), toggleMenu, ccp(centerX + 84.0f, screenBottom + 65.0f));
 	createToggleButton("Auto-Checkpoints", menu_selector(PauseLayer::onAutoCheckpoints), !GM->getAutoCheckpoints(), toggleMenu, ccp(centerX - 185.0f, screenBottom + 30.0f));
 	createToggleButton("Progress Bar", menu_selector(PauseLayer::onProgressBar), !GM->getShowProgressBar(), toggleMenu, ccp(centerX - 22.0f, screenBottom + 30.0f));
+	
+	this->addChild(toggleMenu);
 }
 
 void PauseLayer::createToggleButton(std::string text, SEL_MenuHandler callback, bool toggled, CCMenu* menu, CCPoint position)
@@ -133,10 +140,11 @@ void PauseLayer::createToggleButton(std::string text, SEL_MenuHandler callback, 
 
 void PauseLayer::setupProgressBars()
 {
+	GJGameLevel* level = PLAY_LAYER->getLevel();
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
 	CCSprite* normalBarBG = CCSprite::create("GJ_progressBar_001.png");
-	normalBarBG->setColor(ccBLACK);
+	normalBarBG->setColor(ccc3(0, 0, 0)); // robtop could've used the ccBLACK macro here but didn't...
 	normalBarBG->setOpacity(125);
 	normalBarBG->setScale(1.0f);
 	this->addChild(normalBarBG, 3);
@@ -152,8 +160,7 @@ void PauseLayer::setupProgressBars()
 	normalBarFill->setPosition(ccp(fillInset * 0.5f, normalBarBG->getContentSize().height * 0.5f));
 	normalBarBG->addChild(normalBarFill, 1);
 
-	// int normalPercent = level>getNormalPercent(); // vtable +620
-	int normalPercent = 0;
+	int normalPercent = level->getNormalPercent(); // vtable +620
 	float normalBarW = normalBarFill->getContentSize().width;
 	float normalFillW = normalBarW * (normalPercent / 100.0f);
 	if (normalFillW < normalBarW)
@@ -161,20 +168,19 @@ void PauseLayer::setupProgressBars()
 	normalBarFill->setTextureRect(CCRect(0, 0, normalFillW, normalBarFill->getContentSize().height));
 
 	CCSprite* practiceBarBG = CCSprite::create("GJ_progressBar_001.png");
-	practiceBarBG->setColor(ccBLACK);
+	practiceBarBG->setColor(ccc3(0, 0, 0));
 	practiceBarBG->setOpacity(125);
 	practiceBarBG->setScale(1.0f);
 	this->addChild(practiceBarBG, 3);
 	practiceBarBG->setPosition(ccpAdd(normalBarBG->getPosition(), ccp(0.0f, -50.0f)));
 
 	CCSprite* practiceBarFill = CCSprite::create("GJ_progressBar_001.png");
-	practiceBarFill->setColor(ccWHITE); // color {0, -1, -1} = {0x00, 0xFF, 0xFF} -> cyan
+	practiceBarFill->setColor(ccc3(0, 255, 255)); // cyan
 	practiceBarFill->setAnchorPoint(ccp(0.0f, 0.5f));
 	practiceBarFill->setPosition(normalBarFill->getPosition()); // same local offset
 	practiceBarBG->addChild(practiceBarFill, 1);
 
-	// int practicePercent = level->getPracticePercent(); // vtable +628
-	int practicePercent = 0;
+	int practicePercent = level->getPracticePercent(); // vtable +628
 	float practiceBarW = practiceBarFill->getContentSize().width;
 	float practiceFillW = practiceBarW * (practicePercent / 100.0f);
 	if (practiceFillW < practiceBarW)
@@ -182,13 +188,13 @@ void PauseLayer::setupProgressBars()
 	practiceBarFill->setTextureRect(CCRect(0, 0, practiceFillW, practiceBarFill->getContentSize().height));
 
 	CCLabelBMFont* normalPctLabel = CCLabelBMFont::create(
-		CCString::createWithFormat("%i%%", normalPercent)->getCString(), "bigFont.fnt");
+		CCString::createWithFormat("%i%%", level->getNormalPercent())->getCString(), "bigFont.fnt");
 	this->addChild(normalPctLabel, 4);
 	normalPctLabel->setPosition(normalBarBG->getPosition());
 	normalPctLabel->setScale(0.5f);
 
 	CCLabelBMFont* practicePctLabel = CCLabelBMFont::create(
-		CCString::createWithFormat("%i%%", practicePercent)->getCString(), "bigFont.fnt");
+		CCString::createWithFormat("%i%%", level->getPracticePercent())->getCString(), "bigFont.fnt");
 	this->addChild(practicePctLabel, 4);
 	practicePctLabel->setPosition(practiceBarBG->getPosition());
 	practicePctLabel->setScale(0.5f);
@@ -272,9 +278,10 @@ void PauseLayer::onProgressBar(CCObject* sender)
 
 void PauseLayer::onAutoCheckpoints(CCObject* sender)
 {
-	// probably too complicated for me lol
+	GM->setAutoCheckpoints(GM->getAutoCheckpoints() ^ 1);
 }
 
 void PauseLayer::onAutoRetry(CCObject* sender)
 {
+	GM->setAutoRetryLevel(GM->getAutoRetryLevel() ^ 1);
 }
