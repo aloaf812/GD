@@ -121,7 +121,7 @@ bool LevelSelectLayer::init(int page)
 	rightShadow->setScaleX(0.7f);
     
 	ccBlendFunc shadowBlendFunc = { GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA };
-	rightShadow->setBlendFunc(shadowBlendFunc);
+	leftShadow->setBlendFunc(shadowBlendFunc);
 	rightShadow->setBlendFunc(shadowBlendFunc);
 
     CCSprite* topBar = CCSprite::createWithSpriteFrameName("GJ_topBar_001.png");

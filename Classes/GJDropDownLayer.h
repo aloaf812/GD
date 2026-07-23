@@ -10,7 +10,6 @@ class GJDropDownLayerDelegate;
 class GJDropDownLayer : public cocos2d::CCLayerColor {
 public:
     GJDropDownLayer();
-    ~GJDropDownLayer();
     
     bool init(const char* title, float height);
     bool init(const char* title);
@@ -30,7 +29,7 @@ public:
     GJDropDownLayer* create(const char* title, float height);
     GJDropDownLayer* create(const char* title);
     
-    bool ccTouchBegan() { return true; }
+	bool ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
     // void ccTouchCancelled() {}
     // void ccTouchEnded() {}
     // void ccTouchMoved() {}
