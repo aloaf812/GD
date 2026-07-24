@@ -165,6 +165,7 @@ public:
 
 	int unk_0x1b8; // 0x1b8
 	
+	float m_levelLength; // 0x1bc
 	float m_realLevelLength; // 0x1c0;
 	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
 	bool m_showingHint; // 0x1d0

@@ -64,6 +64,9 @@ PlayLayer::PlayLayer()
 	m_practiceMode = false;
 	m_activeGColorAction = nullptr;
 	m_showingHint = false;
+
+	m_levelLength = 0.0f;
+	m_realLevelLength = 0.0f;
 }
 
 void PlayLayer::onQuit()
@@ -488,10 +491,9 @@ void PlayLayer::delayedResetLevel()
 void PlayLayer::showRetryLayer()
 {
 	m_showingEndLayer = true;
-	// RetryLevelLayer is unimplemented
-	/*RetryLevelLayer* retryLayer = RetryLevelLayer::create();
+	RetryLevelLayer* retryLayer = RetryLevelLayer::create();
 	this->addChild(retryLayer, 100);
-	retryLayer->showLayer(false);*/
+	retryLayer->showLayer(false);
 }
 
 void PlayLayer::startGame()
@@ -1158,6 +1160,12 @@ void PlayLayer::destroyPlayer()
 		m_player->playerDestroyed();
 		
 		// more left to implement
+
+		if (!m_practiceMode)
+			// m_levelLength is NOT implemented at all because it's set in PlayLayer::createObjectsFromSetup and it's a really confusing function
+			// m_lastRunPercent = (m_player->getPosition().x / m_levelLength) * 100.0f;
+			m_lastRunPercent = 2;
+
 		CCSequence* sequence;
 		if ((!GameManager::sharedState()->getAutoRetryLevel()) && (!m_practiceMode)) {
 			PLAY_LAYER->getUILayer()->disableMenu();

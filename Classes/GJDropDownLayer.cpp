@@ -3,21 +3,21 @@
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 USING_NS_CC;
 GJDropDownLayer::GJDropDownLayer() {
-    this->m_endPosition = ccp(0, 0);
-    this->m_startPosition = ccp(0, 0);
-    this->m_buttonMenu = NULL;
-    this->m_listLayer = NULL;
-    this->m_internalLayer = NULL;
-    this->m_hidden = false;
-    this->m_delegate = NULL;
+    m_endPosition = ccp(0, 0);
+    m_startPosition = ccp(0, 0);
+	m_uiMenu = NULL;
+    m_listLayer = NULL;
+    m_internalLayer = NULL;
+    m_hidden = false;
+    m_delegate = NULL;
 }
 
 void GJDropDownLayer::disableUI() {
-    m_buttonMenu->setTouchEnabled(false);
+    m_uiMenu->setTouchEnabled(false);
 }
 
 void GJDropDownLayer::enableUI() {
-    m_buttonMenu->setTouchEnabled(true);
+	m_uiMenu->setTouchEnabled(true);
 }
 
 void GJDropDownLayer::draw() {
@@ -77,17 +77,17 @@ void GJDropDownLayer::showLayer(bool instantShow) {
     this->layerVisible();
     
     if (instantShow) {
-        m_internalLayer->setPosition(this->m_endPosition);
+        m_internalLayer->setPosition(m_endPosition);
         this->setOpacity(125);
         this->enterAnimFinished();
 		return;
 	}
 	
-    CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_endPosition), 2.0f);
+    CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5f, m_endPosition), 2.0f);
 	CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::enterAnimFinished));
     m_internalLayer->runAction(CCSequence::create(action, callback, nullptr));
     this->setOpacity(0);
-    this->runAction(CCFadeTo::create(0.5, 125));
+    this->runAction(CCFadeTo::create(0.5f, 125));
 }
 
 bool GJDropDownLayer::ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent) {
@@ -142,12 +142,12 @@ bool GJDropDownLayer::init(const char* title, float height) {
     CCMenuItemSpriteExtra* backBtn = CCMenuItemSpriteExtra::create(backBtnSprite, NULL, this, menu_selector(GJDropDownLayer::exitLayer));
     backBtn->setSizeMult(2.0f);
     
-    m_buttonMenu = CCMenu::create(backBtn, NULL);
-	m_buttonMenu->setPosition(ccp((winSize.width * 0.5f) + 178.0f, (winSize.height * 0.5f) - (height * 0.5f)));
+	m_uiMenu = CCMenu::create(backBtn, NULL);
+	m_uiMenu->setPosition(ccp((winSize.width * 0.5f) + 178.0f, (winSize.height * 0.5f) - (height * 0.5f)));
     
-	m_buttonMenu->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() + 24, CCDirector::sharedDirector()->getScreenTop() - 23));
+	m_uiMenu->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() + 24, CCDirector::sharedDirector()->getScreenTop() - 23));
     
-    m_internalLayer->addChild(m_buttonMenu, 10);
+	m_internalLayer->addChild(m_uiMenu, 10);
     
 	float height2 = height + m_listLayer->getPosition().y + 12.0;
     CCSprite* chain1 = CCSprite::createWithSpriteFrameName("chain_01_001.png");

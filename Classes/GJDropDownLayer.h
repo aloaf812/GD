@@ -30,14 +30,11 @@ public:
     GJDropDownLayer* create(const char* title);
     
 	bool ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
-    // void ccTouchCancelled() {}
-    // void ccTouchEnded() {}
-    // void ccTouchMoved() {}
     
     // these are from geode =)
-    cocos2d::CCPoint m_endPosition;
-    cocos2d::CCPoint m_startPosition;
-    cocos2d::CCMenu* m_buttonMenu; // 0x198
+    cocos2d::CCPoint m_endPosition; // 0x188
+    cocos2d::CCPoint m_startPosition; // 0x190
+	cocos2d::CCMenu* m_uiMenu; // 0x198
     GJListLayer* m_listLayer; // 0x19c
 
 	CC_SYNTHESIZE_READONLY(cocos2d::CCLayer*, m_internalLayer, InternalLayer); // 0x1a0
