@@ -7,6 +7,7 @@
 #include "ObjectToolbox.h"
 #include "CheckpointObject.h"
 #include "GameStatsManager.h"
+#include "RetryLevelLayer.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 
