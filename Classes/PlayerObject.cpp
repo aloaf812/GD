@@ -583,7 +583,7 @@ void PlayerObject::updateJump(float dt)
 			this->m_yVelocity = m_yStart * flipMod() * pScale;
 			this->incrementJumps();
 			if (this->m_rollMode != false) {
-				/*flipGravity(this, (bool)(this->m_gravityFlipped ^ 1), true);
+				/*flipGravity(this, (bool)(!m_gravityFlipped), true);
 				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&this->m_yVelocity + 4)
 					, 0x40000000, 0x3fe33333);
 				*pdVar8 = dVar11;*/
@@ -798,7 +798,7 @@ void PlayerObject::hitGround(bool notFlipped)
 		else
 			landParticle = m_landParticle2;
 
-		this->unk_0x368 = unk_0x368 ^ 1;
+		unk_0x368 = !unk_0x368;
 		landParticle->setAngle(unk_0x374 * flipMod());
 		landParticle->setGravity(ccp(m_landParticle->getGravity().x, unk_0x378 * flipMod()));
 		landParticle->setPosition(this->getPosition() + ccp(0.0f, (-12 * flipMod()) * m_playerScale));

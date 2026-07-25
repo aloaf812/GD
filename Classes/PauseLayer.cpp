@@ -272,16 +272,16 @@ void PauseLayer::onHelp(CCObject* sender)
 
 void PauseLayer::onProgressBar(CCObject* sender)
 {
-	GM->setShowProgressBar(GM->getShowProgressBar() ^ 1);
+	GM->setShowProgressBar(!GM->getShowProgressBar());
 	PLAY_LAYER->toggleProgressbar();
 }
 
 void PauseLayer::onAutoCheckpoints(CCObject* sender)
 {
-	GM->setAutoCheckpoints(GM->getAutoCheckpoints() ^ 1);
+	GM->setAutoCheckpoints(!GM->getAutoCheckpoints());
 }
 
 void PauseLayer::onAutoRetry(CCObject* sender)
 {
-	GM->setAutoRetryLevel(GM->getAutoRetryLevel() ^ 1);
+	GM->setAutoRetryLevel(!GM->getAutoRetryLevel());
 }

@@ -7,7 +7,21 @@
 class OptionsLayer : public GJDropDownLayer {
 public:
     static OptionsLayer* create();
+	void createToggleButton(std::string text, cocos2d::SEL_MenuHandler callback, bool toggled, cocos2d::CCMenu* menu, cocos2d::CCPoint position);
 	void customSetup();
+	void toggleGP();
+
+	void onGC(CCObject* sender);
+	void onGPSignIn(CCObject* sender);
+	void onSupport(CCObject* sender);
+	void onHelp(CCObject* sender);
+	void onRate(CCObject* sender);
+	void onMusic(CCObject* sender);
+	void onFX(CCObject* sender);
+	void onAutoCheckpoints(CCObject* sender);
+	void onAutoRetry(CCObject* sender);
+
+	cocos2d::CCMenu* m_optionsMenu; // 0x1b0
 };
 
 #endif
