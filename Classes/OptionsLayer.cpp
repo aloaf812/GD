@@ -54,33 +54,39 @@ void OptionsLayer::createToggleButton(std::string text, SEL_MenuHandler callback
 
 void OptionsLayer::customSetup()
 {
-	// unk_0x1bd = 0;
-	// unk_0x1bc = 0;
+	unk_0x1bd = false;
+	unk_0x1bc = false;
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 
-	ButtonSprite* supportSpr = ButtonSprite::create("Support", 128, 0, 1.0f, true);
+	ButtonSprite* supportSpr = ButtonSprite::create("Support", 130, 0, 1.0f, true);
 	CCMenuItemSpriteExtra* supportExtra = CCMenuItemSpriteExtra::create(supportSpr, NULL, this, menu_selector(OptionsLayer::onSupport));
 
-	ButtonSprite* helpSpr = ButtonSprite::create("How to play", 128, 0, 1.0f, true);
+	ButtonSprite* helpSpr = ButtonSprite::create("How to play", 130, 0, 1.0f, true);
 	CCMenuItemSpriteExtra* helpExtra = CCMenuItemSpriteExtra::create(helpSpr, NULL, this, menu_selector(OptionsLayer::onHelp));
 
 	m_optionsMenu = CCMenu::create(supportExtra, helpExtra, nullptr);
 	m_optionsMenu->alignItemsHorizontallyWithPadding(10.0f);
 	m_optionsMenu->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 80.0));
 
-	ButtonSprite* rateSpr = ButtonSprite::create("Rate", 128, 0, 1.0f, true);
+	float buttonHeight = supportExtra->getContentSize().height * supportExtra->getScaleY();
+
+	ButtonSprite* rateSpr = ButtonSprite::create("Rate", 130, 0, 1.0f, true);
 	CCMenuItemSpriteExtra* rateExtra = CCMenuItemSpriteExtra::create(rateSpr, NULL, this, menu_selector(OptionsLayer::onRate));
 	m_optionsMenu->addChild(rateExtra);
+	rateExtra->setPosition(supportExtra->getPosition() + ccp(0.0f, -buttonHeight - 10.0f));
 
-	// soundtracks button and placement and all that other stuff though it won't be worked on rn
+	ButtonSprite* stSptr = ButtonSprite::create("Soundtracks", 130, 0, 1.0f, true);
+	CCMenuItemSpriteExtra* stExtra = CCMenuItemSpriteExtra::create(stSptr, NULL, this, menu_selector(OptionsLayer::onSoundtracks));
+	m_optionsMenu->addChild(stExtra);
+	stExtra->setPosition(helpExtra->getPosition() + ccp(0.0f, -buttonHeight - 10.0f));
 
 	m_internalLayer->addChild(m_optionsMenu, 1);
 
 	CCMenu* toggleMenu = CCMenu::create();
 	createToggleButton("Music", menu_selector(OptionsLayer::onMusic), !GM->getMusicEnabled(), toggleMenu, ccp((winSize.width * 0.5f) - 140.0f, winSize.height * 0.5f));
-	createToggleButton("SFX", menu_selector(OptionsLayer::onFX), !GM->getFxEnabled(), toggleMenu, ccp((winSize.width * 0.5f) - 140.0f, winSize.height * 0.5f));
-	createToggleButton("Auto-Checkpoints", menu_selector(OptionsLayer::onAutoCheckpoints), !GM->getAutoCheckpoints(), toggleMenu, ccp((winSize.width * 0.5f) - 140.0f, winSize.height * 0.5f));
-	createToggleButton("Auto-Retry", menu_selector(OptionsLayer::onAutoRetry), !GM->getAutoRetryLevel(), toggleMenu, ccp((winSize.width * 0.5f) - 140.0f, winSize.height * 0.5f));
+	createToggleButton("SFX", menu_selector(OptionsLayer::onFX), !GM->getFxEnabled(), toggleMenu, ccp((winSize.width * 0.5f) + 40.0f, winSize.height * 0.5f));
+	createToggleButton("Auto-Checkpoints", menu_selector(OptionsLayer::onAutoCheckpoints), !GM->getAutoCheckpoints(), toggleMenu, ccp((winSize.width * 0.5f) - 140.0f, (winSize.height * 0.5f) - 40.0f));
+	createToggleButton("Auto-Retry", menu_selector(OptionsLayer::onAutoRetry), !GM->getAutoRetryLevel(), toggleMenu, ccp((winSize.width * 0.5f) + 40.0f, (winSize.height * 0.5f) - 40.0f));
 
 	// this still needs more work but it's not worth working on if the buttons themselves dont even work
 	// TL;DR fix GJDropDownLayer and its buttons before deciding to work on any GJDropDownLayer classes
@@ -112,9 +118,16 @@ void OptionsLayer::onGPSignIn(CCObject* sender)
 
 void OptionsLayer::onSupport(CCObject* sender)
 {
-	/*unk_0x1bc = 1;
-	unk_0x1bd = 0;
-	this->exitLayer();*/
+	unk_0x1bc = true;
+	unk_0x1bd = false;
+	// this->exitLayer();
+}
+
+void OptionsLayer::onSoundtracks(CCObject* sender)
+{
+	unk_0x1bd = true;
+	unk_0x1bc = false;
+	// this->exitLayer();
 }
 
 void OptionsLayer::onHelp(CCObject* sender)

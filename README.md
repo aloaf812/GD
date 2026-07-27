@@ -1,6 +1,7 @@
 # Geometry Dash (1.710) Decompilation
 
-Disclaimer: This is a **work-in-progress** decompilation of Geometry Dash version 1.710. Some of the core functionality is implemented, but not enough for it to be in a usable state.
+> [!IMPORTANT]
+> This is a **work-in-progress** decompilation of Geometry Dash version 1.710. Some of the core functionality is implemented, but not enough for it to be in a usable state.
 
 # Building/Contributing
 

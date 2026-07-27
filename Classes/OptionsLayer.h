@@ -14,6 +14,7 @@ public:
 	void onGC(CCObject* sender);
 	void onGPSignIn(CCObject* sender);
 	void onSupport(CCObject* sender);
+	void onSoundtracks(CCObject* sender);
 	void onHelp(CCObject* sender);
 	void onRate(CCObject* sender);
 	void onMusic(CCObject* sender);
@@ -22,6 +23,8 @@ public:
 	void onAutoRetry(CCObject* sender);
 
 	cocos2d::CCMenu* m_optionsMenu; // 0x1b0
+	bool unk_0x1bd; // 0x1bd
+	bool unk_0x1bc; // 0x1bc
 };
 
 #endif

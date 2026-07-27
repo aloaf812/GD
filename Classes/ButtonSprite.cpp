@@ -3,6 +3,7 @@
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 
 ButtonSprite::ButtonSprite() {
 	m_buttonType = 0;
@@ -77,7 +78,7 @@ bool ButtonSprite::init(cocos2d::CCSprite* sprite, int width, int height, float 
 
 	this->addChild(sprite, 1);
 
-	m_bgSprite = cocos2d::extension::CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
+	m_bgSprite = CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
 	m_bgSprite->setContentSize(CCSize(16.0f, 16.0f));
 	this->addChild(m_bgSprite, 0);
 
@@ -184,7 +185,7 @@ void ButtonSprite::setString(const char* text) {
 
 void ButtonSprite::updateBGImage(const char* bgImage) {
 	m_bgSprite->removeMeAndCleanup();
-	m_bgSprite = cocos2d::extension::CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
+	m_bgSprite = CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
 	m_bgSprite->setContentSize(CCSize(16.0f, 16.0f));
 	this->addChild(m_bgSprite, 0);
 
@@ -194,10 +195,10 @@ void ButtonSprite::updateBGImage(const char* bgImage) {
 		this->updateSpriteBGSize();
 }
 
-bool ButtonSprite::init(const char* caption, int width, int height, float scale, bool absoluteWidth, const char* font, const char* bgImage, float absoluteHeight) {
-	if (!cocos2d::CCSprite::init()) {
+bool ButtonSprite::init(const char* caption, int width, int height, float scale, bool absoluteWidth, const char* font, const char* bgImage, float absoluteHeight)
+{
+	if (!CCSprite::init())
 		return false;
-	}
 
 	m_buttonType = 1;
 	m_customScale = scale;
@@ -208,14 +209,14 @@ bool ButtonSprite::init(const char* caption, int width, int height, float scale,
 
 	m_textPositionOffset = ccp(0.0f, 2.0f);
 
-	if (strcmp(font, "bigFont.fnt") != 0) {
+	if (!strcmp(font, "bigFont.fnt")) {
 		m_textPositionOffset = ccp(-1.0f, 2.0f);
 	}
 
 	m_label = CCLabelBMFont::create("", font);
 	this->addChild(m_label, 1);
 
-	m_bgSprite = cocos2d::extension::CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
+	m_bgSprite = CCScale9Sprite::create(bgImage, CCRect(0.0f, 0.0f, 40.0f, 40.0f));
 	m_bgSprite->setContentSize(CCSize(16.0f, 16.0f));
 	this->addChild(m_bgSprite, 0);
 
