@@ -20,6 +20,7 @@ public:
     // google play
     static bool isSignedInGooglePlay();
     static void signInGooglePlay();
+	static void signOutGooglePlay();
     // achievements
     static void showAchievements();
     static void openAppPage();

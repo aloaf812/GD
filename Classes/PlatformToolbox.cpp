@@ -68,6 +68,11 @@ void PlatformToolbox::signInGooglePlay()
     
 }
 
+void PlatformToolbox::signOutGooglePlay()
+{
+
+}
+
 void PlatformToolbox::showAchievements()
 {
     

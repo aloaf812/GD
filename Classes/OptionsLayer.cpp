@@ -88,7 +88,21 @@ void OptionsLayer::customSetup()
 	createToggleButton("Auto-Checkpoints", menu_selector(OptionsLayer::onAutoCheckpoints), !GM->getAutoCheckpoints(), toggleMenu, ccp((winSize.width * 0.5f) - 140.0f, (winSize.height * 0.5f) - 40.0f));
 	createToggleButton("Auto-Retry", menu_selector(OptionsLayer::onAutoRetry), !GM->getAutoRetryLevel(), toggleMenu, ccp((winSize.width * 0.5f) + 40.0f, (winSize.height * 0.5f) - 40.0f));
 
-	// this still needs more work but it's not worth working on if the buttons themselves dont even work
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	// GooglePlayManager::sharedState()->setDelegate(m_gPlayDelegate);
+	CCSprite* gpSignIn = CCSprite::createWithSpriteFrameName("gplusSignIn_001.png");
+	CCSprite* gpSignOut = CCSprite::createWithSpriteFrameName("gplusSignOut_001.png");
+
+	m_gpSignIn = CCMenuItemSpriteExtra::create(gpSignIn, NULL, this, menu_selector(OptionsLayer::onGPSignIn));
+	m_gpSignOut = CCMenuItemSpriteExtra::create(gpSignOut, NULL, this, menu_selector(OptionsLayer::onGPSignOut));
+	
+	toggleMenu->addChild(m_gpSignIn);
+	toggleMenu->addChild(m_gpSignOut);
+
+	m_gpSignIn->setPosition(toggleMenu->convertToNodeSpace(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) - 80.0f)));
+	m_gpSignOut->setPosition(m_gpSignIn->getPosition());
+	#endif
+
 	// TL;DR fix GJDropDownLayer and its buttons before deciding to work on any GJDropDownLayer classes
 
 	this->toggleGP();
@@ -109,11 +123,26 @@ void OptionsLayer::onGC(CCObject* sender)
 
 void OptionsLayer::onGPSignIn(CCObject* sender)
 {
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	if (PlatformToolbox::isSignedInGooglePlay())
 		toggleGP();
 	else
 		PlatformToolbox::signInGooglePlay();
+#endif
+}
+
+void OptionsLayer::onGPSignOut(CCObject* sender)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	if (!PlatformToolbox::isSignedInGooglePlay())
+		toggleGP();
+	else
+		PlatformToolbox::signOutGooglePlay();
+	
+	GM->setDidSyncAchievements(false);
+	m_gpSignIn->setVisible(true);
+	m_gpSignOut->setVisible(false);
+#endif
 }
 
 void OptionsLayer::onSupport(CCObject* sender)
