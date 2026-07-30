@@ -16,14 +16,14 @@ bool UILayer::init()
 
 	CCSprite* pauseButton = CCSprite::createWithSpriteFrameName("GJ_pauseBtn_clean_001.png");
 	pauseButton->setOpacity(75);
-	this->m_pauseBtn = CCMenuItemSpriteExtra::create(pauseButton, NULL, this, menu_selector(UILayer::onPause));
+	m_pauseBtn = CCMenuItemSpriteExtra::create(pauseButton, NULL, this, menu_selector(UILayer::onPause));
 	//m_pauseBtn->setVolume(0);
 	m_pauseBtn->setSizeMult(4.0f);
 	CCMenu* pauseBtnMenu = CCMenu::create(this->m_pauseBtn, 0);
 	this->addChild(pauseBtnMenu, 16);
 	pauseBtnMenu->setPosition(pDirector->getScreenRight() - 15.0, pDirector->getScreenTop() - 15.0);
 
-	this->m_checkpointMenu = CCMenu::create();
+	m_checkpointMenu = CCMenu::create();
 	this->addChild(m_checkpointMenu, 16);
 	CCSprite* addCheckSpr = CCSprite::createWithSpriteFrameName("GJ_checkpointBtn_001.png");
 	CCMenuItemSpriteExtra* addCheckBtn = CCMenuItemSpriteExtra::create(addCheckSpr, NULL, this, menu_selector(UILayer::onCheck));
@@ -32,7 +32,7 @@ bool UILayer::init()
 
 	CCSprite* deleteCheckSpr = CCSprite::createWithSpriteFrameName("GJ_removeCheckBtn_001.png");
 	CCMenuItemSpriteExtra* deleteCheckBtn = CCMenuItemSpriteExtra::create(deleteCheckSpr, NULL, this, menu_selector(UILayer::onDeleteCheck));
-	this->m_checkpointMenu->addChild(deleteCheckBtn);
+	m_checkpointMenu->addChild(deleteCheckBtn);
 	//deleteCheckBtn->setScaleVar(1.1f);
 
 	CCArray* checkArray = CCArray::create();

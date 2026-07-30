@@ -44,8 +44,7 @@ void MenuLayer::onMoreGames(CCObject* sender)
 	GameManager::sharedState()->reportAchievementWithID("geometry.ach.moreGames", 100, false);
 	GJMoreGamesLayer* moreGamesLayer = GJMoreGamesLayer::create();
 	this->addChild(moreGamesLayer, 100);
-	moreGamesLayer->showLayer(false); // wow this is broken
-    return;
+	moreGamesLayer->showLayer(false);
 }
 
 void MenuLayer::onPlay(CCObject* sender)
@@ -56,7 +55,6 @@ void MenuLayer::onPlay(CCObject* sender)
     CCScene *pScene = LevelSelectLayer::scene(0);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
-    return;
 }
 
 void MenuLayer::onGarage(CCObject* sender)
@@ -67,8 +65,6 @@ void MenuLayer::onGarage(CCObject* sender)
     CCScene *pScene = GJGarageLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
-    return;
-
 }
 
 void MenuLayer::onCreator(CCObject* sender)
@@ -78,9 +74,7 @@ void MenuLayer::onCreator(CCObject* sender)
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCScene *pScene = CreatorLayer::scene();
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
-    pDirector->replaceScene(fade);
-    return;
-    
+	pDirector->replaceScene(fade);
 }
 
 void MenuLayer::onAchievements(CCObject* sender)
@@ -212,41 +206,43 @@ bool MenuLayer::init() {
         this->addChild(lvlEdit);
         lvlEdit->setPosition(mainMenu->convertToWorldSpace(creatorExtra->getPosition()) + CCPoint(50.0f, -50.0f));
     }
-    
+
+	float buttonMenuY = CCDirector::sharedDirector()->getScreenBottom() + 45.0f;
+
     CCMenu* bottomMenu = CCMenu::create();
     this->addChild(bottomMenu);
-    
+
     // todo: add functionality to all of these buttons
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        CCSprite* gplusButton = CCSprite::createWithSpriteFrameName("GJ_gpBtn_001.png");
-        gplusButton->setScale(1.0f);
-        CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(gplusButton, NULL, this, menu_selector(MenuLayer::onAchievements));
+		// GooglePlayManager::sharedState()->setDelegate(m_gpDelegate);
+        
+		m_platformSpr = CCSprite::createWithSpriteFrameName("GJ_gpBtn_001.png");
+		CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(m_platformSpr, NULL, this, menu_selector(MenuLayer::onGooglePlayGames));
         bottomMenu->addChild(gplusExtra);
+		this->googlePlaySignedIn();
 	#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) // finally doesn't show game center on windows
-        CCSprite* gcButton = CCSprite::createWithSpriteFrameName("GJ_gkBtn_001.png");
-        gcButton->setScale(1.0f);
-        CCMenuItemSpriteExtra* gcExtra = CCMenuItemSpriteExtra::create(gcButton, NULL, this, menu_selector(MenuLayer::onGameCenter));
+		m_platformSpr = CCSprite::createWithSpriteFrameName("GJ_gkBtn_001.png");
+		CCMenuItemSpriteExtra* gcExtra = CCMenuItemSpriteExtra::create(m_platformSpr, NULL, this, menu_selector(MenuLayer::onGameCenter));
         bottomMenu->addChild(gcExtra);
     #endif
     
     CCSprite* achievementsButton = CCSprite::createWithSpriteFrameName("GJ_achBtn_001.png");
-    achievementsButton->setScale(1.0f);
     CCMenuItemSpriteExtra* achievementsExtra = CCMenuItemSpriteExtra::create(achievementsButton, NULL, this, menu_selector(MenuLayer::onAchievements));
     bottomMenu->addChild(achievementsExtra);
     
     CCSprite* optionsButton = CCSprite::createWithSpriteFrameName("GJ_optionsBtn_001.png");
-    optionsButton->setScale(1.0f);
     CCMenuItemSpriteExtra* optionsExtra = CCMenuItemSpriteExtra::create(optionsButton, NULL, this, menu_selector(MenuLayer::onOptions));
     bottomMenu->addChild(optionsExtra);
     
     CCSprite* statsButton = CCSprite::createWithSpriteFrameName("GJ_statsBtn_001.png");
-    statsButton->setScale(1.0f);
     CCMenuItemSpriteExtra* statsExtra = CCMenuItemSpriteExtra::create(statsButton, NULL, this, menu_selector(MenuLayer::onStats));
     bottomMenu->addChild(statsExtra);
     
-	bottomMenu->setPosition(CCPoint(winSize.width * 0.5f, CCDirector::sharedDirector()->getScreenBottom() + 45.0f));
+	bottomMenu->setPosition(ccp(winSize.width * 0.5f, buttonMenuY));
     bottomMenu->alignItemsHorizontallyWithPadding(5.0f);
     
+	float robtopLogoPos = CCDirector::sharedDirector()->getScreenBottom() + 30.0f;
+
     CCSprite* robtopLogo = CCSprite::createWithSpriteFrameName("robtoplogo_small.png");
     robtopLogo->setScale(0.8f);
     CCMenuItemSpriteExtra* robtopExtra = CCMenuItemSpriteExtra::create(robtopLogo, NULL, this, menu_selector(MenuLayer::onRobTop));
@@ -254,7 +250,7 @@ bool MenuLayer::init() {
     
     CCMenu* socialsMenu = CCMenu::create(robtopExtra, NULL);
     this->addChild(socialsMenu, 2);
-	socialsMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 50.0f, CCDirector::sharedDirector()->getScreenBottom() + 30.0f - 6.0f));
+	socialsMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 50.0f, robtopLogoPos - 6.0f));
     
     CCSprite* facebookIcon = CCSprite::createWithSpriteFrameName("gj_fbIcon_001.png");
     CCMenuItemSpriteExtra* facebookExtra = CCMenuItemSpriteExtra::create(facebookIcon, NULL, this, menu_selector(MenuLayer::onFacebook));
@@ -266,16 +262,16 @@ bool MenuLayer::init() {
     twitterExtra->setSizeMult(1.5f);
     socialsMenu->addChild(twitterExtra);
     
-	facebookExtra->setPosition(socialsMenu->convertToNodeSpace(CCPoint(CCDirector::sharedDirector()->getScreenLeft() + 30.0f, CCDirector::sharedDirector()->getScreenBottom() + 30.0f + 30.0f)));
-    twitterExtra->setPosition(facebookExtra->getPosition() + CCPoint(40.0, 0.0f));
+	facebookExtra->setPosition(socialsMenu->convertToNodeSpace(ccp(CCDirector::sharedDirector()->getScreenLeft() + 30.0f, robtopLogoPos + 30.0f)));
+    twitterExtra->setPosition(facebookExtra->getPosition() + ccp(40.0, 0.0f));
     
     CCSprite* moreGamesButton = CCSprite::createWithSpriteFrameName("GJ_moreGamesBtn_001.png");
 	CCMenuItemSpriteExtra* moreGamesExtra = CCMenuItemSpriteExtra::create(moreGamesButton, NULL, this, menu_selector(MenuLayer::onMoreGames));
-    
+
     CCMenu* extraMenu = CCMenu::create(moreGamesExtra, NULL);
     this->addChild(extraMenu, 2);
     
-	extraMenu->setPosition(CCPoint(CCDirector::sharedDirector()->getScreenRight() - 43.0f, CCDirector::sharedDirector()->getScreenBottom() + 45.0f));
+	extraMenu->setPosition(ccp(CCDirector::sharedDirector()->getScreenRight() - 43.0f, buttonMenuY));
 
 	if (MoreGamesManager::sharedState()->getHasNewGames()) {
 		CCSprite* exMark = CCSprite::createWithSpriteFrameName("exMark_001.png");
@@ -295,4 +291,9 @@ void MenuLayer::endGame()
 void MenuLayer::syncPlatformAchievements(float dt) {
 	CCNode::unschedule(schedule_selector(MenuLayer::syncPlatformAchievements));
 	GameManager::sharedState()->syncPlatformAchievements();
+}
+
+void MenuLayer::googlePlaySignedIn()
+{
+	// todo
 }

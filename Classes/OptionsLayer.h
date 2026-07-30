@@ -24,7 +24,7 @@ public:
 	void onAutoCheckpoints(CCObject* sender);
 	void onAutoRetry(CCObject* sender);
 
-	// GooglePlayManager* m_gPlayDelegate; // 0x1ac
+	// GooglePlayDelegate* m_gPlayDelegate; // 0x1ac
 	cocos2d::CCMenu* m_optionsMenu; // 0x1b0
 	bool unk_0x1bd; // 0x1bd
 	bool unk_0x1bc; // 0x1bc

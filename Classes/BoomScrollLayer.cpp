@@ -158,7 +158,7 @@ void BoomScrollLayer::quickUpdate()
 
 void BoomScrollLayer::moveToPage(int page)
 {
-	if ((m_looped) || (-1 < page && (page < getTotalPages()))) {
+	if (m_looped || (-1 < page && (page < getTotalPages()))) {
 		m_movingToPage = true;
 		m_targetPos = positionForPageWithNumber(page);
 		m_internalLayer->stopActionByTag(2);
@@ -189,7 +189,7 @@ void BoomScrollLayer::moveToPage(int page)
 
 void BoomScrollLayer::instantMoveToPage(int page)
 {
-	if ((m_looped) || ((-1 < page && (page < getTotalPages())))) {
+	if (m_looped || ((-1 < page && (page < getTotalPages())))) {
 		m_internalLayer->stopActionByTag(2);
 		m_movingToPage = false;
 		m_internalLayer->setPosition(positionForPageWithNumber(page));
@@ -204,7 +204,7 @@ void BoomScrollLayer::instantMoveToPage(int page)
 
 void BoomScrollLayer::moveToPageEnded()
 {
-	if ((m_animatingToPage != m_currentScreen) && m_delegate)
+	if (m_animatingToPage != m_currentScreen && m_delegate)
 		m_delegate->scrollLayerScrollingStarted(this);
 
 	m_internalLayer->stopActionByTag(2);

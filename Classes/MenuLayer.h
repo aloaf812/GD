@@ -29,6 +29,10 @@ public:
     void onMoreGames(cocos2d::CCObject* sender);
 	void endGame();
 	void syncPlatformAchievements(float dt);
+	virtual void googlePlaySignedIn();
+
+	// GooglePlayDelegate* m_gpDelegate; // 0x110
+	cocos2d::CCSprite* m_platformSpr; // 0x114
 };
 
 #endif
