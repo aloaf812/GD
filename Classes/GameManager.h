@@ -86,6 +86,7 @@ public:
     int colorForPos(int color);
     std::string colorKey(int param_1, bool param_2);
 	void returnToLastScene(GJGameLevel* level);
+	void reportPercentageForLevel(int levelID, int percent, bool practiceMode);
 
 	virtual void setup();
 	virtual void encodeDataTo(DS_Dictionary* dict);

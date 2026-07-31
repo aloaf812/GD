@@ -19,6 +19,7 @@ public:
     virtual bool init();
 
 	char const* getCoinKey(int coinNumber);
+	void savePercentage(int percent, bool practiceMode);
 
 	// DS_Dictionary is extremely broken on windows phone (and win32 in general)
 	// i would fix this but i'm lazy and tired rn

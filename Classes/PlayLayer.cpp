@@ -8,6 +8,7 @@
 #include "CheckpointObject.h"
 #include "GameStatsManager.h"
 #include "RetryLevelLayer.h"
+#include "GameSoundManager.h"
 using namespace CocosDenshion;
 USING_NS_CC;
 
@@ -1147,6 +1148,7 @@ bool PlayLayer::isFlipping()
 	return m_flipValue != 1.0;
 }
 
+// weird function
 void PlayLayer::destroyPlayer()
 {
 	if (!m_player->getIsLocked() && !m_playerDead) {
@@ -1159,14 +1161,28 @@ void PlayLayer::destroyPlayer()
 		bool newBest = true;
 		m_playerDead = true;
 		m_player->playerDestroyed();
-		
-		// more left to implement
+
+		// pfVar3 = m_player->getPosition();
+		if (!m_testMode) {
+			float lastRunPct = (m_player->getPosition().x / m_levelLength) * 100.0f;
+			if (m_practiceMode || (lastRunPct <= m_level->getNormalPercent()))
+				newBest = false;
+
+			m_level->savePercentage(lastRunPct, m_practiceMode);
+			if (m_level->getLevelType() == GJLevelType::MainLevel)
+				GM->reportPercentageForLevel(m_level->getLevelID(), lastRunPct, m_practiceMode);
+		}
+		else
+			newBest = false;
 
 		if (!m_practiceMode)
 			// m_levelLength is NOT implemented at all because it's set in PlayLayer::createObjectsFromSetup and it's a really confusing function
-			// m_lastRunPercent = (m_player->getPosition().x / m_levelLength) * 100.0f;
-			m_lastRunPercent = 2;
+			m_lastRunPercent = (m_player->getPosition().x / m_levelLength) * 100.0f;
+			
+		if (!m_practiceMode)
+			SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(false);
 
+		GameSoundManager::sharedManager()->playEffect("explode_11.ogg", 1.0f, 0.0f, 0.65f);
 		CCSequence* sequence;
 		if ((!GameManager::sharedState()->getAutoRetryLevel()) && (!m_practiceMode)) {
 			PLAY_LAYER->getUILayer()->disableMenu();
@@ -1177,7 +1193,7 @@ void PlayLayer::destroyPlayer()
 			float delayTime;
 			if (newBest) {
 				delayTime = 1.4f;
-				// this->showNewBest();
+				this->showNewBest();
 			}
 			else
 				delayTime = 1.0f;
@@ -1217,9 +1233,43 @@ void PlayLayer::showHint()
 	hintLabel->setPosition(ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 60.0f));
 	hintLabel->setOpacity(0);
 
-	// crashes the game somehow :/
-	CCSequence* sequence = CCSequence::create(CCFadeIn::create(0.5f), CCDelayTime::create(delayTime), CCFadeOut::create(0.5f), CCCallFunc::create(hintLabel, callfunc_selector(CCNode::removeMeAndCleanup)));
+	CCFadeIn* fadeIn = CCFadeIn::create(0.5f);
+	CCDelayTime* delay = CCDelayTime::create(delayTime);
+	CCFadeOut* fadeOut = CCFadeOut::create(0.5f);
+	CCCallFunc* callback = CCCallFunc::create(hintLabel, callfunc_selector(CCNode::removeMeAndCleanup));
+	CCSequence* sequence = CCSequence::create(fadeIn, delay, fadeOut, callback, nullptr);
+
 	hintLabel->runAction(sequence);
+}
+
+void PlayLayer::showNewBest()
+{
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	CCPoint newBestPos = ccp(winSize.width * 0.5f, (winSize.height * 0.5f) + 20.0f);
+
+	CCNode* newBestNode = CCNode::create();
+	this->addChild(newBestNode, 15);
+	newBestNode->setPosition(newBestPos);
+
+	CCSprite* newBestSpr = CCSprite::createWithSpriteFrameName("GJ_newBest_001.png");
+	newBestNode->addChild(newBestSpr);
+	newBestSpr->setAnchorPoint(ccp(0.5f, 0.0f));
+
+	char const* pctString = CCString::createWithFormat("%i%%", m_lastRunPercent)->getCString();
+	CCLabelBMFont* pctLabel = CCLabelBMFont::create(pctString, "bigFont.fnt");
+	pctLabel->setAnchorPoint(ccp(0.5f, 1.0f));
+	newBestNode->addChild(pctLabel);
+	newBestNode->setScale(0.01f);
+
+	// this isn't exactly accurate, but at least it doesn't crash...
+	CCEaseElasticOut* easeElasticOut = CCEaseElasticOut::create(CCScaleTo::create(0.4f, 1.0f), 0.6f);
+	CCDelayTime* delay = CCDelayTime::create(0.7f);
+	CCEaseIn* easeIn = CCEaseIn::create(CCScaleTo::create(0.4f, 0.01f, 0.01f), 2.0f);
+	CCHide* hide = CCHide::create();
+	CCCallFunc* callback = CCCallFunc::create(newBestNode, callfunc_selector(CCNode::removeMeAndCleanup));
+	CCSequence* sequence = CCSequence::create(easeElasticOut, delay, easeIn, hide, callback, nullptr);
+
+	newBestNode->runAction(sequence);
 }
 
 std::string PlayLayer::getParticleKey(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType)

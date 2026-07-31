@@ -174,3 +174,8 @@ char const* GJGameLevel::getCoinKey(int coinNumber)
 {
 	return CCString::createWithFormat("%i_%i", m_levelID, coinNumber)->getCString();
 }
+
+void GJGameLevel::savePercentage(int percent, bool practiceMode)
+{
+	// todo
+}

@@ -54,6 +54,7 @@ public:
 	void destroyPlayer();
 
 	void showHint();
+	void showNewBest();
 
     // tints
     void tintBackground(cocos2d::ccColor3B color, float duration);

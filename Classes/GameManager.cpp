@@ -518,3 +518,8 @@ void GameManager::returnToLastScene(GJGameLevel* level)
 	pDirector->replaceScene(CCTransitionFade::create(0.5f, targetScene));
 	sharedState()->fadeInMusic("menuLoop.mp3");
 }
+
+void GameManager::reportPercentageForLevel(int levelID, int percent, bool practiceMode)
+{
+	// todo
+}
