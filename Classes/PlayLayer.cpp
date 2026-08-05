@@ -101,7 +101,7 @@ CCScene* PlayLayer::scene(GJGameLevel* level)
 	pApp->setScenePointer(scene);
     PlayLayer* layer = PlayLayer::create(level);
     scene->addChild(layer);
-    // scene->setObjType(5);
+    scene->setObjType(CCObjectType::PlayLayer);
     return scene;
 }
 
@@ -222,29 +222,29 @@ bool PlayLayer::init(GJGameLevel* level)
 	unk_0x170 = CCArray::create();
 	unk_0x170->retain();
 
-	this->m_stateObjects = CCArray::create();
+	m_stateObjects = CCArray::create();
 	m_stateObjects->retain();
 
-	this->m_bigActionContainer = CCArray::create();
+	m_bigActionContainer = CCArray::create();
 	m_bigActionContainer->retain();
 
-	this->field_0x1e4 = CCNode::create();
+	field_0x1e4 = CCNode::create();
 	this->addChild(field_0x1e4);
 	field_0x1e4->setVisible(false);
 
-	this->m_objColorRef = CCSprite::create();
+	m_objColorRef = CCSprite::create();
 	this->addChild(m_objColorRef);
 	m_objColorRef->setVisible(false);
 
-	this->field_0x1f4 = CCSprite::create();
+	field_0x1f4 = CCSprite::create();
 	this->addChild(field_0x1f4);
 	field_0x1f4->setVisible(false);
 
-	this->field_0x1e8 = CCSprite::create();
+	field_0x1e8 = CCSprite::create();
 	this->addChild(field_0x1e8);
 	field_0x1e8->setVisible(false);
 
-	this->m_gColorRef = CCSprite::create();
+	m_gColorRef = CCSprite::create();
 	this->addChild(m_gColorRef);
 	m_gColorRef->setVisible(false);
 #pragma endregion
@@ -360,9 +360,9 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->updateCamera(0.0f);
 	m_attemptLabel->setPosition(ccp(m_cameraPos.x + winSize.width * 0.5f, m_cameraPos.y + (winSize.height * 0.5f) + 125.0f));
 	
-	this->m_progressBar = CCSprite::create("slidergroove2.png");
+	m_progressBar = CCSprite::create("slidergroove2.png");
 	this->addChild(m_progressBar, 10);
-	this->m_progressFill = CCSprite::create("sliderBar2.png");
+	m_progressFill = CCSprite::create("sliderBar2.png");
 	unk_0x204 = 8.0f;
 	// unk_0x200 = m_progressBar->isDirty() - 4.0f;
 	ccTexParams texParams2 = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
@@ -437,8 +437,8 @@ void PlayLayer::resetLevel()
 	unk_0x1a9 = m_cleanReset;
 	// this->clearPickedUpItems();
 
-	unk_0x130->removeAllObjects(); // this is a CCArray
-	unk_0x1e0->removeAllObjects(); // this is a CCDictionary
+	unk_0x130->removeAllObjects();
+	unk_0x1e0->removeAllObjects();
 
 	// unk_0x178 is unused so far so this will be unused for now
 	/*for (int i = 0; i < unk_0x178->count(); i++) {
@@ -447,10 +447,10 @@ void PlayLayer::resetLevel()
 		piVar12->setEnterEffect(EnterEffect::unk1);
 	}*/
 
-	this->m_flipValue = 0.0;
-	// this->field336_0x1d4 = 0.0;
-	this->m_isFlipped = false;
-	//this->field337_0x1d8 = 1.0;
+	m_flipValue = 0.0;
+	// unk_0x1d4 = 0.0;
+	m_isFlipped = false;
+	// field337_0x1d8 = 1.0;
 	this->stopActionByTag(14);
 
 	this->m_cameraPortal = nullptr;
