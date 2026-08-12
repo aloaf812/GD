@@ -14,20 +14,14 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: aloaf812/cocos2d-x
-
-
-    - name: Checkout GD
-      uses: actions/checkout@v4
-      with:
-        path: projects/GD/
+        submodules: recursive
 
     - name: Setup Android NDK
       run: |
         pwd
         wget https://github.com/aloaf812/cocos2d-x/releases/download/packages/android-ndk-r8e-linux.tar.bz2
         tar -xjf android-ndk-r8e-linux.tar.bz2
-        ls
-        
+        ls        
 
     - name: Run Build Script
       run: |
@@ -36,20 +30,11 @@ jobs:
         ./build_native.sh
       env:
         NDK_ROOT: /home/runner/work/GD/GD/android-ndk-r8e        
-
-    - name: Rename Artifacts
-      run: |
-        cd /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi
-        mv libcocos2dcpp.so libcocos2dcpp-arm.so
-        cd /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi-v7a
-        mv libcocos2dcpp.so libcocos2dcpp-v7a.so
-        cd /home/runner/work/GD/GD/projects/GD/proj.android/libs/x86
-        mv libcocos2dcpp.so libcocos2dcpp-x86.so
-      
+ 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         path: |
-          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi/libcocos2dcpp-arm.so
-          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi-v7a/libcocos2dcpp-v7a.so
-          /home/runner/work/GD/GD/projects/GD/proj.android/libs/x86/libcocos2dcpp-x86.so
+          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi/libcocos2dcpp.so
+          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi-v7a/libcocos2dcpp.so
+          /home/runner/work/GD/GD/projects/GD/proj.android/libs/x86/libcocos2dcpp.so

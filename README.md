@@ -3,18 +3,36 @@
 > [!IMPORTANT]
 > This is a **work-in-progress** decompilation of Geometry Dash version 1.710. Some of the core functionality is implemented, but not enough for it to be in a usable state.
 
-# Building/Contributing
-
-You can find instructions on how to build this project as well as contributing to it in the [USAGE.md](https://github.com/aloaf812/GD/blob/1.7/USAGE.md) file.
-
 # Why decompile 1.7?
 
 - It uses cocos2d-x 2.2.3 (the older version GD used has broken screen orientations)
 - It does not have slopes
 - SimpleAudioEngine is used as the audio engine (instead of FMOD which is used in current versions)
 
+# Building
+
+### 1. Get the source code
+
+Before anything you're going to need to install [**Git**](https://git-scm.com/) onto your computer.
+
+After you've done that, you can simply run the following line on your computer's terminal application: 
+```
+git clone --recursive https://github.com/aloaf812/cocos2d-x
+```
+
+What this does is it clones the *cocos2d-x* fork **recursively** so that both *cocos2d-x* and the *GD* repository are downloaded and set up.
+
+### 2. Compiling the code
+
+:skull:
+
+# Contributing
+
+You can find information on contributing to the decompilation in the [CONTRIBUTING.md](https://github.com/aloaf812/GD/blob/1.7/CONTRIBUTING.md) file.
+
+
 # Platform Support
-Currently the project only supports the following platforms, with more on the way:
+Currently the decomp only supports the following platforms, with more on the way:
 - iOS
 - Android
 - Mac
@@ -22,14 +40,15 @@ Currently the project only supports the following platforms, with more on the wa
 - Linux
 
 # Special Thanks
- - [AntiMatter](https://github.com/a-zalt) 
+ - [AntiMatter](https://github.com/a-zalt)
  - [System32](https://github.com/system32149)
+ - [ItzZyann](https://github.com/ItzZyann)
 
 # SHA-1 File Hashes
 
 ## 1.71
 
-#### Android
+### Android
 
 * APK File: `aa680e1a03db4840e8f85171f1ab8469e3fbabe5`
 
@@ -38,12 +57,14 @@ Currently the project only supports the following platforms, with more on the wa
   * armeabi-v7a: `b9c694455936aff06578c4f7332512f9950a0f97`
   * x86: `05c7293d3f78d0bf70568ffa3ea26e9f1b037fde`
 
-#### iOS
+### iOS
 
 * IPA File: `d87adba92976d345cc499a83a8f7d5fa4ec7bcf6`
 * GeometryJump (executable): `1f6f06e6a0798b7e2c15436e5020f261db48c250`
 
 ## 1.70
+
+### Android
 
 * APK File: `4d445903218646cb55bb39a88004a0c488ad2cde`
 
