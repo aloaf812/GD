@@ -16,7 +16,7 @@ GameSoundManager* GameSoundManager::sharedManager()
 }
 
 bool GameSoundManager::init() {
-	this->m_state = 0;
+	m_state = 0;
     return true;
 }
 
@@ -37,15 +37,14 @@ void GameSoundManager::playEffect(char const* filename, float pitch, float pan, 
 void GameSoundManager::setBGMusicVolume(float volume)
 {
 	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(volume);
-	this->m_bgVol = volume;
+	m_bgVol = volume;
 }
 
 void GameSoundManager::asynchronousSetup()
 {
 	// this->preload();
-	SimpleAudioEngine* SAE = SimpleAudioEngine::sharedEngine();
-	SAE->setEffectsVolume(1.0f);
-	SAE->setBackgroundMusicVolume(1.0f);
+	SimpleAudioEngine::sharedEngine()->setEffectsVolume(1.0f);
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(1.0f);
 	this->setBGMusicVolume(1.0f);
-	this->m_state = 4;
+	m_state = 4;
 }

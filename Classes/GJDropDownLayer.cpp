@@ -54,7 +54,7 @@ void GJDropDownLayer::hideLayer(bool instantHide) {
 }
 
 void GJDropDownLayer::registerWithTouchDispatcher() {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -500, true);
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 2147483651, true);
 }
 
 void GJDropDownLayer::keyBackClicked() {
@@ -90,9 +90,13 @@ void GJDropDownLayer::showLayer(bool instantShow) {
     this->runAction(CCFadeTo::create(0.5f, 125));
 }
 
-bool GJDropDownLayer::ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent) {
+bool GJDropDownLayer::ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent) {
 	return true;
 }
+
+void GJDropDownLayer::ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent) {}
+void GJDropDownLayer::ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent) {}
+void GJDropDownLayer::ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent) {}
 
 GJDropDownLayer* GJDropDownLayer::create(const char* title, float height) {
     GJDropDownLayer* pRet = new GJDropDownLayer();

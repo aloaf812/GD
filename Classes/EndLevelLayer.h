@@ -5,6 +5,10 @@
 
 class EndLevelLayer : public GJDropDownLayer {
     char const* getEndText();
+
+	void onMenu(cocos2d::CCObject* sender);
+	void onReplay(cocos2d::CCObject* sender);
+	void onEveryplay(cocos2d::CCObject* sender);
 };
 
 #endif

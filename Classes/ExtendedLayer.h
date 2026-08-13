@@ -11,7 +11,9 @@ public:
 	static ExtendedLayer* create();
     bool init();
 
-	CC_SYNTHESIZE(BoomScrollLayerDelegate*, m_delegate, Delegate);
+	void setPosition(cocos2d::CCPoint const &position);
+
+	CC_SYNTHESIZE(BoomScrollLayerDelegate*, m_delegate, Delegate); // 0x10c
 };
 
 #endif /* defined(__GeometryDash__ExtendedLayer__) */

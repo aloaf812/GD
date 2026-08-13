@@ -90,7 +90,7 @@ public:
 	* Doesn't get called in selectPage:
 	*/
 	virtual void scrollLayerScrolledToPage(BoomScrollLayer* sender, int page) {};
-	virtual void scrollLayerMoved(cocos2d::CCPoint p0) {};
+	virtual void scrollLayerMoved(cocos2d::CCPoint position) {};
 };
 
 

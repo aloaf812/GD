@@ -19,3 +19,9 @@ ExtendedLayer* ExtendedLayer::create() {
 
 	return NULL;
 }
+
+void ExtendedLayer::setPosition(CCPoint const &position) {
+	CCNode::setPosition(position);
+	/*if (m_delegate)
+		m_delegate->scrollLayerMoved(position);*/
+}
