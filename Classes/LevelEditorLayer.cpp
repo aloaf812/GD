@@ -89,6 +89,6 @@ void LevelEditorLayer::removeBackground()
 {
 	if (m_bgSprite != nullptr) {
 		m_bgSprite->removeFromParent();
-		this->m_bgSprite = nullptr;
+		m_bgSprite = nullptr;
 	}
 }

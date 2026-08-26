@@ -25,6 +25,7 @@ PlayerObject::PlayerObject()
 	unk_0x30e = false;
 
 	unk_0x324 = 0.0f;
+	unk_0x350 = 0.0f;
 	m_hasJumped = false;
 	m_hasRingJumped = false;
 }
@@ -553,15 +554,15 @@ void PlayerObject::updateGlowColor()
 
 void PlayerObject::updateJump(float dt)
 {
-	double gravity = this->m_gravity;
+	double gravity = m_gravity;
 	double gravity2;
-	if ((this->m_rollMode != false) || (isFlying()))
+	if (m_rollMode || (isFlying()))
 		gravity2 = 0.958199;
 	else
 		gravity2 = gravity;
 
 	float pScale;
-	bool isPlayerBig = this->m_playerScale == 1.0;
+	bool isPlayerBig = m_playerScale == 1.0;
 	if (isPlayerBig)
 		pScale = 1.0f;
 	else
@@ -570,19 +571,19 @@ void PlayerObject::updateJump(float dt)
 	if (!isFlying())
 	{
 		float fVar5 = 0.6f;
-		if (!this->m_rollMode) {
+		if (!m_rollMode) {
 			fVar5 = 1.0f;
 		}
 
 		if ((unk_0x30e) && (m_canJump)) {
-			this->m_isJumping = true;
-			this->m_onGround = false;
-			this->m_canJump = false;
-			this->unk_0x312 = false;
+			m_isJumping = true;
+			m_onGround = false;
+			m_canJump = false;
+			unk_0x312 = false;
 
-			this->m_yVelocity = m_yStart * flipMod() * pScale;
+			m_yVelocity = m_yStart * flipMod() * pScale;
 			this->incrementJumps();
-			if (this->m_rollMode != false) {
+			if (m_rollMode != false) {
 				/*flipGravity(this, (bool)(!m_gravityFlipped), true);
 				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&this->m_yVelocity + 4)
 					, 0x40000000, 0x3fe33333);
@@ -595,15 +596,15 @@ void PlayerObject::updateJump(float dt)
 			return;
 		}
 
-		if (this->m_isJumping) {
-			this->m_yVelocity = m_yVelocity - gravity2 * dt * flipMod() * fVar5;
+		if (m_isJumping) {
+			m_yVelocity = m_yVelocity - gravity2 * dt * flipMod() * fVar5;
 
 			if (!playerIsFalling())
 				return;
 
-			this->m_isJumping = false;
-			this->unk_0x30f = true;
-			this->m_onGround = false;
+			m_isJumping = false;
+			unk_0x30f = true;
+			m_onGround = false;
 			return;
 		}
 
@@ -613,7 +614,7 @@ void PlayerObject::updateJump(float dt)
 
 		m_yVelocity = m_yVelocity - gravity2 * dt * flipMod() * fVar5;
 
-		if (!this->m_gravityFlipped) {
+		if (!m_gravityFlipped) {
 			if (m_yVelocity > 15.0)
 				m_yVelocity = 15.0;
 			else if (m_yVelocity < -15.0)
@@ -628,7 +629,7 @@ void PlayerObject::updateJump(float dt)
 
 	}
 
-	this->m_onGround = false;
+	m_onGround = false;
 }
 
 void PlayerObject::updateTimeMod(float timeMod)

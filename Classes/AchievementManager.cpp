@@ -35,19 +35,13 @@ bool AchievementManager::init()
 
 void AchievementManager::notifyAchievementWithID(char const* achID)
 {
-    // houston, we have a problem.
-    CCLOG("notifying achievement %s", achID);
-	if (this->m_dontNotifyAch == false) {
-		if (m_allAchievements->objectForKey(achID) != nullptr) {
+	if (!m_dontNotifyAch) {
+		if (m_allAchievements->objectForKey(achID)) {
 			CCDictionary* tempDict = (CCDictionary*)m_allAchievements->objectForKey(achID);
 			const char* title = tempDict->valueForKey("title")->getCString();
-            CCLOG(title);
 			const char* description = tempDict->valueForKey("achievedDescription")->getCString();
-            CCLOG(description);
 			const char* icon = tempDict->valueForKey("icon")->getCString();
-            CCLOG(icon);
-            AchievementNotifier* pAchNotifier = AchievementNotifier::sharedState();
-			pAchNotifier->notifyAchievement(title, description, icon);
+			AchievementNotifier::sharedState()->notifyAchievement(title, description, icon);
 		}
 	}
 }
@@ -73,7 +67,7 @@ void AchievementManager::reportAchievementWithID(char const* achID, int percenta
 
 bool AchievementManager::isAchievementEarned(char const* achID)
 {
-	return false;
+	return 99 < percentForAchievement(achID);
 }
 
 bool AchievementManager::areAchievementsEarned(CCArray* achSet)
@@ -83,5 +77,5 @@ bool AchievementManager::areAchievementsEarned(CCArray* achSet)
 
 int AchievementManager::percentForAchievement(char const* achID)
 {
-	return 100;
+	return m_reportedAchievements->valueForKey(achID)->intValue();;
 }

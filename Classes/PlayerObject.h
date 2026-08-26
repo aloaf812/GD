@@ -153,6 +153,8 @@ public:
 
 	cocos2d::CCPoint m_lastUpdatePos; // 0x34c
 
+	float unk_0x350; // 0x350
+
 	// particles
 	cocos2d::CCParticleSystemQuad* m_dragParticle; // 0x354
 	cocos2d::CCParticleSystemQuad* m_birdDragParticle; // 0x358

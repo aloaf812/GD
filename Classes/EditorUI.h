@@ -19,6 +19,8 @@ public:
 	void toggleMode(cocos2d::CCObject* sender);
 	void resetUI();
 
+	void showMaxError();
+
 	CC_SYNTHESIZE(EditMode, m_editMode, EditMode); // 0x190
 
 protected:

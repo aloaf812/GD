@@ -1,4 +1,5 @@
 #include "EditorUI.h"
+#include "FLAlertLayer.h"
 USING_NS_CC;
 
 
@@ -109,4 +110,9 @@ void EditorUI::resetUI()
 	//updateDeleteMenu();
 	//this->updateCreateMenu(false);
 	//updateEditMenu();
+}
+
+void EditorUI::showMaxError()
+{
+	FLAlertLayer::create(nullptr, "Max Objects", CCString::createWithFormat("You cannot create more than <cy>%i</c> <cg>objects</c> in a single level.", 10000)->getCString(), "OK", nullptr, 300.0f)->show();
 }
