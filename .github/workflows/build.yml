@@ -20,7 +20,7 @@ jobs:
       run: |
         pwd
         wget https://github.com/decompme/compilers/releases/download/compilers/android-ndk-r8e-linux-x86_64-gcc-4.4.3.tar.bz2
-        tar -xjf android-ndk-r8e-linux-x86_64-gcc-4.4.3.tar.bz2 -C android-ndk-r8e
+        mkdir android-ndk-r8e && tar -xjf android-ndk-r8e-linux-x86_64-gcc-4.4.3.tar.bz2 -C android-ndk-r8e
         ls
 
     - name: Run Build Script
