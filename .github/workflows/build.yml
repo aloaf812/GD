@@ -19,13 +19,14 @@ jobs:
     - name: Setup Android NDK
       run: |
         pwd
-        wget https://github.com/aloaf812/cocos2d-x/releases/download/packages/android-ndk-r8e-linux.tar.bz2
+        wget https://github.com/decompme/compilers/releases/download/compilers/android-ndk-r8e-linux-x86_64-gcc-4.4.3.tar.bz2
         tar -xjf android-ndk-r8e-linux.tar.bz2
-        ls        
+        ls
 
     - name: Run Build Script
       run: |
         cd /home/runner/work/GD/GD/projects/GD/proj.android
+        sed -i '1c\APP_ABI := x86' jni/Application.mk
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
@@ -35,6 +36,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: |
-          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi/libcocos2dcpp.so
-          /home/runner/work/GD/GD/projects/GD/proj.android/libs/armeabi-v7a/libcocos2dcpp.so
           /home/runner/work/GD/GD/projects/GD/proj.android/libs/x86/libcocos2dcpp.so
