@@ -19,8 +19,8 @@ jobs:
     - name: Setup Android NDK
       run: |
         pwd
-        wget https://github.com/decompme/compilers/releases/download/compilers/android-ndk-r8e-linux-x86_64-gcc-4.4.3.tar.bz2
-        tar -xjf android-ndk-r8e-linux-x86_64-gcc-4.4.3.tar.bz2
+        wget https://github.com/aloaf812/cocos2d-x/releases/download/packages/android-ndk-r8e-linux-x86.tar.bz2
+        tar -xjf android-ndk-r8e-linux-x86.tar.bz2
         ls
 
     - name: Run Build Script
@@ -30,7 +30,7 @@ jobs:
         chmod +x ./build_native.sh
         ./build_native.sh
       env:
-        NDK_ROOT: /home/runner/work/GD/GD
+        NDK_ROOT: /home/runner/work/GD/GD/android-ndk-r8e
  
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
