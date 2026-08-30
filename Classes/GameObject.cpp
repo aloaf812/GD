@@ -96,7 +96,7 @@ bool GameObject::init(const char *spriteName) {
     m_scaleModY = 1.0f;
     m_startScaleX = 1.0f;
     m_startScaleY = 1.0f;
-    //  this->m_ID = dword_4B6E6C;
+    //  m_ID = dword_4B6E6C;
     m_startRotation = 0.0f;
     m_tintColor = ccc3(255, 255, 255);
     m_tintDuration = 0.5f;
@@ -195,7 +195,7 @@ const char* GameObject::getBallFrame(int idx) {
 }
 
 void GameObject::triggerActivated() {
-    this->m_hasBeenActivated = true;
+    m_hasBeenActivated = true;
 }
 
 void GameObject::removeGlow() {
@@ -206,63 +206,63 @@ void GameObject::removeGlow() {
 }
 
 void GameObject::powerOnObject() {
-    this->m_stateVar = true;
-    if (!this->m_poweredOn)
-        this->m_poweredOn = true;
+    m_stateVar = true;
+    if (!m_poweredOn)
+        m_poweredOn = true;
 }
 void GameObject::powerOffObject() {
-    if (this->m_poweredOn)
-        this->m_poweredOn = false;
+    if (m_poweredOn)
+        m_poweredOn = false;
 }
 
 void GameObject::activateObject() {
-    this->m_shouldHide = false;
-    if (this->m_isActive || this->m_isSleeping) return;
+    m_shouldHide = false;
+    if (m_isActive || m_isSleeping) return;
     
-    this->m_isActive = true;
-    if (this->m_isInvisible) return;
+    m_isActive = true;
+    if (m_isInvisible) return;
     
     this->setVisible(true);
     if (this->unk_0x1c9)
         PLAY_LAYER->registerStateObject(this);
     
-    if (!this->m_dontShow && this->m_objectParent)
-        this->m_objectParent->addChild(this, this->m_objectZ);
+    if (!m_dontShow && m_objectParent)
+        m_objectParent->addChild(this, m_objectZ);
     
-    if (this->m_hasGlow)
-        PLAY_LAYER->getBatchNodeAdd()->addChild(this->m_glowSprite);
+    if (m_hasGlow)
+        PLAY_LAYER->getBatchNodeAdd()->addChild(m_glowSprite);
     
-    if (this->m_hasColor) {
+    if (m_hasColor) {
         if (PLAY_LAYER->getTintObjectsUseBlend()) {
-            PLAY_LAYER->getBatchNodeAdd()->addChild(this->m_glowSprite);
+            PLAY_LAYER->getBatchNodeAdd()->addChild(m_glowSprite);
         } else {
-            PLAY_LAYER->getBatchNode()->addChild(this->m_glowSprite);
+            PLAY_LAYER->getBatchNode()->addChild(m_glowSprite);
         }
     }
     // this = (GameManager *)(*(int (**)(void))(*(_DWORD *)v13 + 0xDC))();
-    if (this->unk_0x1d0 && !this->getActionByTag(11) && this->m_myAction) {
+    if (this->unk_0x1d0 && !this->getActionByTag(11) && m_myAction) {
         this->runAction(m_myAction);
     }
 }
 
 /*void GameObject::addColorSprite() {
     if (
-        ((this->m_objectKey >= 207 && this->m_objectKey < 214) ||
-         (this->m_objectKey >= 215 && this->m_objectKey < 220) ||
-         (this->m_objectKey >= 247 && this->m_objectKey < 262) ||
-         (this->m_objectKey >= 263 && this->m_objectKey <= 275))
-        && this->m_hasColor
+        ((m_objectKey >= 207 && m_objectKey < 214) ||
+         (m_objectKey >= 215 && m_objectKey < 220) ||
+         (m_objectKey >= 247 && m_objectKey < 262) ||
+         (m_objectKey >= 263 && m_objectKey <= 275))
+        && m_hasColor
         ) {
         // replace _001.png with _color_001.png
-        std::string colorSpriteFrame = CCString::createWithFormat("%i", this->m_objectKey)->getCString();
+        std::string colorSpriteFrame = CCString::createWithFormat("%i", m_objectKey)->getCString();
         // this isn't how it works but it also kind of works
         colorSpriteFrame.replace(0, colorSpriteFrame.find("_001.png"), "_color_001.png");
-        this->m_colorSprite = cocos2d::CCSprite::createWithSpriteFrameName(colorSpriteFrame.c_str());
-        this->m_colorSprite->retain();
-        this->m_colorSprite->setPosition(this->getPosition());
+        m_colorSprite = cocos2d::CCSprite::createWithSpriteFrameName(colorSpriteFrame.c_str());
+        m_colorSprite->retain();
+        m_colorSprite->setPosition(this->getPosition());
         GameManager* gman = GameManager::sharedState();
         if (gman->getEditMode()) {
-            this->m_colorSprite->setOpacity(100);
+            m_colorSprite->setOpacity(100);
         }
     }
 }*/
@@ -270,53 +270,53 @@ void GameObject::activateObject() {
 void GameObject::setFlipX(bool flipX) {
     CCSpritePlus::setFlipX(flipX);
 
-    if (this->m_glowSprite) {
+    if (m_glowSprite) {
         m_glowSprite->setFlipX(flipX);
     }
-    if (this->m_hasColor) {
+    if (m_hasColor) {
         m_colorSprite->setFlipX(flipX);
     }
 }
 
 void GameObject::setFlipY(bool flipY) {
     CCSpritePlus::setFlipY(flipY);
-    if (this->m_glowSprite) {
+    if (m_glowSprite) {
         m_glowSprite->setFlipY(flipY);
     }
-    if (this->m_hasColor) {
+    if (m_hasColor) {
         m_colorSprite->setFlipY(flipY);
     }
 }
 
 void GameObject::setScaleX(float scaleX) {
     CCSpritePlus::setScaleX(scaleX);
-    if (this->m_glowSprite) {
-        this->m_glowSprite->setScaleX(scaleX);
+    if (m_glowSprite) {
+        m_glowSprite->setScaleX(scaleX);
     }
-    if (this->m_hasColor) {
+    if (m_hasColor) {
         m_colorSprite->setScaleX(scaleX);
     }
 }
 
 void GameObject::setScaleY(float scaleY) {
     CCSpritePlus::setScaleY(scaleY);
-    if (this->m_glowSprite) {
-        this->m_glowSprite->setScaleY(scaleY);
+    if (m_glowSprite) {
+        m_glowSprite->setScaleY(scaleY);
     }
-    if (this->m_hasColor) {
+    if (m_hasColor) {
         m_colorSprite->setScaleY(scaleY);
     }
 }
 
 void GameObject::resetObject() {
-    this->m_hasBeenActivated = false;
-    this->m_isSleeping = false;
+    m_hasBeenActivated = false;
+    m_isSleeping = false;
     this->unk_0x1de = false;
 }
 
 /*void GameObject::setGlowColor(cocos2d::ccColor3B color) {
-    if (this->m_glowSprite) {
-        this->m_glowSprite->setColor(color);
+    if (m_glowSprite) {
+        m_glowSprite->setColor(color);
     }
 }*/
 
@@ -341,9 +341,9 @@ void GameObject::setPosition(cocos2d::CCPoint const &position) {
 void GameObject::setVisible(bool visible) {
     if (this->unk_0x1e8 && this->isVisible() != visible) {
         if (visible) {
-            this->m_particleSystem = PLAY_LAYER->claimParticle(this->unk_0x1e4);
+            m_particleSystem = PLAY_LAYER->claimParticle(this->unk_0x1e4);
             this->setPosition(this->getPosition());
-            if (this->m_particleSystem) {
+            if (m_particleSystem) {
                 PLAY_LAYER->getGameLayer();
                 CCPoint point = this-> + this->unk_0x1ec;
             }
@@ -408,7 +408,7 @@ void GameObject::customSetup()
 		break;
 	}
 
-	// if (((uVar13 < 0xf) && ((1 << (uVar13 & 0xff) & 0x7002U) != 0)) || (this->m_objectKey == 8)) {
+	// if (((uVar13 < 0xf) && ((1 << (uVar13 & 0xff) & 0x7002U) != 0)) || (m_objectKey == 8)) {
 	if (m_objectKey == 8) {
 		unk_0x1d4 = 30.0f;
 		unk_0x1d8 = 30.0f;

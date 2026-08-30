@@ -46,10 +46,10 @@ bool LevelEditorLayer::init(GJGameLevel* level)
 	if (!CCLayer::init())
 		return false;
 
-	this->m_objectCount = 0;
+	m_objectCount = 0;
 	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 	GameManager::sharedState()->resetMusic();
-	this->m_level = level;
+	m_level = level;
 
 	m_gameLayer = CCLayer::create();
 	this->addChild(m_gameLayer, 1);
@@ -58,7 +58,7 @@ bool LevelEditorLayer::init(GJGameLevel* level)
 	// missing code
 
 	if (!m_levelSettings) {
-		this->m_levelSettings = LevelSettingsObject::create();
+		m_levelSettings = LevelSettingsObject::create();
 		m_levelSettings->retain();
 	}
 	

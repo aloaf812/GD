@@ -19,7 +19,7 @@ bool UILayer::init()
 	m_pauseBtn = CCMenuItemSpriteExtra::create(pauseButton, NULL, this, menu_selector(UILayer::onPause));
 	//m_pauseBtn->setVolume(0);
 	m_pauseBtn->setSizeMult(4.0f);
-	CCMenu* pauseBtnMenu = CCMenu::create(this->m_pauseBtn, 0);
+	CCMenu* pauseBtnMenu = CCMenu::create(m_pauseBtn, 0);
 	this->addChild(pauseBtnMenu, 16);
 	pauseBtnMenu->setPosition(pDirector->getScreenRight() - 15.0, pDirector->getScreenTop() - 15.0);
 

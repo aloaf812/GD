@@ -412,7 +412,7 @@ void PlayerObject::playerDestroyed()
 		unk_0x318 = 0.0f;
 	}
 
-	this->m_isDead = true;
+	m_isDead = true;
 	this->stopRotation();
 	this->deactivateParticle();
 	this->touchedObject(nullptr);
@@ -585,7 +585,7 @@ void PlayerObject::updateJump(float dt)
 			this->incrementJumps();
 			if (m_rollMode != false) {
 				/*flipGravity(this, (bool)(!m_gravityFlipped), true);
-				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&this->m_yVelocity + 4)
+				dVar11 = (double)__muldf3(*(undefined4 *)pdVar8, *(undefined4 *)((int)&m_yVelocity + 4)
 					, 0x40000000, 0x3fe33333);
 				*pdVar8 = dVar11;*/
 				unk_0x316 = 0;
@@ -638,26 +638,26 @@ void PlayerObject::updateTimeMod(float timeMod)
 		PLAY_LAYER->playSpeedParticle(timeMod);
 
 	// temporary dummy values
-	this->m_timeMod = timeMod;
+	m_timeMod = timeMod;
 	if (timeMod == 0.9f) {
-		this->m_yStart = 11.180031776428223;
-		this->m_gravity = 0.9581990242004395;
-		this->m_speed = 5.7700018882751465;
+		m_yStart = 11.180031776428223;
+		m_gravity = 0.9581990242004395;
+		m_speed = 5.7700018882751465;
 	}
 	else if (timeMod == 0.7f) {
-		this->m_yStart = 10.620032;
-		this->m_gravity = 0.940199;
-		this->m_speed = 5.980002;
+		m_yStart = 10.620032;
+		m_gravity = 0.940199;
+		m_speed = 5.980002;
 	}
 	else if (timeMod == 1.1f) {
-		this->m_yStart = 11.420032;
-		this->m_gravity = 0.957199;
-		this->m_speed = 5.870002;
+		m_yStart = 11.420032;
+		m_gravity = 0.957199;
+		m_speed = 5.870002;
 	}
 	else if (timeMod == 1.3f) {
-		this->m_yStart = 11.230032;
-		this->m_gravity = 0.961199;
-		this->m_speed = 6.000002;
+		m_yStart = 11.230032;
+		m_gravity = 0.961199;
+		m_speed = 6.000002;
 	}
 
 	if (m_rollMode)

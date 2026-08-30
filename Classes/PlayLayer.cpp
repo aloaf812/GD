@@ -293,7 +293,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	this->createObjectsFromSetup(m_level->getLevelString());
 
 	if (!m_levelSettings) {
-		this->m_levelSettings = LevelSettingsObject::create();
+		m_levelSettings = LevelSettingsObject::create();
 		m_levelSettings->retain();
 	}
 
@@ -344,7 +344,7 @@ bool PlayLayer::init(GJGameLevel* level)
 	char const* audioFile = LevelTools::getAudioFileName(audioTrack);
 	SAE->preloadBackgroundMusic(audioFile);
 	// std::string audioStr = LevelTools::getAudioString(audioTrack);
-	// this->m_audioEffectsLayer = AudioEffectsLayer::create(audioStr);
+	// m_audioEffectsLayer = AudioEffectsLayer::create(audioStr);
 	// field_0x13c->addChild(m_audioEffectsLayer, 1);
 	// m_audioEffectsLayer->setVisible(false);
 
@@ -453,7 +453,7 @@ void PlayLayer::resetLevel()
 	// field337_0x1d8 = 1.0;
 	this->stopActionByTag(14);
 
-	this->m_cameraPortal = nullptr;
+	m_cameraPortal = nullptr;
 	//m_audioEffectsLayer->resetAudioVars();
 	m_player->resetObject();
 	this->animateOutFlyGround(true);
@@ -682,14 +682,14 @@ ccColor3B PlayLayer::getGColor()
 
 void PlayLayer::setActiveGColorAction(ColorAction* action)
 {
-	if (this->m_activeGColorAction != action) {
+	if (m_activeGColorAction != action) {
 		if (action != nullptr)
 			action->retain();
 
-		if (this->m_activeGColorAction != nullptr)
+		if (m_activeGColorAction != nullptr)
 			m_activeGColorAction->release();
 
-			this->m_activeGColorAction = action;
+			m_activeGColorAction = action;
 	}
 }
 
@@ -722,7 +722,7 @@ void PlayLayer::togglePracticeMode(bool practice)
 	//while (int idx = m_checkpoints->count(), idx != 0) {
 		// removeLastCheckpoint();
 	//}
-	this->m_cleanReset = true;
+	m_cleanReset = true;
 	resetLevel();
 }
 

@@ -54,7 +54,7 @@ bool MultilineBitmapFont::initWithFont(
 
 	for (int i = 0; i < 300; ++i)
 	{
-		this->m_fontWidths[i] = fontObject->getFontWidth(i);
+		m_fontWidths[i] = fontObject->getFontWidth(i);
 	}
 
 	std::string coloredText;

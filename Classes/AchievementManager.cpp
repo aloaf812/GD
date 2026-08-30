@@ -6,10 +6,10 @@ USING_NS_CC;
 
 AchievementManager::AchievementManager()
 {
-	this->m_allAchievements = nullptr;
+	m_allAchievements = nullptr;
     // unk_0xec = 0;
 	m_reportedAchievements = nullptr;
-	this->m_dontNotifyAch = false;
+	m_dontNotifyAch = false;
 }
 
 AchievementManager* AchievementManager::sharedState()

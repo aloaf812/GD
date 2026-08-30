@@ -5,10 +5,10 @@ USING_NS_CC;
 
 GJGroundLayer::GJGroundLayer()
 {
-	this->m_groundWidth = 0.0f;
-	this->m_groundSprite = NULL;
-	this->m_line = NULL;
-	this->m_isActive = false;
+	m_groundWidth = 0.0f;
+	m_groundSprite = NULL;
+	m_line = NULL;
+	m_isActive = false;
 }
 
 GJGroundLayer* GJGroundLayer::create(int gID)
@@ -90,7 +90,7 @@ void GJGroundLayer::fadeInGround(float duration)
 
 void GJGroundLayer::fadeInFinished()
 {
-	this->m_isActive = true;
+	m_isActive = true;
 }
 
 void GJGroundLayer::fadeOutGround(float duration)

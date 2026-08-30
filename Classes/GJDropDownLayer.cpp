@@ -46,7 +46,7 @@ void GJDropDownLayer::hideLayer(bool instantHide) {
         this->layerHidden();
     }
     else {
-        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, this->m_startPosition), 2.0f);
+        CCEaseInOut* action = CCEaseInOut::create(CCMoveTo::create(0.5, m_startPosition), 2.0f);
 		CCCallFunc* callback = CCCallFunc::create(this, callfunc_selector(GJDropDownLayer::layerHidden));
 		m_internalLayer->runAction(CCSequence::create(action, callback, NULL));
         this->runAction(CCFadeTo::create(0.5, 0));

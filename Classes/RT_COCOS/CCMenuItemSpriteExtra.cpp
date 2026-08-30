@@ -46,7 +46,7 @@ bool CCMenuItemSpriteExtra::init(cocos2d::CCNode* normalSprite, cocos2d::CCNode*
     if (!CCMenuItemSprite::initWithNormalSprite(normalSprite, selectedSprite, NULL, target, selector))
         return false;
 
-    this->m_originalScale = 1.0f;
+    m_originalScale = 1.0f;
     normalSprite->setAnchorPoint(CCPoint(0.5f, 0.5f));
 
     CCSize size = normalSprite->getContentSize();
@@ -56,7 +56,7 @@ bool CCMenuItemSpriteExtra::init(cocos2d::CCNode* normalSprite, cocos2d::CCNode*
 
     //this->mDarken = true;
     this->mUseAnimation = true;
-	this->m_scaleVar = 1.26f;
+	m_scaleVar = 1.26f;
 
     return true;
 }

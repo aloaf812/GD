@@ -33,7 +33,7 @@ bool AchievementBar::init(char const* title, char const* description, char const
 	CCDirector* pDirector = CCDirector::sharedDirector();
 	CCSize winSize = pDirector->getWinSize();
 
-	this->m_layerColor = CCLayerColor::create(ccc4(0, 0, 0, 0));
+	m_layerColor = CCLayerColor::create(ccc4(0, 0, 0, 0));
 	this->addChild(m_layerColor);
 
 	CCScale9Sprite* box = CCScale9Sprite::create("GJ_square01.png", CCRect(0, 0, 80, 80));

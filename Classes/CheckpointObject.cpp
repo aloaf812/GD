@@ -20,6 +20,6 @@ void CheckpointObject::setObject(GameObject* obj)
 		if (m_object)
 			m_object->release();
 		
-		this->m_object = obj;
+		m_object = obj;
 	}
 }

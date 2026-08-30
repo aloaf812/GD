@@ -44,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 	#else
-		this->m_isIOS = false;
+		m_isIOS = false;
 	#endif
 
 	CCContentManager::sharedManager();

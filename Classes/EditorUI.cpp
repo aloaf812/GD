@@ -39,15 +39,15 @@ bool EditorUI::init(LevelEditorLayer* editorLayer)
 	// robtop why unordered i confusd
 	CCMenuItemSpriteExtra* modeBtn;
 	modeBtn = getModeBtn("edit_buildBtn_001.png", 2);
-	this->m_buildBtn = modeBtn;
+	m_buildBtn = modeBtn;
 	buttonMenu->addChild(modeBtn);
 
 	modeBtn = getModeBtn("edit_editBtn_001.png", 3);
-	this->m_editBtn = modeBtn;
+	m_editBtn = modeBtn;
 	buttonMenu->addChild(modeBtn);
 	
 	modeBtn = getModeBtn("edit_deleteBtn_001.png", 1);
-	this->m_deleteBtn = modeBtn;
+	m_deleteBtn = modeBtn;
 	buttonMenu->addChild(modeBtn);
 
 	m_buildBtn->setPosition(ccp(pDirector->getScreenLeft() + 42.0f, pDirector->getScreenBottom() + 75.0f));

@@ -83,11 +83,11 @@ void GameManager::applicationDidEnterBackground()
 
 void GameManager::applicationWillEnterForeground()
 {
-    if (this->m_hasRatedGame != false) {
+    if (m_hasRatedGame != false) {
         GameManager* pGameManager = sharedState();
         pGameManager->reportAchievementWithID("geometry.ach.rate", 100, false);
     }
-	if (this->m_didLikeFacebook != false) {
+	if (m_didLikeFacebook != false) {
         GameManager* pGameManager = sharedState();
         pGameManager->reportAchievementWithID("geometry.ach.facebook", 100, false);
     }
@@ -157,42 +157,42 @@ void GameManager::dataLoaded(DS_Dictionary* dict)
 {   // robtop why
 
     // dicionaries
-    // what?: this->m_valueKeeper =
+    // what?: m_valueKeeper =
 
     // bools
-    /*this->m_gameCenterEnabled = dict->getBoolForKey("gameCenterEnabled");
-    this->m_firstSetup = dict->getBoolForKey("firstSetup");
-    this->m_showedFirstTutorial = dict->getBoolForKey("showedFirstTutorial");
-    this->m_musicEnabled = dict->getBoolForKey("musicEnabled");
-    this->m_fxEnabled = dict->getBoolForKey("fxEnabled");
+    /*m_gameCenterEnabled = dict->getBoolForKey("gameCenterEnabled");
+    m_firstSetup = dict->getBoolForKey("firstSetup");
+    m_showedFirstTutorial = dict->getBoolForKey("showedFirstTutorial");
+    m_musicEnabled = dict->getBoolForKey("musicEnabled");
+    m_fxEnabled = dict->getBoolForKey("fxEnabled");
 
     // intergers
-    this->m_playerUserID = dict->getIntegerForKey("playerUserID");
-    this->m_playerFrame = dict->getIntegerForKey("playerFrame");
-    this->m_playerColor = dict->getIntegerForKey("playerColor");
-    this->m_playerColor2 = dict->getIntegerForKey("playerColor2");
+    m_playerUserID = dict->getIntegerForKey("playerUserID");
+    m_playerFrame = dict->getIntegerForKey("playerFrame");
+    m_playerColor = dict->getIntegerForKey("playerColor");
+    m_playerColor2 = dict->getIntegerForKey("playerColor2");
 
     // iVar9 = dict->getIntegerForKey("playerShip");
 
     // more bools
-    this->m_autoCheckpoints = dict->getBoolForKey("autoCheckpoints");
-    this->m_showSongMarkers = dict->getBoolForKey("showSongMarkers");
-    this->m_showBPMMarkers = dict->getBoolForKey("showBPMMarkers");
-    this->m_recordGameplay = dict->getBoolForKey("recordGameplay");
-    this->m_autoRetryLevel = dict->getBoolForKey("autoRetryLevel");
-    this->m_showProgressBar = dict->getBoolForKey("showProgressBar");
-    this->m_commentSortRecent = dict->getBoolForKey("commentSortRecent");
-    this->m_performanceMode = dict->getBoolForKey("performanceMode");
-    this->m_clickedEditor = dict->getBoolForKey("clickedEditor");
-    this->m_clickedGarage = dict->getBoolForKey("clickedGarage");
-    this->m_clickedName = dict->getBoolForKey("clickedName");
-    this->m_clickedPractice = dict->getBoolForKey("clickedPractice");
-    this->m_showedEditorGuide = dict->getBoolForKey("showedEditorGuide");
-    this->m_playerScoreValid = dict->getBoolForKey("playerScoreValid");
-    this->m_enableTutorial = dict->getBoolForKey("kEnableTutorial");
-    this->m_showedRateDiffDialog = dict->getBoolForKey("showedRateDiffDialog");
-    this->m_showedRateStarDialog = dict->getBoolForKey("showedRateStarDialog");
-    this->m_showedLowDetailDialog = dict->getBoolForKey("showedLowDetailDialog");*/
+    m_autoCheckpoints = dict->getBoolForKey("autoCheckpoints");
+    m_showSongMarkers = dict->getBoolForKey("showSongMarkers");
+    m_showBPMMarkers = dict->getBoolForKey("showBPMMarkers");
+    m_recordGameplay = dict->getBoolForKey("recordGameplay");
+    m_autoRetryLevel = dict->getBoolForKey("autoRetryLevel");
+    m_showProgressBar = dict->getBoolForKey("showProgressBar");
+    m_commentSortRecent = dict->getBoolForKey("commentSortRecent");
+    m_performanceMode = dict->getBoolForKey("performanceMode");
+    m_clickedEditor = dict->getBoolForKey("clickedEditor");
+    m_clickedGarage = dict->getBoolForKey("clickedGarage");
+    m_clickedName = dict->getBoolForKey("clickedName");
+    m_clickedPractice = dict->getBoolForKey("clickedPractice");
+    m_showedEditorGuide = dict->getBoolForKey("showedEditorGuide");
+    m_playerScoreValid = dict->getBoolForKey("playerScoreValid");
+    m_enableTutorial = dict->getBoolForKey("kEnableTutorial");
+    m_showedRateDiffDialog = dict->getBoolForKey("showedRateDiffDialog");
+    m_showedRateStarDialog = dict->getBoolForKey("showedRateStarDialog");
+    m_showedLowDetailDialog = dict->getBoolForKey("showedLowDetailDialog");*/
 
 	GameLevelManager::sharedState()->dataLoaded(dict);
 
@@ -210,14 +210,14 @@ void GameManager::loadBackground(int backID)
     if (bgID != m_loadedBGIdx) {
 		CCString* bgStr;
 		CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-		if (this->m_loadedBGIdx != 0)
+		if (m_loadedBGIdx != 0)
 		{
 			bgStr = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
 			// pTextureCache->removeTextureForKey(bgStr->getCString);
 		}
 		bgStr = CCString::createWithFormat("game_bg_%02d_001.png", bgID);
 		pTextureCache->addImage(bgStr->getCString());
-		this->m_loadedBGIdx = bgID;
+		m_loadedBGIdx = bgID;
     }
 }
 
@@ -230,18 +230,18 @@ void GameManager::loadGround(int gID)
     if (gID < 1) {
         groundID = 1;
     }
-    if (groundID != this->m_loadedGIdx)
+    if (groundID != m_loadedGIdx)
     {
         CCString* groundStr;
         CCTextureCache* pTextureCache = CCTextureCache::sharedTextureCache();
-        if (this->m_loadedGIdx != 0)
+        if (m_loadedGIdx != 0)
         {
             groundStr = CCString::createWithFormat("groundSquare_%02d_001.png", groundID);
             // MISSING CC FUNCTION: pTextureCache->removeTextureForKey(groundStr->getCString);
         }
         groundStr = CCString::createWithFormat("groundSquare_%02d_001.png", groundID);
         pTextureCache->addImage(groundStr->getCString());
-        this->m_loadedGIdx = groundID;
+        m_loadedGIdx = groundID;
     }
 }
 
@@ -341,7 +341,7 @@ void GameManager::likeFacebook()
     if (GameToolbox::doWeHaveInternet()) {
         CCApplication* pApplication = CCApplication::sharedApplication();
         pApplication->openURL("https://www.facebook.com/geometrydash");
-		this->m_didLikeFacebook = true;
+		m_didLikeFacebook = true;
     }
 }
 
@@ -350,7 +350,7 @@ void GameManager::followTwitter()
     if (GameToolbox::doWeHaveInternet()) {
         CCApplication* pApplication = CCApplication::sharedApplication();
         pApplication->openURL("https://twitter.com/robtopgames");
-		this->m_didFollowTwitter = true;
+		m_didFollowTwitter = true;
     }
 }
 

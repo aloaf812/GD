@@ -93,7 +93,7 @@ bool BoomScrollLayer::init(cocos2d::CCArray* pages, int offset, bool looped)
     
     this->updatePages();
 
-	this->m_looped = looped;
+	m_looped = looped;
 	if (looped)
 		repositionPagesLooped();
 
@@ -149,7 +149,7 @@ bool BoomScrollLayer::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *p
 void BoomScrollLayer::quickUpdate()
 {
 	if (m_movingToPage) {
-		this->m_movingToPage = false;
+		m_movingToPage = false;
 		m_internalLayer->stopActionByTag(2);
 		m_internalLayer->setPosition(m_targetPos);
 		moveToPageEnded();
@@ -236,8 +236,8 @@ void BoomScrollLayer::repositionPagesLooped()
 
 	if (unk_0x124) {
 		getPage(m_currentScreen)->setPosition(getRelativePosForPage(m_currentScreen));
-		actualPage2 = this->m_currentScreen - 1;
-		actualPage3 = this->m_currentScreen + 1;
+		actualPage2 = m_currentScreen - 1;
+		actualPage3 = m_currentScreen + 1;
 	}
 
 	getPage(actualPage2)->setPosition(getRelativePosForPage(actualPage2));
