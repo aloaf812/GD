@@ -31,6 +31,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setOpenGLView(pEGLView);
 	pDirector->setProjection(kCCDirectorProjection2D);
 	pDirector->setupScreenScale(CCSizeMake(480.0f, 320.0f));
+
+	// temporary fix while we get CCDirector::setupScreenScale unlobotomized
+	pDirector->setContentScaleFactor(2);
     
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
     CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
