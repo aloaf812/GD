@@ -24,11 +24,16 @@ bool EditorUI::init(LevelEditorLayer* editorLayer)
 	if (!CCLayer::init())
 		return false;
 
-	CCDirector* pDirector = CCDirector::sharedDirector();
-
-
+	m_editorLayer = editorLayer;
+	
 	this->setTouchEnabled(true);
 	this->setKeypadEnabled(true);
+
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+	// unk_0x11c = Slider::create(this, menu_selector(EditorUI::sliderChanged), "sliderBar.png", "slidergroove_02.png", "GJ_moveBtn.png");
+
+
 
 	CCSprite* bgSprite = CCSprite::create("edit_barBG_001.png");
 	bgSprite->setPosition(ccp(0.0f, 0.0f));
@@ -50,15 +55,15 @@ bool EditorUI::init(LevelEditorLayer* editorLayer)
 	m_deleteBtn = modeBtn;
 	buttonMenu->addChild(modeBtn);
 
-	m_buildBtn->setPosition(ccp(pDirector->getScreenLeft() + 42.0f, pDirector->getScreenBottom() + 75.0f));
+	m_buildBtn->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() + 42.0f, CCDirector::sharedDirector()->getScreenBottom() + 75.0f));
 	m_editBtn->setPosition(m_buildBtn->getPosition() + ccp(0.0f, -29.0f));
 	m_deleteBtn->setPosition(m_editBtn->getPosition() + ccp(0.0f, -29.0f));
-	buttonMenu->setPosition(ccp(pDirector->getScreenLeft() + 85.0f, pDirector->getScreenBottom() + 75.0f));
+	buttonMenu->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() + 85.0f, CCDirector::sharedDirector()->getScreenBottom() + 75.0f));
 
 
 	CCSprite* vLine = CCSprite::createWithSpriteFrameName("edit_vLine_001.png");
 	this->addChild(vLine, 2);
-	vLine->setPosition(ccp(pDirector->getScreenLeft() + 85.0f, pDirector->getScreenBottom() + 75.0f));
+	vLine->setPosition(ccp(CCDirector::sharedDirector()->getScreenLeft() + 85.0f, CCDirector::sharedDirector()->getScreenBottom() + 75.0f));
 
 	// this->setupDeleteMenu();
 	this->setupCreateMenu();
@@ -90,6 +95,11 @@ void EditorUI::toggleMode(cocos2d::CCObject* sender)
 	CCLOG("toggling");
 }
 
+void EditorUI::toggleSwipe(cocos2d::CCObject* sender)
+{
+	// idk this is also pretty simple
+}
+
 void EditorUI::resetUI()
 {
 	CCSprite* normalFrame;
@@ -115,4 +125,9 @@ void EditorUI::resetUI()
 void EditorUI::showMaxError()
 {
 	FLAlertLayer::create(nullptr, "Max Objects", CCString::createWithFormat("You cannot create more than <cy>%i</c> <cg>objects</c> in a single level.", 10000)->getCString(), "OK", nullptr, 300.0f)->show();
+}
+
+void EditorUI::sliderChanged(CCObject* sender)
+{
+	// very thingy implementation, cool one tho but very mathy so later
 }
