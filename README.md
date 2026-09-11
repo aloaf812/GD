@@ -43,6 +43,7 @@ Currently the decomp only supports the following platforms, with more on the way
  - [AntiMatter](https://github.com/a-zalt)
  - [System32](https://github.com/system32149)
  - [ItzZyann](https://github.com/ItzZyann)
+ - [Staz](https://github.com/Stazzical)
 
 # SHA-1 File Hashes
 
