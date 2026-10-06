@@ -3,6 +3,8 @@
 > [!IMPORTANT]
 > This is a **work-in-progress** decompilation of Geometry Dash version 1.710. Some of the core functionality is implemented, but not enough for it to be in a usable state.
 
+### [Join the Discord server!](discord.gg/9ZKQQfzeX8)
+
 # Why decompile 1.7?
 
 - It uses cocos2d-x 2.2.3 (the older version GD used has broken screen orientations)
