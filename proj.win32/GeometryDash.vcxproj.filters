@@ -222,6 +222,15 @@
     <ClCompile Include="..\Classes\RetryLevelLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\TutorialPopup.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StatsLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AchievementsLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -435,6 +444,15 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\RetryLevelLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialPopup.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StatsLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AchievementsLayer.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

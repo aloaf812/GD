@@ -11,6 +11,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AchievementBar.cpp \
                    ../../Classes/AchievementManager.cpp \
                    ../../Classes/AchievementNotifier.cpp \
+                   ../../Classes/AchievementsLayer.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/BoomListView.cpp \
                    ../../Classes/BoomScrollLayer.cpp \
@@ -72,6 +73,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/SongInfoLayer.cpp \
                    ../../Classes/SongObject.cpp \
                    ../../Classes/SongsLayer.cpp \
+                   ../../Classes/StatsLayer.cpp \
                    ../../Classes/TextArea.cpp \
                    ../../Classes/TutorialLayer.cpp \
                    ../../Classes/UILayer.cpp

@@ -133,6 +133,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\AchievementBar.cpp" />
     <ClCompile Include="..\Classes\AchievementManager.cpp" />
     <ClCompile Include="..\Classes\AchievementNotifier.cpp" />
+    <ClCompile Include="..\Classes\AchievementsLayer.cpp" />
     <ClCompile Include="..\Classes\AdToolbox.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BoomListView.cpp" />
@@ -196,6 +197,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\SongInfoLayer.cpp" />
     <ClCompile Include="..\Classes\SongObject.cpp" />
     <ClCompile Include="..\Classes\SongsLayer.cpp" />
+    <ClCompile Include="..\Classes\StatsLayer.cpp" />
     <ClCompile Include="..\Classes\TextArea.cpp" />
     <ClCompile Include="..\Classes\TutorialLayer.cpp" />
     <ClCompile Include="..\Classes\TutorialPopup.cpp" />
@@ -206,6 +208,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\AchievementBar.h" />
     <ClInclude Include="..\Classes\AchievementManager.h" />
     <ClInclude Include="..\Classes\AchievementNotifier.h" />
+    <ClInclude Include="..\Classes\AchievementsLayer.h" />
     <ClInclude Include="..\Classes\AdToolbox.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AppMacros.h" />
@@ -270,6 +273,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\SongInfoLayer.h" />
     <ClInclude Include="..\Classes\SongObject.h" />
     <ClInclude Include="..\Classes\SongsLayer.h" />
+    <ClInclude Include="..\Classes\StatsLayer.h" />
     <ClInclude Include="..\Classes\TextArea.h" />
     <ClInclude Include="..\Classes\TutorialLayer.h" />
     <ClInclude Include="..\Classes\TutorialPopup.h" />

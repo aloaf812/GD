@@ -9,6 +9,8 @@
 #include "LevelSelectLayer.h"
 #include "GJGarageLayer.h"
 #include "CreatorLayer.h"
+#include "AchievementsLayer.h"
+#include "StatsLayer.h"
 
 #include "PlatformToolbox.h"
 #include "GameManager.h"
@@ -79,7 +81,9 @@ void MenuLayer::onCreator(CCObject* sender)
 
 void MenuLayer::onAchievements(CCObject* sender)
 {
-    
+	AchievementsLayer* layer = AchievementsLayer::create();
+	this->addChild(layer, 100);
+	layer->showLayer(false);
 }
 
 void MenuLayer::onOptions(CCObject* sender)
@@ -91,7 +95,9 @@ void MenuLayer::onOptions(CCObject* sender)
 
 void MenuLayer::onStats(CCObject* sender)
 {
-    
+	StatsLayer* layer = StatsLayer::create();
+	this->addChild(layer, 100);
+	layer->showLayer(false);
 }
 
 void MenuLayer::onRobTop(CCObject* sender)
