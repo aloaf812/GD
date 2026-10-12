@@ -42,5 +42,6 @@ public:
 	CCMenuItemToggler* unk_0x14c; // 0x14c
 
 	CC_SYNTHESIZE(cocos2d::CCSprite*, m_rateSprite, RateSprite); // 0x150
+	CC_SYNTHESIZE(bool, m_doSelect, DoSelect); // 0x154
 };
 #endif

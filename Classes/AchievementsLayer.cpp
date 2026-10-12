@@ -16,3 +16,8 @@ AchievementsLayer* AchievementsLayer::create()
 		return NULL;
 	}
 }
+
+void AchievementsLayer::customSetup()
+{
+
+}

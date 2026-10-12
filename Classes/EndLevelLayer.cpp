@@ -22,7 +22,7 @@ char const* EndLevelLayer::getEndText()
 void EndLevelLayer::onMenu(CCObject* sender)
 {
 	PLAY_LAYER->onQuit();
-	this->exitLayer(false);
+	this->hideLayer(false);
 	GameSoundManager::sharedManager()->playEffect("quitSound_01.ogg", 1.0f, 0.0f, 0.7f);
 }
 
@@ -30,7 +30,7 @@ void EndLevelLayer::onReplay(CCObject* sender)
 {
 	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(false);
 	GameSoundManager::sharedManager()->playEffect("playSound_01.ogg", 1.0f, 0.0f, 0.3f);
-	this->exitLayer(false);
+	this->hideLayer(false);
 	
 	PLAY_LAYER->runAction(CCSequence::create(CCDelayTime::create(0.5f), CCCallFunc::create(PLAY_LAYER, callfunc_selector(PlayLayer::fullReset)), nullptr));
 }

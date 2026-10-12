@@ -16,3 +16,8 @@ StatsLayer* StatsLayer::create()
 		return NULL;
 	}
 }
+
+void StatsLayer::customSetup()
+{
+
+}
