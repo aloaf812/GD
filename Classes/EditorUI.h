@@ -33,7 +33,7 @@ public:
 	CCMenuItemSpriteExtra* m_buildBtn; // 0x144
 	CCMenuItemSpriteExtra* m_editBtn; // 0x148
 	
-	ButtonSprite* unk_0x14c; // 0x14c
+	CCMenuItemSpriteExtra* unk_0x14c; // 0x14c
 	
 	CC_SYNTHESIZE(EditMode, m_editMode, EditMode); // 0x190
 	LevelEditorLayer* m_editorLayer; // 0x194

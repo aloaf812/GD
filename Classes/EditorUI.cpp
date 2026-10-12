@@ -97,7 +97,12 @@ void EditorUI::toggleMode(cocos2d::CCObject* sender)
 
 void EditorUI::toggleSwipe(cocos2d::CCObject* sender)
 {
-	// idk this is also pretty simple
+	unk_0x12c = unk_0x12c ^ 1;
+	ButtonSprite* this_00 = (ButtonSprite*)unk_0x14c->getNormalImage();
+	if (!unk_0x12c)
+		this_00->updateBGImage("GJ_button_01.png");
+	else
+		this_00->updateBGImage("GJ_button_02.png");
 }
 
 void EditorUI::resetUI()

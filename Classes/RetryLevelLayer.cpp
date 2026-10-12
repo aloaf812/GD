@@ -144,7 +144,7 @@ void RetryLevelLayer::onReplay(CCObject* sender)
 void RetryLevelLayer::onMenu(CCObject* sender)
 {
 	PLAY_LAYER->onQuit();
-	this->exitLayer(false);
+	this->hideLayer(false);
 	GameSoundManager::sharedManager()->playEffect("quitSound_01.ogg", 1.0f, 0.0f, 0.7f);
 }
 
