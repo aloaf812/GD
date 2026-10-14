@@ -53,30 +53,21 @@ void MenuLayer::onPlay(CCObject* sender)
 {
     this->willClose();
 	GameManager::sharedState()->setLastScene(LastGameScene::unk8);
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene *pScene = LevelSelectLayer::scene(0);
-    CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
-    pDirector->replaceScene(fade);
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, LevelSelectLayer::scene(0)));
 }
 
 void MenuLayer::onGarage(CCObject* sender)
 {
     this->willClose();
 	GameManager::sharedState()->setClickedGarage(true);
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene *pScene = GJGarageLayer::scene();
-    CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
-    pDirector->replaceScene(fade);
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, GJGarageLayer::scene()));
 }
 
 void MenuLayer::onCreator(CCObject* sender)
 {
     this->willClose();
 	GameManager::sharedState()->setClickedEditor(true);
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene *pScene = CreatorLayer::scene();
-    CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
-	pDirector->replaceScene(fade);
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, CreatorLayer::scene()));
 }
 
 void MenuLayer::onAchievements(CCObject* sender)
@@ -119,7 +110,7 @@ void MenuLayer::onTwitter(CCObject* sender)
 void MenuLayer::onTrailer(CCObject* sender)
 {
     PlatformToolbox::logEvent("gjl_trailer");
-    if (!GameToolbox::doWeHaveInternet()) {
+    if (GameToolbox::doWeHaveInternet()) {
 		CCApplication::sharedApplication()->openURL("https://www.youtube.com/watch?v=k90y6PIzIaE");
     }
 }
@@ -141,7 +132,12 @@ void MenuLayer::onFullVersion(CCObject* sender)
 
 void MenuLayer::showGCQuestion()
 {
-
+	FLAlertLayer* alert = FLAlertLayer::create(unk_0x10c, "Game Center",
+		"Do you want to <cg>enable</c>\n<cy>Game Center</c>? You can change this anytime in the options menu."
+		, "NO", "YES", 300.0f);
+	alert->setTag(1);
+	alert->setTargetScene(AppDelegate::get()->getScenePointer());
+	alert->show();
 }
 
 void MenuLayer::onGooglePlayGames(CCObject* sender)
@@ -299,7 +295,37 @@ void MenuLayer::syncPlatformAchievements(float dt) {
 	GameManager::sharedState()->syncPlatformAchievements();
 }
 
+void MenuLayer::tryShowAd(float dt)
+{
+	if (GameManager::sharedState()->showInterstitial())
+		CCNode::unschedule(schedule_selector(MenuLayer::tryShowAd));
+}
+
 void MenuLayer::googlePlaySignedIn()
 {
 	// todo
 }
+
+void MenuLayer::FLAlert_Clicked(FLAlertLayer* layer, bool button2Clicked)
+{
+	// todo
+}
+
+void MenuLayer::keyBackClicked()
+{
+	FLAlertLayer* alert = FLAlertLayer::create(unk_0x10c, "Quit Game", "Are you sure you want to <cr>Quit</c>?", "Cancel", "Yes", 300.0f);
+	alert->setTag(0);
+	alert->show();
+}
+
+void MenuLayer::showPirateMessage()
+{
+	FLAlertLayer* alert = FLAlertLayer::create(unk_0x10c, "Pirate detected!",
+		"<cy>Online features</c> have been <cr>disabled</c>. Please consider purchasing the <cg>full version</c> as it really help us to continue developing <cl>Geometry Dash</c>!"
+		, "OK :(", "Get Full", 300.0f);
+	alert->setTag(2);
+	alert->setTargetScene(AppDelegate::get()->getScenePointer());
+	alert->show();
+}
+
+void MenuLayer::onEveryplay(CCObject* sender) {}

@@ -1331,6 +1331,18 @@ void PlayLayer::cameraMoveY(float value, float duration, float rate)
 	this->runAction(ease);
 }
 
+void PlayLayer::shakeCamera(float time)
+{
+	unk_0x1c8 = true;
+	unk_0x1cc = 3.0f;
+	this->runAction(CCSequence::create(CCDelayTime::create(time), CCCallFunc::create(this, callfunc_selector(PlayLayer::stopCameraShake)), nullptr));
+}
+
+void PlayLayer::stopCameraShake()
+{
+	unk_0x1c8 = false;
+}
+
 CheckpointObject* PlayLayer::createCheckpoint()
 {
 	CheckpointObject* check = CheckpointObject::create();
@@ -1370,4 +1382,19 @@ void PlayLayer::incrementJumps()
 	GameStatsManager::sharedState()->incrementStat("1");
 	m_jumps++;
 	m_level->setJumps(m_level->getJumps() + 1);
+}
+
+void PlayLayer::flipFinished()
+{
+	m_player->levelFlipFinished();
+}
+
+void PlayLayer::startRecording()
+{
+	m_shouldRestartAfterStopped = false;
+}
+
+void PlayLayer::tryStartRecord()
+{
+	startRecording();
 }

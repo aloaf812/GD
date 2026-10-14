@@ -114,8 +114,14 @@ public:
 	void moveCameraToPos(cocos2d::CCPoint pos);
 	void cameraMoveX(float value, float duration, float rate);
 	void cameraMoveY(float value, float duration, float rate);
+	void shakeCamera(float time);
+	void stopCameraShake();
     
 	bool hasUniqueCoin(GameObject* obj);
+	void flipFinished();
+
+	void startRecording();
+	void tryStartRecord();
 
 	float unk_0x110; // 0x110
 	bool unk_0x120; // 0x120
@@ -168,7 +174,9 @@ public:
 	
 	float m_levelLength; // 0x1bc
 	float m_realLevelLength; // 0x1c0;
-	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4 
+	cocos2d::CCLabelBMFont* m_attemptLabel; // 0x1c4
+	bool unk_0x1c8; // 0x1c8
+	float unk_0x1cc; // 0x1cc
 	bool m_showingHint; // 0x1d0
 	
 	cocos2d::CCDictionary* m_particlesDictionary; // 0x1dc
@@ -230,8 +238,8 @@ public:
 	virtual void setActiveGColorAction(ColorAction* action);
     /*CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeLineColorAction, ActiveLineColorAction); // 0x2a0
     CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeObjColorAction, ActiveObjColorAction); // 0x2a4
-    CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeTintObjColorAction, ActiveTintObjColorAction); // 0x2a8
-    CC_PROPERTY(bool, m_shouldRestartAfterStopped, ShouldRestartAfterStopped); // 0x2ac*/
+    CC_PROPERTY_READONLY(cocos2d::CCAction*, m_activeTintObjColorAction, ActiveTintObjColorAction); // 0x2a8*/
+    CC_SYNTHESIZE(bool, m_shouldRestartAfterStopped, ShouldRestartAfterStopped); // 0x2ac
 	CC_SYNTHESIZE_READONLY(bool, m_tintObjectsUseBlend, TintObjectsUseBlend); // 0x2ad
 };
 

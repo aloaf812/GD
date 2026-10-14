@@ -224,6 +224,8 @@ void PlayerObject::logValues()
 	// hey robtop lowkey give us the gd source code :)
 }
 
+// todo: delete this entire function and redo it
+// "when you get home i want you to take this outfit and burn it" -kg
 void PlayerObject::update(float dt)
 {
 	if (!m_isDead) {

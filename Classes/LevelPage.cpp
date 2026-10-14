@@ -203,5 +203,4 @@ void LevelPage::onPlay(cocos2d::CCObject* sender)
     CCScene* pScene = PlayLayer::scene(m_level);
     CCTransitionFade* fade = CCTransitionFade::create(0.5f, pScene);
     pDirector->replaceScene(fade);
-    return;
 }
