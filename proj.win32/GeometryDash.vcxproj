@@ -164,6 +164,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\GJMoreGamesLayer.cpp" />
     <ClCompile Include="..\Classes\GJSearchObject.cpp" />
     <ClCompile Include="..\Classes\GManager.cpp" />
+    <ClCompile Include="..\Classes\GooglePlayManager.cpp" />
     <ClCompile Include="..\Classes\LevelBrowserLayer.cpp" />
     <ClCompile Include="..\Classes\LevelEditorLayer.cpp" />
     <ClCompile Include="..\Classes\LevelInfoLayer.cpp" />
@@ -240,6 +241,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\GJMoreGamesLayer.h" />
     <ClInclude Include="..\Classes\GJSearchObject.h" />
     <ClInclude Include="..\Classes\GManager.h" />
+    <ClInclude Include="..\Classes\GooglePlayManager.h" />
     <ClInclude Include="..\Classes\LevelBrowserLayer.h" />
     <ClInclude Include="..\Classes\LevelEditorLayer.h" />
     <ClInclude Include="..\Classes\LevelInfoLayer.h" />

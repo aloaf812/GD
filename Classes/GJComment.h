@@ -5,6 +5,8 @@
 
 class GJComment : public cocos2d::CCNode {
 public:
+	bool init();
+
 	CC_SYNTHESIZE(std::string, m_comment, Comment); // 0xe8
 	CC_SYNTHESIZE(std::string, m_userName, UserName); // 0xec
 	CC_SYNTHESIZE(long, m_commentID, CommentID); // 0xf0

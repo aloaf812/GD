@@ -89,7 +89,7 @@ void OptionsLayer::customSetup()
 	createToggleButton("Auto-Retry", menu_selector(OptionsLayer::onAutoRetry), !GM->getAutoRetryLevel(), toggleMenu, ccp((winSize.width * 0.5f) + 40.0f, (winSize.height * 0.5f) - 40.0f));
 
 	#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	// GooglePlayManager::sharedState()->setDelegate(m_gPlayDelegate);
+	GooglePlayManager::sharedState()->setDelegate(m_gpDelegate);
 	CCSprite* gpSignIn = CCSprite::createWithSpriteFrameName("gplusSignIn_001.png");
 	CCSprite* gpSignOut = CCSprite::createWithSpriteFrameName("gplusSignOut_001.png");
 
@@ -107,6 +107,11 @@ void OptionsLayer::customSetup()
 
 	this->toggleGP();
 	m_internalLayer->addChild(toggleMenu);
+}
+
+void OptionsLayer::exitLayer()
+{
+	GJDropDownLayer::exitLayer(nullptr);
 }
 
 void OptionsLayer::toggleGP()
@@ -149,14 +154,14 @@ void OptionsLayer::onSupport(CCObject* sender)
 {
 	unk_0x1bc = true;
 	unk_0x1bd = false;
-	// this->exitLayer();
+	this->exitLayer();
 }
 
 void OptionsLayer::onSoundtracks(CCObject* sender)
 {
 	unk_0x1bd = true;
 	unk_0x1bc = false;
-	// this->exitLayer();
+	this->exitLayer();
 }
 
 void OptionsLayer::onHelp(CCObject* sender)
@@ -187,4 +192,15 @@ void OptionsLayer::onAutoCheckpoints(CCObject* sender)
 void OptionsLayer::onAutoRetry(CCObject* sender)
 {
 	GM->setAutoRetryLevel(!GM->getAutoRetryLevel());
+}
+
+void OptionsLayer::onProgressBar(CCObject* sender)
+{
+	GM->setShowProgressBar(!GM->getShowProgressBar());
+}
+
+void OptionsLayer::onRecordReplays(CCObject* sender)
+{
+	GM->setRecordGameplay(!GM->getRecordGameplay());
+	GM->getRecordGameplay();
 }

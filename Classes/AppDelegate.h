@@ -40,7 +40,7 @@ public:
     void checkSound();
     void trySaveGame();
     void loadingIsFinished();
-    static bool musicTest();
+    bool musicTest();
 
 	void showLoadingCircle(bool, bool, bool);
 	void hideLoadingCircle();

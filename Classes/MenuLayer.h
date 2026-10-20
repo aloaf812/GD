@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "FLAlertLayer.h"
+#include "GooglePlayManager.h"
 
 class MenuLayer: public cocos2d::CCLayer {
 public:
@@ -40,7 +41,7 @@ public:
 	virtual void FLAlert_Clicked(FLAlertLayer* layer, bool button2Clicked);
 
 	FLAlertLayerProtocol* unk_0x10c; // 0x10c
-	// GooglePlayDelegate* m_gpDelegate; // 0x110
+	GooglePlayDelegate* m_gpDelegate; // 0x110
 	cocos2d::CCSprite* m_platformSpr; // 0x114
 };
 

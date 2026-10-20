@@ -207,10 +207,8 @@ void GJGarageLayer::updatePlayerColors()
 
 void GJGarageLayer::onBack(CCObject* sender)
 {
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCScene* scene = MenuLayer::scene();
-    CCTransitionFade* fade = CCTransitionFade::create(0.5f, scene);
-    pDirector->replaceScene(fade);
+	this->setKeypadEnabled(false);
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(0.5f, MenuLayer::scene()));
 }
 
 void GJGarageLayer::onSelectTab(CCObject* sender)

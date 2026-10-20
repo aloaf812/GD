@@ -24,7 +24,9 @@ public:
     void onQuit(cocos2d::CCObject* sender);
     void onRecordReplays(cocos2d::CCObject* sender);
     void onRestart(cocos2d::CCObject* sender);
-    void onResume(cocos2d::CCObject* sender);
+	void onResume(cocos2d::CCObject* sender);
+
+	void keyBackClicked();
 };
 
 #endif /* defined(__PAUSE_LAYER_H__) */

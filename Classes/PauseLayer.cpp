@@ -285,3 +285,14 @@ void PauseLayer::onAutoRetry(CCObject* sender)
 {
 	GM->setAutoRetryLevel(!GM->getAutoRetryLevel());
 }
+
+void PauseLayer::onRecordReplays(CCObject* sender)
+{
+	GM->setRecordGameplay(!GM->getRecordGameplay());
+	GM->getRecordGameplay();
+}
+
+void PauseLayer::keyBackClicked()
+{
+	onQuit(nullptr);
+}

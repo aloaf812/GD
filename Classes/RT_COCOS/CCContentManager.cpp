@@ -12,6 +12,7 @@ CCContentManager* CCContentManager::sharedManager() {
     return sharedManager;
 }
 CCContentManager::CCContentManager() {}
+
 bool CCContentManager::init() {
     m_pDicts = CCDictionary::create();
     m_pDicts->retain();

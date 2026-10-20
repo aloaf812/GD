@@ -214,10 +214,8 @@ bool MenuLayer::init() {
     CCMenu* bottomMenu = CCMenu::create();
     this->addChild(bottomMenu);
 
-    // todo: add functionality to all of these buttons
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-		// GooglePlayManager::sharedState()->setDelegate(m_gpDelegate);
-        
+		GooglePlayManager::sharedState()->setDelegate(m_gpDelegate);
 		m_platformSpr = CCSprite::createWithSpriteFrameName("GJ_gpBtn_001.png");
 		CCMenuItemSpriteExtra* gplusExtra = CCMenuItemSpriteExtra::create(m_platformSpr, NULL, this, menu_selector(MenuLayer::onGooglePlayGames));
         bottomMenu->addChild(gplusExtra);

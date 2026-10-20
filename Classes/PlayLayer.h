@@ -102,6 +102,8 @@ public:
 	void animateOutRollGround(bool insant);
 	void animateOutRollGroundFinished();
 
+	// void circleWaveWillBeRemoved(CCCircleWave* circleWave);
+
 	std::string getParticleKey(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);
 	std::string getParticleKey2(std::string pKey);
 	void createParticle(int objType, char const* file, int zOrder, cocos2d::tCCPositionType positionType);

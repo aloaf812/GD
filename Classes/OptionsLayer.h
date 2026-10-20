@@ -4,12 +4,14 @@
 #include "cocos2d.h"
 #include "RT_COCOS/CCMenuItemSpriteExtra.h"
 #include "GJDropDownLayer.h"
+#include "GooglePlayManager.h"
 
 class OptionsLayer : public GJDropDownLayer {
 public:
     static OptionsLayer* create();
 	void createToggleButton(std::string text, cocos2d::SEL_MenuHandler callback, bool toggled, cocos2d::CCMenu* menu, cocos2d::CCPoint position);
 	void customSetup();
+	void exitLayer();
 	void toggleGP();
 
 	void onGC(CCObject* sender);
@@ -23,8 +25,10 @@ public:
 	void onFX(CCObject* sender);
 	void onAutoCheckpoints(CCObject* sender);
 	void onAutoRetry(CCObject* sender);
+	void onProgressBar(CCObject* sender);
+	void onRecordReplays(CCObject* sender);
 
-	// GooglePlayDelegate* m_gPlayDelegate; // 0x1ac
+	GooglePlayDelegate* m_gpDelegate; // 0x1ac
 	cocos2d::CCMenu* m_optionsMenu; // 0x1b0
 	bool unk_0x1bd; // 0x1bd
 	bool unk_0x1bc; // 0x1bc

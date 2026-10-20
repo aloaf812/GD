@@ -46,6 +46,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GJMoreGamesLayer.cpp \
                    ../../Classes/GJSearchObject.cpp \
                    ../../Classes/GManager.cpp \
+                   ../../Classes/GooglePlayManager.cpp \
                    ../../Classes/LevelBrowserLayer.cpp \
                    ../../Classes/LevelEditorLayer.cpp \
                    ../../Classes/LevelInfoLayer.cpp \

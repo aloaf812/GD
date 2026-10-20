@@ -231,6 +231,9 @@
     <ClCompile Include="..\Classes\AchievementsLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GooglePlayManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -453,6 +456,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AchievementsLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GooglePlayManager.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

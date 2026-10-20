@@ -7,7 +7,7 @@
 
 class TutorialLayer : public FLAlertLayer {
 public:
-	CREATE_FUNC(TutorialLayer);
+	static TutorialLayer* create();
 	bool init();
 	void removeTutorialTexture();
 

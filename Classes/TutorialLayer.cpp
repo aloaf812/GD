@@ -1,6 +1,22 @@
 #include "TutorialLayer.h"
 USING_NS_CC;
 
+TutorialLayer* TutorialLayer::create()
+{
+	TutorialLayer* pRet = new TutorialLayer();
+	if (pRet && pRet->init())
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+}
+
 bool TutorialLayer::init() {
 
 	if (!CCLayerColor::initWithColor(ccc4(0, 0, 0, 150)))
