@@ -30,7 +30,7 @@ const char* LevelTools::getAudioFileName(int audio)
     switch (audio) {
         case 0: return "StereoMadness.mp3";
         default: return "BackOnTrack.mp3";
-        case 2: return "Polargeist";
+        case 2: return "Polargeist.mp3";
         case 3: return "DryOut.mp3";
         case 4: return "BaseAfterBase.mp3";
         case 5: return "CantLetGo.mp3";
