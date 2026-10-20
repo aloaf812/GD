@@ -524,8 +524,8 @@ void GameManager::reportPercentageForLevel(int levelID, int percent, bool practi
 	// todo
 }
 
-bool GameManager::showInterstitial()
+/*bool GameManager::showInterstitial()
 {
 	// might have different behavior in the lite version
 	return true;
-}
+}*/

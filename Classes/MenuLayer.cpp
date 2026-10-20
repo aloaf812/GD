@@ -295,8 +295,8 @@ void MenuLayer::syncPlatformAchievements(float dt) {
 
 void MenuLayer::tryShowAd(float dt)
 {
-	if (GameManager::sharedState()->showInterstitial())
-		CCNode::unschedule(schedule_selector(MenuLayer::tryShowAd));
+	/*if (GameManager::sharedState()->showInterstitial())
+		CCNode::unschedule(schedule_selector(MenuLayer::tryShowAd));*/
 }
 
 void MenuLayer::googlePlaySignedIn()
