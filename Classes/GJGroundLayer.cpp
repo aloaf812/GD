@@ -44,14 +44,20 @@ bool GJGroundLayer::init(int gID)
 	m_groundSprite->setColor(ccc3(0, 102, 255));
 	ccBlendFunc gBlendFunc = { GL_ONE, GL_ZERO };
 	m_groundSprite->setBlendFunc(gBlendFunc);
-	m_groundSprite->setTextureRect(CCRectMake(0, 0, winSize.width, m_groundSprite->getContentSize().height));
+
+	CCRect gTexRect = m_groundSprite->getTextureRect();
+	m_groundWidth = gTexRect.size.width * m_groundSprite->getScale();
+	int gBalancer = ceil(winSize.width / gTexRect.size.height) + 1;
+	gTexRect.size.width = gTexRect.size.height * gBalancer;
+	m_groundSprite->setTextureRect(gTexRect);
     m_groundSprite->setPosition(ccp(0.0f, 90.0f));
 
 	m_line = CCSprite::createWithSpriteFrameName("floorLine_001.png");
 	this->addChild(m_line, 3);
 	m_line->setPosition(ccp(winSize.width * 0.5f, 90.5f));
 	m_line->setAnchorPoint(ccp(0.5f, 1.0f));
-	m_line->setBlendFunc({GL_SRC_ALPHA, GL_ONE});
+	ccBlendFunc lBlendFunc = { GL_SRC_ALPHA, GL_ONE };
+	m_line->setBlendFunc(lBlendFunc);
 	m_line->setTag(1);
 	m_line->setColor(ccWHITE);
     
@@ -106,7 +112,7 @@ void GJGroundLayer::draw()
 
 void GJGroundLayer::showGround()
 {
-
+	m_isActive = true;
 }
 
 void GJGroundLayer::deactivateGround()

@@ -145,7 +145,7 @@ void MenuGameLayer::update(float delta)
 	else
 		balancer = ((1.0f - playerScale) * 30.0f) * 0.5f;
 
-	float groundY = CCDirector::sharedDirector()->getScreenBottom() + 90.0f + 15.0f - balancer;
+	float groundY = (CCDirector::sharedDirector()->getScreenBottom() + 90.0f) + 15.0f - balancer;
 	if (m_playerObject->getPosition().y < groundY)
 	{
 		m_playerObject->setPosition(ccp(m_playerObject->getPosition().x, groundY));
@@ -192,13 +192,12 @@ void MenuGameLayer::update(float delta)
 	m_backgroundPosition = ccp(m_backgroundPosition.x + (step * 5.77f) * 0.9f, 0.0f);
 	CCPoint newBGPos = ccp(-m_backgroundPosition.x * 0.1f, -m_backgroundPosition.y * 0.1f);
 	float i;
-	for (i = newBGPos.x; i < -m_bgSpeed; i += m_bgSpeed);
-	newBGPos.x = i;
+	for (i = newBGPos.x; i < -m_bgSpeed; i = i + m_bgSpeed);
 	m_bgSprite->setPosition(newBGPos);
 
 	CCPoint groundPos = ccp(m_backgroundPosition.x, CCDirector::sharedDirector()->getScreenBottom() + 90.0f);
-	for (i = groundPos.x; i < -m_groundSpeed; i += m_groundSpeed);
-	groundPos.x = i;
+	// was another variable defined here or does it reuse i that is the question
+	for (i = groundPos.x; i < -m_groundSpeed; i = i + m_groundSpeed);
 	m_groundSprite->setPosition(groundPos);
 
 }
